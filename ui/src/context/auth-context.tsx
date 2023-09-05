@@ -33,8 +33,10 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
     return signInWithPopup(auth, provider);
   }
 
-  function logout(): Promise<void> {
-    return auth.signOut();
+  async function logout(): Promise<void> {
+    auth.signOut().finally(() => {
+      setCurrentUser(null);
+    });
   }
 
   useEffect(() => {

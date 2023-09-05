@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { BookMarkedIcon } from "lucide-react";
 import { Link } from "@/router";
 import { ModeToggle } from "./mode-toggle";
+import { useAuth } from "@/context/auth-context";
 
 export function Header() {
+  const { currentUser, logout } = useAuth();
+
   const rawLink = `<a href="javascript:window.location='${window.location.origin}?url='+encodeURIComponent(document.location)">
     Add to Readclip
   </a>`;
@@ -27,29 +30,39 @@ export function Header() {
             </Link>
 
             <Link to="/setting">
-              <Button className="dark:text-white text-gray-800" variant="link">
+              <Button
+                className="dark:text-white text-gray-800 px-0"
+                variant="link"
+              >
                 Setting
               </Button>
             </Link>
-
-            <div
-              className="flex-shrink-0 hover:underline cursor-pointer text-sm"
-              dangerouslySetInnerHTML={{ __html: rawLink }}
-            />
           </nav>
         </div>
 
         <div className="hidden md:flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <nav className="flex items-center">
-            <div className="px-4 flex">
-              {/* <ModeToggle /> */}
-              <Link to="/login">
-                <Button variant="link" className="text-gray-600">
-                  Sign in
+            {currentUser ? (
+              <div className="flex gap-4 items-center">
+                <div
+                  className="flex-shrink-0 hover:underline cursor-pointer text-sm"
+                  dangerouslySetInnerHTML={{ __html: rawLink }}
+                />
+                <ModeToggle />
+                <Button variant="outline" onClick={logout}>
+                  Logout
                 </Button>
-              </Link>
-              <Button variant="outline">Sign up</Button>
-            </div>
+              </div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="link" className="text-gray-600">
+                    Sign in
+                  </Button>
+                </Link>
+                <Button variant="outline">Sign up</Button>
+              </>
+            )}
           </nav>
         </div>
 
