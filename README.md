@@ -32,11 +32,11 @@ git clone https://github.com/ahmadrosid/ReadClip.git
 Build UI:
 
 ```bash
-cd internal/views
+cd ui
 npm run build
 ```
 
-Build binary, make sure you are in root folder first `cd ../../` after build ui:
+Build binary, make sure you are in root folder first `cd ../` after build ui:
 
 ```bash
 go build
