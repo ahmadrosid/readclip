@@ -1,0 +1,92 @@
+# ReadClip
+
+Read blog post, news or any text from internet without ads without distraction!
+
+![demo](./readclip-screenshot-demo.png)
+
+## Why?
+
+I enjoy reading a lot. Every day, I spend about one or two hours reading anything from the internet, mostly blogs, news, and some social media. However, the web these days is very cluttered with ads and widgets everywhere. While I don't have an issue with website owners displaying ads to earn some money from the content they create, sometimes they don't consider us, the readers. They place ads in a way that prevents us from even being able to read the articles.
+
+The objective of this project is to enhance the readability of those articles or blog posts. We will download the html content, then do some magic and turn it into markdown, and present it in a simple and clean manner, allowing for easier reading without any ads or distractions. You can choose between dark mode or light mode for your reading preference.
+
+One issue I encountered while bookmarking and saving only the links is that sometimes they break due to the site owner forgetting to maintain the domain or removing the content. With the **ReadClip** project, we aim to address this by preserving the content. This way, even if the links are broken, we'll still have access to the text from those inaccessible sources.
+
+## Stack
+
+This project is a fullstack web app created using Golang for the backend and Vite with React for the frontend. It began as an experiment with Golang file embedding, and it has evolved into a practical bookmarking app that I find useful.
+
+## Requirement
+
+- go >= go1.19.2
+- nodejs >= v20.3.0
+
+## Installation
+
+Clone this project
+
+```bash
+git clone https://github.com/ahmadrosid/ReadClip.git
+```
+
+Build UI:
+
+```bash
+cd internal/views
+npm run build
+```
+
+Build binary, make sure you are in root folder first `cd ../../` after build ui:
+
+```bash
+go build
+```
+
+Now you can run with this command:
+
+```bash
+./readclip
+```
+
+Install as standalone binary
+
+```bash
+go build
+go install
+```
+
+If your global path is configured you can just run:
+
+```bash
+readclip
+```
+
+If you need to save article into you database you can enable it using postgres db, just extract the connection string
+
+```bash
+DB_CONNECTION_STRING="user=postgres password=postgres dbname=readclip host=your-posgres-host sslmode=verify-full"
+```
+
+If you are using docker you can use docker-compose to run the build and exec the container.
+
+```bash
+docker-compose up
+```
+
+## Roadmap
+
+Some feature will be added soon.
+
+- [x] Make it responsive
+- [x] Tag system
+- [x] Make it available on managed cloud (fly.io)
+- [ ] Filter saved links with tag
+- [ ] Paginate saved links
+- [ ] Improve parsing code
+- [ ] Authentication, with firebase
+- [ ] FullText search (Opensearch)
+- [ ] Chrome Extensions?
+
+## LICENSE
+
+MIT
