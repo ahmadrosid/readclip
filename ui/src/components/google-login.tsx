@@ -9,7 +9,7 @@ export function GoogleSignIn({
 }) {
   const { currentUser, googleSignin, logout } = useAuth();
 
-  async function handleGoogleLogin(): Promise<void> {
+  async function handleGoogleLogin() {
     try {
       setError("");
       await googleSignin();
@@ -23,7 +23,7 @@ export function GoogleSignIn({
     }
   }
 
-  async function handleLogout(): Promise<void> {
+  async function handleLogout() {
     try {
       setError("");
       await logout();

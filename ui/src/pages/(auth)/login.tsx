@@ -10,8 +10,21 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
+import { useAuthState } from "react-firebase-hooks/auth";
+import app from "@/lib/firebase";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "@/router";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  useAuthState(getAuth(app), {
+    onUserChanged: async (user) => {
+      if (user) {
+        navigate("/");
+      }
+    },
+  });
+
   return (
     <div className="grid p-8 place-content-center">
       <div className="max-w-md w-full">

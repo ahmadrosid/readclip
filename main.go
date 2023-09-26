@@ -47,6 +47,7 @@ func main() {
 		Index: "index.html",
 	})
 
+	app.Use("/login", serveUI)
 	app.Use("/clips", serveUI)
 	app.Use("/setting", serveUI)
 	app.Use("/", serveUI)
