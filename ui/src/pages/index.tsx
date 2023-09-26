@@ -22,6 +22,10 @@ import { downloadText } from "@/lib/utils";
 import { readingTime } from "reading-time-estimator";
 import { useQuery } from "react-query";
 import { toast } from "sonner";
+import app from "@/lib/firebase";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "@/router";
+import { useIdToken } from "react-firebase-hooks/auth";
 
 function LoadingSkeleton() {
   return (
@@ -36,6 +40,16 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
+  useIdToken(getAuth(app), {
+    onUserChanged: async (user) => {
+      console.log(user);
+      if (!user) {
+        navigate("/login");
+      }
+    },
+  });
+
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
