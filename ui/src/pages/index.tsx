@@ -43,7 +43,6 @@ export default function Home() {
   const navigate = useNavigate();
   useIdToken(getAuth(app), {
     onUserChanged: async (user) => {
-      console.log(user);
       if (!user) {
         navigate("/login");
       }
