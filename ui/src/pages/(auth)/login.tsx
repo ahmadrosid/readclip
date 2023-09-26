@@ -21,6 +21,9 @@ export default function LoginPage() {
     onUserChanged: async (user) => {
       if (user) {
         navigate("/");
+        user.getIdToken().then((token) => {
+          console.log(token);
+        });
       }
     },
   });

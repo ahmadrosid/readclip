@@ -16,6 +16,10 @@ import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
 import { FilterIcon } from "lucide-react";
 import { fetchAllArticles, Article } from "@/lib/api";
+import app from "@/lib/firebase";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "@/router";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function LoadingSkeleton() {
   return (
@@ -39,6 +43,15 @@ function LoadingSkeleton() {
 }
 
 export default function ArticlePage() {
+  const navigate = useNavigate();
+  const user = useAuthState(getAuth(app), {
+    onUserChanged: async (user) => {
+      if (!user) {
+        navigate("/login");
+      }
+    },
+  });
+
   const {
     data: articles,
     refetch,
@@ -50,6 +63,7 @@ export default function ArticlePage() {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: "articles",
+    enabled: user !== null,
     queryFn: fetchAllArticles,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
