@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
-import { useIdToken } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function LoadingSkeleton() {
   return (
@@ -40,15 +40,6 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
-  const navigate = useNavigate();
-  useIdToken(getAuth(app), {
-    onUserChanged: async (user) => {
-      if (!user) {
-        navigate("/login");
-      }
-    },
-  });
-
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
@@ -57,6 +48,22 @@ export default function Home() {
     queryKey: ["markdown", inputUrl],
     queryFn: () => fetchMarkdown(inputUrl),
     enabled,
+  });
+
+  const navigate = useNavigate();
+  useAuthState(getAuth(app), {
+    onUserChanged: async (user) => {
+      if (!user) {
+        navigate("/login");
+      } else {
+        const before = enabled;
+        setEnabled(false);
+        const token = await user.getIdToken();
+        console.log({ token });
+        window.localStorage.setItem("token", token);
+        setEnabled(before);
+      }
+    },
   });
 
   const reading = readingTime(data?.data?.Content || "", 260);

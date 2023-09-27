@@ -1,12 +1,18 @@
 package main
 
 import (
+	"context"
+	"errors"
 	"io/fs"
 	"net/http"
-	"os"
+
+	"firebase.google.com/go/auth"
+	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
 	"github.com/ahmadrosid/readclip/internal/bookmark"
 	"github.com/ahmadrosid/readclip/internal/clip"
+	"github.com/ahmadrosid/readclip/internal/config"
+	"github.com/ahmadrosid/readclip/internal/firebase"
 	"github.com/ahmadrosid/readclip/internal/tag"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/ui"
@@ -15,18 +21,12 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	godotenv.Load()
-	connStr := os.Getenv("DB_CONNECTION_STRING")
-	if connStr == "" {
-		println("DB_CONNECTION_STRING is empty")
-	}
-
-	db, _ := util.ConnectToDatabase(connStr)
+	env := config.Load()
+	db, _ := util.ConnectToDatabase(env.DatabaseUrl)
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
@@ -48,9 +48,33 @@ func main() {
 	})
 
 	app.Use("/login", serveUI)
+	app.Use("/register", serveUI)
 	app.Use("/clips", serveUI)
 	app.Use("/setting", serveUI)
 	app.Use("/", serveUI)
+
+	ctx := context.Background()
+	firebaseApp, err := firebase.NewFirebaseApp(ctx, *env)
+	if err != nil {
+		panic(err)
+	}
+
+	app.Use(gofiberfirebaseauth.New(gofiberfirebaseauth.Config{
+		FirebaseApp: firebaseApp,
+		IgnoreUrls:  []string{"GET::/login", "POST::/register"},
+		Authorizer: func(IDToken string, CurrentURL string) (*auth.Token, error) {
+			client, err := firebaseApp.Auth(ctx)
+			if err != nil {
+				return nil, errors.New("Failed to create firebase client")
+			}
+			token, err := client.VerifyIDToken(context.Background(), IDToken)
+			if err != nil {
+				return nil, errors.New("Malformed Token")
+			}
+
+			return token, nil
+		},
+	}))
 
 	clip.NewHandler(
 		app.Group("/api/clips"),
@@ -64,5 +88,5 @@ func main() {
 		app.Group("/api/bookmarks"),
 	)
 
-	app.Listen(":" + os.Getenv("PORT"))
+	app.Listen(":" + env.Port)
 }

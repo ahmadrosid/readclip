@@ -1,3 +1,7 @@
+export const getToken = () => {
+  return window.localStorage.getItem("token") || "";
+};
+
 export type Article = {
   Id: string;
   Url: string;
@@ -60,7 +64,11 @@ export const fetchAllArticles = async ({
   pageParam?: number;
 }): Promise<ArticleListResponse> => {
   console.log("pageParam", pageParam);
-  const res = await fetch("/api/clips?page=" + pageParam);
+  const res = await fetch("/api/clips?page=" + pageParam, {
+    headers: {
+      Authorization: getToken(),
+    },
+  });
   return await res.json();
 };
 
@@ -69,6 +77,10 @@ export const fetchDeleteArticle = async (
 ): Promise<{ status: string }> => {
   const res = await fetch(`api/clips/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
   });
   return await res.json();
 };
@@ -78,6 +90,7 @@ export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
     body: JSON.stringify({
       url,
@@ -87,7 +100,11 @@ export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
 };
 
 export const fetchAllTags = async (): Promise<TagListResponse> => {
-  const res = await fetch("/api/tags");
+  const res = await fetch("/api/tags", {
+    headers: {
+      Authorization: getToken(),
+    },
+  });
   return await res.json();
 };
 
@@ -98,6 +115,7 @@ export const fetchCreateTag = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
     body: JSON.stringify({
       name,
@@ -119,6 +137,7 @@ export const fetchAddrticleTag = async ({
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: getToken(),
     },
     body: JSON.stringify({
       article_id,
