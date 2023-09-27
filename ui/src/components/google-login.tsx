@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button.tsx";
 import { Google } from "./icons/google";
 
 export function GoogleSignIn({
+  label,
   setError,
 }: {
+  label: string;
   setError: (error: string) => void;
 }) {
   const { currentUser, googleSignin, logout } = useAuth();
@@ -49,7 +51,7 @@ export function GoogleSignIn({
           className="bg-white h-10 w-full"
         >
           <Google className="mr-2 h-4 w-4" />
-          Continue with Google
+          {label}
         </Button>
       )}
     </div>

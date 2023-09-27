@@ -1,5 +1,5 @@
 import { GoogleSignIn } from "@/components/google-login";
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,7 +14,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
-import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -31,15 +30,15 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl">Sign in to ReadClip</CardTitle>
+            <CardTitle className="text-2xl">Register to ReadClip</CardTitle>
             <CardDescription>
-              Start your reading journey by logging in to your account.
+              Start your reading journey by create new account.
             </CardDescription>
           </CardHeader>
           <Separator />
           <CardContent className="grid gap-4 pt-4 pb-2 bg-gray-100/75">
             <GoogleSignIn
-              label="Continue with Google"
+              label="Register with Google"
               setError={(error) => {
                 if (error == "") return;
                 toast.error(error);
@@ -49,17 +48,13 @@ export default function LoginPage() {
           <CardFooter className="bg-gray-100/75">
             <div className="flex justify-center text-sm w-full">
               <span className="px-2 text-muted-foreground">
-                <a
-                  className={cn(
-                    buttonVariants({
-                      variant: "link",
-                      className: "text-muted-foreground",
-                    })
-                  )}
-                  href="/register"
+                Or create{" "}
+                <Button
+                  variant="link"
+                  className="px-0 text-muted-foreground underline hover:text-foreground"
                 >
-                  Or create new account!
-                </a>
+                  new account!
+                </Button>
               </span>
             </div>
           </CardFooter>

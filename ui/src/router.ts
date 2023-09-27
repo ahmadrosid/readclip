@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/clips`
   | `/login`
+  | `/register`
   | `/setting`
 
 export type Params = {
