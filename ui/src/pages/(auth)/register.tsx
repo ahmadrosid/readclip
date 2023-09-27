@@ -1,5 +1,5 @@
 import { GoogleSignIn } from "@/components/google-login";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
+import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -48,13 +49,17 @@ export default function LoginPage() {
           <CardFooter className="bg-gray-100/75">
             <div className="flex justify-center text-sm w-full">
               <span className="px-2 text-muted-foreground">
-                Or create{" "}
-                <Button
-                  variant="link"
-                  className="px-0 text-muted-foreground underline hover:text-foreground"
+                <a
+                  className={cn(
+                    buttonVariants({
+                      variant: "link",
+                      className: "text-muted-foreground",
+                    })
+                  )}
+                  href="/login"
                 >
-                  new account!
-                </Button>
+                  Already have account? Login here!
+                </a>
               </span>
             </div>
           </CardFooter>
