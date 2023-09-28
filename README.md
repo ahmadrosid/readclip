@@ -81,9 +81,9 @@ Some feature will be added soon.
 - [x] Tag system
 - [x] Make it available on managed cloud (fly.io)
 - [ ] Filter saved links with tag
-- [ ] Paginate saved links
+- [x] Paginate saved links
 - [ ] Improve parsing code
-- [ ] Authentication, with firebase
+- [x] Authentication, with firebase
 - [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
 
