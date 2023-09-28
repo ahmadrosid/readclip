@@ -97,6 +97,10 @@ export default function Home() {
     }
   }, [data]);
 
+  if (inputUrl !== "" && !isLoading && error === null) {
+    mutate(inputUrl);
+  }
+
   const handleDeleteArticle = useCallback(async () => {
     if (data?.data.Id) {
       const res = await fetchDeleteArticle(data.data.Id);
