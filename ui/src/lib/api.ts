@@ -73,7 +73,6 @@ export const fetchAllArticles = async ({
 }: {
   pageParam?: number;
 }): Promise<ArticleListResponse> => {
-  console.log("pageParam", pageParam);
   const res = await fetch("/api/clips?page=" + pageParam, {
     headers: {
       Authorization: getToken(),
