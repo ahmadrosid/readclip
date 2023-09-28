@@ -43,6 +43,6 @@ func (d *dbService) CreateClip(clip Clip) error {
 }
 
 func (d *dbService) DeleteClipByID(id string, userID uuid.UUID) error {
-	err := d.db.Unscoped().Where("id = ?", id, "user_id = ?", userID).Delete(&Clip{}).Error
+	err := d.db.Unscoped().Where("id = ?", id).Where("user_id = ?", userID).Delete(&Clip{}).Error
 	return err
 }
