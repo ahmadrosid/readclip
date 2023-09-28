@@ -105,10 +105,17 @@ export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
       url,
     }),
   });
+
+  const data = await res.json();
   if (res.status === 401) {
     throw new Error("Unauthorized");
   }
-  return res.json();
+
+  if (res.status === 400) {
+    throw new Error(data.error);
+  }
+
+  return data;
 };
 
 export const fetchAllTags = async (): Promise<TagListResponse> => {

@@ -40,7 +40,7 @@ export default function Home() {
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
 
-  const { data, mutate, isLoading, error } = useMutation(
+  const { data, mutate, reset, isLoading, error } = useMutation(
     "markdown",
     fetchMarkdown,
     {
@@ -71,7 +71,9 @@ export default function Home() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      mutate(inputUrl);
+      if (inputUrl !== "") {
+        mutate(inputUrl);
+      }
     },
     [inputUrl, mutate]
   );
@@ -92,19 +94,20 @@ export default function Home() {
     }
   }, [data]);
 
-  const handleDeleteArticle = useCallback(async () => {
+  const handleDeleteClip = useCallback(async () => {
     if (data?.data.Id) {
       const res = await fetchDeleteArticle(data.data.Id);
       if (res.status === "success") {
         setInputUrl("");
+        reset();
         toast.success("Clip deleted!");
       } else {
         toast.error("Failed to delete article");
       }
     }
-  }, [data?.data.Id]);
+  }, [data?.data.Id, reset]);
 
-  if (urlParam !== "" && !isLoading && error === null && !data) {
+  if (urlParam !== "" && !isLoading && !error && !data) {
     if (inputUrl !== "") {
       mutate(inputUrl);
     }
@@ -180,7 +183,7 @@ export default function Home() {
                   <div className="flex items-center rounded-md bg-secondary text-secondary-foreground border">
                     <Button
                       variant="secondary"
-                      onClick={handleDeleteArticle}
+                      onClick={handleDeleteClip}
                       className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
                     >
                       <TrashIcon className="h-3 w-3" />

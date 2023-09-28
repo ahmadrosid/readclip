@@ -33,13 +33,13 @@ func (d *dbService) GetClipById(id string, userID uuid.UUID) (Clip, error) {
 
 func (d *dbService) GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error) {
 	var clip Clip
-	err := d.db.First(&clip, "hash_url = ?", hash_url, "user_id = ?", userID).Error
+	err := d.db.Where("user_id = ?", userID).First(&clip, "hash_url = ?", hash_url).Error
 	return clip, err
 }
 
-func (d *dbService) CreateClip(clip Clip) error {
+func (d *dbService) CreateClip(clip Clip) (Clip, error) {
 	err := d.db.Create(&clip).Error
-	return err
+	return clip, err
 }
 
 func (d *dbService) DeleteClipByID(id string, userID uuid.UUID) error {

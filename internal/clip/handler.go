@@ -78,12 +78,12 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 	}
 
 	hashURL := md5.Sum([]byte(input.Url))
-	article, err := h.repo.GetClipByHashUrl(hex.EncodeToString(hashURL[:]), *userID)
+	data, err := h.repo.GetClipByHashUrl(hex.EncodeToString(hashURL[:]), *userID)
 	if err == nil {
 		return c.JSON(fiber.Map{
 			"status":           "success",
 			"current_datetime": util.GetCurrentDatetime(),
-			"data":             article,
+			"data":             data,
 		})
 	}
 
@@ -113,34 +113,35 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		})
 	}
 
-	go func() {
-		now := time.Now().UTC()
-		hostname, err := util.GetHostname(input.Url)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+	now := time.Now().UTC()
+	hostname, err := util.GetHostname(input.Url)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-		err = h.repo.CreateClip(Clip{
-			Id:          uuid.New(),
-			Url:         input.Url,
-			Title:       res.Title,
-			HashUrl:     hex.EncodeToString(hashURL[:]),
-			Description: res.Metadata.Description,
-			Content:     res.Content,
-			Hostname:    hostname,
-			CreatedAt:   &now,
-			UserID:      *userID,
+	clipData, err := h.repo.CreateClip(Clip{
+		Id:          uuid.New(),
+		Url:         input.Url,
+		Title:       res.Title,
+		HashUrl:     hex.EncodeToString(hashURL[:]),
+		Description: res.Metadata.Description,
+		Content:     res.Content,
+		Hostname:    hostname,
+		CreatedAt:   &now,
+		UserID:      *userID,
+	})
+
+	if err != nil {
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"status":  "success",
+			"message": err.Error(),
 		})
-		if err != nil {
-			fmt.Println(err)
-		}
-	}()
+	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status":           "success",
 		"current_datetime": util.GetCurrentDatetime(),
-		"data":             res,
+		"data":             clipData,
 	})
 }
 
