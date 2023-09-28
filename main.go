@@ -60,7 +60,7 @@ func main() {
 
 	app.Use(gofiberfirebaseauth.New(gofiberfirebaseauth.Config{
 		FirebaseApp:  firebaseApp,
-		IgnoreUrls:   []string{"GET::/login", "GET::/register"},
+		IgnoreUrls:   []string{"GET::/login", "GET::/register", "GET::/", "GET::/clips", "GET::/setting"},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
 
