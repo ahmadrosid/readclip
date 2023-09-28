@@ -158,7 +158,7 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 		})
 	}
 
-	articles, err := h.repo.GetAllClipData(perPage, offset, *userID)
+	clips, err := h.repo.GetAllClipData(perPage, offset, *userID)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": "error",
@@ -169,10 +169,10 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 	response := fiber.Map{
 		"status":           "success",
 		"current_datetime": util.GetCurrentDatetime(),
-		"data":             articles,
+		"data":             clips,
 		"page":             page,
 		"per_page":         perPage,
-		"total":            len(articles),
+		"total":            len(clips),
 	}
 
 	if len(articles) >= perPage {
