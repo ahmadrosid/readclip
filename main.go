@@ -9,10 +9,11 @@ import (
 
 	"github.com/ahmadrosid/readclip/internal/bookmark"
 	"github.com/ahmadrosid/readclip/internal/clip"
-	"github.com/ahmadrosid/readclip/internal/config"
-	"github.com/ahmadrosid/readclip/internal/firebase"
 	"github.com/ahmadrosid/readclip/internal/tag"
+	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/config"
+	"github.com/ahmadrosid/readclip/internal/util/firebase"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -73,6 +74,10 @@ func main() {
 	)
 	bookmark.NewHandler(
 		app.Group("/api/bookmarks"),
+	)
+	user.NewHandler(
+		app.Group("/api/users"),
+		user.NewUserRepository(db),
 	)
 
 	app.Listen(":" + env.Port)

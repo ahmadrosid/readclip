@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	firebase "firebase.google.com/go"
-	"github.com/ahmadrosid/readclip/internal/config"
+	"github.com/ahmadrosid/readclip/internal/util/config"
 
 	"google.golang.org/api/option"
 )

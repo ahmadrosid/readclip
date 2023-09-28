@@ -15,12 +15,27 @@ import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
+import { useMutation } from "react-query";
+import { fetchCreateUser } from "@/lib/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const registerMutation = useMutation("register", fetchCreateUser, {
+    onSuccess: (data) => {
+      if (data.status === "success") {
+        toast.success("Register success!");
+        navigate("/");
+      }
+    },
+    onError: (err: Error) => {
+      toast.error(err.message);
+    },
+  });
+
   useAuthState(getAuth(app), {
     onUserChanged: async (user) => {
-      if (user) {
+      const hasToken = window.localStorage.getItem("token");
+      if (user && hasToken && !registerMutation.isLoading) {
         navigate("/");
       }
     },
@@ -43,6 +58,12 @@ export default function LoginPage() {
               setError={(error) => {
                 if (error == "") return;
                 toast.error(error);
+              }}
+              onAuthenticated={(user) => {
+                console.log("goes here!, onAuthenticated");
+                if (user.user.displayName) {
+                  registerMutation.mutate(user.user.displayName);
+                }
               }}
             />
           </CardContent>

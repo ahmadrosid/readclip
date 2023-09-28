@@ -34,6 +34,7 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
   }
 
   async function logout(): Promise<void> {
+    window.localStorage.removeItem("token");
     auth.signOut().finally(() => {
       setCurrentUser(null);
     });

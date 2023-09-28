@@ -11,10 +11,14 @@ import (
 )
 
 func ConnectToDatabase(dsn string) (*gorm.DB, error) {
-	gormConfig := &gorm.Config{}
+	gormConfig := &gorm.Config{
+		TranslateError: true,
+	}
 	gormConfig.Logger = logger.Default.LogMode(logger.Silent)
 	if os.Getenv("ENABLE_LOG_SQL") == "true" {
-		gormConfig = &gorm.Config{}
+		gormConfig = &gorm.Config{
+			TranslateError: true,
+		}
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), gormConfig)

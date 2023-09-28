@@ -38,6 +38,16 @@ export type Tag = {
   UpdatedAt: string;
 };
 
+export type User = {
+  ID: string;
+  Name: string;
+  Email: string;
+  FirebaseID: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt?: string;
+};
+
 export type TagListResponse = BaseResponse & {
   data: Tag[];
   status: string;
@@ -69,7 +79,7 @@ export const fetchAllArticles = async ({
       Authorization: getToken(),
     },
   });
-  return await res.json();
+  return res.json();
 };
 
 export const fetchDeleteArticle = async (
@@ -82,7 +92,7 @@ export const fetchDeleteArticle = async (
       Authorization: getToken(),
     },
   });
-  return await res.json();
+  return res.json();
 };
 
 export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
@@ -99,7 +109,7 @@ export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
   if (res.status === 401) {
     throw new Error("Unauthorized");
   }
-  return await res.json();
+  return res.json();
 };
 
 export const fetchAllTags = async (): Promise<TagListResponse> => {
@@ -108,7 +118,7 @@ export const fetchAllTags = async (): Promise<TagListResponse> => {
       Authorization: getToken(),
     },
   });
-  return await res.json();
+  return res.json();
 };
 
 export const fetchCreateTag = async (
@@ -124,7 +134,7 @@ export const fetchCreateTag = async (
       name,
     }),
   });
-  return await res.json();
+  return res.json();
 };
 
 export type AddArticleTagRequest = {
@@ -147,5 +157,33 @@ export const fetchAddrticleTag = async ({
       tag_id,
     }),
   });
-  return await res.json();
+  return res.json();
+};
+
+export const fetchCreateUser = async (
+  name: string
+): Promise<{ status: string; data: User }> => {
+  const res = await fetch(`/api/users/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+    body: JSON.stringify({
+      name,
+    }),
+  });
+
+  if (!res.ok) {
+    if (res.status === 409) {
+      throw new Error("User already exists");
+    }
+
+    if (res.status === 401) {
+      throw new Error("Unauthorized");
+    }
+
+    throw new Error("Error: " + res.statusText);
+  }
+  return res.json();
 };

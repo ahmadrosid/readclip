@@ -1,21 +1,29 @@
 import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button.tsx";
 import { Google } from "./icons/google";
+import type { UserCredential } from "firebase/auth";
 
 export function GoogleSignIn({
   label,
   setError,
+  onAuthenticated,
 }: {
   label: string;
   setError: (error: string) => void;
+  onAuthenticated?: (credential: UserCredential) => void;
 }) {
   const { currentUser, googleSignin, logout } = useAuth();
 
   async function handleGoogleLogin() {
     try {
       setError("");
-      await googleSignin();
-      // TODO: authenticate to backend
+      const user = await googleSignin();
+      console.log("goes here login!");
+      const token = await user.user.getIdTokenResult();
+      console.log(token);
+      window.localStorage.setItem("token", token.token);
+      onAuthenticated?.(user);
+      console.log("end");
     } catch (e) {
       // TODO: handle error
       if (e instanceof Error) {
