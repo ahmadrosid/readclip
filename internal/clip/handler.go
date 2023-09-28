@@ -32,7 +32,6 @@ func NewHandler(route fiber.Router, ts ClipRepository) {
 func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 	// sleep for two seconds for testing purpose
 	// time.Sleep(2 * time.Second)
-
 	c.Accepts("application/json")
 
 	var input InputClip

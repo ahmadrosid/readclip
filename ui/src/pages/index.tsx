@@ -11,16 +11,12 @@ import {
   Send,
   TrashIcon,
 } from "lucide-react";
-import {
-  fetchMarkdown,
-  fetchDeleteArticle,
-  type MarkdownResponse,
-} from "@/lib/api";
+import { fetchMarkdown, fetchDeleteArticle } from "@/lib/api";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { downloadText } from "@/lib/utils";
 import { readingTime } from "reading-time-estimator";
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { toast } from "sonner";
 import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
@@ -43,12 +39,25 @@ export default function Home() {
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
-  const [enabled, setEnabled] = useState(urlParam !== null);
-  const { data, refetch, isLoading, error } = useQuery<MarkdownResponse>({
-    queryKey: ["markdown", inputUrl],
-    queryFn: () => fetchMarkdown(inputUrl),
-    enabled,
-  });
+
+  const { data, mutate, isLoading, error } = useMutation(
+    "markdown",
+    fetchMarkdown,
+    {
+      onSuccess: (data) => {
+        if (data.status === "success") {
+          setInputUrl("");
+        }
+      },
+      onError: (err: Error) => {
+        if (err.message === "Unauthorized") {
+          toast.error("Unauthorized! Please login to continue");
+          return;
+        }
+        toast.error(err.message);
+      },
+    }
+  );
 
   const navigate = useNavigate();
   useAuthState(getAuth(app), {
@@ -56,12 +65,8 @@ export default function Home() {
       if (!user) {
         navigate("/login");
       } else {
-        const before = enabled;
-        setEnabled(false);
         const token = await user.getIdToken();
-        console.log({ token });
         window.localStorage.setItem("token", token);
-        setEnabled(before);
       }
     },
   });
@@ -71,10 +76,9 @@ export default function Home() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setEnabled(true);
-      refetch();
+      mutate(inputUrl);
     },
-    [refetch]
+    [inputUrl, mutate]
   );
 
   const handleCopyArticle = useCallback(() => {
@@ -97,7 +101,6 @@ export default function Home() {
     if (data?.data.Id) {
       const res = await fetchDeleteArticle(data.data.Id);
       if (res.status === "success") {
-        setEnabled(false);
         setInputUrl("");
         toast.success("Clip deleted!");
       } else {
@@ -118,9 +121,6 @@ export default function Home() {
               <Input
                 value={inputUrl}
                 onChange={(e) => {
-                  if (enabled) {
-                    setEnabled(false);
-                  }
                   setInputUrl(e.target.value);
                 }}
                 type="text"

@@ -2,11 +2,9 @@ package main
 
 import (
 	"context"
-	"errors"
 	"io/fs"
 	"net/http"
 
-	"firebase.google.com/go/auth"
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
 	"github.com/ahmadrosid/readclip/internal/bookmark"
@@ -54,26 +52,15 @@ func main() {
 	app.Use("/", serveUI)
 
 	ctx := context.Background()
-	firebaseApp, err := firebase.NewFirebaseApp(ctx, *env)
+	firebaseApp, err := firebase.NewFirebaseApp(ctx, env)
 	if err != nil {
 		panic(err)
 	}
 
 	app.Use(gofiberfirebaseauth.New(gofiberfirebaseauth.Config{
-		FirebaseApp: firebaseApp,
-		IgnoreUrls:  []string{"GET::/login", "POST::/register"},
-		Authorizer: func(IDToken string, CurrentURL string) (*auth.Token, error) {
-			client, err := firebaseApp.Auth(ctx)
-			if err != nil {
-				return nil, errors.New("Failed to create firebase client")
-			}
-			token, err := client.VerifyIDToken(context.Background(), IDToken)
-			if err != nil {
-				return nil, errors.New("Malformed Token")
-			}
-
-			return token, nil
-		},
+		FirebaseApp:  firebaseApp,
+		IgnoreUrls:   []string{"GET::/login", "POST::/register"},
+		ErrorHandler: firebase.ErrorHandler,
 	}))
 
 	clip.NewHandler(

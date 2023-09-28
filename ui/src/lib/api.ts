@@ -96,6 +96,9 @@ export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
       url,
     }),
   });
+  if (res.status === 401) {
+    throw new Error("Unauthorized");
+  }
   return await res.json();
 };
 
