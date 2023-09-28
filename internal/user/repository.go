@@ -28,8 +28,13 @@ func (*dbService) Delete(id uuid.UUID) error {
 }
 
 // FindByFirebaseID implements UserRepository.
-func (*dbService) FindByFirebaseID(firebaseID string) (*User, error) {
-	panic("unimplemented")
+func (d *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
+	user := &User{}
+	err := d.db.Find(user, "firebase_id", firebaseID).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
 
 // FindByID implements UserRepository.

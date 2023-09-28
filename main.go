@@ -64,20 +64,23 @@ func main() {
 		ErrorHandler: firebase.ErrorHandler,
 	}))
 
+	userRepo := user.NewUserRepository(db)
 	clip.NewHandler(
 		app.Group("/api/clips"),
 		clip.NewClipRepository(db),
+		userRepo,
 	)
 	tag.NewHandler(
 		app.Group("/api/tags"),
 		tag.NewTagRepository(db),
+		userRepo,
 	)
 	bookmark.NewHandler(
 		app.Group("/api/bookmarks"),
 	)
 	user.NewHandler(
 		app.Group("/api/users"),
-		user.NewUserRepository(db),
+		userRepo,
 	)
 
 	app.Listen(":" + env.Port)

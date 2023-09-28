@@ -6,10 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-var (
-	defaultUserID = "32b28b74-78bc-46e0-b63a-7d0e91630f1d"
-)
-
 type ClipTag struct {
 	Id        uuid.UUID  `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
 	TagID     string     `gorm:"type:uuid;index:idx_unique_tag,unique"`

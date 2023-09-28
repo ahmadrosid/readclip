@@ -93,6 +93,9 @@ export default function ArticlePage() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const firstPageData = articles?.pages?.[0]?.data;
+  const hasData = Boolean(firstPageData && firstPageData.length);
+
   return (
     <div className="p-4 md:p-8">
       <div className="px-1 flex justify-between items-center">
@@ -175,17 +178,19 @@ export default function ArticlePage() {
             ))}
           </div>
           <div className="flex justify-center w-full">
-            <Button
-              disabled={!hasNextPage || isFetchingNextPage}
-              onClick={() => fetchNextPage()}
-              size="lg"
-            >
-              {isFetchingNextPage
-                ? "Loading more..."
-                : hasNextPage
-                ? "Load More"
-                : "Nothing more to load"}{" "}
-            </Button>
+            {hasData && (
+              <Button
+                disabled={!hasNextPage || isFetchingNextPage}
+                onClick={() => fetchNextPage()}
+                size="lg"
+              >
+                {isFetchingNextPage
+                  ? "Loading more..."
+                  : hasNextPage
+                  ? "Load More"
+                  : "Nothing more to load"}{" "}
+              </Button>
+            )}
           </div>
         </>
       ) : null}

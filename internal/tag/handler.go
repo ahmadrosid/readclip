@@ -3,20 +3,34 @@ package tag
 import (
 	"net/http"
 
+	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/gofiber/fiber/v2"
+	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
 type TagHandler struct {
-	repo TagRepository
+	repo     TagRepository
+	userRepo user.UserRepository
 }
 
-func NewHandler(route fiber.Router, ts TagRepository) {
+func NewHandler(route fiber.Router, repo TagRepository, userRepo user.UserRepository) {
 	handler := &TagHandler{
-		repo: ts,
+		repo,
+		userRepo,
 	}
 	route.Get("/", handler.getAllTags)
 	route.Post("/", handler.createNewTag)
 	route.Post("/clip", handler.createClipTag)
+}
+
+func (h *TagHandler) getUserID(c *fiber.Ctx) (string, error) {
+	authUser := c.Locals("user").(gofiberfirebaseauth.User)
+	user, err := h.userRepo.FindByFirebaseID(authUser.UserID)
+	if err != nil {
+		return "", err
+	}
+
+	return user.ID.String(), nil
 }
 
 func (h *TagHandler) createNewTag(c *fiber.Ctx) error {
@@ -28,7 +42,15 @@ func (h *TagHandler) createNewTag(c *fiber.Ctx) error {
 		})
 	}
 
-	tag, err := h.repo.CreateNewTag(createTag.Name, defaultUserID)
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "error",
+			"message": err.Error(),
+		})
+	}
+
+	tag, err := h.repo.CreateNewTag(createTag.Name, userID)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(&fiber.Map{
 			"status":  "error",
@@ -66,7 +88,15 @@ func (h *TagHandler) createClipTag(c *fiber.Ctx) error {
 }
 
 func (h *TagHandler) getAllTags(c *fiber.Ctx) error {
-	tags, err := h.repo.GetAllTag(defaultUserID)
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "error",
+			"message": err.Error(),
+		})
+	}
+
+	tags, err := h.repo.GetAllTag(userID)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),

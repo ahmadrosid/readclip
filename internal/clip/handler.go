@@ -7,9 +7,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
 type InputClip struct {
@@ -17,16 +19,27 @@ type InputClip struct {
 }
 
 type ClipHandler struct {
-	repo ClipRepository
+	repo     ClipRepository
+	userRepo user.UserRepository
 }
 
-func NewHandler(route fiber.Router, ts ClipRepository) {
+func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepository) {
 	handler := &ClipHandler{
-		repo: ts,
+		repo, userRepo,
 	}
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
 	route.Delete("/:id", handler.deleteClipByID)
+}
+
+func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
+	authUser := c.Locals("user").(gofiberfirebaseauth.User)
+	user, err := h.userRepo.FindByFirebaseID(authUser.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user.ID, nil
 }
 
 func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
@@ -56,8 +69,16 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		})
 	}
 
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
 	hashURL := md5.Sum([]byte(input.Url))
-	article, err := h.repo.GetClipByHashUrl(hex.EncodeToString(hashURL[:]))
+	article, err := h.repo.GetClipByHashUrl(hex.EncodeToString(hashURL[:]), *userID)
 	if err == nil {
 		return c.JSON(fiber.Map{
 			"status":           "success",
@@ -97,6 +118,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		hostname, err := util.GetHostname(input.Url)
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
 
 		err = h.repo.CreateClip(Clip{
@@ -108,6 +130,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 			Content:     res.Content,
 			Hostname:    hostname,
 			CreatedAt:   &now,
+			UserID:      *userID,
 		})
 		if err != nil {
 			fmt.Println(err)
@@ -126,7 +149,15 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 	perPage := 99
 	offset := (page - 1) * perPage
 
-	articles, err := h.repo.GetAllClipData(perPage, offset)
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	articles, err := h.repo.GetAllClipData(perPage, offset, *userID)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": "error",
@@ -159,7 +190,15 @@ func (h *ClipHandler) deleteClipByID(c *fiber.Ctx) error {
 		})
 	}
 
-	err := h.repo.DeleteClipByID(id)
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	err = h.repo.DeleteClipByID(id, *userID)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": "error",
