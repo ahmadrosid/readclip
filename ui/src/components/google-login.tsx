@@ -18,14 +18,10 @@ export function GoogleSignIn({
     try {
       setError("");
       const user = await googleSignin();
-      console.log("goes here login!");
       const token = await user.user.getIdTokenResult();
-      console.log(token);
       window.localStorage.setItem("token", token.token);
       onAuthenticated?.(user);
-      console.log("end");
     } catch (e) {
-      // TODO: handle error
       if (e instanceof Error) {
         const errorMessage = e.message;
         setError("Failed to log in with Google: " + errorMessage);
@@ -56,7 +52,7 @@ export function GoogleSignIn({
         <Button
           onClick={handleGoogleLogin}
           variant="outline"
-          className="bg-white h-10 w-full"
+          className="h-10 w-full dark:text-gray-900 dark:hover:text-white"
         >
           <Google className="mr-2 h-4 w-4" />
           {label}

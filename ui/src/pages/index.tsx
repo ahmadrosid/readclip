@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Markdown } from "@/components/markdown";
 import {
   Circle,
@@ -44,11 +44,6 @@ export default function Home() {
     "markdown",
     fetchMarkdown,
     {
-      onSuccess: (data) => {
-        if (data.status === "success") {
-          setInputUrl("");
-        }
-      },
       onError: (err: Error) => {
         if (err.message === "Unauthorized") {
           toast.error("Unauthorized! Please login to continue");
@@ -97,10 +92,6 @@ export default function Home() {
     }
   }, [data]);
 
-  if (inputUrl !== "" && !isLoading && error === null) {
-    mutate(inputUrl);
-  }
-
   const handleDeleteArticle = useCallback(async () => {
     if (data?.data.Id) {
       const res = await fetchDeleteArticle(data.data.Id);
@@ -112,6 +103,10 @@ export default function Home() {
       }
     }
   }, [data?.data.Id]);
+
+  if (urlParam !== "" && !isLoading && error === null && !data) {
+    mutate(inputUrl);
+  }
 
   return (
     <div className="px-4 gap-4">

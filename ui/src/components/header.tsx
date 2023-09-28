@@ -60,7 +60,9 @@ export function Header() {
                     Sign in
                   </Button>
                 </Link>
-                <Button variant="outline">Sign up</Button>
+                <Link to="/register">
+                  <Button variant="outline">Sign up</Button>
+                </Link>
               </>
             )}
           </nav>

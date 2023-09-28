@@ -27,7 +27,7 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="grid p-8 place-content-center">
+    <div className="grid p-8 py-16 place-content-center">
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
@@ -37,7 +37,7 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <Separator />
-          <CardContent className="grid gap-4 pt-4 pb-2 bg-gray-100/75">
+          <CardContent className="grid gap-4 pt-4 pb-2 bg-gray-100/75 dark:bg-gray-200">
             <GoogleSignIn
               label="Continue with Google"
               setError={(error) => {
@@ -46,14 +46,14 @@ export default function LoginPage() {
               }}
             />
           </CardContent>
-          <CardFooter className="bg-gray-100/75">
+          <CardFooter className="bg-gray-100/75 dark:bg-gray-200">
             <div className="flex justify-center text-sm w-full">
               <span className="px-2 text-muted-foreground">
                 <a
                   className={cn(
                     buttonVariants({
                       variant: "link",
-                      className: "text-muted-foreground",
+                      className: "text-muted-foreground dark:text-gray-600",
                     })
                   )}
                   href="/register"
