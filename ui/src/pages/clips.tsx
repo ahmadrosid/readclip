@@ -152,7 +152,7 @@ export default function ArticlePage() {
       {isFetching && !isFetchingNextPage && <LoadingSkeleton />}
       {isError && (
         <div className="grid place-content-center">
-          <p className="text-2xl leading-tight">Could not load articles 😬</p>
+          <p className="text-2xl leading-tight">Could not load clips 😬</p>
           <div className="text-center py-2">
             <Button disabled={isLoading} onClick={() => refetch()}>
               Reload

@@ -105,7 +105,9 @@ export default function Home() {
   }, [data?.data.Id]);
 
   if (urlParam !== "" && !isLoading && error === null && !data) {
-    mutate(inputUrl);
+    if (inputUrl !== "") {
+      mutate(inputUrl);
+    }
   }
 
   return (

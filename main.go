@@ -25,32 +25,36 @@ import (
 
 func main() {
 	env := config.Load()
+	index, err := fs.Sub(ui.Index, "dist")
+	if err != nil {
+		panic(err)
+	}
 	db, _ := util.ConnectToDatabase(env.DatabaseUrl)
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
+
+	serveUI := func(ctx *fiber.Ctx) error {
+		return filesystem.SendFile(ctx, http.FS(index), "index.html")
+	}
+
+	app.Get("/register", serveUI)
+	app.Get("/clips", serveUI)
+	app.Get("/setting", serveUI)
+	app.Get("/login", serveUI)
+
+	app.Use("/", filesystem.New(filesystem.Config{
+		Root:   http.FS(index),
+		Index:  "index.html",
+		Browse: false,
+	}))
+
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:3000, http://127.0.0.1:8000",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
-
-	index, err := fs.Sub(ui.Index, "dist")
-	if err != nil {
-		panic(err)
-	}
-
-	serveUI := filesystem.New(filesystem.Config{
-		Root:  http.FS(index),
-		Index: "index.html",
-	})
-
-	app.Use("/login", serveUI)
-	app.Use("/register", serveUI)
-	app.Use("/clips", serveUI)
-	app.Use("/setting", serveUI)
-	app.Use("/", serveUI)
 
 	ctx := context.Background()
 	firebaseApp, err := firebase.NewFirebaseApp(ctx, env)
@@ -60,7 +64,7 @@ func main() {
 
 	app.Use(gofiberfirebaseauth.New(gofiberfirebaseauth.Config{
 		FirebaseApp:  firebaseApp,
-		IgnoreUrls:   []string{"GET::/login", "GET::/register", "GET::/", "GET::/clips", "GET::/setting"},
+		IgnoreUrls:   []string{"GET::/", "GET::/login", "GET::/register", "GET::/clips", "GET::/setting", "GET::/favicon.ico"},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
 
@@ -82,6 +86,5 @@ func main() {
 		app.Group("/api/users"),
 		userRepo,
 	)
-
 	app.Listen(":" + env.Port)
 }
