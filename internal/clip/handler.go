@@ -175,7 +175,7 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 		"total":            len(clips),
 	}
 
-	if len(articles) >= perPage {
+	if len(clips) >= perPage {
 		response["nextCursor"] = page + 1
 	}
 
