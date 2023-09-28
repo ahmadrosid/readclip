@@ -3,13 +3,22 @@ import { BookMarkedIcon } from "lucide-react";
 import { Link } from "@/router";
 import { ModeToggle } from "./mode-toggle";
 import { useAuth } from "@/context/auth-context";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 export function Header() {
+  const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
 
   const rawLink = `<a href="javascript:window.location='${window.location.origin}?url='+encodeURIComponent(document.location)">
     Add to Readclip
   </a>`;
+
+  const handleLogout = useCallback(async () => {
+    await logout();
+    window.localStorage.removeItem("token");
+    navigate("/login");
+  }, [logout, navigate]);
 
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur dark:bg-gray-900/75 dark:border-gray-800">
@@ -49,7 +58,7 @@ export function Header() {
                   dangerouslySetInnerHTML={{ __html: rawLink }}
                 />
                 <ModeToggle />
-                <Button variant="outline" onClick={logout}>
+                <Button variant="outline" onClick={handleLogout}>
                   Logout
                 </Button>
               </div>
