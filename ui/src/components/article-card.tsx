@@ -105,7 +105,7 @@ export function ArticleCard({
             <PopoverContent align="end">
               <div className="grid gap-2">
                 <div>
-                  <p>Delete this article?</p>
+                  <p>Delete this clip?</p>
                 </div>
                 <div className="flex gap-2 ml-auto">
                   <Button
