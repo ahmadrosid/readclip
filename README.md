@@ -80,7 +80,7 @@ Some feature will be added soon.
 - [x] Make it responsive
 - [x] Tag system
 - [x] Make it available on managed cloud (fly.io)
-- [ ] Filter saved links with tag
+- [x] Filter saved links with tag
 - [x] Paginate saved links
 - [ ] Improve parsing code
 - [x] Authentication, with firebase
