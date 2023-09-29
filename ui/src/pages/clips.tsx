@@ -14,12 +14,12 @@ import { CommandSeparator } from "cmdk";
 import { useInfiniteQuery } from "react-query";
 import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
-import { FilterIcon } from "lucide-react";
 import { fetchAllArticles, Article } from "@/lib/api";
 import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { FilterTag } from "@/components/filter-tag";
 
 function LoadingSkeleton() {
   return (
@@ -101,9 +101,7 @@ export default function ArticlePage() {
       <div className="px-1 flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
         <div>
-          <Button variant="outline" size="icon">
-            <FilterIcon className="w-4 h-4" />
-          </Button>
+          <FilterTag />
         </div>
       </div>
       <div>
@@ -144,7 +142,7 @@ export default function ArticlePage() {
       </div>
       <div>
         <DialogTag
-          article={tagArticle}
+          clip={tagArticle}
           open={openAddTag}
           onOpenChange={setOpenAddTag}
         />

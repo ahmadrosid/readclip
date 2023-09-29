@@ -139,7 +139,7 @@ function CommanSearchTag({
   );
 }
 
-export function SelecTag({ articleId }: { articleId: string }) {
+export function SelecTag({ clipId }: { clipId: string }) {
   const [tags, setTags] = React.useState<Tag[]>([]);
   const [open, setOpen] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState(
@@ -174,12 +174,11 @@ export function SelecTag({ articleId }: { articleId: string }) {
 
   const createTagMutation = useMutation(fetchCreateTag, {
     onSuccess: (data) => {
-      console.log({ data });
       if (data.status === "success") {
         toast.success("New tag created!");
         handleAddArticleTag(data.data.Id);
+        refetch();
       }
-      refetch();
     },
   });
 
@@ -192,9 +191,8 @@ export function SelecTag({ articleId }: { articleId: string }) {
   }, []);
 
   const handleAddArticleTag = (tagId: string) => {
-    console.log("handleAddArticleTag here!", tagId);
     addTagMutation.mutate({
-      article_id: articleId,
+      clip_id: clipId,
       tag_id: tagId,
     });
   };

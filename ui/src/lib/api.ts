@@ -144,12 +144,12 @@ export const fetchCreateTag = async (
 };
 
 export type AddArticleTagRequest = {
-  article_id: string;
+  clip_id: string;
   tag_id: string;
 };
 
 export const fetchAddrticleTag = async ({
-  article_id,
+  clip_id,
   tag_id,
 }: AddArticleTagRequest): Promise<AddArticleTagResponse> => {
   const res = await fetch(`/api/tags/clip`, {
@@ -159,7 +159,7 @@ export const fetchAddrticleTag = async ({
       Authorization: getToken(),
     },
     body: JSON.stringify({
-      article_id,
+      clip_id,
       tag_id,
     }),
   });

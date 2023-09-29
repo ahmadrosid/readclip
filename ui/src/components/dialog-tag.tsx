@@ -11,23 +11,23 @@ import {
 import { SelecTag } from "./select-tag";
 
 type Props = {
-  article?: Article;
+  clip?: Article;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-export function DialogTag({ article, open, onOpenChange }: Props) {
-  if (!article) return null;
+export function DialogTag({ clip, open, onOpenChange }: Props) {
+  if (!clip) return null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add tag</DialogTitle>
-          <DialogDescription>{article.Title}</DialogDescription>
+          <DialogDescription>{clip.Title}</DialogDescription>
         </DialogHeader>
         <div>
-          <SelecTag articleId={article.Id} />
+          <SelecTag clipId={clip.Id} />
         </div>
         <DialogFooter>
           <Button onClick={() => onOpenChange(false)} type="submit">
