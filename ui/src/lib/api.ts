@@ -70,10 +70,16 @@ export type AddArticleTagResponse = BaseResponse & {
 
 export const fetchAllArticles = async ({
   pageParam = 1,
+  tagId = "",
 }: {
+  tagId?: string;
   pageParam?: number;
 }): Promise<ArticleListResponse> => {
-  const res = await fetch("/api/clips?page=" + pageParam, {
+  let url = "/api/clips?page=" + pageParam;
+  if (tagId !== "") {
+    url += "&tag_id=" + tagId;
+  }
+  const res = await fetch(url, {
     headers: {
       Authorization: getToken(),
     },

@@ -52,8 +52,10 @@ export default function ArticlePage() {
     },
   });
 
+  const [tagId, setTagId] = useState("");
+
   const {
-    data: articles,
+    data: clips,
     refetch,
     isLoading,
     isError,
@@ -62,9 +64,15 @@ export default function ArticlePage() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: "articles",
+    queryKey: ["clips", tagId],
     enabled: user !== null,
-    queryFn: fetchAllArticles,
+    queryFn: (param) => {
+      console.log({ param });
+      return fetchAllArticles({
+        pageParam: param.pageParam || 1,
+        tagId: tagId,
+      });
+    },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
@@ -93,7 +101,7 @@ export default function ArticlePage() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const firstPageData = articles?.pages?.[0]?.data;
+  const firstPageData = clips?.pages?.[0]?.data;
   const hasData = Boolean(firstPageData && firstPageData.length);
 
   return (
@@ -101,7 +109,15 @@ export default function ArticlePage() {
       <div className="px-1 flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
         <div>
-          <FilterTag />
+          <FilterTag
+            onSelect={(tag) => {
+              if (tag) {
+                setTagId(tag.Id);
+              } else {
+                setTagId("");
+              }
+            }}
+          />
         </div>
       </div>
       <div>
@@ -113,17 +129,17 @@ export default function ArticlePage() {
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup heading="Suggestions">
-              {articles?.pages.map((group, i) => (
+              {clips?.pages.map((group, i) => (
                 <Fragment key={i}>
-                  {group.data.map((article) => (
+                  {group.data.map((clip) => (
                     <CommandItem
                       onSelect={() => {
                         window.location.href =
-                          "/?url=" + encodeURIComponent(article.Url);
+                          "/?url=" + encodeURIComponent(clip.Url);
                       }}
-                      key={article.Id}
+                      key={clip.Id}
                     >
-                      {article.Title}
+                      {clip.Title}
                     </CommandItem>
                   ))}
                 </Fragment>
@@ -158,10 +174,10 @@ export default function ArticlePage() {
           </div>
         </div>
       )}
-      {articles ? (
+      {clips ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
-            {articles.pages.map((group, i) => (
+            {clips.pages.map((group, i) => (
               <Fragment key={i}>
                 {group.data.map((article) => (
                   <ArticleCard

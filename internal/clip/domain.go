@@ -21,7 +21,7 @@ type Clip struct {
 }
 
 type ClipRepository interface {
-	GetAllClipData(perPage int, offset int, userID uuid.UUID) ([]Clip, error)
+	GetAllClipData(perPage int, offset int, tagId string, userID uuid.UUID) ([]Clip, error)
 	GetClipById(id string, userID uuid.UUID) (Clip, error)
 	GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error)
 	CreateClip(clip Clip) (Clip, error)

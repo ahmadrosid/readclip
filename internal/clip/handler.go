@@ -146,6 +146,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 }
 
 func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
+	tagId := c.Query("tag_id", "")
 	page := c.QueryInt("page", 1)
 	perPage := 99
 	offset := (page - 1) * perPage
@@ -158,7 +159,7 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 		})
 	}
 
-	clips, err := h.repo.GetAllClipData(perPage, offset, *userID)
+	clips, err := h.repo.GetAllClipData(perPage, offset, tagId, *userID)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": "error",

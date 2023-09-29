@@ -13,14 +13,18 @@ func NewClipRepository(db *gorm.DB) ClipRepository {
 	return &dbService{db}
 }
 
-func (d *dbService) GetAllClipData(perPage int, offset int, userID uuid.UUID) ([]Clip, error) {
+func (d *dbService) GetAllClipData(perPage int, offset int, tagId string, userID uuid.UUID) ([]Clip, error) {
 	var clips []Clip
-	err := d.db.
-		Select("id, url, title, hash_url, description, hostname, created_at").
-		Where("user_id = ?", userID).
+	query := d.db.
+		Select("clips.id, clips.url, clips.title, clips.hash_url, clips.description, clips.hostname, clips.created_at").
+		Where("clips.user_id = ?", userID)
+	if tagId != "" {
+		query = query.Joins("INNER JOIN clip_tags ON clips.id = clip_tags.clip_id").Where("clip_tags.tag_id = ?", tagId)
+	}
+	err := query.
 		Limit(perPage).
 		Offset(offset).
-		Order("created_at DESC").
+		Order("clips.created_at DESC").
 		Find(&clips).Error
 	return clips, err
 }
