@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Markdown } from "@/components/markdown";
 import {
   Circle,
@@ -41,7 +41,7 @@ export default function Home() {
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
 
   const { data, mutate, reset, isLoading, error } = useMutation(
-    "markdown",
+    "fetchMarkdown",
     fetchMarkdown,
     {
       onError: (err: Error) => {
@@ -107,11 +107,11 @@ export default function Home() {
     }
   }, [data?.data.Id, reset]);
 
-  if (urlParam !== "" && !isLoading && !error && !data) {
-    if (inputUrl !== "") {
-      mutate(inputUrl);
+  useEffect(() => {
+    if (urlParam !== null && !isLoading && !error && !data) {
+      mutate(urlParam);
     }
-  }
+  }, [urlParam, isLoading, error, data, mutate]);
 
   return (
     <div className="px-4 gap-4">
@@ -124,9 +124,7 @@ export default function Home() {
             <div className="space-y-2 flex-1">
               <Input
                 value={inputUrl}
-                onChange={(e) => {
-                  setInputUrl(e.target.value);
-                }}
+                onChange={(e) => setInputUrl(e.target.value)}
                 type="text"
                 placeholder="https://..."
                 name="web_url"
