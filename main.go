@@ -39,6 +39,7 @@ func main() {
 		return filesystem.SendFile(ctx, http.FS(index), "index.html")
 	}
 
+	app.Get("/clip", serveUI)
 	app.Get("/register", serveUI)
 	app.Get("/clips", serveUI)
 	app.Get("/setting", serveUI)
