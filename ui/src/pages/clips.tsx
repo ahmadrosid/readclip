@@ -67,7 +67,6 @@ export default function ArticlePage() {
     queryKey: ["clips", tagId],
     enabled: user !== null,
     queryFn: (param) => {
-      console.log({ param });
       return fetchAllArticles({
         pageParam: param.pageParam || 1,
         tagId: tagId,
