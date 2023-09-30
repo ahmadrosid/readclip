@@ -10,7 +10,7 @@ export function Header() {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
 
-  const rawLink = `<a href="javascript:window.location='${window.location.origin}?url='+encodeURIComponent(document.location)">
+  const rawLink = `<a href="javascript:window.location='${window.location.origin}/clip?url='+encodeURIComponent(document.location)">
     Add to Readclip
   </a>`;
 
@@ -25,12 +25,21 @@ export function Header() {
       <div className="pl-8 pr-8 flex h-14 items-center">
         <div className="mr-4 flex flex-1">
           <nav className="flex items-center space-x-2">
-            <p className="font-bold flex items-center gap-3">
+            <p className="font-bold flex items-center gap-2">
               <BookMarkedIcon className="w-5 h-5" />
               <Link to="/" className="text-lg">
                 ReadClip
               </Link>
             </p>
+
+            <Link to="/clip">
+              <Button
+                className="dark:text-white text-gray-800 pr-0"
+                variant="link"
+              >
+                Clip
+              </Button>
+            </Link>
 
             <Link to="/clips">
               <Button className="dark:text-white text-gray-800" variant="link">
