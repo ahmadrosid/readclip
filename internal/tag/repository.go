@@ -11,6 +11,15 @@ type tagGormRepository struct {
 	db *gorm.DB
 }
 
+func (repo *tagGormRepository) GetClipTag(clipId string) ([]Tag, error) {
+	var tags []Tag
+	err := repo.db.Select("tags.*").
+		Joins("INNER JOIN clip_tags ON tags.id = clip_tags.tag_id").
+		Where("clip_tags.clip_id = ?", clipId).
+		Find(&tags).Error
+	return tags, err
+}
+
 func (repo *tagGormRepository) AddTagToClip(clipId string, tagId string) (*ClipTag, error) {
 	var now = time.Now().UTC()
 	var clipTag = &ClipTag{

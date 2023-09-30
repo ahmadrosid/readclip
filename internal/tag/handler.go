@@ -21,6 +21,7 @@ func NewHandler(route fiber.Router, repo TagRepository, userRepo user.UserReposi
 	route.Get("/", handler.getAllTags)
 	route.Post("/", handler.createNewTag)
 	route.Post("/clip", handler.createClipTag)
+	route.Get("/clip/:id", handler.getClipTags)
 }
 
 func (h *TagHandler) getUserID(c *fiber.Ctx) (string, error) {
@@ -74,6 +75,22 @@ func (h *TagHandler) createClipTag(c *fiber.Ctx) error {
 	}
 
 	clipTag, err := h.repo.AddTagToClip(createClipTag.ClipId, createClipTag.TagId)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(&fiber.Map{
+			"status":  "error",
+			"message": err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(&fiber.Map{
+		"status": "success",
+		"data":   clipTag,
+	})
+}
+
+func (h *TagHandler) getClipTags(c *fiber.Ctx) error {
+	clipId := c.Params("id")
+	clipTag, err := h.repo.GetClipTag(clipId)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(&fiber.Map{
 			"status":  "error",

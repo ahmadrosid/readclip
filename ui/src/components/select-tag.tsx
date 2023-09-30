@@ -22,6 +22,7 @@ import {
   Tag,
   fetchAddrticleTag,
   fetchAllTags,
+  fetchClipTags,
   fetchCreateTag,
 } from "@/lib/api";
 import { useCommandState } from "cmdk";
@@ -155,6 +156,17 @@ export function SelecTag({ clipId }: { clipId: string }) {
       }
     },
     enabled: tags.length === 0,
+  });
+
+  useQuery({
+    queryKey: "clip_tags",
+    enabled: selectedValues.size === 0,
+    queryFn: () => fetchClipTags(clipId),
+    onSuccess: (data) => {
+      if (data.status === "success") {
+        setSelectedValues(new Set(data.data.map((item) => item.Name)));
+      }
+    },
   });
 
   const addTagMutation = useMutation<

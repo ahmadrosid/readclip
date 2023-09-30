@@ -34,4 +34,5 @@ type TagRepository interface {
 	CreateNewTag(name string, userId string) (*Tag, error)
 	GetAllTag(userId string) ([]Tag, error)
 	AddTagToClip(articleId string, tagId string) (*ClipTag, error)
+	GetClipTag(clipId string) ([]Tag, error)
 }

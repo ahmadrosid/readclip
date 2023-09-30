@@ -1,7 +1,3 @@
-export const getToken = () => {
-  return window.localStorage.getItem("token") || "";
-};
-
 export type Article = {
   Id: string;
   Url: string;
@@ -68,6 +64,33 @@ export type AddArticleTagResponse = BaseResponse & {
   status: string;
 };
 
+export type AddArticleTagRequest = {
+  clip_id: string;
+  tag_id: string;
+};
+
+export const getToken = () => {
+  return window.localStorage.getItem("token") || "";
+};
+
+export const handleReturnFetch = async (res: Response) => {
+  const data = await res.json();
+  if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error("Unauthorized");
+    }
+    if (res.status === 409) {
+      throw new Error("User already exists");
+    }
+    if (res.status === 400) {
+      throw new Error(data.error);
+    }
+
+    throw new Error("Error: " + res.statusText);
+  }
+  return data;
+};
+
 export const fetchAllArticles = async ({
   pageParam = 1,
   tagId = "",
@@ -79,123 +102,115 @@ export const fetchAllArticles = async ({
   if (tagId !== "") {
     url += "&tag_id=" + tagId;
   }
-  const res = await fetch(url, {
-    headers: {
-      Authorization: getToken(),
-    },
-  });
-  return res.json();
+  return handleReturnFetch(
+    await fetch(url, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+  );
 };
 
 export const fetchDeleteArticle = async (
   id: string
 ): Promise<{ status: string }> => {
-  const res = await fetch(`api/clips/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-  });
-  return res.json();
+  return handleReturnFetch(
+    await fetch(`api/clips/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
 };
 
 export const fetchMarkdown = async (url: string): Promise<MarkdownResponse> => {
-  const res = await fetch("/api/clips", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-    body: JSON.stringify({
-      url,
-    }),
-  });
-
-  const data = await res.json();
-  if (res.status === 401) {
-    throw new Error("Unauthorized");
-  }
-
-  if (res.status === 400) {
-    throw new Error(data.error);
-  }
-
-  return data;
+  return handleReturnFetch(
+    await fetch("/api/clips", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify({
+        url,
+      }),
+    })
+  );
 };
 
 export const fetchAllTags = async (): Promise<TagListResponse> => {
-  const res = await fetch("/api/tags", {
-    headers: {
-      Authorization: getToken(),
-    },
-  });
-  return res.json();
+  return handleReturnFetch(
+    await fetch("/api/tags", {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+  );
 };
 
 export const fetchCreateTag = async (
   name: string
 ): Promise<TagCreateResponse> => {
-  const res = await fetch("/api/tags", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-    body: JSON.stringify({
-      name,
-    }),
-  });
-  return res.json();
-};
-
-export type AddArticleTagRequest = {
-  clip_id: string;
-  tag_id: string;
+  return handleReturnFetch(
+    await fetch("/api/tags", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify({
+        name,
+      }),
+    })
+  );
 };
 
 export const fetchAddrticleTag = async ({
   clip_id,
   tag_id,
 }: AddArticleTagRequest): Promise<AddArticleTagResponse> => {
-  const res = await fetch(`/api/tags/clip`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-    body: JSON.stringify({
-      clip_id,
-      tag_id,
-    }),
-  });
-  return res.json();
+  return handleReturnFetch(
+    await fetch(`/api/tags/clip`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify({
+        clip_id,
+        tag_id,
+      }),
+    })
+  );
 };
 
 export const fetchCreateUser = async (
   name: string
 ): Promise<{ status: string; data: User }> => {
-  const res = await fetch(`/api/users/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-    body: JSON.stringify({
-      name,
-    }),
-  });
+  return handleReturnFetch(
+    await fetch(`/api/users/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify({
+        name,
+      }),
+    })
+  );
+};
 
-  if (!res.ok) {
-    if (res.status === 409) {
-      throw new Error("User already exists");
-    }
-
-    if (res.status === 401) {
-      throw new Error("Unauthorized");
-    }
-
-    throw new Error("Error: " + res.statusText);
-  }
-  return res.json();
+export const fetchClipTags = async (
+  clipId: string
+): Promise<{ status: string; data: Tag[] }> => {
+  return handleReturnFetch(
+    await fetch(`/api/tags/clip/${clipId}`, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+  );
 };
