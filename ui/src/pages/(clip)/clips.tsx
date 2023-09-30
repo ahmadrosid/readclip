@@ -48,6 +48,9 @@ export default function ArticlePage() {
     onUserChanged: async (user) => {
       if (!user) {
         navigate("/login");
+      } else {
+        const token = await user.getIdToken(true);
+        window.localStorage.setItem("token", token);
       }
     },
   });

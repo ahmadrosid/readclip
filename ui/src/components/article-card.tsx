@@ -79,7 +79,7 @@ export function ArticleCard({
       <CardHeader className="grid grid-cols-[1fr_80px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <a
-            href={"/?url=" + encodeURIComponent(article.Url)}
+            href={"/clip?url=" + encodeURIComponent(article.Url)}
             className="hover:underline"
           >
             <CardTitle className="dark:text-gray-200">

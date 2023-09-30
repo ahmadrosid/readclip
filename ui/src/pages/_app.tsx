@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/auth-context";
+import Footer from "@/components/footer";
 
 export const Catch = () => {
   const error = useRouteError();
@@ -28,6 +29,7 @@ export default function App() {
             <Outlet />
           </main>
           <Toaster richColors />
+          <Footer />
         </QueryClientProvider>
       </AuthProvider>
     </ThemeProvider>
