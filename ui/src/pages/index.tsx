@@ -9,6 +9,7 @@ import {
   ExternalLink,
   RefreshCw,
   Send,
+  TagIcon,
   TrashIcon,
 } from "lucide-react";
 import { fetchMarkdown, fetchDeleteArticle } from "@/lib/api";
@@ -22,6 +23,7 @@ import app from "@/lib/firebase";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { DialogTag } from "@/components/dialog-tag";
 
 function LoadingSkeleton() {
   return (
@@ -39,6 +41,7 @@ export default function Home() {
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
+  const [openAddTag, setOpenAddTag] = useState(false);
 
   const { data, mutate, reset, isLoading, error } = useMutation(
     "fetchMarkdown",
@@ -107,6 +110,8 @@ export default function Home() {
     }
   }, [data?.data.Id, reset]);
 
+  const handleAddTag = useCallback(() => setOpenAddTag(true), []);
+
   useEffect(() => {
     if (urlParam !== null && !isLoading && !error && !data) {
       mutate(urlParam);
@@ -157,59 +162,73 @@ export default function Home() {
       {isLoading && inputUrl !== "" && <LoadingSkeleton />}
 
       {data?.data && (
-        <div className="grid pb-8">
-          <div className="bg-white dark:bg-gray-800 py-4 rounded-md  w-full min-w-xs max-w-md sm:max-w-3xl border block mx-auto">
-            {data.data && (
-              <div className="px-4 flex items-center">
-                <div className="flex gap-2">
-                  <a
-                    href={data.data.Url}
-                    target="_blank"
-                    className="text-sm text-gray-500 hover:underline hover:text-gray-700 inline-flex items-center gap-1"
-                  >
-                    <ExternalLink className="h-3 w-3" />
-                    Visit link
-                  </a>
-                  <p className="text-sm text-gray-500 inline-flex gap-1 items-center">
-                    <Circle className="w-2 h-2 fill-gray-500" />
-                    {reading.text}
-                    {", "}
-                    {reading.words} words
-                  </p>
-                </div>
-                <div className="ml-auto">
-                  <div className="flex items-center rounded-md bg-secondary text-secondary-foreground border">
-                    <Button
-                      variant="secondary"
-                      onClick={handleDeleteClip}
-                      className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+        <>
+          <DialogTag
+            clip={data.data}
+            open={openAddTag}
+            onOpenChange={setOpenAddTag}
+          />
+          <div className="grid pb-8">
+            <div className="bg-white dark:bg-gray-800 py-4 rounded-md  w-full min-w-xs max-w-md sm:max-w-3xl border block mx-auto">
+              {data.data && (
+                <div className="px-4 flex items-center">
+                  <div className="flex gap-2">
+                    <a
+                      href={data.data.Url}
+                      target="_blank"
+                      className="text-sm text-gray-500 hover:underline hover:text-gray-700 inline-flex items-center gap-1"
                     >
-                      <TrashIcon className="h-3 w-3" />
-                    </Button>
-                    <Separator orientation="vertical" className="h-[20px]" />
-                    <Button
-                      variant="secondary"
-                      onClick={handleCopyArticle}
-                      className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
-                    >
-                      <CopyIcon className="h-3 w-3" />
-                    </Button>
-                    <Separator orientation="vertical" className="h-[20px]" />
-                    <Button
-                      variant="secondary"
-                      onClick={handleDownloadArticle}
-                      className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
-                    >
-                      <DownloadIcon className="h-3 w-3" />
-                    </Button>
+                      <ExternalLink className="h-3 w-3" />
+                      Visit link
+                    </a>
+                    <p className="text-sm text-gray-500 inline-flex gap-1 items-center">
+                      <Circle className="w-2 h-2 fill-gray-500" />
+                      {reading.text}
+                      {", "}
+                      {reading.words} words
+                    </p>
+                  </div>
+                  <div className="ml-auto">
+                    <div className="flex items-center rounded-md bg-secondary text-secondary-foreground border">
+                      <Button
+                        variant="secondary"
+                        onClick={handleAddTag}
+                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                      >
+                        <TagIcon className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        onClick={handleDeleteClip}
+                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                      >
+                        <TrashIcon className="h-3 w-3" />
+                      </Button>
+                      <Separator orientation="vertical" className="h-[20px]" />
+                      <Button
+                        variant="secondary"
+                        onClick={handleCopyArticle}
+                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                      >
+                        <CopyIcon className="h-3 w-3" />
+                      </Button>
+                      <Separator orientation="vertical" className="h-[20px]" />
+                      <Button
+                        variant="secondary"
+                        onClick={handleDownloadArticle}
+                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                      >
+                        <DownloadIcon className="h-3 w-3" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            <Separator className="mb-4 mt-3" />
-            <Markdown>{`# ${data.data.Title}\n\n${data.data.Content}`}</Markdown>
+              )}
+              <Separator className="mb-4 mt-3" />
+              <Markdown>{`# ${data.data.Title}\n\n${data.data.Content}`}</Markdown>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
