@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@generouted/react-router':
-    specifier: ^1.15.5
-    version: 1.15.5(react-router-dom@6.15.0)(react@18.2.0)(vite@4.4.5)
+    specifier: ^1.15.8
+    version: 1.15.8(react-router-dom@6.15.0)(react@18.2.0)(vite@4.4.5)
   '@radix-ui/react-aspect-ratio':
     specifier: ^1.0.3
     version: 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
@@ -1080,15 +1080,15 @@ packages:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
     dev: false
 
-  /@generouted/react-router@1.15.5(react-router-dom@6.15.0)(react@18.2.0)(vite@4.4.5):
-    resolution: {integrity: sha512-6SWndXZlY9gg2yPrbKbe4xOQXK0Y3mKacTXxBWQbBOiYk7p10oKg5wA9B5/eJLeFffh/olEMWrWea/EUdhVBrw==}
+  /@generouted/react-router@1.15.8(react-router-dom@6.15.0)(react@18.2.0)(vite@4.4.5):
+    resolution: {integrity: sha512-P0bHA4UPsp1VAoJmYmsBAQhiT1cGfVwfyerw+K6RAtTZnb8QHYAas5jLK4MYJtGWxSO0AuezHzBmfT1QpjlvSg==}
     peerDependencies:
       react: '>=18'
       react-router-dom: '>=6'
       vite: '>=4'
     dependencies:
       fast-glob: 3.3.1
-      generouted: 1.15.5(vite@4.4.5)
+      generouted: 1.15.8(vite@4.4.5)
       react: 18.2.0
       react-router-dom: 6.15.0(react-dom@18.2.0)(react@18.2.0)
       vite: 4.4.5(@types/node@20.5.1)
@@ -3080,8 +3080,8 @@ packages:
   /function-bind@1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
 
-  /generouted@1.15.5(vite@4.4.5):
-    resolution: {integrity: sha512-FNx45OKj06CuTkv2LUTzSghj6j9VhiQ8jSW7wspB0KW16xPGotbkMKTd7kYy/88EatEM92hVWHciuykYsUeY/g==}
+  /generouted@1.15.8(vite@4.4.5):
+    resolution: {integrity: sha512-bX1nd4+xS/A/K1Wbct57GOtso1HQj6YZfJTGqW+vMR5x+fKGaabVWklP+0xNMiZ1r5VRetlckH+rjeQMXquU7A==}
     peerDependencies:
       vite: '>=3'
     dependencies:
