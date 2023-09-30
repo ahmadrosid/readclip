@@ -119,7 +119,7 @@ export default function Home() {
   }, [urlParam, isLoading, error, data, mutate]);
 
   return (
-    <div className="px-4 gap-4">
+    <div className="px-4 gap-4 min-h-[80vh]">
       <div className="py-4 w-full sticky top-10 z-10 bg-gray-50 dark:bg-gray-900/90 dark:backdrop-blur">
         <div className="max-w-3xl mx-auto">
           <form
