@@ -74,7 +74,10 @@ export function Header() {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="link" className="text-gray-600">
+                  <Button
+                    variant="link"
+                    className="text-gray-600 dark:text-white"
+                  >
                     Sign in
                   </Button>
                 </Link>
