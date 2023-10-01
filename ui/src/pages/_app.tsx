@@ -3,7 +3,6 @@ import { Outlet, useRouteError } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "sonner";
-import { AuthProvider } from "@/context/auth-context";
 import Footer from "@/components/footer";
 
 export const Catch = () => {
@@ -22,16 +21,14 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <Header />
-          <main>
-            <Outlet />
-          </main>
-          <Toaster richColors />
-          <Footer />
-        </QueryClientProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Toaster richColors />
+        <Footer />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

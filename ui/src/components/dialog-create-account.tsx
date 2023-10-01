@@ -31,10 +31,11 @@ export function DialogCreateAccount({
   const navigate = useNavigate();
   const [logout] = useSignOut(getAuth(app));
 
-  const handleSignout = useCallback(() => {
+  const handleSignout = useCallback(async () => {
     window.localStorage.removeItem("token");
-    logout();
-  }, [logout]);
+    await logout();
+    onOpenChange(false);
+  }, [logout, onOpenChange]);
 
   const registerMutation = useMutation("register", fetchCreateUser, {
     onSuccess: (data) => {
@@ -67,7 +68,14 @@ export function DialogCreateAccount({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            onClick={(e) => {
+              e.preventDefault();
+              handleSignout();
+            }}
+          >
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
               e.preventDefault();

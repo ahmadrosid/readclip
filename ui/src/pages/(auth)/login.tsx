@@ -27,13 +27,8 @@ export default function LoginPage() {
   const [open, setOpen] = useState(false);
 
   const loginMutation = useMutation("login", fetchLogin, {
-    onSuccess: (data) => {
-      if (data.status === "success" && data.data !== null) {
-        navigate("/clip");
-      }
-    },
+    onSuccess: () => navigate("/clip"),
     onError: (err: Error) => {
-      console.log(err);
       if (err.message === "user not found") {
         setOpen(true);
         return;
@@ -55,9 +50,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     const hasToken = window.localStorage.getItem("token");
-    if (hasToken && !loginMutation.isLoading) {
-      navigate("/");
-    }
+    console.log({ hasToken, isLoading: loginMutation.isLoading });
+    // if (hasToken && !loginMutation.isLoading) {
+    //   navigate("/");
+    // }
   }, [loginMutation.isLoading, navigate]);
 
   return (

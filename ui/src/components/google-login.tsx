@@ -1,7 +1,11 @@
-import { useAuth } from "@/context/auth-context";
 import { Button } from "@/components/ui/button.tsx";
 import { Google } from "./icons/google";
 import type { UserCredential } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import app from "@/lib/firebase";
+import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export function GoogleSignIn({
   label,
@@ -12,12 +16,19 @@ export function GoogleSignIn({
   setError: (error: string) => void;
   onAuthenticated?: (credential: UserCredential) => void;
 }) {
-  const { currentUser, googleSignin, logout } = useAuth();
+  const [currentUser] = useAuthState(getAuth(app), {
+    onUserChanged: async (user) => {
+      if (user) {
+        const token = await user.getIdToken();
+        window.localStorage.setItem("token", token);
+      }
+    },
+  });
 
   async function handleGoogleLogin() {
     try {
       setError("");
-      const user = await googleSignin();
+      const user = await signInWithPopup(auth, new GoogleAuthProvider());
       const token = await user.user.getIdToken();
       window.localStorage.setItem("token", token);
       onAuthenticated?.(user);
@@ -32,7 +43,7 @@ export function GoogleSignIn({
   async function handleLogout() {
     try {
       setError("");
-      await logout();
+      auth.signOut();
     } catch {
       setError("Failed to log out");
     }

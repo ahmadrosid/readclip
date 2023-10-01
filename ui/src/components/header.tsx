@@ -2,23 +2,24 @@ import { Button } from "@/components/ui/button";
 import { BookMarkedIcon } from "lucide-react";
 import { Link } from "@/router";
 import { ModeToggle } from "./mode-toggle";
-import { useAuth } from "@/context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import { auth } from "@/lib/firebase";
 
 export function Header() {
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();
 
   const rawLink = `<a href="javascript:window.location='${window.location.origin}/clip?url='+encodeURIComponent(document.location)">
     Add to Readclip
   </a>`;
 
+  const hasToken = window.localStorage.getItem("token");
+
   const handleLogout = useCallback(async () => {
-    await logout();
+    await auth.signOut();
     window.localStorage.removeItem("token");
     navigate("/login");
-  }, [logout, navigate]);
+  }, [navigate]);
 
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur dark:bg-gray-900/75 dark:border-gray-800">
@@ -60,7 +61,7 @@ export function Header() {
 
         <div className="hidden md:flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <nav className="flex items-center">
-            {currentUser ? (
+            {hasToken ? (
               <div className="flex gap-4 items-center">
                 <div
                   className="flex-shrink-0 hover:underline cursor-pointer text-sm"
