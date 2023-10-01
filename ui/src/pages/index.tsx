@@ -1,4 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Link } from "@/router";
 import { ArrowRight } from "lucide-react";
@@ -7,7 +8,7 @@ export default function Home() {
   return (
     <div className="container mx-auto pt-8">
       <div className="max-w-3xl py-16 mx-auto text-left">
-        <p>Bookmark manager for organizing your links from internet.</p>
+        <p>Welcome to Readclip.</p>
         <p className="py-6 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem] dark:text-white">
           A better way to bookmark, read news, blogs, or any internet text
           without ads.
@@ -26,25 +27,13 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-4 py-12">
-        <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
-          Why?
-        </h2>
-        <p className="text-lg font-medium">
-          The web these days is very cluttered with ads and widgets everywhere.
-          While I don't have an issue with website owners displaying ads to earn
-          some money from the content they create, sometimes they don't care
-          about us, the readers. Sometime they place ads in a way that prevents
-          us from even being able to read the texts.
-        </p>
-      </div>
-
       <div className="max-w-3xl mx-auto space-y-4 py-12 mb-8">
         <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
           Features
         </h2>
+        <Separator />
         <div className="space-y-4 pt-8">
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700">
+          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
             Reading
           </h3>
           <p className="text-lg font-medium">
@@ -53,7 +42,7 @@ export default function Home() {
             allowing for easier reading without any ads or distractions. You can
             choose between dark mode or light mode for your reading preference.
           </p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700">
+          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
             Bookmarking
           </h3>
           <p className="text-lg font-medium">
@@ -63,7 +52,7 @@ export default function Home() {
             links are broken, we'll still have access to the text from those
             inaccessible sources.
           </p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700">
+          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
             You own your data
           </h3>
           <p className="text-lg font-medium">
@@ -71,6 +60,45 @@ export default function Home() {
             database and only you can access the data. You can also export your
             data to JSON or csv format. This way, you can always have access to
             your data.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto space-y-4 py-12 mb-8">
+        <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
+          How it works?
+        </h2>
+        <Separator />
+        <p className="text-lg font-medium">
+          You can use Readclip in two simple ways: bookmarklet or submit a link.
+        </p>
+        <div className="space-y-4 pt-8">
+          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
+            Submit link.
+          </h3>
+          <p className="text-lg font-medium">
+            Got to to{" "}
+            <Link to={"/clip"} className="underline">
+              Clip
+            </Link>{" "}
+            page and submit your link there.
+            <img
+              src="/img/submit-link.png"
+              alt="clip"
+              className="w-full border my-2 rounded-md"
+            />
+          </p>
+          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
+            Bookmarklet
+          </h3>
+          <p className="text-lg font-medium">
+            You also can use bookmarklet to save your link. Drag and drop the
+            bookmarklet link into you bookmark bar.
+            <img
+              src="/img/bookmarklet.png"
+              alt="clip"
+              className="w-full border my-2 rounded-md"
+            />
           </p>
         </div>
       </div>
