@@ -15,24 +15,26 @@ import { formatFileSize } from "@/lib/utils";
 import { toast } from "sonner";
 import axios from "axios";
 
+type FileInfo = File & { path: string; size: number };
+
 export function ImportSetting() {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<FileInfo | null>(null);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "multipart/form-data": [".html"] },
-    onDropAccepted: (files) => {
+    onDropAccepted: (files: File[]) => {
       if (files.length == 0) return;
       const file = files[0];
-      setSelectedFile(file as File);
+      setSelectedFile(file as FileInfo);
     },
   });
 
   const files =
     selectedFile === null
       ? []
-      : [selectedFile].map((file: any) => {
+      : [selectedFile].map((file) => {
           return (
-            <li key={file.path}>
+            <li key={(file as FileInfo).path}>
               {file.path} - {formatFileSize(file.size as number)}
             </li>
           );

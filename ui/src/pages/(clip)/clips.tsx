@@ -21,27 +21,6 @@ import { useNavigate } from "@/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FilterTag } from "@/components/filter-tag";
 
-function LoadingSkeleton() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
-      {Array(9)
-        .fill(0)
-        .map((_, i) => (
-          <Card key={i}>
-            <CardContent className="grid gap-4 py-4">
-              <div className="flex gap-3">
-                <Skeleton className="flex-1 h-[25px] rounded-sm" />
-                <Skeleton className="w-[80px] h-[25px] rounded-sm" />
-              </div>
-              <Skeleton className="w-full h-[100px] rounded-md" />
-              <Skeleton className="flex-1 h-[25px] rounded-sm" />
-            </CardContent>
-          </Card>
-        ))}
-    </div>
-  );
-}
-
 export default function ArticlePage() {
   const navigate = useNavigate();
   const user = useAuthState(getAuth(app), {
@@ -147,13 +126,12 @@ export default function ArticlePage() {
                 </Fragment>
               ))}
             </CommandGroup>
-
             <CommandSeparator />
             <CommandGroup heading="Menu">
-              <CommandItem onSelect={() => (window.location.href = "/")}>
-                Home
+              <CommandItem onSelect={() => navigate("/")}>Home</CommandItem>
+              <CommandItem onSelect={() => navigate("/clips")}>
+                Saved
               </CommandItem>
-              <CommandItem>Saved</CommandItem>
             </CommandGroup>
           </CommandList>
         </CommandDialog>
@@ -210,6 +188,27 @@ export default function ArticlePage() {
           </div>
         </>
       ) : null}
+    </div>
+  );
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
+      {Array(9)
+        .fill(0)
+        .map((_, i) => (
+          <Card key={i}>
+            <CardContent className="grid gap-4 py-4">
+              <div className="flex gap-3">
+                <Skeleton className="flex-1 h-[25px] rounded-sm" />
+                <Skeleton className="w-[80px] h-[25px] rounded-sm" />
+              </div>
+              <Skeleton className="w-full h-[100px] rounded-md" />
+              <Skeleton className="flex-1 h-[25px] rounded-sm" />
+            </CardContent>
+          </Card>
+        ))}
     </div>
   );
 }
