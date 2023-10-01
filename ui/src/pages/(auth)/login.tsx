@@ -56,7 +56,7 @@ export default function LoginPage() {
   useEffect(() => {
     const hasToken = window.localStorage.getItem("token");
     if (hasToken) {
-      // navigate("/");
+      navigate("/");
     }
   }, [navigate]);
 
