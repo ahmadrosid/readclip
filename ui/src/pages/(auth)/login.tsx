@@ -10,24 +10,64 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { useAuthState } from "react-firebase-hooks/auth";
-import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
+import { useCallback, useEffect, useState } from "react";
+import type { UserCredential } from "firebase/auth";
+import { DialogCreateAccount } from "@/components/dialog-create-account";
+import { useMutation } from "react-query";
+import { fetchLogin } from "@/lib/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  useAuthState(getAuth(app), {
-    onUserChanged: async (user) => {
-      if (user) {
-        navigate("/");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+  });
+  const [open, setOpen] = useState(false);
+
+  const loginMutation = useMutation("login", fetchLogin, {
+    onSuccess: (data) => {
+      if (data.status === "success" && data.data !== null) {
+        navigate("/clip");
       }
+    },
+    onError: (err: Error) => {
+      console.log(err);
+      if (err.message === "user not found") {
+        setOpen(true);
+        return;
+      }
+      toast.error(err.message);
     },
   });
 
+  const handleOnAthenticated = useCallback(
+    (credential: UserCredential) => {
+      setUser({
+        name: credential.user.displayName ?? "",
+        email: credential.user.email ?? "",
+      });
+      loginMutation.mutate();
+    },
+    [loginMutation]
+  );
+
+  useEffect(() => {
+    const hasToken = window.localStorage.getItem("token");
+    if (hasToken) {
+      // navigate("/");
+    }
+  }, [navigate]);
+
   return (
-    <div className="grid p-8 py-16 place-content-center">
+    <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
+      <DialogCreateAccount
+        email={user.email}
+        name={user.name}
+        open={open}
+        onOpenChange={setOpen}
+      />
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
@@ -44,6 +84,7 @@ export default function LoginPage() {
                 if (error == "") return;
                 toast.error(error);
               }}
+              onAuthenticated={handleOnAthenticated}
             />
           </CardContent>
           <CardFooter className="bg-gray-100/75 dark:bg-gray-200">

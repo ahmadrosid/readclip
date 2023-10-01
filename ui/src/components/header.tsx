@@ -66,7 +66,6 @@ export function Header() {
                   className="flex-shrink-0 hover:underline cursor-pointer text-sm"
                   dangerouslySetInnerHTML={{ __html: rawLink }}
                 />
-                <ModeToggle />
                 <Button variant="outline" onClick={handleLogout}>
                   Logout
                 </Button>

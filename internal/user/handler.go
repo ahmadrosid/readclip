@@ -17,7 +17,39 @@ type handler struct {
 
 func NewHandler(route fiber.Router, repo UserRepository) {
 	handler := &handler{repo}
+	route.Post("/login", handler.login)
 	route.Post("/register", handler.register)
+}
+
+func (h *handler) login(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(gofiberfirebaseauth.User)
+	user, err := h.repo.FindByFirebaseID(currentUser.UserID)
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
+			return c.Status(http.StatusConflict).JSON(fiber.Map{
+				"status": "error",
+				"error":  "email already registered",
+			})
+		}
+
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	if user.Name == "" {
+		return c.Status(http.StatusNotFound).JSON(fiber.Map{
+			"status": "error",
+			"error":  "user not found",
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"data":   user,
+		"status": "success",
+	})
 }
 
 func (h *handler) register(c *fiber.Ctx) error {

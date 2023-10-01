@@ -18,8 +18,8 @@ export function GoogleSignIn({
     try {
       setError("");
       const user = await googleSignin();
-      const token = await user.user.getIdTokenResult();
-      window.localStorage.setItem("token", token.token);
+      const token = await user.user.getIdToken();
+      window.localStorage.setItem("token", token);
       onAuthenticated?.(user);
     } catch (e) {
       if (e instanceof Error) {

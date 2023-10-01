@@ -107,7 +107,7 @@ export default function ArticlePage() {
   const hasData = Boolean(firstPageData && firstPageData.length);
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="p-4 md:p-8 min-h-[80vh]">
       <div className="px-1 flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
         <div>

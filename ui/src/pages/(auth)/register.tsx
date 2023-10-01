@@ -42,7 +42,7 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="grid p-8 py-16 place-content-center">
+    <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">

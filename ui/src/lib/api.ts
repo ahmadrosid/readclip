@@ -82,7 +82,7 @@ export const handleReturnFetch = async (res: Response) => {
     if (res.status === 409) {
       throw new Error("User already exists");
     }
-    if (res.status === 400) {
+    if (res.status >= 400) {
       throw new Error(data.error);
     }
 
@@ -186,6 +186,18 @@ export const fetchAddrticleTag = async ({
   );
 };
 
+export const fetchClipTags = async (
+  clipId: string
+): Promise<{ status: string; data: Tag[] }> => {
+  return handleReturnFetch(
+    await fetch(`/api/tags/clip/${clipId}`, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+  );
+};
+
 export const fetchCreateUser = async (
   name: string
 ): Promise<{ status: string; data: User }> => {
@@ -203,12 +215,12 @@ export const fetchCreateUser = async (
   );
 };
 
-export const fetchClipTags = async (
-  clipId: string
-): Promise<{ status: string; data: Tag[] }> => {
+export const fetchLogin = async (): Promise<{ status: string; data: User }> => {
   return handleReturnFetch(
-    await fetch(`/api/tags/clip/${clipId}`, {
+    await fetch(`/api/users/login`, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: getToken(),
       },
     })

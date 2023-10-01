@@ -21,7 +21,7 @@ export default function App() {
   const queryClient = new QueryClient();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider>
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <Header />

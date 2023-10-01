@@ -14,8 +14,8 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 }
 
 // Create implements UserRepository.
-func (d *dbService) Create(user *User) (*User, error) {
-	err := d.db.Create(&user).Error
+func (repo *dbService) Create(user *User) (*User, error) {
+	err := repo.db.Create(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -28,18 +28,22 @@ func (*dbService) Delete(id uuid.UUID) error {
 }
 
 // FindByFirebaseID implements UserRepository.
-func (d *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
+func (repo *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
 	user := &User{}
-	err := d.db.Find(user, "firebase_id", firebaseID).Error
+	err := repo.db.Find(user, "firebase_id", firebaseID).Error
 	if err != nil {
 		return nil, err
 	}
 	return user, nil
 }
 
-// FindByID implements UserRepository.
-func (*dbService) FindByID(id uuid.UUID) (*User, error) {
-	panic("unimplemented")
+func (repo *dbService) FindByID(id uuid.UUID) (*User, error) {
+	user := &User{}
+	err := repo.db.Find(user, "id", id).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
 
 // Update implements UserRepository.
