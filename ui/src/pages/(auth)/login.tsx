@@ -55,10 +55,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     const hasToken = window.localStorage.getItem("token");
-    if (hasToken) {
+    if (hasToken && !loginMutation.isLoading) {
       navigate("/");
     }
-  }, [navigate]);
+  }, [loginMutation.isLoading, navigate]);
 
   return (
     <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
