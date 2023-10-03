@@ -8,6 +8,8 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ExportSetting } from "@/components/setting/export-setting";
+import GeneralSetting from "@/components/setting/general-setting";
+import TagSetting from "@/components/setting/tag-setting";
 
 function NavItem({
   pathname,
@@ -67,6 +69,13 @@ export default function SettingPage() {
               General
             </NavItem>
             <NavItem
+              pathname="tags"
+              activePath={activePath}
+              onClick={() => setActivePath("tags")}
+            >
+              Tags
+            </NavItem>
+            <NavItem
               pathname="import"
               activePath={activePath}
               onClick={() => setActivePath("import")}
@@ -83,22 +92,8 @@ export default function SettingPage() {
           </nav>
         </aside>
         <div className="flex-1 lg:max-w-3xl">
-          {activePath === "general" && (
-            <div className="bg-white shadow rounded-lg p-6 space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-lg font-bold tracking-tight">General</h3>
-                <p className="text-muted-foreground">
-                  Manage your general information.
-                </p>
-              </div>
-              <Separator className="my-6" />
-              <div>
-                <label className="block text-sm text-gray-500">
-                  Cooming soon!
-                </label>
-              </div>
-            </div>
-          )}
+          {activePath === "general" && <GeneralSetting />}
+          {activePath === "tags" && <TagSetting />}
           {activePath === "import" && <ImportSetting />}
           {activePath === "export" && <ExportSetting />}
         </div>

@@ -226,3 +226,17 @@ export const fetchLogin = async (): Promise<{ status: string; data: User }> => {
     })
   );
 };
+
+export const fetchDeleteTag = async (
+  tagId: string
+): Promise<{ status: string }> => {
+  return handleReturnFetch(
+    await fetch(`/api/tags/${tagId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
+};

@@ -7,11 +7,19 @@ import (
 	"gorm.io/gorm"
 )
 
-type tagGormRepository struct {
+type tagRepository struct {
 	db *gorm.DB
 }
 
-func (repo *tagGormRepository) GetClipTag(clipId string) ([]Tag, error) {
+func (repo *tagRepository) DeleteClipTag(id string) error {
+	err := repo.db.Where("id = ?", id).Delete(&Tag{}).Error
+	if err == nil {
+		err = repo.db.Where("clip_id = ?", id).Delete(&ClipTag{}).Error
+	}
+	return err
+}
+
+func (repo *tagRepository) GetClipTag(clipId string) ([]Tag, error) {
 	var tags []Tag
 	err := repo.db.Select("tags.*").
 		Joins("INNER JOIN clip_tags ON tags.id = clip_tags.tag_id").
@@ -20,7 +28,7 @@ func (repo *tagGormRepository) GetClipTag(clipId string) ([]Tag, error) {
 	return tags, err
 }
 
-func (repo *tagGormRepository) AddTagToClip(clipId string, tagId string) (*ClipTag, error) {
+func (repo *tagRepository) AddTagToClip(clipId string, tagId string) (*ClipTag, error) {
 	var now = time.Now().UTC()
 	var clipTag = &ClipTag{
 		ClipID:    clipId,
@@ -33,7 +41,7 @@ func (repo *tagGormRepository) AddTagToClip(clipId string, tagId string) (*ClipT
 	return clipTag, err
 }
 
-func (repo *tagGormRepository) CreateNewTag(name string, userId string) (*Tag, error) {
+func (repo *tagRepository) CreateNewTag(name string, userId string) (*Tag, error) {
 	var now = time.Now().UTC()
 	var tag = &Tag{
 		Name:      name,
@@ -45,14 +53,14 @@ func (repo *tagGormRepository) CreateNewTag(name string, userId string) (*Tag, e
 	return tag, err
 }
 
-func (repo *tagGormRepository) GetAllTag(userId string) ([]Tag, error) {
+func (repo *tagRepository) GetAllTag(userId string) ([]Tag, error) {
 	var tags []Tag
 	err := repo.db.Where("user_id = ?", userId).Find(&tags).Error
 	return tags, err
 }
 
 func NewTagRepository(db *gorm.DB) TagRepository {
-	return &tagGormRepository{
+	return &tagRepository{
 		db: db,
 	}
 }
