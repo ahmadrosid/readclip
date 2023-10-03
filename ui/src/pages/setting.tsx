@@ -45,6 +45,9 @@ export default function SettingPage() {
     onUserChanged: async (user) => {
       if (!user) {
         navigate("/login");
+      } else {
+        const token = await user.getIdToken();
+        window.localStorage.setItem("token", token);
       }
     },
   });
