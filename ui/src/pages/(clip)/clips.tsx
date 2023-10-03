@@ -15,24 +15,11 @@ import { useInfiniteQuery } from "react-query";
 import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
 import { fetchAllArticles, Article } from "@/lib/api";
-import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
-import { useNavigate } from "@/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { FilterTag } from "@/components/filter-tag";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ArticlePage() {
-  const navigate = useNavigate();
-  const user = useAuthState(getAuth(app), {
-    onUserChanged: async (user) => {
-      if (!user) {
-        navigate("/login");
-      } else {
-        const token = await user.getIdToken(true);
-        window.localStorage.setItem("token", token);
-      }
-    },
-  });
+  const { user, navigate } = useAuth();
 
   const [tagId, setTagId] = useState("");
 

@@ -40,7 +40,10 @@ export function DialogCreateAccount({
   const registerMutation = useMutation("register", fetchCreateUser, {
     onSuccess: (data) => {
       if (data.status === "success") {
-        navigate("/clip");
+        toast.success("Account created successfully");
+        setTimeout(() => {
+          navigate("/clip");
+        }, 1000);
       }
     },
     onError: (err: Error) => {

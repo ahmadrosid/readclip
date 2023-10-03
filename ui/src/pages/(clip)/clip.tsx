@@ -19,11 +19,8 @@ import { downloadText } from "@/lib/utils";
 import { readingTime } from "reading-time-estimator";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
-import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
-import { useNavigate } from "@/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { DialogTag } from "@/components/dialog-tag";
+import { useAuth } from "@/hooks/useAuth";
 
 function LoadingSkeleton() {
   return (
@@ -57,17 +54,7 @@ export default function Home() {
     }
   );
 
-  const navigate = useNavigate();
-  useAuthState(getAuth(app), {
-    onUserChanged: async (user) => {
-      if (!user) {
-        navigate("/login");
-      } else {
-        const token = await user.getIdToken();
-        window.localStorage.setItem("token", token);
-      }
-    },
-  });
+  useAuth();
 
   const reading = readingTime(data?.data?.Content || "", 260);
 

@@ -50,11 +50,15 @@ export default function LoginPage() {
 
   useEffect(() => {
     const hasToken = window.localStorage.getItem("token");
-    console.log({ hasToken, isLoading: loginMutation.isLoading });
-    // if (hasToken && !loginMutation.isLoading) {
-    //   navigate("/");
-    // }
-  }, [loginMutation.isLoading, navigate]);
+    if (
+      hasToken &&
+      !open &&
+      !loginMutation.isLoading &&
+      !loginMutation.isError
+    ) {
+      navigate("/");
+    }
+  }, [loginMutation, navigate, open]);
 
   return (
     <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
@@ -67,7 +71,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl">Sign in to ReadClip</CardTitle>
+            <CardTitle className="text-2xl">Sign in to ReadClipx</CardTitle>
             <CardDescription>
               Start your reading journey by logging in to your account.
             </CardDescription>

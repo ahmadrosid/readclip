@@ -3,13 +3,10 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { ImportSetting } from "@/components/setting/import-setting";
-import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
-import { useNavigate } from "@/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { ExportSetting } from "@/components/setting/export-setting";
 import GeneralSetting from "@/components/setting/general-setting";
 import TagSetting from "@/components/setting/tag-setting";
+import { useAuth } from "@/hooks/useAuth";
 
 function NavItem({
   pathname,
@@ -38,19 +35,11 @@ function NavItem({
   );
 }
 
+type Path = "general" | "tags" | "import" | "export";
+
 export default function SettingPage() {
-  const [activePath, setActivePath] = useState("general");
-  const navigate = useNavigate();
-  useAuthState(getAuth(app), {
-    onUserChanged: async (user) => {
-      if (!user) {
-        navigate("/login");
-      } else {
-        const token = await user.getIdToken();
-        window.localStorage.setItem("token", token);
-      }
-    },
-  });
+  const [activePath, setActivePath] = useState<Path>("general");
+  useAuth();
 
   return (
     <div className="hidden space-y-6 p-10 pb-16 md:block min-h-[80vh]">
