@@ -35,6 +35,7 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
+  useAuth();
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
@@ -44,6 +45,7 @@ export default function Home() {
     "fetchMarkdown",
     fetchMarkdown,
     {
+      retry: 2,
       onError: (err: Error) => {
         if (err.message === "Unauthorized") {
           toast.error("Unauthorized! Please login to continue");
@@ -54,9 +56,7 @@ export default function Home() {
     }
   );
 
-  useAuth();
-
-  const reading = readingTime(data?.data?.Content || "", 260);
+  const readingEst = readingTime(data?.data?.Content || "", 260);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -170,9 +170,7 @@ export default function Home() {
                     </a>
                     <p className="text-sm text-gray-500 inline-flex gap-1 items-center">
                       <Circle className="w-2 h-2 fill-gray-500" />
-                      {reading.text}
-                      {", "}
-                      {reading.words} words
+                      {readingEst.text + ", " + readingEst.words} words
                     </p>
                   </div>
                   <div className="ml-auto">
