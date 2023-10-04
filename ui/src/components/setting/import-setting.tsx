@@ -79,7 +79,9 @@ export function ImportSetting() {
                   .post("/api/bookmarks/import/chrome", data, {
                     headers: {
                       "Content-Type": "multipart/form-data",
-                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                      Authorization: `Bearer ${window.localStorage.getItem(
+                        "token"
+                      )}`,
                     },
                   })
                   .then((res: Response) => {
