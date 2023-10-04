@@ -89,17 +89,17 @@ func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string
 			}
 		}
 		if len(tagIds) == 0 {
-			return `""`
+			return ""
 		}
 
-		var tagsString string
+		var tagsString []string
 		for _, tagId := range tagIds {
 			for _, tag := range tagMap[tagId] {
-				tagsString += tag.Name + ","
+				tagsString = append(tagsString, tag.Name)
 			}
 		}
 
-		return tagsString
+		return strings.Join(tagsString, ",")
 	}
 
 	escapeForCSV := func(data string) string {
@@ -112,17 +112,17 @@ func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string
 
 	if format == "csv" {
 		var builder strings.Builder
-		builder.WriteString("url,title,description,content,hostname,tags,created_at\n")
+		builder.WriteString("url,title,description,hostname,tags,created_at,content\n")
 
 		for _, clip := range clips {
 			row := fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s\n",
 				escapeForCSV(clip.Url),
 				escapeForCSV(clip.Title),
 				escapeForCSV(clip.Description),
-				escapeForCSV(clip.Content),
 				escapeForCSV(clip.Hostname),
 				escapeForCSV(getTags(clip.Id)),
-				escapeForCSV(clip.CreatedAt.String()))
+				escapeForCSV(clip.CreatedAt.String()),
+				escapeForCSV(clip.Content))
 
 			builder.WriteString(row)
 		}
