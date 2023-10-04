@@ -76,7 +76,12 @@ export function ImportSetting() {
                   };
                 };
                 axios
-                  .post("/api/bookmarks/import/chrome", data)
+                  .post("/api/bookmarks/import/chrome", data, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                  })
                   .then((res: Response) => {
                     if (res.data.status === "error") {
                       toast.error(res.data.error);
