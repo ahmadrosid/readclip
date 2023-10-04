@@ -240,3 +240,44 @@ export const fetchDeleteTag = async (
     })
   );
 };
+
+export const fetchExportClips = async (format: "json" | "csv") => {
+  return fetch("/api/clips/export", {
+    method: "POST",
+    body: JSON.stringify({ format }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+  }).then((response) => {
+    const contentType = response.headers.get("Content-Type");
+
+    if (response.status !== 200) {
+      throw new Error("Error: " + response.statusText);
+    }
+
+    if (contentType?.includes("application/json")) {
+      return response.json();
+    } else {
+      return response.blob().then((blob) => {
+        console.log({ blob });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+
+        if (format === "json") {
+          a.download = "clips.json";
+        } else {
+          a.download = "clips.csv";
+        }
+
+        document.body.appendChild(a);
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      });
+    }
+  });
+};

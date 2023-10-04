@@ -8,8 +8,8 @@ import (
 
 type ClipTag struct {
 	Id        uuid.UUID  `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
-	TagID     string     `gorm:"type:uuid;index:idx_unique_tag,unique"`
-	ClipID    string     `gorm:"type:uuid;index:idx_unique_tag,unique"`
+	TagID     uuid.UUID  `gorm:"type:uuid;index:idx_unique_tag,unique"`
+	ClipID    uuid.UUID  `gorm:"type:uuid;index:idx_unique_tag,unique"`
 	CreatedAt *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
 }
 

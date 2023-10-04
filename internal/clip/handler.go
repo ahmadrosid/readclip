@@ -1,6 +1,7 @@
 package clip
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
@@ -14,8 +15,12 @@ import (
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
-type InputClip struct {
+type GrabMarkdownRequest struct {
 	Url string
+}
+
+type ExportClipRequest struct {
+	Format string
 }
 
 type ClipHandler struct {
@@ -30,6 +35,7 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
 	route.Delete("/:id", handler.deleteClipByID)
+	route.Post("/export", handler.exportClips)
 }
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
@@ -47,7 +53,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 	// time.Sleep(2 * time.Second)
 	c.Accepts("application/json")
 
-	var input InputClip
+	var input GrabMarkdownRequest
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"status": "error",
@@ -211,4 +217,40 @@ func (h *ClipHandler) deleteClipByID(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",
 	})
+}
+
+func (h *ClipHandler) exportClips(c *fiber.Ctx) error {
+	c.Accepts("application/json")
+	var req ExportClipRequest
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	result, err := h.repo.ExportClips(req.Format, *userID)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	c.Set("Content-Type", "text/plain")
+	if req.Format == "csv" {
+		c.Set("Content-Disposition", "attachment; filename=clips.csv")
+	} else {
+		c.Set("Content-Disposition", "attachment; filename=clips.json")
+	}
+
+	return c.SendStream(bytes.NewReader([]byte(result)))
 }

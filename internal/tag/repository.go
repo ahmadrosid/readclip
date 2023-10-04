@@ -31,8 +31,8 @@ func (repo *tagRepository) GetClipTag(clipId string) ([]Tag, error) {
 func (repo *tagRepository) AddTagToClip(clipId string, tagId string) (*ClipTag, error) {
 	var now = time.Now().UTC()
 	var clipTag = &ClipTag{
-		ClipID:    clipId,
-		TagID:     tagId,
+		ClipID:    uuid.MustParse(clipId),
+		TagID:     uuid.MustParse(tagId),
 		CreatedAt: &now,
 	}
 	err := repo.db.Create(

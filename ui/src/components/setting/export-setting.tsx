@@ -1,4 +1,32 @@
 import { Separator } from "@/components/ui/separator";
+import { Button } from "../ui/button";
+import { useMutation } from "react-query";
+import { fetchExportClips } from "@/lib/api";
+import { toast } from "sonner";
+
+function DownloadButton({ format }: { format: "csv" | "json" }) {
+  const exportMutation = useMutation("export", fetchExportClips, {
+    retry: 2,
+    onSuccess: () => {
+      toast.success("Exported successfully");
+    },
+    onError: (err: Error) => {
+      toast.error(err.message);
+    },
+  });
+
+  return (
+    <Button
+      disabled={exportMutation.isLoading}
+      variant="outline"
+      onClick={() => exportMutation.mutate(format)}
+    >
+      {exportMutation.isLoading
+        ? "Exporting..."
+        : `Export to ${format === "csv" ? "CSV" : "JSON"}`}
+    </Button>
+  );
+}
 
 export function ExportSetting() {
   return (
@@ -6,12 +34,13 @@ export function ExportSetting() {
       <div className="space-y-2">
         <h3 className="text-lg font-bold tracking-tight">Export</h3>
         <p className="text-muted-foreground">
-          Export you bookmarks data into sqlite format.
+          Export you bookmarks data into CSV or JSON.
         </p>
       </div>
       <Separator className="my-6" />
-      <div>
-        <label className="block text-sm text-gray-500">Cooming soon!</label>
+      <div className="space-x-4">
+        <DownloadButton format="csv" />
+        <DownloadButton format="json" />
       </div>
     </div>
   );

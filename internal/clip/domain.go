@@ -26,4 +26,5 @@ type ClipRepository interface {
 	GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error)
 	CreateClip(clip Clip) (Clip, error)
 	DeleteClipByID(id string, userID uuid.UUID) error
+	ExportClips(format string, userID uuid.UUID) (string, error)
 }
