@@ -88,7 +88,6 @@ export function ImportSetting() {
                     if (res.data.status === "error") {
                       toast.error(res.data.error);
                     } else {
-                      console.log(res.data.data);
                       toast.success("File uploaded successfully!");
                       setSelectedFile(null);
                     }
