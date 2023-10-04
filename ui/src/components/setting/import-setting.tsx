@@ -92,7 +92,7 @@ export function ImportSetting() {
                   })
                   .catch((err) => {
                     console.log(err);
-                    toast.error("Something went wrong!");
+                    toast.error("Something went wrong!" + `\n${err.message}`);
                   });
               }}
               encType="multipart/form-data"

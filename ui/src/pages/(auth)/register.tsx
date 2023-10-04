@@ -60,7 +60,6 @@ export default function LoginPage() {
                 toast.error(error);
               }}
               onAuthenticated={(user) => {
-                console.log("goes here!, onAuthenticated");
                 if (user.user.displayName) {
                   registerMutation.mutate(user.user.displayName);
                 }

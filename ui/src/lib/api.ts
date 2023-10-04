@@ -260,7 +260,6 @@ export const fetchExportClips = async (format: "json" | "csv") => {
       return response.json();
     } else {
       return response.blob().then((blob) => {
-        console.log({ blob });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.style.display = "none";
