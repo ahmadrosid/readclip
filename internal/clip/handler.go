@@ -93,7 +93,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		})
 	}
 
-	res := &util.ContentData{}
+	var res = &util.ContentData{}
 	if util.IsValidYoutubeUrl(input.Url) {
 		res, err = util.GrabYoutubeVideoInfo(input.Url)
 		if err != nil {
