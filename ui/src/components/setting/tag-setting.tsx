@@ -69,9 +69,14 @@ export default function TagSetting() {
         </div>
       </div>
       <Separator className="my-6" />
-      <div className="grid gap-2 border pb-1 rounded">
-        {data?.data.map((tag) => (
-          <TagItem key={tag.Id} tag={tag} refetch={refetch} />
+      <div className="grid gap-2 border pb-1 rounded-md">
+        {data?.data.map((tag, idx) => (
+          <TagItem
+            key={tag.Id}
+            tag={tag}
+            refetch={refetch}
+            className={cn(idx > 0 && "border-t")}
+          />
         ))}
       </div>
     </div>
