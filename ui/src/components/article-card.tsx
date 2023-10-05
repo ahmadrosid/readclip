@@ -20,9 +20,9 @@ import { Separator } from "@/components/ui/separator";
 import {
   CalendarCheck,
   DownloadIcon,
-  Edit,
   ExternalLink,
   ExternalLinkIcon,
+  Loader2,
   MoreVertical,
   PlusIcon,
   TrashIcon,
@@ -33,7 +33,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { formatDistance } from "date-fns";
-import { type Article, fetchDeleteClip } from "@/lib/api";
+import { type Article, fetchDeleteClip, fetchDownloadClip } from "@/lib/api";
+import { toast } from "sonner";
+import { useMutation } from "react-query";
 
 type Props = {
   article: Article;
@@ -42,6 +44,77 @@ type Props = {
   onAddTagCallback: (article: Article) => void;
 };
 
+type MenuItemProps = {
+  clipId: string;
+  setOpenDropdown: (state: boolean) => void;
+};
+
+export function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
+  const downloadMutation = useMutation({
+    mutationFn: fetchDownloadClip,
+    mutationKey: "downloadClip",
+    onSuccess: () => setOpenDropdown(false),
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    },
+  });
+
+  return (
+    <>
+      <DropdownMenuItem
+        onSelect={(e) => {
+          e.preventDefault();
+          downloadMutation.mutate(clipId);
+        }}
+        className="cursor-pointer"
+      >
+        <DownloadIcon className="mr-2 h-4 w-4" /> Download
+      </DropdownMenuItem>
+    </>
+  );
+}
+
+export function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
+  const deleteMutation = useMutation({
+    mutationKey: "deleteClip",
+    mutationFn: fetchDeleteClip,
+    onSuccess(data) {
+      if (data.status === "success") {
+        toast.success("Clip deleted!");
+      } else {
+        toast.error("Failed to delete article");
+      }
+      setOpenDropdown(false);
+    },
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    },
+  });
+
+  return (
+    <>
+      <DropdownMenuItem
+        onSelect={(e) => {
+          e.preventDefault();
+          deleteMutation.mutate(clipId);
+        }}
+        className="cursor-pointer"
+      >
+        {deleteMutation.isLoading ? (
+          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+        ) : (
+          <TrashIcon className="mr-2 h-4 w-4" />
+        )}{" "}
+        Delete
+      </DropdownMenuItem>
+    </>
+  );
+}
+
 export function ArticleCard({
   article,
   current_datetime,
@@ -49,6 +122,7 @@ export function ArticleCard({
   onAddTagCallback,
 }: Props) {
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
   const [controller, setController] = useState<AbortController | null>(null);
 
   const handleDeleteArticle = async () => {
@@ -123,7 +197,7 @@ export function ArticleCard({
             </PopoverContent>
           </Popover>
           <Separator orientation="vertical" className="h-[20px]" />
-          <DropdownMenu>
+          <DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="secondary"
@@ -146,15 +220,20 @@ export function ArticleCard({
               >
                 <PlusIcon className="mr-2 h-4 w-4" /> Add tags
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              {/* <DropdownMenuItem className="cursor-pointer">
                 <Edit className="mr-2 h-4 w-4" /> Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <DownloadIcon className="mr-2 h-4 w-4" /> Download
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <TrashIcon className="mr-2 h-4 w-4" /> Delete
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
+              <DownloadMenuItem
+                clipId={article.Id}
+                setOpenDropdown={setOpenDropdown}
+              />
+              <DeleteMenuItem
+                clipId={article.Id}
+                setOpenDropdown={(state) => {
+                  setOpenDropdown(state);
+                  onDeleteCallback(article.Id);
+                }}
+              />
               <DropdownMenuSeparator />
               <a
                 className="w-full cursor-pointer"

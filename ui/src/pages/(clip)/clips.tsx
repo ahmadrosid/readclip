@@ -20,7 +20,6 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
-
   const [tagId, setTagId] = useState("");
 
   const {

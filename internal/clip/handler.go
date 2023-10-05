@@ -35,6 +35,7 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
 	route.Delete("/:id", handler.deleteClipByID)
+	route.Get("/:id/download", handler.downloadClipByID)
 	route.Post("/export", handler.exportClips)
 }
 
@@ -217,6 +218,40 @@ func (h *ClipHandler) deleteClipByID(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",
 	})
+}
+
+func (h *ClipHandler) downloadClipByID(c *fiber.Ctx) error {
+	id := c.Params("id")
+	if id == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "id is required",
+		})
+	}
+
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	clip, err := h.repo.GetClipById(id, *userID)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	fileName := fmt.Sprintf("%s.md", clip.Title)
+	c.Set("Content-Type", "text/plain")
+	c.Set("Content-File-Name", fileName)
+	c.Set("Content-Disposition", "attachment; filename="+fileName)
+
+	return c.Status(http.StatusOK).SendStream(bytes.NewReader([]byte(clip.Content)))
 }
 
 func (h *ClipHandler) exportClips(c *fiber.Ctx) error {

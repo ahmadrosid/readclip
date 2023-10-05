@@ -294,3 +294,39 @@ export const fetchExportClips = async (format: "json" | "csv") => {
     }
   });
 };
+
+export const fetchDownloadClip = async (clipId: string) => {
+  return fetch(`/api/clips/${clipId}/download`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+  }).then((response) => {
+    const filename = response.headers.get("Content-File-Name");
+    if (!filename) {
+      throw new Error("Error: Failed to download!");
+    }
+
+    if (response.status === 404) {
+      throw new Error("Error: Clip not found!");
+    } else if (response.status !== 200) {
+      throw new Error("Error: " + response.statusText);
+    }
+
+    return response.blob().then((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+
+      a.download = filename;
+
+      document.body.appendChild(a);
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    });
+  });
+};

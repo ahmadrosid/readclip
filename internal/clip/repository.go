@@ -37,7 +37,7 @@ func (repo *clipRepository) GetAllClipData(perPage int, offset int, tagId string
 
 func (repo *clipRepository) GetClipById(id string, userID uuid.UUID) (Clip, error) {
 	var article Clip
-	err := repo.db.First(&article, "id = ?", id, "user_id = ?", userID).Error
+	err := repo.db.Where("id = ?", id).Where("user_id = ?", userID).First(&article).Error
 	return article, err
 }
 
