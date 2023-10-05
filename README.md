@@ -86,7 +86,3 @@ Some feature will be added soon.
 - [x] Authentication, with firebase
 - [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
-
-## LICENSE
-
-MIT

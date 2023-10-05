@@ -252,7 +252,9 @@ export const fetchExportClips = async (format: "json" | "csv") => {
   }).then((response) => {
     const contentType = response.headers.get("Content-Type");
 
-    if (response.status !== 200) {
+    if (response.status === 204) {
+      throw new Error("Error: You have no clips to export");
+    } else if (response.status !== 200) {
       throw new Error("Error: " + response.statusText);
     }
 

@@ -37,7 +37,7 @@ export default function TagSetting() {
   });
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 space-y-6">
+    <div className="bg-white dark:bg-gray-700 dark:border shadow rounded-lg p-6 space-y-6">
       <div className="flex justify-between align-top">
         <div className="space-y-2">
           <h3 className="text-lg font-bold tracking-tight">Tags</h3>

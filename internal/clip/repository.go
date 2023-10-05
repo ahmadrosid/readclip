@@ -64,6 +64,10 @@ func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string
 		return "", err
 	}
 
+	if len(clips) == 0 {
+		return "", nil
+	}
+
 	var tags []tag.Tag
 	err = repo.db.Where("user_id = ?", userID).Find(&tags).Error
 	if err != nil {

@@ -245,6 +245,13 @@ func (h *ClipHandler) exportClips(c *fiber.Ctx) error {
 		})
 	}
 
+	if result == "" {
+		return c.Status(http.StatusNoContent).JSON(fiber.Map{
+			"status":  "success",
+			"message": "No data to export",
+		})
+	}
+
 	c.Set("Content-Type", "text/plain")
 	if req.Format == "csv" {
 		c.Set("Content-Disposition", "attachment; filename=clips.csv")

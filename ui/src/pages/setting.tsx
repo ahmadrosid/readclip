@@ -27,7 +27,8 @@ function NavItem({
         pathname === activePath
           ? "bg-white hover:border-muted-foreground"
           : "hover:bg-muted hover:border-muted-foreground border-transparent",
-        "justify-start cursor-pointer border"
+        "justify-start cursor-pointer border",
+        "dark:bg-transparent"
       )}
     >
       {children}
