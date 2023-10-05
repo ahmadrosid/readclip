@@ -19,6 +19,7 @@ function DownloadButton({ format }: { format: "csv" | "json" }) {
     <Button
       disabled={exportMutation.isLoading}
       variant="outline"
+      className="dark:bg-gray-800/70"
       onClick={() => exportMutation.mutate(format)}
     >
       {exportMutation.isLoading

@@ -58,7 +58,7 @@ export function ImportSetting() {
           }}
         >
           <DialogTrigger asChild>
-            <Button>Upload file</Button>
+            <Button className="dark:text-white">Upload file</Button>
           </DialogTrigger>
           <DialogContent>
             <form

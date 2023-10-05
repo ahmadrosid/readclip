@@ -76,7 +76,9 @@ export default function TagSetting() {
             key={tag.Id}
             tag={tag}
             refetch={refetch}
-            className={cn(idx % 2 === 0 && "bg-gray-100 dark:bg-gray-800/70")}
+            className={cn(
+              idx % 2 === 0 && "bg-gray-100/70 dark:bg-gray-800/70"
+            )}
           />
         ))}
       </div>
