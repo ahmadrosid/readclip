@@ -2,7 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { type Tag, fetchAllTags, fetchDeleteTag } from "@/lib/api";
 import { useQuery, useMutation } from "react-query";
 import { Button } from "../ui/button";
-import { PlusIcon, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
