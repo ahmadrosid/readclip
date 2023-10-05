@@ -17,9 +17,31 @@ import {
 } from "@/components/ui/dialog";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "react-query";
+import { fetchDeleteUser } from "@/lib/api";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function GeneralSetting() {
   const { theme, setTheme } = useTheme();
+  const { signOut } = useAuth();
+  const [open, setOpen] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: fetchDeleteUser,
+    mutationKey: "delete-user",
+    onSuccess: async () => {
+      await signOut();
+      setOpen(false);
+    },
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    },
+  });
 
   return (
     <div className="bg-white dark:bg-gray-700 dark:border shadow rounded-lg p-6 space-y-6">
@@ -32,7 +54,7 @@ export default function GeneralSetting() {
       <Separator className="my-6" />
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <p>Select your preferred theme.</p>
+          <p>Select your preferred theme</p>
           <Select onValueChange={setTheme} defaultValue={theme}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select Theme" />
@@ -48,7 +70,7 @@ export default function GeneralSetting() {
           <p className="text-muted-foreground">Account (Danger Zone)</p>
           <div className="flex justify-between">
             <p>Delete account</p>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button variant={"destructive"}>Delete</Button>
               </DialogTrigger>
@@ -61,10 +83,19 @@ export default function GeneralSetting() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button type="submit" variant="outline">
+                  <Button variant="outline" onClick={() => setOpen(!open)}>
                     Cancel
                   </Button>
-                  <Button type="submit">Yes delete my account!</Button>
+                  <Button
+                    type="submit"
+                    disabled={deleteMutation.isLoading}
+                    onClick={() => deleteMutation.mutate()}
+                  >
+                    {deleteMutation.isLoading && (
+                      <Loader2 className="animate-spin w-4 h-4 mr-2" />
+                    )}
+                    Yes delete my account!
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

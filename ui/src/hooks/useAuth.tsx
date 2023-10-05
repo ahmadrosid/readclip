@@ -5,7 +5,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 export function useAuth() {
   const navigate = useNavigate();
-  const user = useAuthState(getAuth(app), {
+  const auth = getAuth(app);
+  const user = useAuthState(auth, {
     onUserChanged: async (user) => {
       if (!user) {
         navigate("/login");
@@ -16,5 +17,11 @@ export function useAuth() {
     },
   });
 
-  return { user, navigate };
+  const signOut = async () => {
+    await auth.signOut();
+    window.localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  return { user, signOut, navigate };
 }

@@ -241,6 +241,18 @@ export const fetchDeleteTag = async (
   );
 };
 
+export const fetchDeleteUser = async (): Promise<{ status: string }> => {
+  return handleReturnFetch(
+    await fetch(`/api/users/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
+};
+
 export const fetchExportClips = async (format: "json" | "csv") => {
   return fetch("/api/clips/export", {
     method: "POST",

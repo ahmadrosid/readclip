@@ -22,9 +22,20 @@ func (repo *dbService) Create(user *User) (*User, error) {
 	return user, nil
 }
 
-// Delete implements UserRepository.
-func (*dbService) Delete(id uuid.UUID) error {
-	panic("unimplemented")
+func (repo *dbService) Delete(id uuid.UUID) error {
+	println("Delete user, user_id: ", id.String())
+	err := repo.db.Delete(&User{}, "id", id).Error
+	if err == nil {
+		println("Delete tag, user_id: ", id.String())
+		type Tag struct{}
+		err = repo.db.Delete(&Tag{}, "user_id", id).Error
+	}
+	if err == nil {
+		println("Delete clip, user_id: ", id.String())
+		type Clip struct{}
+		err = repo.db.Delete(&Clip{}, "user_id", id).Error
+	}
+	return err
 }
 
 // FindByFirebaseID implements UserRepository.

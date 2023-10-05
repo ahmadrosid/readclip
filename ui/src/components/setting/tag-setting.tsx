@@ -69,7 +69,7 @@ export default function TagSetting() {
         </div>
       </div>
       <Separator className="my-6" />
-      <div className="grid gap-2 border rounded">
+      <div className="grid gap-2 border pb-1 rounded">
         {data?.data.map((tag) => (
           <TagItem key={tag.Id} tag={tag} refetch={refetch} />
         ))}

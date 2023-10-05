@@ -19,6 +19,7 @@ func NewHandler(route fiber.Router, repo UserRepository) {
 	handler := &handler{repo}
 	route.Post("/login", handler.login)
 	route.Post("/register", handler.register)
+	route.Delete("/delete", handler.delete)
 }
 
 func (h *handler) login(c *fiber.Ctx) error {
@@ -90,6 +91,37 @@ func (h *handler) register(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"data":   user,
+		"status": "success",
+	})
+}
+
+func (h *handler) delete(c *fiber.Ctx) error {
+	currentUser := c.Locals("user").(gofiberfirebaseauth.User)
+	user, err := h.repo.FindByFirebaseID(currentUser.UserID)
+
+	if err != nil {
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
+			return c.Status(http.StatusConflict).JSON(fiber.Map{
+				"status": "error",
+				"error":  "email already registered",
+			})
+		}
+
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	err = h.repo.Delete(user.ID)
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",
 	})
 }
