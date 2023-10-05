@@ -45,7 +45,7 @@ export default function GeneralSetting() {
           </Select>
         </div>
         <div className="space-y-3">
-          <p className="text-muted-foreground">Account</p>
+          <p className="text-muted-foreground">Account (Danger Zone)</p>
           <div className="flex justify-between">
             <p>Delete account</p>
             <Dialog>

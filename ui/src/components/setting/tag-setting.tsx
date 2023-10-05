@@ -4,17 +4,34 @@ import { useQuery, useMutation } from "react-query";
 import { Button } from "../ui/button";
 import { RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
-function TagItem({ tag, refetch }: { tag: Tag; refetch: () => void }) {
+type TagProps = {
+  tag: Tag;
+  className?: string;
+  refetch: () => void;
+};
+
+function TagItem({ tag, className, refetch }: TagProps) {
   const deleteTagMutation = useMutation({
     mutationFn: fetchDeleteTag,
     mutationKey: "delete-tag",
     onSuccess: () => refetch(),
-    onError: (err) => console.error(err),
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    },
   });
 
   return (
-    <div key={tag.Id} className="flex justify-between items-center gap-2">
+    <div
+      key={tag.Id}
+      className={cn(
+        "flex justify-between items-center gap-2 pt-1 px-2",
+        className
+      )}
+    >
       <label className="block text-sm text-gray-500">{tag.Name}</label>
       <Button
         variant="ghost"
@@ -52,7 +69,7 @@ export default function TagSetting() {
         </div>
       </div>
       <Separator className="my-6" />
-      <div className="grid gap-2">
+      <div className="grid gap-2 border rounded">
         {data?.data.map((tag) => (
           <TagItem key={tag.Id} tag={tag} refetch={refetch} />
         ))}
