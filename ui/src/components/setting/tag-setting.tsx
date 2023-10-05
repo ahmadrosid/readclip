@@ -2,7 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { type Tag, fetchAllTags, fetchDeleteTag } from "@/lib/api";
 import { useQuery, useMutation } from "react-query";
 import { Button } from "../ui/button";
-import { RefreshCcw } from "lucide-react";
+import { PlusIcon, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ function TagItem({ tag, className, refetch }: TagProps) {
     <div
       key={tag.Id}
       className={cn(
-        "flex justify-between items-center gap-2 pt-1 px-2",
+        "flex justify-between items-center gap-2 px-2 py-1",
         className
       )}
     >
@@ -37,9 +37,7 @@ function TagItem({ tag, className, refetch }: TagProps) {
         variant="ghost"
         size="sm"
         className="text-sm text-red-500"
-        onClick={() => {
-          deleteTagMutation.mutate(tag.Id);
-        }}
+        onClick={() => deleteTagMutation.mutate(tag.Id)}
       >
         {deleteTagMutation.isLoading ? "Deleting..." : "Delete"}
       </Button>
@@ -66,16 +64,19 @@ export default function TagSetting() {
               className={cn("w-4 h-4", isLoading && "animate-spin")}
             />
           </Button>
+          {/* <Button variant="ghost" size="sm" onClick={() => console.log()}>
+            <PlusIcon className={cn("w-4 h-4", isLoading && "animate-spin")} />
+          </Button> */}
         </div>
       </div>
       <Separator className="my-6" />
-      <div className="grid gap-2 border pb-1 rounded-md">
+      <div className="grid border rounded overflow-hidden">
         {data?.data.map((tag, idx) => (
           <TagItem
             key={tag.Id}
             tag={tag}
             refetch={refetch}
-            className={cn(idx > 0 && "border-t")}
+            className={cn(idx % 2 === 0 && "bg-gray-100 dark:bg-gray-800/70")}
           />
         ))}
       </div>
