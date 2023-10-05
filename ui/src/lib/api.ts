@@ -111,7 +111,7 @@ export const fetchAllArticles = async ({
   );
 };
 
-export const fetchDeleteArticle = async (
+export const fetchDeleteClip = async (
   id: string
 ): Promise<{ status: string }> => {
   return handleReturnFetch(

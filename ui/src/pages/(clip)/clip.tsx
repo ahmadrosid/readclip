@@ -12,7 +12,7 @@ import {
   TagIcon,
   TrashIcon,
 } from "lucide-react";
-import { fetchMarkdown, fetchDeleteArticle } from "@/lib/api";
+import { fetchMarkdown, fetchDeleteClip } from "@/lib/api";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { downloadText } from "@/lib/utils";
@@ -35,26 +35,42 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
-  useAuth();
+  const { navigate } = useAuth();
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
   const [openAddTag, setOpenAddTag] = useState(false);
 
-  const { data, mutate, reset, isLoading, error } = useMutation(
-    "fetchMarkdown",
-    fetchMarkdown,
-    {
-      retry: 2,
-      onError: (err: Error) => {
-        if (err.message === "Unauthorized") {
-          toast.error("Unauthorized! Please login to continue");
-          return;
-        }
+  const { data, mutate, isLoading, error } = useMutation({
+    mutationFn: fetchMarkdown,
+    mutationKey: "fetchMarkdown",
+    retry: 2,
+    onError: (err: Error) => {
+      if (err.message === "Unauthorized") {
+        toast.error("Unauthorized! Please login to continue");
+        return;
+      }
+      toast.error(err.message);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationKey: "deleteClip",
+    mutationFn: fetchDeleteClip,
+    onSuccess(data) {
+      if (data.status === "success") {
+        navigate("/clips");
+        toast.success("Clip deleted!");
+      } else {
+        toast.error("Failed to delete article");
+      }
+    },
+    onError: (err) => {
+      if (err instanceof Error) {
         toast.error(err.message);
-      },
-    }
-  );
+      }
+    },
+  });
 
   const readingEst = readingTime(data?.data?.Content || "", 260);
 
@@ -68,7 +84,7 @@ export default function Home() {
     [inputUrl, mutate]
   );
 
-  const handleCopyArticle = useCallback(() => {
+  const handleCopyClip = useCallback(() => {
     navigator.clipboard
       .writeText(`# ${data?.data?.Title}\n\n${data?.data?.Content}`)
       .then(() => {
@@ -76,7 +92,7 @@ export default function Home() {
       });
   }, [data]);
 
-  const handleDownloadArticle = useCallback(() => {
+  const handleDownloadClip = useCallback(() => {
     if (data) {
       const title = `${data.data.Title}.md`;
       downloadText(title, `# ${data.data.Title}\n\n${data.data.Content}`);
@@ -86,24 +102,17 @@ export default function Home() {
 
   const handleDeleteClip = useCallback(async () => {
     if (data?.data.Id) {
-      const res = await fetchDeleteArticle(data.data.Id);
-      if (res.status === "success") {
-        setInputUrl("");
-        reset();
-        toast.success("Clip deleted!");
-      } else {
-        toast.error("Failed to delete article");
-      }
+      deleteMutation.mutate(data.data.Id);
     }
-  }, [data?.data.Id, reset]);
+  }, [data?.data.Id, deleteMutation]);
 
   const handleAddTag = useCallback(() => setOpenAddTag(true), []);
 
   useEffect(() => {
-    if (urlParam !== null && !isLoading && !error && !data) {
+    if (urlParam !== null && !isLoading && !data && !deleteMutation.isLoading) {
       mutate(urlParam);
     }
-  }, [urlParam, isLoading, error, data, mutate]);
+  }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading]);
 
   return (
     <div className="px-4 gap-4 min-h-[80vh]">
@@ -192,7 +201,7 @@ export default function Home() {
                       <Separator orientation="vertical" className="h-[20px]" />
                       <Button
                         variant="secondary"
-                        onClick={handleCopyArticle}
+                        onClick={handleCopyClip}
                         className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
                       >
                         <CopyIcon className="h-3 w-3" />
@@ -200,7 +209,7 @@ export default function Home() {
                       <Separator orientation="vertical" className="h-[20px]" />
                       <Button
                         variant="secondary"
-                        onClick={handleDownloadArticle}
+                        onClick={handleDownloadClip}
                         className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
                       >
                         <DownloadIcon className="h-3 w-3" />

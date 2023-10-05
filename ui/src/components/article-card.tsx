@@ -33,7 +33,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { formatDistance } from "date-fns";
-import { type Article, fetchDeleteArticle } from "@/lib/api";
+import { type Article, fetchDeleteClip } from "@/lib/api";
 
 type Props = {
   article: Article;
@@ -58,7 +58,7 @@ export function ArticleCard({
     } else {
       controller.abort();
     }
-    const res = await fetchDeleteArticle(article.Id);
+    const res = await fetchDeleteClip(article.Id);
     if (res.status === "success") {
       setOpenConfirmDelete(false);
       onDeleteCallback(article.Id);

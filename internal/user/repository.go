@@ -13,7 +13,6 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 	return &dbService{db}
 }
 
-// Create implements UserRepository.
 func (repo *dbService) Create(user *User) (*User, error) {
 	err := repo.db.Create(&user).Error
 	if err != nil {
@@ -38,7 +37,6 @@ func (repo *dbService) Delete(id uuid.UUID) error {
 	return err
 }
 
-// FindByFirebaseID implements UserRepository.
 func (repo *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
 	user := &User{}
 	err := repo.db.Find(user, "firebase_id", firebaseID).Error
