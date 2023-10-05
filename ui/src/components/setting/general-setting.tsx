@@ -16,7 +16,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { useTheme } from "@/components/theme-provider";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function GeneralSetting() {
   const { theme, setTheme } = useTheme();
