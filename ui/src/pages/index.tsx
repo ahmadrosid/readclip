@@ -46,20 +46,19 @@ export default function Home() {
             Bookmarking
           </h3>
           <p className="text-lg font-medium">
-            When bookmarking links from internet sometimes you will lose the
-            content when the link is no longer accesable. With ReadClip, we aim
-            to address this by preserving the content. This way, even if the
-            links are broken, we'll still have access to the text from those
-            inaccessible sources.
+            When bookmarking links from the internet, you will sometimes lose
+            the content when the link is no longer accessible. With ReadClip, we
+            aim to address this by preserving the content. This way, even if the
+            links are broken, you still have access to it.
           </p>
           <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            You own your data
+            Own your data
           </h3>
           <p className="text-lg font-medium">
             When you save a bookmark, we'll download the content and store it in
-            database and only you can access the data. You can also export your
-            data to JSON or csv format. This way, you can always have access to
-            your data.
+            the database, and only you can access the data. You can also export
+            your data to JSON or CSV format. This way, you can always have
+            access to your data even if you delete your account.
           </p>
         </div>
       </div>
