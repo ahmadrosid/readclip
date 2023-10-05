@@ -49,7 +49,7 @@ type MenuItemProps = {
   setOpenDropdown: (state: boolean) => void;
 };
 
-export function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
+function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
   const downloadMutation = useMutation({
     mutationFn: fetchDownloadClip,
     mutationKey: "downloadClip",
@@ -81,7 +81,7 @@ export function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
   );
 }
 
-export function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
+function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
   const deleteMutation = useMutation({
     mutationKey: "deleteClip",
     mutationFn: fetchDeleteClip,
