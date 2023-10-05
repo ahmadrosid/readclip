@@ -70,7 +70,12 @@ export function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
         }}
         className="cursor-pointer"
       >
-        <DownloadIcon className="mr-2 h-4 w-4" /> Download
+        {downloadMutation.isLoading ? (
+          <Loader2 className="animate-spin mr-2 h-4 w-4" />
+        ) : (
+          <DownloadIcon className="mr-2 h-4 w-4" />
+        )}{" "}
+        Download
       </DropdownMenuItem>
     </>
   );
