@@ -191,6 +191,7 @@ export default function Home() {
                       >
                         <TagIcon className="h-3 w-3" />
                       </Button>
+                      <Separator orientation="vertical" className="h-[20px]" />
                       <Button
                         variant="secondary"
                         onClick={handleDeleteClip}
