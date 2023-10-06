@@ -16,7 +16,13 @@ export default function Footer() {
           </a>{" "}
           ©2023 All rights reserved.
         </p>
-        <div>
+        <div className="flex items-center gap-4">
+          <a
+            className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
+            href="mailto:alahmadrosid@gmail.com"
+          >
+            Contact
+          </a>
           <ModeToggle />
         </div>
       </div>
