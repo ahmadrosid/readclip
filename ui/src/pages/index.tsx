@@ -3,8 +3,17 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Link } from "@/router";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const howToRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (url.hash === "#how-to") {
+      howToRef.current?.scrollIntoView();
+    }
+  }, [howToRef]);
+
   return (
     <div className="container mx-auto pt-8">
       <div className="max-w-3xl py-16 mx-auto text-left">
@@ -63,7 +72,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-4 py-12 mb-8">
+      <div
+        ref={howToRef}
+        id="how-to"
+        className="max-w-3xl mx-auto space-y-4 py-12 mb-8"
+      >
         <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
           How it works?
         </h2>
