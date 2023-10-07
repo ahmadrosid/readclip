@@ -43,7 +43,7 @@ func (repo *clipRepository) GetClipById(id string, userID uuid.UUID) (Clip, erro
 
 func (repo *clipRepository) GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error) {
 	var clip Clip
-	err := repo.db.Where("user_id = ?", userID).First(&clip, "hash_url = ?", hash_url).Error
+	err := repo.db.Where("user_id = ?", userID).Where("hash_url = ?", hash_url).First(&clip).Error
 	return clip, err
 }
 
