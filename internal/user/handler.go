@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ahmadrosid/readclip/internal/util/logsnag"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
@@ -88,6 +89,10 @@ func (h *handler) register(c *fiber.Ctx) error {
 			"error":  err.Error(),
 		})
 	}
+
+	go func() {
+		logsnag.SendEventUserRegister(user.Name, user.ID.String())
+	}()
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"data":   user,
