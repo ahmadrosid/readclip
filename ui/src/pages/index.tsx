@@ -4,6 +4,39 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/router";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+export function DialogDemo() {
+  return (
+    <Dialog>
+      <DialogTrigger className="px-6 flex items-center">
+        See Demo <ArrowRight className="w-4 h-4 ml-3" />
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Demo</DialogTitle>
+          <div className="pt-4">
+            <iframe
+              className="overflow-hidden rounded-md"
+              width="620"
+              height="400"
+              src="https://www.youtube.com/embed/PZbvBXEPvFk?si=9EW0yHgN10Q3GVY_"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
 
 export default function Home() {
   const howToRef = useRef<HTMLDivElement>(null);
@@ -22,18 +55,21 @@ export default function Home() {
           A better way to bookmark, read news, blogs, or any internet text
           without ads.
         </p>
-        <Link
-          to="/clip"
-          className={cn(
-            buttonVariants({
-              size: "lg",
-              className:
-                "items-center justify-between h-10 bg-black dark:bg-white text-white dark:text-black",
-            })
-          )}
-        >
-          Start bookmarking <ArrowRight className="w-4 h-4 ml-3" />
-        </Link>
+        <div className="flex gap-2 items-center">
+          <Link
+            to="/clip"
+            className={cn(
+              buttonVariants({
+                size: "lg",
+                className:
+                  "items-center justify-between h-10 bg-black dark:bg-white text-white dark:text-black",
+              })
+            )}
+          >
+            Getting started
+          </Link>
+          <DialogDemo />
+        </div>
       </div>
 
       <div className="max-w-3xl mx-auto space-y-4 py-12 mb-8">
@@ -95,7 +131,7 @@ export default function Home() {
             </Link>{" "}
             page and submit your link there.
             <img
-              src="/img/submit-link.png"
+              src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700714/submit-readclip_hszpvj.png"
               alt="clip"
               className="w-full border my-2 rounded-md"
             />
@@ -107,7 +143,7 @@ export default function Home() {
             You also can use bookmarklet to save your link. Drag and drop the
             bookmarklet link into you bookmark bar.
             <img
-              src="/img/bookmarklet.png"
+              src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700583/bookmarklet-readclip_scghdf.png"
               alt="clip"
               className="w-full border my-2 rounded-md"
             />
