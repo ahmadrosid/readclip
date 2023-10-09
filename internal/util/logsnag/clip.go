@@ -24,7 +24,7 @@ func SendClipEvent(link string, title string, id string) {
 			"link": link,
 		},
 		Notify:  false,
-		Channel: "user-register",
+		Channel: "bookmark",
 	}
 
 	payload, err := json.Marshal(dataPayload)
