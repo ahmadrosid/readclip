@@ -10,6 +10,7 @@ import (
 
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/logsnag"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
@@ -137,6 +138,12 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		CreatedAt:   &now,
 		UserID:      *userID,
 	})
+
+	go func() {
+		if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
+			logsnag.SendClipEvent(input.Url, res.Title, userID.String())
+		}
+	}()
 
 	if err != nil {
 		return c.Status(http.StatusOK).JSON(fiber.Map{
