@@ -19,6 +19,12 @@ export default function Footer() {
         <div className="flex items-center gap-4">
           <a
             className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
+            href="/tools"
+          >
+            Free tools
+          </a>
+          <a
+            className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
             href="mailto:alahmadrosid@gmail.com"
           >
             Contact

@@ -56,6 +56,12 @@ export function Header() {
                 Setting
               </Button>
             </Link>
+
+            <Link to="/tools">
+              <Button className="dark:text-white text-gray-800" variant="link">
+                Free tools
+              </Button>
+            </Link>
           </nav>
         </div>
 

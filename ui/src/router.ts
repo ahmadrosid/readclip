@@ -10,6 +10,9 @@ export type Path =
   | `/login`
   | `/register`
   | `/setting`
+  | `/tools`
+  | `/tools/reading-time`
+  | `/tools/word-counter`
 
 export type Params = {
   
