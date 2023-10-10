@@ -59,7 +59,7 @@ export default function ReadingTime() {
     if (textareaRef.current) {
       handleWordCount(textareaRef.current.value);
     }
-  }, [config]);
+  }, [config, handleWordCount]);
 
   return (
     <div className="container mx-auto min-h-[80vh]">
