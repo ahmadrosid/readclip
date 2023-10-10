@@ -44,6 +44,9 @@ func main() {
 	app.Get("/clips", serveUI)
 	app.Get("/setting", serveUI)
 	app.Get("/login", serveUI)
+	app.Get("/tools", serveUI)
+	app.Get("/tools/word-counter", serveUI)
+	app.Get("/tools/reading-time", serveUI)
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
