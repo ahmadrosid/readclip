@@ -17,6 +17,11 @@ export const tools = [
     description: "Estimate the reading time of your text",
     link: "/tools/reading-time",
   },
+  {
+    title: "Youtube Transcriber",
+    description: "Don't really have time to watch videos? Now you can read them!",
+    link: "/tools/youtube-transcriber",
+  },
 ];
 
 export default function Tools() {

@@ -13,6 +13,7 @@ export type Path =
   | `/tools`
   | `/tools/reading-time`
   | `/tools/word-counter`
+  | `/tools/youtube-transcriber`
 
 export type Params = {
   
