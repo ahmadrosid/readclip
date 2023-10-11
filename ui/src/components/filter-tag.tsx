@@ -35,7 +35,11 @@ export function FilterTag({ onSelect }: Props) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8">
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 bg-white dark:bg-gray-800"
+        >
           {selectedValues?.size > 0 && (
             <>
               <Badge

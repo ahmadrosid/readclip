@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
-import { type Tag, fetchAllTags, fetchDeleteTag } from "@/lib/api";
+import { type Tag, fetchAllTags, fetchDeleteClipTagAndTag } from "@/lib/api";
 import { useQuery, useMutation } from "react-query";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ type TagProps = {
 
 function TagItem({ tag, className, refetch }: TagProps) {
   const deleteTagMutation = useMutation({
-    mutationFn: fetchDeleteTag,
+    mutationFn: fetchDeleteClipTagAndTag,
     mutationKey: "delete-tag",
     onSuccess: () => refetch(),
     onError: (err) => {

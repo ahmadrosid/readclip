@@ -11,12 +11,12 @@ type tagRepository struct {
 	db *gorm.DB
 }
 
-func (repo *tagRepository) DeleteClipTag(id string) error {
-	err := repo.db.Where("id = ?", id).Delete(&Tag{}).Error
-	if err == nil {
-		err = repo.db.Where("clip_id = ?", id).Delete(&ClipTag{}).Error
-	}
-	return err
+func (repo *tagRepository) DeleteClipTagByTagId(id string) error {
+	return repo.db.Where("tag_id = ?", id).Delete(&ClipTag{}).Error
+}
+
+func (repo *tagRepository) DeleteTag(id string) error {
+	return repo.db.Where("id = ?", id).Delete(&Tag{}).Error
 }
 
 func (repo *tagRepository) GetClipTag(clipId string) ([]Tag, error) {

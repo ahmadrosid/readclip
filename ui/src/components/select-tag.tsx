@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandGroup,
+  CommandList,
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
@@ -14,7 +14,7 @@ import {
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { Badge } from "./ui/badge";
 import { Separator } from "./ui/separator";
-import { Check, PlusIcon, XIcon } from "lucide-react";
+import { Check, Loader2, PlusIcon, XIcon } from "lucide-react";
 import { useQuery, useMutation } from "react-query";
 import {
   AddArticleTagRequest,
@@ -24,6 +24,7 @@ import {
   fetchAllTags,
   fetchClipTags,
   fetchCreateTag,
+  fetchDeleteClipTag,
 } from "@/lib/api";
 import { useCommandState } from "cmdk";
 import { toast } from "sonner";
@@ -109,18 +110,9 @@ function CommanSearchTag({
 
   return (
     <Command>
-      <CommandInput
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleAddNewTag(e.currentTarget.value);
-          }
-        }}
-        placeholder="Type to search or add new tag!"
-      />
-
+      <CommandInput placeholder="Type to search or add new tag!" />
       <RenderEmptyState handleAddNewTag={handleAddNewTag} />
-
-      <CommandGroup>
+      <CommandList>
         {tags.map((item) => (
           <CommandItem
             key={item.Name}
@@ -135,8 +127,67 @@ function CommanSearchTag({
             )}
           </CommandItem>
         ))}
-      </CommandGroup>
+      </CommandList>
     </Command>
+  );
+}
+
+export function BadgeSelected({
+  value,
+  tags,
+  refetch,
+  setSelectedValues,
+}: {
+  tags: Tag[];
+  value: string;
+  refetch: () => void;
+  setSelectedValues: React.Dispatch<React.SetStateAction<Set<string>>>;
+}) {
+  const deleteTagMutation = useMutation({
+    mutationFn: fetchDeleteClipTag,
+    mutationKey: "select-delete-tag",
+    onSuccess: () => refetch(),
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    },
+  });
+
+  const handleDeletedSelectedBylabel = React.useCallback(
+    async (label: string) => {
+      if (deleteTagMutation.isLoading) {
+        return;
+      }
+
+      const tag = tags.filter((tag) => tag.Name === label)[0];
+      if (tag) {
+        await deleteTagMutation.mutateAsync(tag.Id);
+
+        setSelectedValues((prev) => {
+          const next = new Set<string>(prev);
+          next.delete(label);
+          return next;
+        });
+      }
+    },
+    [deleteTagMutation, setSelectedValues, tags]
+  );
+
+  return (
+    <Badge
+      variant="secondary"
+      key={value}
+      onClick={() => handleDeletedSelectedBylabel(value)}
+      className="rounded-sm font-normal cursor-pointer pr-1 pl-1.5"
+    >
+      {value}
+      {deleteTagMutation.isLoading ? (
+        <Loader2 className="ml-1 h-3 w-3 animate-spin" />
+      ) : (
+        <XIcon className="ml-1 h-3 w-3" />
+      )}
+    </Badge>
   );
 }
 
@@ -194,14 +245,6 @@ export function SelecTag({ clipId }: { clipId: string }) {
     },
   });
 
-  const handleDeletedSelectedBylabel = React.useCallback((label: string) => {
-    setSelectedValues((prev) => {
-      const next = new Set<string>(prev);
-      next.delete(label);
-      return next;
-    });
-  }, []);
-
   const handleAddArticleTag = (tagId: string) => {
     addTagMutation.mutate({
       clip_id: clipId,
@@ -211,22 +254,24 @@ export function SelecTag({ clipId }: { clipId: string }) {
 
   return (
     <div>
-      <div className="pb-4 flex gap-1">
+      <div className="pb-4 space-x-1">
         {Array.from(selectedValues.values()).map((value) => (
-          <Badge
-            variant="secondary"
+          <BadgeSelected
             key={value}
-            onClick={() => handleDeletedSelectedBylabel(value)}
-            className="rounded-sm font-normal cursor-pointer"
-          >
-            {value}
-            <XIcon className="ml-1 h-3 w-3" />
-          </Badge>
+            value={value}
+            tags={tags}
+            refetch={refetch}
+            setSelectedValues={setSelectedValues}
+          />
         ))}
       </div>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="h-8 border-dashed">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 border-dashed w-full"
+          >
             <PlusCircledIcon className="mr-2 h-4 w-4" />
             {"Select tags"}
             {selectedValues.size > 0 && (
@@ -250,7 +295,7 @@ export function SelecTag({ clipId }: { clipId: string }) {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0" align="start">
+        <PopoverContent className="p-0" align="start" side="bottom">
           <CommanSearchTag
             tags={tags}
             setOpen={setOpen}

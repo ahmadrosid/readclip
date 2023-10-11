@@ -23,6 +23,7 @@ func NewHandler(route fiber.Router, repo TagRepository, userRepo user.UserReposi
 	route.Post("/clip", handler.createClipTag)
 	route.Get("/clip/:id", handler.getClipTags)
 	route.Delete("/:id", handler.deleteClipTag)
+	route.Delete("/clip/:id", handler.deleteSelectedClipTag)
 }
 
 func (h *TagHandler) getUserID(c *fiber.Ctx) (string, error) {
@@ -129,7 +130,30 @@ func (h *TagHandler) getAllTags(c *fiber.Ctx) error {
 
 func (h *TagHandler) deleteClipTag(c *fiber.Ctx) error {
 	id := c.Params("id")
-	err := h.repo.DeleteClipTag(id)
+	err := h.repo.DeleteTag(id)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"error":  err.Error(),
+			"status": "error",
+		})
+	}
+
+	err = h.repo.DeleteClipTagByTagId(id)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"error":  err.Error(),
+			"status": "error",
+		})
+	}
+
+	return c.Status(http.StatusAccepted).JSON(fiber.Map{
+		"status": "success",
+	})
+}
+
+func (h *TagHandler) deleteSelectedClipTag(c *fiber.Ctx) error {
+	id := c.Params("id")
+	err := h.repo.DeleteClipTagByTagId(id)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error":  err.Error(),

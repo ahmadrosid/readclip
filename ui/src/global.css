@@ -61,3 +61,14 @@
 body {
   @apply bg-gray-50 dark:bg-gray-900
 }
+
+[cmdk-list] {
+  height: var(--cmdk-list-height);
+  max-height: 300px;
+  transition: height 100ms ease;
+}
+
+[cmdk-list] {
+  scroll-padding-block-start: 8px;
+  scroll-padding-block-end: 8px;
+}

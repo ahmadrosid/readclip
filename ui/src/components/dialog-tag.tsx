@@ -21,7 +21,7 @@ export function DialogTag({ clip, open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] top-[40%]">
         <DialogHeader>
           <DialogTitle>Add tag</DialogTitle>
           <DialogDescription>{clip.Title}</DialogDescription>

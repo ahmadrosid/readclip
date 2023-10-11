@@ -227,11 +227,25 @@ export const fetchLogin = async (): Promise<{ status: string; data: User }> => {
   );
 };
 
-export const fetchDeleteTag = async (
+export const fetchDeleteClipTagAndTag = async (
   tagId: string
 ): Promise<{ status: string }> => {
   return handleReturnFetch(
     await fetch(`/api/tags/${tagId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
+};
+
+export const fetchDeleteClipTag = async (
+  tagId: string
+): Promise<{ status: string }> => {
+  return handleReturnFetch(
+    await fetch(`/api/tags/clip/${tagId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
