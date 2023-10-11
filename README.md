@@ -21,6 +21,19 @@ This project is a fullstack web app created using Golang for the backend and Vit
 - go >= go1.19.2
 - nodejs >= v20.3.0
 
+## Local development
+
+Make sure you have installed golang, and nodejs and to get up and running with the local development just run this command.
+
+```bash
+make dev
+```
+
+Then visit this link:
+
+- [http://localhost:8000](http://localhost:8000) - For Backend
+- [http://localhost:3000](http://localhost:3000) - For UI react dev
+
 ## Installation
 
 Clone this project
@@ -72,19 +85,6 @@ If you are using docker you can use docker-compose to run the build and exec the
 ```bash
 docker-compose up
 ```
-
-## Local development
-
-Make sure you have installed golang, and nodejs and to get up and running with the local development just run this command.
-
-```bash
-make dev
-```
-
-Then visit this link:
-
-- [http://localhost:8000](http://localhost:8000) - For Backend
-- [http://localhost:3000](http://localhost:3000) - For UI react dev
 
 ## Roadmap
 
