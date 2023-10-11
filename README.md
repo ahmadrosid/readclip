@@ -73,6 +73,19 @@ If you are using docker you can use docker-compose to run the build and exec the
 docker-compose up
 ```
 
+## Local development
+
+Make sure you have installed golang, and nodejs and to get up and running with the local development just run this command.
+
+```bash
+make dev
+```
+
+Then visit this link:
+
+- [http://localhost:8000](http://localhost:8000) - For Backend
+- [http://localhost:8000](http://localhost:8000) - For UI react dev
+
 ## Roadmap
 
 Some feature will be added soon.
