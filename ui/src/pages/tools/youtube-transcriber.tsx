@@ -4,37 +4,16 @@ import { Title } from "@/components/ui/title";
 import { useState } from "react";
 import { Copy } from "lucide-react";
 export default function YoutubeTranscriber() {
-  const { title, description } = tools[2];
+  const { title, description } = tools[3];
 
-  // https://www.youtube.com/watch?v=Pzl1B7nB9Kc
-
+  // @ts-ignore
   const [link, setLink] = useState<string>("");
-  const [videoId, setVideoId] = useState<string>("");
+  // @ts-ignore
+  const [transcribe, setTranscribe] = useState<string>("");
 
-  /*
-   *caesar@linuxbox  ~  node
-  Welcome to Node.js v20.7.0.
-  Type ".help" for more information.
-  > const link = "https://www.youtube.com/watch?v=Pzl1B7nB9Kc"
-  undefined
-  > link.indexOf("=");
-  31
-  > const pattern  = /v=([A-Za-z0-9_-]+)/;
-  undefined
-  > const match = link.match(pattern);
-  undefined
-  > match;
-  [
-    'v=Pzl1B7nB9Kc',
-    'Pzl1B7nB9Kc',
-    index: 30,
-    input: 'https://www.youtube.com/watch?v=Pzl1B7nB9Kc',
-    groups: undefined
-  ]
-  >
-  
-   * */
-  const getVideoId = (link: string) => {
+  const [videoId, setVideoId] = useState<string | RegExpMatchArray>("");
+
+  const getVideoId = (link: string): string | RegExpMatchArray => {
     const pattern = /v=([A-Za-z0-9_-]+)/;
     const match = link.match(pattern);
     if (match) return match;
@@ -43,7 +22,36 @@ export default function YoutubeTranscriber() {
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const link = e.target.value;
-    console.log(link);
+    const videoId = getVideoId(link);
+
+    setLink(link);
+    setVideoId(videoId);
+  };
+
+  const getTranscribe = () => {
+    const url = "http://localhost:8000/api/youtube/transcript";
+    const headers = {
+      "Content-Type": "application/json",
+      "User-Agent": "Insomnia/2023.5.7",
+      // Authorization: "Bearer YOUR_AUTH_TOKEN_HERE",
+    };
+
+    const data = {
+      url: "https://www.youtube.com/watch?v=Rzlr2tNSl0U",
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -64,27 +72,34 @@ export default function YoutubeTranscriber() {
                 className="border rounded-lg flex-1 p-4 focus:outline-blue-100"
                 onChange={handleUrlChange}
               />
-              <button className="bg-blue-400 px-5 py-2 rounded-lg text-white">
+              <button
+                onClick={getTranscribe}
+                className="bg-blue-400 px-5 py-2 rounded-lg text-white"
+              >
                 Transcribe
               </button>
             </div>
-            <div>
-              <div className="p-4">
-                <iframe
-                  className="m-auto"
-                  width="560"
-                  height="315"
-                  src="https://www.youtube.com/embed/Pzl1B7nB9Kc"
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
+            {videoId ? (
+              <div>
+                <div className="p-4">
+                  <iframe
+                    className="m-auto"
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex-1 p-4">
             <div>
-              <button className="flex gap-2 rounded border bg-yellow-500 px-4 py-2 text-white rounded-lg">
+              <button className="flex gap-2 border bg-yellow-500 px-4 py-2 text-white rounded-lg">
                 <Copy />
                 <span>Copy</span>
               </button>
