@@ -15,7 +15,7 @@ import {
 export function DialogDemo() {
   return (
     <Dialog>
-      <DialogTrigger className="px-6 flex items-center">
+      <DialogTrigger className="px-6 flex items-center underline">
         See Demo <ArrowRight className="w-4 h-4 ml-3" />
       </DialogTrigger>
       <DialogContent className="max-w-2xl">
