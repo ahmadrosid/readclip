@@ -14,6 +14,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/config"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
+	"github.com/ahmadrosid/readclip/internal/youtube"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -39,14 +40,22 @@ func main() {
 		return filesystem.SendFile(ctx, http.FS(index), "index.html")
 	}
 
-	app.Get("/clip", serveUI)
-	app.Get("/register", serveUI)
-	app.Get("/clips", serveUI)
-	app.Get("/setting", serveUI)
-	app.Get("/login", serveUI)
-	app.Get("/tools", serveUI)
-	app.Get("/tools/word-counter", serveUI)
-	app.Get("/tools/reading-time", serveUI)
+	uiPaths := []string{
+		"/",
+		"/clip",
+		"/register",
+		"/clips",
+		"/setting",
+		"/login",
+		"/tools",
+		"/tools/word-counter",
+		"/tools/reading-time",
+		"/tools/markdown-editor",
+	}
+
+	for _, path := range uiPaths {
+		app.Get(path, serveUI)
+	}
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
@@ -70,12 +79,13 @@ func main() {
 		FirebaseApp: firebaseApp,
 		IgnoreUrls: []string{
 			"GET::/",
+			"GET::/favicon.ico",
 			"GET::/login",
 			"GET::/register",
 			"GET::/clips",
 			"GET::/setting",
+			"POST::/api/youtube/transcript",
 			"GET::/tools/*",
-			"GET::/favicon.ico",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
@@ -93,6 +103,9 @@ func main() {
 	)
 	bookmark.NewHandler(
 		app.Group("/api/bookmarks"),
+	)
+	youtube.NewHandler(
+		app.Group("/api/youtube"),
 	)
 	user.NewHandler(
 		app.Group("/api/users"),

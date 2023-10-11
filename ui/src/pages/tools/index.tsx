@@ -18,8 +18,14 @@ export const tools = [
     link: "/tools/reading-time",
   },
   {
+    title: "Markdown Editor",
+    description: "Write, edit and view Markdown files.",
+    link: "/tools/markdown-editor",
+  },
+  {
     title: "Youtube Transcriber",
-    description: "Don't really have time to watch videos? Now you can read them!",
+    description:
+      "Don't really have time to watch videos? Now you can read them!",
     link: "/tools/youtube-transcriber",
   },
 ];
