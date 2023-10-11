@@ -17,6 +17,11 @@ export const tools = [
     description: "Estimate the reading time of your text",
     link: "/tools/reading-time",
   },
+  {
+    title: "Markdown Editor",
+    description: "Write, edit and view Markdown files.",
+    link: "/tools/markdown-editor",
+  },
 ];
 
 export default function Tools() {
