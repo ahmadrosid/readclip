@@ -14,6 +14,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/config"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
+	"github.com/ahmadrosid/readclip/internal/youtube"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -70,12 +71,13 @@ func main() {
 		FirebaseApp: firebaseApp,
 		IgnoreUrls: []string{
 			"GET::/",
+			"GET::/favicon.ico",
 			"GET::/login",
 			"GET::/register",
 			"GET::/clips",
 			"GET::/setting",
 			"GET::/tools/*",
-			"GET::/favicon.ico",
+			"POST::/api/youtube/transcript",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
@@ -93,6 +95,9 @@ func main() {
 	)
 	bookmark.NewHandler(
 		app.Group("/api/bookmarks"),
+	)
+	youtube.NewHandler(
+		app.Group("/api/youtube"),
 	)
 	user.NewHandler(
 		app.Group("/api/users"),
