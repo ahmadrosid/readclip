@@ -31,7 +31,7 @@ export default function MarkdownEditor() {
       </div>
 
       <div>
-        <div className="rounded-md bg-white dark:bg-gray-800 border grid grid-cols-3 max-w-[130px]">
+        <div className="rounded-lg bg-white dark:bg-gray-800 border grid grid-cols-3 max-w-[130px] p-0.5 gap-0.5">
           <Button
             className={cn(
               "p-0",
@@ -40,7 +40,7 @@ export default function MarkdownEditor() {
             variant="ghost"
             onClick={() => splitView("editor")}
           >
-            <Pencil className="w-5 h-5" />
+            <Pencil className="w-4 h-4" />
           </Button>
           <Button
             className={cn(
@@ -50,7 +50,7 @@ export default function MarkdownEditor() {
             variant="ghost"
             onClick={() => splitView("split")}
           >
-            <Columns className="w-5 h-5" />
+            <Columns className="w-4 h-4" />
           </Button>
           <Button
             className={cn(
@@ -60,7 +60,7 @@ export default function MarkdownEditor() {
             variant="ghost"
             onClick={() => splitView("viewer")}
           >
-            <Eye className="w-5 h-5" />
+            <Eye className="w-4 h-4" />
           </Button>
         </div>
       </div>
