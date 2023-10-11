@@ -14,6 +14,7 @@ export type Path =
   | `/tools/markdown-editor`
   | `/tools/reading-time`
   | `/tools/word-counter`
+  | `/tools/youtube-transcriber`
 
 export type Params = {
   

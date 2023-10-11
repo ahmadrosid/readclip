@@ -344,3 +344,26 @@ export const fetchDownloadClip = async (clipId: string) => {
     });
   });
 };
+
+export const fetchYoutubeTranscribe = async (
+  url: string
+): Promise<{
+  url: string;
+  content: string;
+  language: string;
+}> => {
+  if (url === "") {
+    throw new Error("Url is required!");
+  }
+
+  return handleReturnFetch(
+    await fetch(`https://echo-tube.vercel.app/transcribe`, {
+      method: "POST",
+      body: JSON.stringify({ videoUrl: url }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
+};
