@@ -3,8 +3,10 @@ import { tools } from ".";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
 import { Markdown } from "@/components/markdown";
-import Icon from "@/components/lucide-icon";
-import FormatButtons from "@/components/markdown-editor/format-buttons";
+import { twMerge } from "tailwind-merge";
+import ViewButton from "@/components/markdown-editor/view-buttons";
+
+type ViewMode = "editor" | "viewer" | "split";
 
 const defaultText = `
 # Hello
@@ -30,6 +32,11 @@ function doSomething(nothing) {
 export default function MarkdownEditor() {
   const { title, description } = tools[2];
   const [text, setText] = useState(defaultText);
+  const [viewMode, setViewMode] = useState<ViewMode>("split");
+
+  const splitView = (mode: ViewMode) => {
+    setViewMode(mode);
+  }
 
   return (
     <div className="container mx-auto min-h-[80vh]">
@@ -39,81 +46,20 @@ export default function MarkdownEditor() {
         <Separator className="mt-4" />
       </div>
 
-      <div className="flex py-6 gap-6">
-        <div className="editor flex-1">
-          <FormatButtons />
+      <ViewButton splitView={splitView} viewMode={viewMode} />
+      <div className="flex py-4 gap-6">
+        <div className={twMerge("editor flex-1", viewMode === "viewer" ? "hidden" : "")}>
           <textarea
+            id="textarea"
             defaultValue={text}
             onChange={(e) => setText(e.target.value)}
             className="w-full h-screen bg-gray-800 text-white p-6 rounded-lg"
           />
         </div>
-        <div className="viewer flex-1">
+        <div className={twMerge("viewer flex-1", viewMode === "editor" ? "hidden" : "")}>
           <Markdown>{text}</Markdown>
         </div>
       </div>
     </div>
   );
 }
-
-/*
- * !TODO
- * - formatting buttons
- * */
-
-/*
-          <div className="flex">
-            <button>
-              <Icon name="Undo" />
-            </button>
-
-            <button>
-              <Icon name="Redo" />
-            </button>
-            <button>
-              <Icon name="Bold" />
-            </button>
-
-            <button>
-              <Icon name="Italic" />
-            </button>
-            <button>
-              <Icon name="Strikethrough" />
-            </button>
-            <button>
-              <Icon name="Heading" />
-            </button>
-
-            <button>
-              <Icon name="Code2" />
-            </button>
-
-            <button>
-              <Icon name="List" />
-            </button>
-            <button>
-              <Icon name="ListOrdered" />
-            </button>
-            <button>
-              <Icon name="ListChecks" />
-            </button>
-
-            <button>
-              <Icon name="Link" />
-            </button>
-            <button>
-              <Icon name="Image" />
-            </button>
-
-            <button>
-              <Icon name="Minus" />
-            </button>
-
-            <button>
-              <Icon name="Quote" />
-            </button>
-          </div>
-
-
-
-*/
