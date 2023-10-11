@@ -38,7 +38,7 @@ export function FilterTag({ onSelect }: Props) {
         <Button
           variant="outline"
           size="sm"
-          className="h-8 bg-white dark:bg-gray-800"
+          className="h-9 bg-white dark:bg-gray-800"
         >
           {selectedValues?.size > 0 && (
             <>

@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { fetchAllArticles, Article } from "@/lib/api";
 import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
+import { Input } from "@/components/ui/input";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
@@ -75,7 +76,19 @@ export default function ArticlePage() {
     <div className="p-4 md:p-8 min-h-[80vh]">
       <div className="px-1 flex justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
-        <div>
+        <div className="flex gap-2">
+          <div>
+            <Input
+              className="bg-white dark:bg-gray-800"
+              placeholder="Search clips..."
+              onClick={(e) => {
+                e.preventDefault();
+                if (!openCommandDialog) {
+                  setOpenCommandDialog(true);
+                }
+              }}
+            />
+          </div>
           <FilterTag
             onSelect={(tag) => {
               if (tag) {
@@ -101,8 +114,7 @@ export default function ArticlePage() {
                   {group.data.map((clip) => (
                     <CommandItem
                       onSelect={() => {
-                        window.location.href =
-                          "/?url=" + encodeURIComponent(clip.Url);
+                        window.location.href = `/clip?url=${clip.Url}`;
                       }}
                       key={clip.Id}
                     >
