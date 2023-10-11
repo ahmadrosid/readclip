@@ -76,7 +76,7 @@ export default function ReadingTime() {
               <Label htmlFor="wpm">Words per minute</Label>
               <Input
                 id="wpm"
-                className="bg-white"
+                className="bg-white dark:bg-gray-800"
                 placeholder="300"
                 type="number"
                 value={config.wpm}
@@ -99,7 +99,7 @@ export default function ReadingTime() {
                   }))
                 }
               >
-                <SelectTrigger className="bg-white">
+                <SelectTrigger className="bg-white dark:bg-gray-800">
                   <SelectValue placeholder="Select language" />
                 </SelectTrigger>
                 <SelectContent>
@@ -112,14 +112,14 @@ export default function ReadingTime() {
               </Select>
             </div>
             <Title className="text-xl sm:text-2xl py-0">Result</Title>
-            <Card>
+            <Card className=" dark:bg-gray-800">
               <CardHeader>
                 <CardTitle>Words</CardTitle>
                 <CardDescription>{result?.words || 0}</CardDescription>
               </CardHeader>
             </Card>
 
-            <Card>
+            <Card className="dark:bg-gray-800">
               <CardHeader>
                 <CardTitle>Minutes</CardTitle>
                 <CardDescription>{result?.minutes || 0}</CardDescription>
