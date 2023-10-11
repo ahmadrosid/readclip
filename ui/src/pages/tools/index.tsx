@@ -22,6 +22,12 @@ export const tools = [
     description: "Write, edit and view Markdown files.",
     link: "/tools/markdown-editor",
   },
+  {
+    title: "English Thesaurus",
+    description:
+      "Tired of using the same old, mundane words? 🔍 Discover the power of precision with our thesaurus. Find the perfect word to convey your exact meaning and stand out from the crowd. 📚✨",
+    link: "/tools/english-thesaurus",
+  },
 ];
 
 export default function Tools() {

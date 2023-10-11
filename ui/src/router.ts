@@ -11,6 +11,7 @@ export type Path =
   | `/register`
   | `/setting`
   | `/tools`
+  | `/tools/english-thesaurus`
   | `/tools/markdown-editor`
   | `/tools/reading-time`
   | `/tools/word-counter`
