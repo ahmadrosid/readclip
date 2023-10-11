@@ -25,6 +25,15 @@ This project is a fullstack web app created using Golang for the backend and Vit
 
 Make sure you have installed golang, and nodejs and to get up and running with the local development just run this command.
 
+First instal node dependencies in `ui` folder.
+
+```bash
+cd ui
+pnpm run install
+```
+
+Run development server
+
 ```bash
 make dev
 ```
