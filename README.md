@@ -82,7 +82,13 @@ Some feature will be added soon.
 - [x] Make it available on managed cloud (fly.io)
 - [x] Filter saved links with tag
 - [x] Paginate saved links
-- [ ] Improve parsing code
 - [x] Authentication, with firebase
+- [x] FREE TOOLS: Word Counter
+- [x] FREE TOOLS: Reading timme estimator
+- [ ] FREE TOOLS: Get youtube transcriptions
+- [ ] FREE TOOLS: Markdown viewer
+- [ ] FREE TOOLS: Thesaurus
+- [ ] Daily Reading Digest (explore menu just like instagram etc)
+- [ ] Improve parsing code
 - [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
