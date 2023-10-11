@@ -1,3 +1,4 @@
+import { Link } from "@/router";
 import { ModeToggle } from "./mode-toggle";
 
 export default function Footer() {
@@ -17,12 +18,12 @@ export default function Footer() {
           ©2023 All rights reserved.
         </p>
         <div className="flex items-center gap-4">
-          <a
+          <Link
             className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
-            href="/tools"
+            to="/tools"
           >
             Free tools
-          </a>
+          </Link>
           <a
             className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
             href="mailto:alahmadrosid@gmail.com"
