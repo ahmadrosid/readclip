@@ -1,61 +1,45 @@
 import { Separator } from "@/components/ui/separator";
 import { tools } from ".";
 import { Title } from "@/components/ui/title";
-import { useState } from "react";
-import { Copy } from "lucide-react";
+import { useMutation } from "react-query";
+import { fetchYoutubeTranscribe } from "@/lib/api";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CopyIcon, DownloadIcon, Loader2 } from "lucide-react";
+import { useCallback, useState } from "react";
+import { toast } from "sonner";
+import { downloadText } from "@/lib/utils";
+import { Markdown } from "@/components/markdown";
+
 export default function YoutubeTranscriber() {
   const { title, description } = tools[3];
+  const [inputUrl, setInputUrl] = useState("");
 
-  // @ts-ignore
-  const [link, setLink] = useState<string>("");
-  // @ts-ignore
-  const [transcribe, setTranscribe] = useState<string>("");
+  const transcribeMutation = useMutation({
+    mutationFn: fetchYoutubeTranscribe,
+    mutationKey: "youtube-transcript",
+    onError: (err: Error) => {
+      toast.error(err.message);
+    },
+  });
 
-  const [videoId, setVideoId] = useState<string | RegExpMatchArray>("");
+  const handleCopy = useCallback(() => {
+    if (!transcribeMutation.data) return;
+    navigator.clipboard.writeText(transcribeMutation.data.content).then(() => {
+      toast.success("Copied to clipboard!");
+    });
+  }, [transcribeMutation.data]);
 
-  const getVideoId = (link: string): string | RegExpMatchArray => {
-    const pattern = /v=([A-Za-z0-9_-]+)/;
-    const match = link.match(pattern);
-    if (match) return match;
-    return "";
-  };
-
-  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const link = e.target.value;
-    const videoId = getVideoId(link);
-
-    setLink(link);
-    setVideoId(videoId);
-  };
-
-  const getTranscribe = () => {
-    const url = "http://localhost:8000/api/youtube/transcript";
-    const headers = {
-      "Content-Type": "application/json",
-      "User-Agent": "Insomnia/2023.5.7",
-      // Authorization: "Bearer YOUR_AUTH_TOKEN_HERE",
-    };
-
-    const data = {
-      url: "https://www.youtube.com/watch?v=Rzlr2tNSl0U",
-    };
-
-    fetch(url, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+  const handleDownload = useCallback(() => {
+    if (!transcribeMutation.data) return;
+    const title = `Transcribe.md`;
+    downloadText(title, transcribeMutation.data?.content);
+    toast.success(`Downloaded "${title}"!`);
+  }, [transcribeMutation.data]);
 
   return (
-    <div className="container mx-auto min-h-[80vh]">
+    <div className="container max-w-6xl mx-auto min-h-[80vh]">
       <div className="pt-6">
         <Title>{title}</Title>
         <p className="text-lg text-gray-600">{description}</p>
@@ -64,60 +48,72 @@ export default function YoutubeTranscriber() {
       </div>
       <div className="grid py-6 gap-6">
         <div className="flex gap-4 items-start">
-          <div className="flex-1 p-4">
-            <div className="flex gap-2">
-              <input
+          <div className="flex-1 grid gap-3">
+            <form
+              className="flex gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                if (inputUrl === "") return;
+                transcribeMutation.mutate(inputUrl);
+              }}
+            >
+              <Input
                 type="text"
+                name="youtube_url"
                 placeholder="Paste your video link here"
-                className="border rounded-lg flex-1 p-4 focus:outline-blue-100"
-                onChange={handleUrlChange}
+                className="bg-white dark:bg-gray-800 h-10"
+                onChange={(e) => setInputUrl(e.currentTarget.value)}
               />
-              <button
-                onClick={getTranscribe}
-                className="bg-blue-400 px-5 py-2 rounded-lg text-white"
-              >
+              <Button className="h-10" disabled={transcribeMutation.isLoading}>
+                {transcribeMutation.isLoading ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  ""
+                )}
                 Transcribe
-              </button>
-            </div>
-            {videoId ? (
-              <div>
-                <div className="p-4">
-                  <iframe
-                    className="m-auto"
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${videoId}`}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="flex-1 p-4">
-            <div>
-              <button className="flex gap-2 border bg-yellow-500 px-4 py-2 text-white rounded-lg">
-                <Copy />
-                <span>Copy</span>
-              </button>
-            </div>
-            <div>
-              Lorem ipsum dolor sit amet, officia excepteur ex fugiat
-              reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit
-              ex esse exercitation amet. Nisi anim cupidatat excepteur officia.
-              Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet
-              voluptate voluptate dolor minim nulla est proident. Nostrud
-              officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex
-              occaecat reprehenderit commodo officia dolor Lorem duis laboris
-              cupidatat officia voluptate. Culpa proident adipisicing id nulla
-              nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua
-              reprehenderit commodo ex non excepteur duis sunt velit enim.
-              Voluptate laboris sint cupidatat ullamco ut ea consectetur et est
-              culpa et culpa duis.
-            </div>
+              </Button>
+            </form>
+            <Card className="min-h-[70vh]">
+              <CardHeader>
+                {transcribeMutation.data && (
+                  <div>
+                    <CardTitle className="text-2xl flex justify-between items-center">
+                      <div>
+                        {transcribeMutation.data
+                          ? transcribeMutation.data.url
+                          : ""}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="secondary"
+                          onClick={handleCopy}
+                          className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                        >
+                          <CopyIcon className="h-3 w-3" />
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          onClick={handleDownload}
+                          className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                        >
+                          <DownloadIcon className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </CardTitle>
+                    <Separator className="mt-4" />
+                  </div>
+                )}
+              </CardHeader>
+              <CardContent>
+                {transcribeMutation.data ? (
+                  <Markdown className="p-0 max-w-5xl">
+                    {transcribeMutation.data.content}
+                  </Markdown>
+                ) : (
+                  ""
+                )}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
