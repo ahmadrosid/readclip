@@ -10,41 +10,9 @@ import { Button } from "@/components/ui/button";
 
 type ViewMode = "editor" | "viewer" | "split";
 
-const defaultText = `# Hello
-
-- there
-
-1. how
-2. are 
-
-![alt](https://images.unsplash.com/photo-1691635187966-3795fd20fb77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80)
-
-## Table
-
-Example table format.
-
-| Country        | Capital City   |
-|----------------|----------------|
-| United States  | Washington, D.C.|
-| France         | Paris          |
-| Japan          | Tokyo          |
-| Brazil         | Brasília       |
-| Australia      | Canberra       |
-
-## Code section
-\`\`\`js
-// this is a comment
-
-function doSomething(nothing) {
-    return nothing;
-}
-\`\`\`
-
-`;
-
 export default function MarkdownEditor() {
   const { title, description } = tools[2];
-  const [text, setText] = useState(defaultText);
+  const [text, setText] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("split");
 
   const splitView = (mode: ViewMode) => {
@@ -95,7 +63,7 @@ export default function MarkdownEditor() {
           <Textarea
             id="textarea"
             className="min-h-[70vh] bg-white dark:bg-gray-800"
-            defaultValue={text}
+            placeholder="Paste your markdown text here..."
             onChange={(e) => setText(e.target.value)}
           />
         </div>
