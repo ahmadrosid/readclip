@@ -84,7 +84,7 @@ make dev
 Then visit this link:
 
 - [http://localhost:8000](http://localhost:8000) - For Backend
-- [http://localhost:8000](http://localhost:8000) - For UI react dev
+- [http://localhost:3000](http://localhost:3000) - For UI react dev
 
 ## Roadmap
 
