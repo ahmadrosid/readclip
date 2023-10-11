@@ -3,6 +3,8 @@ import { tools } from ".";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
 import { Markdown } from "@/components/markdown";
+import Icon from "@/components/lucide-icon";
+import FormatButtons from "@/components/markdown-editor/format-buttons";
 
 const defaultText = `
 # Hello
@@ -39,6 +41,7 @@ export default function MarkdownEditor() {
 
       <div className="flex py-6 gap-6">
         <div className="editor flex-1">
+          <FormatButtons />
           <textarea
             defaultValue={text}
             onChange={(e) => setText(e.target.value)}
@@ -52,3 +55,65 @@ export default function MarkdownEditor() {
     </div>
   );
 }
+
+/*
+ * !TODO
+ * - formatting buttons
+ * */
+
+/*
+          <div className="flex">
+            <button>
+              <Icon name="Undo" />
+            </button>
+
+            <button>
+              <Icon name="Redo" />
+            </button>
+            <button>
+              <Icon name="Bold" />
+            </button>
+
+            <button>
+              <Icon name="Italic" />
+            </button>
+            <button>
+              <Icon name="Strikethrough" />
+            </button>
+            <button>
+              <Icon name="Heading" />
+            </button>
+
+            <button>
+              <Icon name="Code2" />
+            </button>
+
+            <button>
+              <Icon name="List" />
+            </button>
+            <button>
+              <Icon name="ListOrdered" />
+            </button>
+            <button>
+              <Icon name="ListChecks" />
+            </button>
+
+            <button>
+              <Icon name="Link" />
+            </button>
+            <button>
+              <Icon name="Image" />
+            </button>
+
+            <button>
+              <Icon name="Minus" />
+            </button>
+
+            <button>
+              <Icon name="Quote" />
+            </button>
+          </div>
+
+
+
+*/
