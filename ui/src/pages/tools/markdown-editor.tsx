@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { Pencil, Columns, Eye } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ViewMode = "editor" | "viewer" | "split";
 
@@ -30,30 +31,37 @@ export default function MarkdownEditor() {
       </div>
 
       <div>
-        <div>
-          <div className="rounded-md bg-white dark:bg-gray-800 border grid grid-cols-3 max-w-[130px]">
-            <Button
-              className="p-0"
-              variant="ghost"
-              onClick={() => splitView("editor")}
-            >
-              <Pencil className="w-5 h-5" />
-            </Button>
-            <Button
-              className="p-0"
-              variant="ghost"
-              onClick={() => splitView("split")}
-            >
-              <Columns className="w-5 h-5" />
-            </Button>
-            <Button
-              className="p-0"
-              variant="ghost"
-              onClick={() => splitView("viewer")}
-            >
-              <Eye className="w-5 h-5" />
-            </Button>
-          </div>
+        <div className="rounded-md bg-white dark:bg-gray-800 border grid grid-cols-3 max-w-[130px]">
+          <Button
+            className={cn(
+              "p-0",
+              viewMode === "editor" && "bg-gray-200 dark:bg-gray-700"
+            )}
+            variant="ghost"
+            onClick={() => splitView("editor")}
+          >
+            <Pencil className="w-5 h-5" />
+          </Button>
+          <Button
+            className={cn(
+              "p-0",
+              viewMode === "split" && "bg-gray-200 dark:bg-gray-700"
+            )}
+            variant="ghost"
+            onClick={() => splitView("split")}
+          >
+            <Columns className="w-5 h-5" />
+          </Button>
+          <Button
+            className={cn(
+              "p-0",
+              viewMode === "viewer" && "bg-gray-200 dark:bg-gray-700"
+            )}
+            variant="ghost"
+            onClick={() => splitView("viewer")}
+          >
+            <Eye className="w-5 h-5" />
+          </Button>
         </div>
       </div>
       <div className="flex py-4 gap-6">
@@ -62,15 +70,16 @@ export default function MarkdownEditor() {
         >
           <Textarea
             id="textarea"
-            className="min-h-[70vh] bg-white dark:bg-gray-800"
+            className="min-h-[80vh] bg-white dark:bg-gray-800"
             placeholder="Paste your markdown text here..."
             onChange={(e) => setText(e.target.value)}
           />
         </div>
         <div
           className={twMerge(
-            "bg-white dark:bg-gray-800 border rounded-md py-4 flex-1",
-            viewMode === "editor" ? "hidden" : ""
+            "bg-white dark:bg-gray-800 border rounded-md py-4 flex-1 max-h-[80vh] overflow-y-auto",
+            viewMode === "editor" && "hidden",
+            viewMode === "viewer" && "max-h-max"
           )}
         >
           <Markdown className="mx-auto prose-headings:border-b prose-headings:pb-2">

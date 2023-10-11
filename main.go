@@ -40,14 +40,22 @@ func main() {
 		return filesystem.SendFile(ctx, http.FS(index), "index.html")
 	}
 
-	app.Get("/clip", serveUI)
-	app.Get("/register", serveUI)
-	app.Get("/clips", serveUI)
-	app.Get("/setting", serveUI)
-	app.Get("/login", serveUI)
-	app.Get("/tools", serveUI)
-	app.Get("/tools/word-counter", serveUI)
-	app.Get("/tools/reading-time", serveUI)
+	uiPaths := []string{
+		"/",
+		"/clip",
+		"/register",
+		"/clips",
+		"/setting",
+		"/login",
+		"/tools",
+		"/tools/word-counter",
+		"/tools/reading-time",
+		"/tools/markdown-editor",
+	}
+
+	for _, path := range uiPaths {
+		app.Get(path, serveUI)
+	}
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
@@ -76,8 +84,8 @@ func main() {
 			"GET::/register",
 			"GET::/clips",
 			"GET::/setting",
-			"GET::/tools/*",
 			"POST::/api/youtube/transcript",
+			"GET::/tools/*",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
