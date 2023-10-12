@@ -95,6 +95,9 @@ export function FilterTag({ onSelect }: Props) {
                       next.add(tag);
                       return next;
                     });
+                  } else {
+                    setSelectedValues(new Set());
+                    onSelect();
                   }
                 }}
               >
