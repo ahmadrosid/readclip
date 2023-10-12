@@ -69,8 +69,8 @@ export default function TagSetting() {
           </Button> */}
         </div>
       </div>
-      <Separator className="my-6" />
-      <div className="grid border rounded overflow-hidden">
+      <Separator />
+      <div className="grid">
         {data?.data.map((tag, idx) => (
           <TagItem
             key={tag.Id}
