@@ -18,10 +18,13 @@ import { fetchAllArticles, Article } from "@/lib/api";
 import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
   const [tagId, setTagId] = useState("");
+  const [selectedHost, setSelectedHost] = useState("");
 
   const {
     data: clips,
@@ -71,24 +74,27 @@ export default function ArticlePage() {
 
   const firstPageData = clips?.pages?.[0]?.data;
   const hasData = Boolean(firstPageData && firstPageData.length);
+  const hosts = new Set<string>(
+    clips?.pages
+      ?.map((page) => page.data.map((article) => article.Hostname))
+      .flat()
+  );
 
   return (
     <div className="p-4 md:p-8 min-h-[80vh]">
-      <div className="px-1 flex justify-between items-center">
+      <div className="px-1 grid sm:flex gap-4 justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
         <div className="flex gap-2">
-          <div>
-            <Input
-              className="bg-white dark:bg-gray-800"
-              placeholder="Search clips..."
-              onClick={(e) => {
-                e.preventDefault();
-                if (!openCommandDialog) {
-                  setOpenCommandDialog(true);
-                }
-              }}
-            />
-          </div>
+          <Input
+            className="bg-white dark:bg-gray-800 flex-1 w-full sm:w-64"
+            placeholder="Search clips..."
+            onClick={(e) => {
+              e.preventDefault();
+              if (!openCommandDialog) {
+                setOpenCommandDialog(true);
+              }
+            }}
+          />
           <FilterTag
             onSelect={(tag) => {
               if (tag) {
@@ -154,18 +160,47 @@ export default function ArticlePage() {
       )}
       {clips ? (
         <>
+          <div className="flex gap-2 pt-4 pb-4 sm:pb-2 max-w-screen-2xl overflow-x-auto">
+            {Array.from(hosts.values()).map((host, i) => (
+              <Badge
+                onClick={() => {
+                  if (selectedHost === host) {
+                    setSelectedHost("");
+                  } else {
+                    setSelectedHost(host);
+                  }
+                }}
+                variant="outline"
+                className={cn(
+                  "hover:bg-gray-200 cursor-pointer",
+                  selectedHost === host && "bg-primary text-white"
+                )}
+                key={i}
+              >
+                {host}
+              </Badge>
+            ))}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
             {clips.pages.map((group, i) => (
               <Fragment key={i}>
-                {group.data.map((article) => (
-                  <ArticleCard
-                    key={article.Id}
-                    article={article}
-                    current_datetime={group.current_datetime}
-                    onDeleteCallback={handleOndeleteCallback}
-                    onAddTagCallback={handleOnAddTagCallback}
-                  />
-                ))}
+                {group.data
+                  .filter((item) => {
+                    if (selectedHost === "") {
+                      return true;
+                    }
+
+                    return selectedHost === item.Hostname;
+                  })
+                  .map((article) => (
+                    <ArticleCard
+                      key={article.Id}
+                      article={article}
+                      current_datetime={group.current_datetime}
+                      onDeleteCallback={handleOndeleteCallback}
+                      onAddTagCallback={handleOnAddTagCallback}
+                    />
+                  ))}
               </Fragment>
             ))}
           </div>

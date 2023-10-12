@@ -116,7 +116,7 @@ export default function Home() {
 
   return (
     <div className="px-4 gap-4 min-h-[80vh]">
-      <div className="py-4 w-full sticky top-10 z-10 bg-gray-50 dark:bg-gray-900/90 dark:backdrop-blur">
+      <div className="py-4 w-full bg-gray-50 dark:bg-gray-900/90 dark:backdrop-blur">
         <div className="max-w-3xl mx-auto">
           <form
             onSubmit={handleSubmit}
@@ -167,8 +167,8 @@ export default function Home() {
           <div className="grid pb-8">
             <div className="bg-white dark:bg-gray-800 py-4 rounded-md  w-full min-w-xs max-w-md sm:max-w-3xl border block mx-auto">
               {data.data && (
-                <div className="px-4 flex items-center">
-                  <div className="flex gap-2">
+                <div className="px-4 flex items-center flex-col-reverse sm:flex-row gap-4">
+                  <div className="flex flex-1 gap-2">
                     <a
                       href={data.data.Url}
                       target="_blank"
@@ -182,7 +182,7 @@ export default function Home() {
                       {readingEst.text + ", " + readingEst.words} words
                     </p>
                   </div>
-                  <div className="ml-auto">
+                  <div className="mx-auto">
                     <div className="flex items-center rounded-md bg-secondary text-secondary-foreground border">
                       <Button
                         variant="secondary"

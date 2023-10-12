@@ -23,15 +23,13 @@ export function Header() {
 
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur dark:bg-gray-900/75 dark:border-gray-800">
-      <div className="pl-8 pr-8 flex h-14 items-center">
+      <div className="pl-4 sm:pl-8 pr-8 flex h-14 items-center">
         <div className="mr-4 flex flex-1">
           <nav className="flex items-center space-x-2">
-            <p className="font-bold flex items-center gap-2">
+            <Link to="/" className="text-lg flex items-center gap-2">
               <BookMarkedIcon className="w-5 h-5" />
-              <Link to="/" className="text-lg">
-                ReadClip
-              </Link>
-            </p>
+              <span className="font-bold hidden sm:block">ReadClip</span>
+            </Link>
 
             <Link to="/clip">
               <Button
@@ -57,7 +55,7 @@ export function Header() {
               </Button>
             </Link>
 
-            <Link to="/tools">
+            <Link to="/tools" className="hidden sm:block">
               <Button className="dark:text-white text-gray-800" variant="link">
                 Free tools
               </Button>
