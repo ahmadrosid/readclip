@@ -2,11 +2,11 @@ import { Separator } from "@/components/ui/separator";
 import { tools } from ".";
 import { Title } from "@/components/ui/title";
 import { useMutation } from "react-query";
-import { fetchYoutubeTranscribe } from "@/lib/api";
+import { fetchYoutubeTranscribe } from "@/lib/external-api";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CopyIcon, DownloadIcon, Loader2 } from "lucide-react";
+import { CopyIcon, DownloadIcon, ExternalLink, Loader2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { downloadText } from "@/lib/utils";
@@ -26,15 +26,22 @@ export default function YoutubeTranscriber() {
 
   const handleCopy = useCallback(() => {
     if (!transcribeMutation.data) return;
-    navigator.clipboard.writeText(transcribeMutation.data.content).then(() => {
-      toast.success("Copied to clipboard!");
-    });
+    navigator.clipboard
+      .writeText(
+        `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+      )
+      .then(() => {
+        toast.success("Copied to clipboard!");
+      });
   }, [transcribeMutation.data]);
 
   const handleDownload = useCallback(() => {
     if (!transcribeMutation.data) return;
-    const title = `Transcribe.md`;
-    downloadText(title, transcribeMutation.data?.content);
+    const title = `${transcribeMutation.data.info.title}.md`;
+    downloadText(
+      title,
+      `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+    );
     toast.success(`Downloaded "${title}"!`);
   }, [transcribeMutation.data]);
 
@@ -80,7 +87,7 @@ export default function YoutubeTranscriber() {
                     <CardTitle className="text-2xl flex justify-between items-center">
                       <div>
                         {transcribeMutation.data
-                          ? transcribeMutation.data.url
+                          ? transcribeMutation.data.info.title
                           : ""}
                       </div>
                       <div className="flex items-center gap-2">
@@ -98,6 +105,14 @@ export default function YoutubeTranscriber() {
                         >
                           <DownloadIcon className="h-3 w-3" />
                         </Button>
+                        <a href={inputUrl} target="_blank">
+                          <Button
+                            variant="secondary"
+                            className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                          </Button>
+                        </a>
                       </div>
                     </CardTitle>
                     <Separator className="mt-4" />
