@@ -67,7 +67,7 @@ export default function YoutubeTranscriber() {
               <Input
                 type="text"
                 name="youtube_url"
-                placeholder="Paste your video link here"
+                placeholder="Paste youtube video link here..."
                 className="bg-white dark:bg-gray-800 h-10"
                 onChange={(e) => setInputUrl(e.currentTarget.value)}
               />
