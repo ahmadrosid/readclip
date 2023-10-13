@@ -48,7 +48,7 @@ export default function Home() {
   }, [howToRef]);
 
   return (
-    <div className="container mx-auto pt-8">
+    <div className="container px-4 sm:px-8 mx-auto pt-8">
       <div className="max-w-3xl py-16 mx-auto text-left">
         <p>Welcome to Readclip.</p>
         <p className="py-6 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem] dark:text-white">
