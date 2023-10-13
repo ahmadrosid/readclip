@@ -32,7 +32,7 @@ export const tools = [
 
 export default function Tools() {
   return (
-    <div className="container mx-auto min-h-[80vh]">
+    <div className="container px-4 sm:px-8 mx-auto min-h-[80vh]">
       <div className="pt-6 pb-4">
         <Title className="pb-4">Free tools from Readclip</Title>
         <p className="text-lg text-gray-600">
@@ -40,7 +40,7 @@ export default function Tools() {
           distractions.
         </p>
       </div>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         {tools.map((tool) => (
           <Card key={tool.title}>
             <a href={tool.link}>
