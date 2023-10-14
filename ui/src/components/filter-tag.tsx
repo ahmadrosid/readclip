@@ -83,37 +83,34 @@ export function FilterTag({ onSelect }: Props) {
           <CommandInput placeholder="Search tag..." />
           <CommandEmpty>No tag found.</CommandEmpty>
           <CommandGroup>
-            {data?.data.map((tag) => (
-              <CommandItem
-                key={tag.Id}
-                onSelect={() => {
-                  onSelect(tag);
-                  setOpen(false);
-                  if (!selectedValues.has(tag)) {
+            {data?.data
+              .filter((item) => !selectedValues.has(item))
+              .map((tag) => (
+                <CommandItem
+                  key={tag.Id}
+                  onSelect={() => {
+                    onSelect(tag);
+                    setOpen(false);
                     setSelectedValues(() => {
                       const next = new Set<Tag>();
                       next.add(tag);
                       return next;
                     });
-                  } else {
-                    setSelectedValues(new Set());
-                    onSelect();
-                  }
-                }}
-              >
-                <div
-                  className={cn(
-                    "mr-2 flex h-4 w-4 p-0.5",
-                    selectedValues.has(tag)
-                      ? "text-black dark:text-white"
-                      : "opacity-0 [&_svg]:invisible"
-                  )}
+                  }}
                 >
-                  <CheckIcon className="h-4 w-4" />
-                </div>
-                <span>{tag.Name}</span>
-              </CommandItem>
-            ))}
+                  <div
+                    className={cn(
+                      "mr-2 flex h-4 w-4 p-0.5",
+                      selectedValues.has(tag)
+                        ? "text-black dark:text-white"
+                        : "opacity-0 [&_svg]:invisible"
+                    )}
+                  >
+                    <CheckIcon className="h-4 w-4" />
+                  </div>
+                  <span>{tag.Name}</span>
+                </CommandItem>
+              ))}
             <CommandSeparator className="my-1" />
             <CommandItem
               onSelect={() => {
