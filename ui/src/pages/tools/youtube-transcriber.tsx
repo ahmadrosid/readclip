@@ -71,7 +71,10 @@ export default function YoutubeTranscriber() {
                 className="bg-white dark:bg-gray-800 h-10"
                 onChange={(e) => setInputUrl(e.currentTarget.value)}
               />
-              <Button className="h-10" disabled={transcribeMutation.isLoading}>
+              <Button
+                className="h-10 dark:text-white"
+                disabled={transcribeMutation.isLoading}
+              >
                 {transcribeMutation.isLoading ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                 ) : (
