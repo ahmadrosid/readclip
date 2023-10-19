@@ -2,7 +2,7 @@
 
 Read blog post, news or any text from internet without ads without distraction!
 
-![demo](./readclip-screenshot-demo.png)
+![demo](https://readclip.ahmadrosid.com/img/readclip.png)
 
 ## Why?
 
