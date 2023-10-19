@@ -52,7 +52,7 @@ func GetTranscript(videoURL string) (*VideoData, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "insomnia/8.2.0")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

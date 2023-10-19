@@ -30,3 +30,11 @@ func IsLocalhost(str string) bool {
 	}
 	return hostname == "localhost"
 }
+
+func IsRedditUrl(str string) bool {
+	hostname, err := GetHostname(str)
+	if err != nil {
+		panic(err)
+	}
+	return hostname == "reddit.com" || hostname == "www.reddit.com"
+}

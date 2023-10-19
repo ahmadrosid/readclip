@@ -11,6 +11,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
+	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
@@ -98,6 +99,14 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 	var res = &util.ContentData{}
 	if util.IsValidYoutubeUrl(input.Url) {
 		res, err = util.GrabYoutubeVideoInfo(input.Url)
+		if err != nil {
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+	} else if util.IsRedditUrl(input.Url) {
+		res, err = reddit.ScrapeReddit(input.Url)
 		if err != nil {
 			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 				"status": "error",

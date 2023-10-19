@@ -8,8 +8,6 @@ import (
 	"strings"
 	"time"
 
-	md "github.com/JohannesKaufmann/html-to-markdown"
-	"github.com/JohannesKaufmann/html-to-markdown/plugin"
 	"github.com/go-shiori/dom"
 	"github.com/markusmobius/go-trafilatura"
 )
@@ -64,7 +62,7 @@ func Scrape(url string, format string) (*ContentData, error) {
 	} else if format == "markdown" {
 		renderHtml := dom.OuterHTML(doc)
 		renderHtml = fixImageURL(renderHtml, getBaseURL(url))
-		markdown, err := convertToMarkdown(renderHtml)
+		markdown, err := ConvertHtmlToMarkdown(renderHtml)
 		if err != nil {
 			return nil, err
 		}
@@ -98,16 +96,6 @@ func Scrape(url string, format string) (*ContentData, error) {
 			PageType:    result.Metadata.PageType,
 		},
 	}, nil
-}
-
-func convertToMarkdown(html string) (string, error) {
-	converter := md.NewConverter("", true, nil)
-	converter.Use(plugin.GitHubFlavored())
-	markdown, err := converter.ConvertString(html)
-	if err != nil {
-		return "", err
-	}
-	return markdown, nil
 }
 
 func getBaseURL(rawURL string) string {

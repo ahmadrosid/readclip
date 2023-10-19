@@ -3,25 +3,22 @@ package main
 import (
 	"context"
 	"io/fs"
-	"net/http"
-	"strings"
 
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
 	"github.com/ahmadrosid/readclip/internal/bookmark"
 	"github.com/ahmadrosid/readclip/internal/clip"
+	"github.com/ahmadrosid/readclip/internal/static"
 	"github.com/ahmadrosid/readclip/internal/tag"
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/config"
-	"github.com/ahmadrosid/readclip/internal/util/embedfile"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
 	"github.com/ahmadrosid/readclip/internal/youtube"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	_ "github.com/lib/pq"
 )
@@ -32,54 +29,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	db, _ := util.ConnectToDatabase(env.DatabaseUrl)
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
 
-	serveUI := func(ctx *fiber.Ctx) error {
-		return filesystem.SendFile(ctx, http.FS(index), "index.html")
-	}
-
-	uiPaths := []string{
-		"/",
-		"/clip",
-		"/register",
-		"/clips",
-		"/setting",
-		"/login",
-		"/tools",
-		"/tools/word-counter",
-		"/tools/reading-time",
-		"/tools/markdown-editor",
-	}
-
-	for _, path := range uiPaths {
-		app.Get(path, serveUI)
-	}
-
-	app.Get("/tools/youtube-transcriber", func(c *fiber.Ctx) error {
-		fs := http.FS(index)
-		oldURL := "https://readclip.ahmadrosid.com/img/readclip.png"
-		newURL := "https://res.cloudinary.com/dr15yjl8w/image/upload/v1697703742/pika-1697703705648-1x_hh34kn.png"
-
-		newHtml, err := embedfile.ReplaceStrInFile(fs, "index.html", oldURL, newURL)
-		if err != nil {
-			return c.SendStatus(http.StatusInternalServerError)
-		}
-
-		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/youtube-transcriber", -1)
-		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Youtube transcriber"`, -1)
-
-		return c.Type("html").SendString(newHtml)
-	})
-
-	app.Use("/", filesystem.New(filesystem.Config{
-		Root:   http.FS(index),
-		Index:  "index.html",
-		Browse: false,
-	}))
+	static.HandleStatic(app, index)
 
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
