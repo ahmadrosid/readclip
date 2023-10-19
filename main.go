@@ -70,6 +70,7 @@ func main() {
 		}
 
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/youtube-transcriber", -1)
+		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Youtube transcriber"`, -1)
 
 		return c.Type("html").SendString(newHtml)
 	})
