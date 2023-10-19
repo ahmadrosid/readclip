@@ -13,6 +13,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/config"
+	"github.com/ahmadrosid/readclip/internal/util/embedfile"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
 	"github.com/ahmadrosid/readclip/internal/youtube"
 	"github.com/ahmadrosid/readclip/ui"
@@ -51,12 +52,24 @@ func main() {
 		"/tools/word-counter",
 		"/tools/reading-time",
 		"/tools/markdown-editor",
-		"/tools/youtube-transcriber",
 	}
 
 	for _, path := range uiPaths {
 		app.Get(path, serveUI)
 	}
+
+	app.Get("/tools/youtube-transcriber", func(c *fiber.Ctx) error {
+		fs := http.FS(index)
+		oldURL := "https://readclip.ahmadrosid.com/img/readclip.png"
+		newURL := "https://res.cloudinary.com/dr15yjl8w/image/upload/v1697703742/pika-1697703705648-1x_hh34kn.png"
+
+		newHtml, err := embedfile.ReplaceStrInFile(fs, "index.html", oldURL, newURL)
+		if err != nil {
+			return c.SendStatus(http.StatusInternalServerError)
+		}
+
+		return c.Type("html").SendString(*newHtml)
+	})
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
@@ -87,6 +100,7 @@ func main() {
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
 			"GET::/tools/*",
+			"GET::/sw.js",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
