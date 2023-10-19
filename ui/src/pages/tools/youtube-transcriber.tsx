@@ -46,7 +46,7 @@ export default function YoutubeTranscriber() {
   }, [transcribeMutation.data]);
 
   return (
-    <div className="container max-w-6xl mx-auto min-h-[80vh]">
+    <div className="container max-w-6xl mx-auto min-h-[80vh] px-4 sm:px-8">
       <div className="pt-6">
         <Title>{title}</Title>
         <p className="text-lg text-gray-600">{description}</p>
