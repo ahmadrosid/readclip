@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-func ReplaceStrInFile(fs http.FileSystem, inputFilePath, oldStr, newStr string) (*string, error) {
+func ReplaceStrInFile(fs http.FileSystem, inputFilePath, oldStr, newStr string) (string, error) {
 	inputFile, err := fs.Open(inputFilePath)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	defer inputFile.Close()
 
@@ -19,7 +19,7 @@ func ReplaceStrInFile(fs http.FileSystem, inputFilePath, oldStr, newStr string) 
 	for {
 		n, err := inputFile.Read(buffer)
 		if err != nil && err != io.EOF {
-			return nil, err
+			return "", err
 		}
 
 		if n == 0 {
@@ -33,10 +33,9 @@ func ReplaceStrInFile(fs http.FileSystem, inputFilePath, oldStr, newStr string) 
 		// Write the modified chunk to the new file
 		_, err = builder.WriteString(modifiedChunk)
 		if err != nil {
-			return nil, err
+			return "", err
 		}
 	}
 
-	result := builder.String()
-	return &result, nil
+	return builder.String(), nil
 }

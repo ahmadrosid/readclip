@@ -4,6 +4,7 @@ import (
 	"context"
 	"io/fs"
 	"net/http"
+	"strings"
 
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
@@ -68,7 +69,9 @@ func main() {
 			return c.SendStatus(http.StatusInternalServerError)
 		}
 
-		return c.Type("html").SendString(*newHtml)
+		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/youtube-transcriber", -1)
+
+		return c.Type("html").SendString(newHtml)
 	})
 
 	app.Use("/", filesystem.New(filesystem.Config{
