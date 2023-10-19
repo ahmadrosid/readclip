@@ -1,4 +1,4 @@
-import { Article } from "@/lib/api";
+import { Article } from "@/lib/api/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

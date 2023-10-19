@@ -14,7 +14,7 @@ import { CommandSeparator } from "cmdk";
 import { useInfiniteQuery } from "react-query";
 import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
-import { fetchAllArticles, Article } from "@/lib/api";
+import { fetchAllArticles, Article } from "@/lib/api/api";
 import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";

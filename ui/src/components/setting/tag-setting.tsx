@@ -1,5 +1,9 @@
 import { Separator } from "@/components/ui/separator";
-import { type Tag, fetchAllTags, fetchDeleteClipTagAndTag } from "@/lib/api";
+import {
+  type Tag,
+  fetchAllTags,
+  fetchDeleteClipTagAndTag,
+} from "@/lib/api/api";
 import { useQuery, useMutation } from "react-query";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";

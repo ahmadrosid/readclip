@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { UserCredential } from "firebase/auth";
 import { DialogCreateAccount } from "@/components/dialog-create-account";
 import { useMutation } from "react-query";
-import { fetchLogin } from "@/lib/api";
+import { fetchLogin } from "@/lib/api/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();

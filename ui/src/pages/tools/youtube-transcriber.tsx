@@ -2,7 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { tools } from ".";
 import { Title } from "@/components/ui/title";
 import { useMutation } from "react-query";
-import { fetchYoutubeTranscribe } from "@/lib/external-api";
+import { fetchYoutubeTranscript } from "@/lib/api/echotube";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,7 +17,7 @@ export default function YoutubeTranscriber() {
   const [inputUrl, setInputUrl] = useState("");
 
   const transcribeMutation = useMutation({
-    mutationFn: fetchYoutubeTranscribe,
+    mutationFn: fetchYoutubeTranscript,
     mutationKey: "youtube-transcript",
     onError: (err: Error) => {
       toast.error(err.message);
@@ -125,7 +125,9 @@ export default function YoutubeTranscriber() {
               <CardContent>
                 {transcribeMutation.data ? (
                   <Markdown className="p-0 max-w-5xl">
-                    {transcribeMutation.data.content}
+                    {transcribeMutation.data.content
+                      .map((item) => item.text)
+                      .join("\n")}
                   </Markdown>
                 ) : (
                   ""

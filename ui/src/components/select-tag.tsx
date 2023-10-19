@@ -25,7 +25,7 @@ import {
   fetchClipTags,
   fetchCreateTag,
   fetchDeleteClipTag,
-} from "@/lib/api";
+} from "@/lib/api/api";
 import { useCommandState } from "cmdk";
 import { toast } from "sonner";
 

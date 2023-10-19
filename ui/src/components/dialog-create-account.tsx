@@ -11,7 +11,7 @@ import {
 import { toast } from "sonner";
 import { useNavigate } from "@/router";
 import { useMutation } from "react-query";
-import { fetchCreateUser } from "@/lib/api";
+import { fetchCreateUser } from "@/lib/api/api";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import app from "@/lib/firebase";

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/echotube"
 	"github.com/gofiber/fiber/v2"
-	"github.com/kkdai/youtube/v2"
 )
 
 type YoutubeTranscriptRequest struct {
@@ -35,23 +35,19 @@ func (h *handler) getYoutubeTranscript(c *fiber.Ctx) error {
 		})
 	}
 
-	videoID, err := util.GetVideoID(input.Url)
+	_, err := util.GetVideoID(input.Url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	client := youtube.Client{}
-	video, err := client.GetTranscript(&youtube.Video{ID: videoID})
+	video, err := echotube.GetTranscript(input.Url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return c.Status(http.StatusOK).JSON(fiber.Map{
-		"data":   video,
-		"status": "success",
-	})
+	return c.Status(http.StatusOK).JSON(video)
 }

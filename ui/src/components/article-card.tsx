@@ -33,7 +33,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { formatDistance } from "date-fns";
-import { type Article, fetchDeleteClip, fetchDownloadClip } from "@/lib/api";
+import {
+  type Article,
+  fetchDeleteClip,
+  fetchDownloadClip,
+} from "@/lib/api/api";
 import { toast } from "sonner";
 import { useMutation } from "react-query";
 

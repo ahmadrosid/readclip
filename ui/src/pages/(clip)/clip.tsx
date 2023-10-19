@@ -12,7 +12,7 @@ import {
   TagIcon,
   TrashIcon,
 } from "lucide-react";
-import { fetchMarkdown, fetchDeleteClip } from "@/lib/api";
+import { fetchMarkdown, fetchDeleteClip } from "@/lib/api/api";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { downloadText } from "@/lib/utils";

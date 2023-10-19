@@ -16,7 +16,7 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
 import { useMutation } from "react-query";
-import { fetchCreateUser } from "@/lib/api";
+import { fetchCreateUser } from "@/lib/api/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();

@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { fetchAllTags, type Tag } from "@/lib/api";
+import { fetchAllTags, type Tag } from "@/lib/api/api";
 import { useQuery } from "react-query";
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";

@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "../ui/button";
 import { useMutation } from "react-query";
-import { fetchExportClips } from "@/lib/api";
+import { fetchExportClips } from "@/lib/api/api";
 import { toast } from "sonner";
 
 function DownloadButton({ format }: { format: "csv" | "json" }) {
