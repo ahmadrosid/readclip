@@ -2,10 +2,10 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import generouted from "@generouted/react-router/plugin";
-// import { VitePWA } from "vite-plugin-pwa";
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  plugins: [react(), generouted()],
+  plugins: [react(), generouted(), VitePWA()],
 
   resolve: {
     alias: {
