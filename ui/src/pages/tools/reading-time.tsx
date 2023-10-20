@@ -71,7 +71,9 @@ export default function ReadingTime() {
       <div className="flex py-6 gap-6">
         <div className="w-full max-w-xs">
           <div className="grid grid-cols-1 gap-4">
-            <Title className="text-xl sm:text-2xl py-0">Config</Title>
+            <Title className="text-xl sm:text-2xl py-0 font-normal">
+              Config
+            </Title>
             <div>
               <Label htmlFor="wpm">Words per minute</Label>
               <Input
@@ -111,7 +113,9 @@ export default function ReadingTime() {
                 </SelectContent>
               </Select>
             </div>
-            <Title className="text-xl sm:text-2xl py-0">Result</Title>
+            <Title className="text-xl sm:text-2xl pb-0 pt-4 font-normal">
+              Result
+            </Title>
             <Card className=" dark:bg-gray-800">
               <CardHeader>
                 <CardTitle>Words</CardTitle>
