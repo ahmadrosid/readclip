@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyIcon, DownloadIcon, ExternalLink, Loader2 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { downloadText } from "@/lib/utils";
 import { Markdown } from "@/components/markdown";
@@ -24,6 +24,7 @@ export default function RedditReader() {
     onError: (err: Error) => {
       if (err.message === "Unauthorized request, please login and try again!") {
         window.localStorage.setItem("redirect-auth", window.location.href);
+        window.localStorage.setItem("cache-input-url", inputUrl);
         setOpenDialogAuth(true);
         return;
       }
@@ -52,6 +53,14 @@ export default function RedditReader() {
     toast.success(`Downloaded "${title}"!`);
   }, [transcribeMutation.data]);
 
+  useEffect(() => {
+    const url = window.localStorage.getItem("cache-input-url");
+    if (url) {
+      setInputUrl(url);
+      window.localStorage.removeItem("cache-input-url");
+    }
+  }, []);
+
   return (
     <>
       <div className="container max-w-6xl mx-auto min-h-[80vh] px-2 sm:px-8">
@@ -76,6 +85,7 @@ export default function RedditReader() {
                   name="reddit_url"
                   placeholder="Paste reddit video link here..."
                   className="bg-white dark:bg-gray-800 h-10"
+                  value={inputUrl}
                   onChange={(e) => setInputUrl(e.currentTarget.value)}
                 />
                 <Button

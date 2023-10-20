@@ -27,7 +27,15 @@ export default function LoginPage() {
   const [open, setOpen] = useState(false);
 
   const loginMutation = useMutation("login", fetchLogin, {
-    onSuccess: () => navigate("/clip"),
+    onSuccess: () => {
+      const redirectUrl = window.localStorage.getItem("redirect-auth");
+      if (redirectUrl) {
+        window.localStorage.removeItem("redirect-auth");
+        window.location.href = redirectUrl;
+        return;
+      }
+      navigate("/clip");
+    },
     onError: (err: Error) => {
       if (err.message === "user not found") {
         setOpen(true);

@@ -24,7 +24,7 @@ export default function LoginPage() {
     onSuccess: (data) => {
       if (data.status === "success") {
         toast.success("Register success!");
-        const redirectUrl = window.localStorage.get("redirect-auth");
+        const redirectUrl = window.localStorage.getItem("redirect-auth");
         if (redirectUrl) {
           window.localStorage.removeItem("redirect-auth");
           window.location.href = redirectUrl;

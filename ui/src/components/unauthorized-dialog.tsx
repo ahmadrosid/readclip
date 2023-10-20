@@ -1,15 +1,13 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { GoogleSignIn } from "./google-login";
-import { toast } from "sonner";
 import { Link } from "@/router";
+import { Button } from "./ui/button";
 
 type Props = {
   open: boolean;
@@ -23,22 +21,17 @@ export function UnauthorizedDialog({ open, onOpenChange }: Props) {
         <AlertDialogHeader>
           <AlertDialogTitle>Unauthorized request!</AlertDialogTitle>
           <AlertDialogDescription>
-            Please login with google or sign up to continue!
+            Please sign in to continue, or create new account!
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <GoogleSignIn
-            label="Login with Google"
-            onAuthenticated={() => {
-              onOpenChange(false);
-            }}
-            setError={(e) => {
-              if (e === "") return;
-              toast.error(e);
-            }}
-          />
           <Link to="/login">
-            <AlertDialogAction className="h-10">Sign Up</AlertDialogAction>
+            <Button className="h-10" variant="outline">
+              Sign In
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button className="h-10">Sign Up</Button>
           </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
