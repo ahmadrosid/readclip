@@ -90,5 +90,6 @@ func main() {
 		app.Group("/api/users"),
 		userRepo,
 	)
-	app.Listen(":" + env.Port)
+	println("0.0.0.0:" + env.Port)
+	app.Listen("0.0.0.0:" + env.Port)
 }

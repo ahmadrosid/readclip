@@ -6,7 +6,7 @@ import (
 )
 
 type Config struct {
-	Port              string `env:"PORT" envDefault:"3000"`
+	Port              string `env:"PORT" envDefault:"8080"`
 	GoogleCredentials string `env:"GOOGLE_APPLICATION_CREDENTIALS" envDefault:""`
 	DatabaseUrl       string `env:"DB_CONNECTION_STRING" envDefault:""`
 }
