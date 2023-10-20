@@ -12,7 +12,7 @@ require (
 	github.com/kkdai/youtube/v2 v2.8.3
 	github.com/lib/pq v1.10.9
 	github.com/markusmobius/go-trafilatura v1.5.1
-	golang.org/x/net v0.15.0
+	golang.org/x/net v0.17.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.4
 )
@@ -55,6 +55,8 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.16.3 // indirect
+	github.com/labstack/echo/v4 v4.11.2 // indirect
+	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/magefile/mage v1.15.0 // indirect
 	github.com/markusmobius/go-dateparser v1.2.1 // indirect
 	github.com/markusmobius/go-domdistiller v0.0.0-20230515154422-71af71939ff3 // indirect
@@ -69,15 +71,16 @@ require (
 	github.com/tetratelabs/wazero v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
+	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/wasilibs/go-re2 v1.3.0 // indirect
 	github.com/yosssi/gohtml v0.0.0-20201013000340-ee4748c638f4 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/crypto v0.13.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	golang.org/x/oauth2 v0.12.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
