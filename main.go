@@ -79,7 +79,7 @@ func main() {
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/youtube-transcriber", -1)
 		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Youtube transcriber"`, -1)
 
-		return c.Type("html").SendString(newHtml)
+		return c.Type("html").Status(http.StatusOK).SendString(newHtml)
 	})
 
 	app.Get("/tools/reddit-reader", func(c *fiber.Ctx) error {
@@ -95,7 +95,7 @@ func main() {
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/reddit-reader", -1)
 		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Reddit reader"`, -1)
 
-		return c.Type("html").SendString(newHtml)
+		return c.Type("html").Status(http.StatusOK).SendString(newHtml)
 	})
 
 	app.Use(recover.New())
