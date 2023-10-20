@@ -1,11 +1,6 @@
 FROM golang:1.20.1-alpine as base
-RUN apk add --no-cache curl
-
-# we need Node >= 16.12.0 and yarn to build the Astro UI
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-  apt-get update && \
-  apt-get install -y nodejs && \
-  npm install --global pnpm
+RUN apk add curl bash nodejs npm make
+RUN npm install --global pnpm
 
 WORKDIR /go/src/app
 COPY go.* .
