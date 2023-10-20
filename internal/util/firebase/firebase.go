@@ -33,6 +33,7 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"status":  "error",
 			"message": "Missing or malformed Token",
+			"error":   "Unauthorized request, please login and try again!",
 		})
 	}
 
