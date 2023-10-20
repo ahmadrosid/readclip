@@ -17,4 +17,6 @@ FROM gcr.io/distroless/static-debian11
 COPY --from=base /go/bin/app /app
 ENV PORT=8080
 
+EXPOSE 8080
+
 CMD ["/app"]
