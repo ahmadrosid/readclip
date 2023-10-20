@@ -8,25 +8,35 @@ import {
 
 export const tools = [
   {
+    slug: "youtube-transcriber",
+    title: "Youtube Transcriber",
+    description:
+      "Don't really have time to watch videos? Now you can read them!",
+    link: "/tools/youtube-transcriber",
+  },
+  {
+    slug: "reddit-reader",
+    title: "Reddit reader",
+    description: "Read reddit discussion without distraction wihtout pain!",
+    link: "/tools/reddit-reader",
+  },
+  {
+    slug: "word-counter",
     title: "Words counter",
     description: "Count the words in your text",
     link: "/tools/word-counter",
   },
   {
+    slug: "reading-time",
     title: "Reading time estimator",
     description: "Estimate the reading time of your text",
     link: "/tools/reading-time",
   },
   {
+    slug: "markdown-editor",
     title: "Markdown Editor",
     description: "Write, edit and view Markdown files.",
     link: "/tools/markdown-editor",
-  },
-  {
-    title: "Youtube Transcriber",
-    description:
-      "Don't really have time to watch videos? Now you can read them!",
-    link: "/tools/youtube-transcriber",
   },
 ];
 

@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 type ViewMode = "editor" | "viewer" | "split";
 
 export default function MarkdownEditor() {
-  const { title, description } = tools[2];
+  const tool = tools.find((item) => item.slug === "markdown-editor");
   const [text, setText] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("split");
 
@@ -23,9 +23,9 @@ export default function MarkdownEditor() {
   return (
     <div className="px-8 min-h-[80vh]">
       <div className="pt-6">
-        <Title>{title}</Title>
+        <Title className="pb-2">{tool?.title}</Title>
         <p className="text-lg text-gray-600 dark:text-gray-400">
-          {description}
+          {tool?.description}
         </p>
         <Separator className="mt-4" />
       </div>

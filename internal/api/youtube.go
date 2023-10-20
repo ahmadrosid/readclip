@@ -1,4 +1,4 @@
-package youtube
+package api
 
 import (
 	"net/http"
@@ -12,14 +12,14 @@ type YoutubeTranscriptRequest struct {
 	Url string
 }
 
-type handler struct{}
+type youtubeHandler struct{}
 
-func NewHandler(route fiber.Router) {
-	handler := &handler{}
+func NewYoutubeHandler(route fiber.Router) {
+	handler := &youtubeHandler{}
 	route.Post("/transcript", handler.getYoutubeTranscript)
 }
 
-func (h *handler) getYoutubeTranscript(c *fiber.Ctx) error {
+func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
 	var input YoutubeTranscriptRequest
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{

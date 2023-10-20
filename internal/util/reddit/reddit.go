@@ -174,7 +174,7 @@ func ScrapeReddit(url string) (*util.ContentData, error) {
 	mainContent := question.Data.Children[0].Data.Selftext
 
 	for _, item := range redditData[1:] {
-		mainContent += "\n\n## Comments:\n\n"
+		mainContent += "\n## Comments:\n"
 		for _, child := range item.Data.Children {
 			if child.Kind == "t1" {
 				mainContent += "\n**Reply from: " + child.Data.Author + "**\n"
@@ -193,7 +193,7 @@ func ScrapeReddit(url string) (*util.ContentData, error) {
 			Hostname:    "reddit.com",
 			URL:         url,
 			Sitename:    "Reddit",
-			Description: question.Data.Children[0].Data.Selftext[0:70],
+			Description: mainContent[0:70],
 		},
 	}, nil
 }

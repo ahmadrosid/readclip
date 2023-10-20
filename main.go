@@ -6,6 +6,7 @@ import (
 
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
+	"github.com/ahmadrosid/readclip/internal/api"
 	"github.com/ahmadrosid/readclip/internal/bookmark"
 	"github.com/ahmadrosid/readclip/internal/clip"
 	"github.com/ahmadrosid/readclip/internal/static"
@@ -14,7 +15,6 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/config"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
-	"github.com/ahmadrosid/readclip/internal/youtube"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -80,8 +80,11 @@ func main() {
 	bookmark.NewHandler(
 		app.Group("/api/bookmarks"),
 	)
-	youtube.NewHandler(
+	api.NewYoutubeHandler(
 		app.Group("/api/youtube"),
+	)
+	api.NewRedditHandler(
+		app.Group("/api/reddit"),
 	)
 	user.NewHandler(
 		app.Group("/api/users"),

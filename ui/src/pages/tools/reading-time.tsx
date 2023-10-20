@@ -26,7 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 export default function ReadingTime() {
-  const { title, description } = tools[1];
+  const tool = tools.find((item) => item.slug === "reading-time");
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [config, setConfig] = useState({
     wpm: 300,
@@ -64,8 +64,8 @@ export default function ReadingTime() {
   return (
     <div className="container mx-auto min-h-[80vh]">
       <div className="pt-6">
-        <Title className="pb-4">{title}</Title>
-        <p className="text-lg text-gray-600">{description}</p>
+        <Title className="pb-4">{tool?.title}</Title>
+        <p className="text-lg text-gray-600">{tool?.description}</p>
         <Separator className="mt-4" />
       </div>
       <div className="flex py-6 gap-6">

@@ -12,7 +12,7 @@ import {
 import { formatNumber } from "@/lib/utils";
 
 export default function WordCounter() {
-  const { title, description } = tools[0];
+  const tool = tools.find((item) => item.slug === "word-counter");
   const [result, setResult] = useState({
     words: 0,
     chars: 0,
@@ -84,8 +84,8 @@ export default function WordCounter() {
   return (
     <div className="container mx-auto min-h-[80vh]">
       <div className="pt-6">
-        <Title className="pb-4">{title}</Title>
-        <p className="text-lg text-gray-600">{description}</p>
+        <Title className="pb-4">{tool?.title}</Title>
+        <p className="text-lg text-gray-600">{tool?.description}</p>
         <Separator className="mt-4" />
       </div>
       <div className="grid py-6 gap-6">

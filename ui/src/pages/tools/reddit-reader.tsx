@@ -2,7 +2,6 @@ import { Separator } from "@/components/ui/separator";
 import { tools } from ".";
 import { Title } from "@/components/ui/title";
 import { useMutation } from "react-query";
-import { fetchYoutubeTranscript } from "@/lib/api/echotube";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,14 +10,15 @@ import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { downloadText } from "@/lib/utils";
 import { Markdown } from "@/components/markdown";
+import { fetchRedditPost } from "@/lib/api/reddit";
 
-export default function YoutubeTranscriber() {
-  const tool = tools.find((item) => item.slug === "youtube-transcriber");
+export default function RedditReader() {
+  const tool = tools.find((item) => item.slug === "reddit-reader");
   const [inputUrl, setInputUrl] = useState("");
 
   const transcribeMutation = useMutation({
-    mutationFn: fetchYoutubeTranscript,
-    mutationKey: "youtube-transcript",
+    mutationFn: fetchRedditPost,
+    mutationKey: "reddit-reader",
     onError: (err: Error) => {
       toast.error(err.message);
     },
@@ -28,7 +28,7 @@ export default function YoutubeTranscriber() {
     if (!transcribeMutation.data) return;
     navigator.clipboard
       .writeText(
-        `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+        `# ${transcribeMutation.data.Title}\n\n${transcribeMutation.data.Content}`
       )
       .then(() => {
         toast.success("Copied to clipboard!");
@@ -37,10 +37,10 @@ export default function YoutubeTranscriber() {
 
   const handleDownload = useCallback(() => {
     if (!transcribeMutation.data) return;
-    const title = `${transcribeMutation.data.info.title}.md`;
+    const title = `${transcribeMutation.data.Title}.md`;
     downloadText(
       title,
-      `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+      `# ${transcribeMutation.data.Title}\n\n${transcribeMutation.data.Content}`
     );
     toast.success(`Downloaded "${title}"!`);
   }, [transcribeMutation.data]);
@@ -50,7 +50,6 @@ export default function YoutubeTranscriber() {
       <div className="pt-6">
         <Title className="pb-2">{tool?.title}</Title>
         <p className="text-lg text-gray-600">{tool?.description}</p>
-
         <Separator className="mt-4" />
       </div>
       <div className="grid py-6 gap-6">
@@ -66,8 +65,8 @@ export default function YoutubeTranscriber() {
             >
               <Input
                 type="text"
-                name="youtube_url"
-                placeholder="Paste youtube video link here..."
+                name="reddit_url"
+                placeholder="Paste reddit video link here..."
                 className="bg-white dark:bg-gray-800 h-10"
                 onChange={(e) => setInputUrl(e.currentTarget.value)}
               />
@@ -80,7 +79,7 @@ export default function YoutubeTranscriber() {
                 ) : (
                   ""
                 )}
-                Transcribe
+                Submit
               </Button>
             </form>
             <Card className="min-h-[70vh]">
@@ -90,7 +89,7 @@ export default function YoutubeTranscriber() {
                     <CardTitle className="text-2xl flex justify-between items-center">
                       <div>
                         {transcribeMutation.data
-                          ? transcribeMutation.data.info.title
+                          ? transcribeMutation.data.Title
                           : ""}
                       </div>
                       <div className="flex items-center gap-2">
@@ -125,9 +124,7 @@ export default function YoutubeTranscriber() {
               <CardContent>
                 {transcribeMutation.data ? (
                   <Markdown className="p-0 max-w-5xl">
-                    {transcribeMutation.data.content
-                      .map((item) => item.text)
-                      .join("\n")}
+                    {transcribeMutation.data.Content}
                   </Markdown>
                 ) : (
                   ""

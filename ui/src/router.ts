@@ -13,6 +13,7 @@ export type Path =
   | `/tools`
   | `/tools/markdown-editor`
   | `/tools/reading-time`
+  | `/tools/reddit-reader`
   | `/tools/word-counter`
   | `/tools/youtube-transcriber`
 
