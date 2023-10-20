@@ -21,6 +21,12 @@ export const tools = [
     link: "/tools/reddit-reader",
   },
   {
+    slug: "markdown-editor",
+    title: "Markdown Editor",
+    description: "Write, edit and view Markdown files.",
+    link: "/tools/markdown-editor",
+  },
+  {
     slug: "word-counter",
     title: "Words counter",
     description: "Count the words in your text",
@@ -31,12 +37,6 @@ export const tools = [
     title: "Reading time estimator",
     description: "Estimate the reading time of your text",
     link: "/tools/reading-time",
-  },
-  {
-    slug: "markdown-editor",
-    title: "Markdown Editor",
-    description: "Write, edit and view Markdown files.",
-    link: "/tools/markdown-editor",
   },
 ];
 
