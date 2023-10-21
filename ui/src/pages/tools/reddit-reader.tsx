@@ -12,8 +12,10 @@ import { downloadText } from "@/lib/utils";
 import { Markdown } from "@/components/markdown";
 import { fetchRedditPost } from "@/lib/api/reddit";
 import { UnauthorizedDialog } from "@/components/unauthorized-dialog";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function RedditReader() {
+  useAuth(false);
   const tool = tools.find((item) => item.slug === "reddit-reader");
   const [inputUrl, setInputUrl] = useState("");
   const [openDialogAuth, setOpenDialogAuth] = useState(false);

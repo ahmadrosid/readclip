@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-export function useAuth() {
+export function useAuth(withRedirect: boolean = true) {
   const navigate = useNavigate();
   const auth = getAuth(app);
   const user = useAuthState(auth, {
     onUserChanged: async (user) => {
       if (!user) {
-        navigate("/login");
+        if (withRedirect) navigate("/login");
       } else {
         const token = await user.getIdToken();
         window.localStorage.setItem("token", token);
