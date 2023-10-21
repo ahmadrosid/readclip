@@ -104,6 +104,11 @@ func main() {
 		return c.SendString(newHtml)
 	})
 
+	app.Get("/health-check", func(c *fiber.Ctx) error {
+		c.Status(http.StatusOK)
+		return c.SendString("Ok")
+	})
+
 	app.Use(recover.New())
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:3000, http://127.0.0.1:8000",
@@ -127,7 +132,7 @@ func main() {
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
 			"GET::/tools/*",
-			"GET::/sw.js",
+			"GET::/health-check",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
