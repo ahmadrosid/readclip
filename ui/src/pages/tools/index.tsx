@@ -23,7 +23,7 @@ export const tools = [
   {
     slug: "markdown-editor",
     title: "Markdown Editor",
-    description: "Write, edit and view Markdown files.",
+    description: "Write, edit and view Markdown texts.",
     link: "/tools/markdown-editor",
   },
   {
