@@ -50,7 +50,7 @@ export default function Tools() {
           distractions.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pb-8">
         {tools.map((tool) => (
           <Card key={tool.title}>
             <a href={tool.link}>
