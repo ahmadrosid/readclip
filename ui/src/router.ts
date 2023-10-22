@@ -11,6 +11,7 @@ export type Path =
   | `/register`
   | `/setting`
   | `/tools`
+  | `/tools/business-analysis`
   | `/tools/markdown-editor`
   | `/tools/reading-time`
   | `/tools/reddit-reader`

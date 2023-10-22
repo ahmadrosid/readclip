@@ -129,6 +129,7 @@ func main() {
 			"GET::/login",
 			"GET::/register",
 			"GET::/clips",
+			"POST::/api/clips/scrape",
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
 			"GET::/tools/*",

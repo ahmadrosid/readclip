@@ -38,6 +38,13 @@ export const tools = [
     description: "Estimate the reading time of your text",
     link: "/tools/reading-time",
   },
+  {
+    slug: "business-analysis",
+    title: "Business Value Proposition Analysis",
+    description:
+      "Find out Business Value Proposition Statement from landing page using AI.",
+    link: "/tools/business-analysis",
+  },
 ];
 
 export default function Tools() {

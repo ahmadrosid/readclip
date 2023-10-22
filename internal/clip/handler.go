@@ -39,6 +39,7 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 	route.Delete("/:id", handler.deleteClipByID)
 	route.Get("/:id/download", handler.downloadClipByID)
 	route.Post("/export", handler.exportClips)
+	route.Post("/scrape", handler.publicScrape)
 }
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
@@ -49,6 +50,41 @@ func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 	}
 
 	return &user.ID, nil
+}
+
+func (h *ClipHandler) publicScrape(c *fiber.Ctx) error {
+	// sleep for two seconds for testing purpose
+	// time.Sleep(2 * time.Second)
+	c.Accepts("application/json")
+
+	var input GrabMarkdownRequest
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	res, err := util.Scrape(input.Url, "markdown")
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	if res.Content == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "content is empty",
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status":           "success",
+		"current_datetime": util.GetCurrentDatetime(),
+		"data":             res,
+	})
 }
 
 func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
