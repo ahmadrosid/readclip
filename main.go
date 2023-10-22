@@ -104,6 +104,25 @@ func main() {
 		return c.SendString(newHtml)
 	})
 
+	app.Get("/tools/business-analysis", func(c *fiber.Ctx) error {
+		fs := http.FS(index)
+		oldURL := "https://readclip.ahmadrosid.com/img/readclip.png"
+		newURL := "https://res.cloudinary.com/dr15yjl8w/image/upload/v1697776546/reddit-reader_xnnb9v.png"
+
+		newHtml, err := embedfile.ReplaceStrInFile(fs, "index.html", oldURL, newURL)
+		if err != nil {
+			return c.SendStatus(http.StatusInternalServerError)
+		}
+
+		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/reddit-reader", -1)
+		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Reddit reader"`, -1)
+
+		c.Type("html")
+		c.Status(http.StatusOK)
+
+		return c.SendString(newHtml)
+	})
+
 	app.Get("/health-check", func(c *fiber.Ctx) error {
 		c.Status(http.StatusOK)
 		return c.SendString("Ok")

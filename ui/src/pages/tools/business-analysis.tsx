@@ -49,7 +49,7 @@ Output your analysis in one sentence.`;
     mutationFn: fetchOpenai,
     mutationKey: "openai-generate",
     onError: (err: Error) => {
-      toast.success(err.message);
+      toast.error(err.message);
     },
     onSuccess: (data) => {
       setResult((prev) => ({
@@ -71,7 +71,8 @@ Output your analysis in one sentence.`;
         content: data.data.Content,
       });
       openAiMutation.mutate({
-        model: "gpt-4",
+        model: "gpt-3.5-turbo",
+        // model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -156,7 +157,7 @@ Output your analysis in one sentence.`;
             <Card>
               <CardHeader>
                 <CardTitle>Settings</CardTitle>
-                <CardContent>
+                <CardContent className="p-0">
                   <Separator className="my-2" />
                   <div className="py-2">
                     <label className="grid gap-2">
@@ -221,14 +222,19 @@ Output your analysis in one sentence.`;
                     </div>
                   </div>
                   <div>
-                    {result.value !== "" && (
+                    {result.value !== "" || openAiMutation.isLoading ? (
                       <div className="pb-4">
                         <CardTitle>Value Proposition Statement</CardTitle>
                       </div>
+                    ) : (
+                      ""
                     )}
                     <div className="border rounded-md p-3 min-h-[3rem]">
-                      {openAiMutation.isLoading && <LoadingSkeleton />}
-                      {result.value}
+                      {openAiMutation.isLoading ? (
+                        <LoadingSkeleton />
+                      ) : (
+                        result.value
+                      )}
                     </div>
                   </div>
                 </div>
