@@ -35,14 +35,16 @@ func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
 		})
 	}
 
-	_, err := util.GetVideoID(input.Url)
+	videoId, err := util.GetVideoID(input.Url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	video, err := echotube.GetTranscript(input.Url)
+	video, err := echotube.GetTranscript(
+		"https://www.youtube.com/watch?v=" + videoId,
+	)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),

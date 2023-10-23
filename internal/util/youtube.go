@@ -29,6 +29,11 @@ func GetVideoID(youtubeURL string) (string, error) {
 		if strings.HasPrefix(u.Path, "/embed/") || strings.HasPrefix(u.Path, "/v/") {
 			return strings.TrimPrefix(u.Path, "/embed/"), nil
 		}
+		if strings.HasPrefix(u.Path, "/shorts/") {
+			// If the URL is a Shorts URL, transform it to the "watch?v=" format
+			videoID := strings.TrimPrefix(u.Path, "/shorts/")
+			return videoID, nil
+		}
 	}
 
 	return "", fmt.Errorf("unrecognized YouTube URL format")
