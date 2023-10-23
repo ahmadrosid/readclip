@@ -50,10 +50,9 @@ export default function Home() {
   return (
     <div className="container px-4 sm:px-8 mx-auto pt-8">
       <div className="max-w-3xl py-16 mx-auto text-left">
-        <p>Welcome to Readclip.</p>
+        <p>Save, Organize, and Enjoy - Readclip</p>
         <p className="py-6 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem] dark:text-white">
-          A better way to bookmark, read news, blogs, or any text from internet
-          without ads.
+          Your Personal Knowledge Library: Readclip Has You Covered.
         </p>
         <div className="flex gap-2 items-center">
           <Link
