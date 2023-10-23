@@ -28,17 +28,11 @@ func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
 		})
 	}
 
-	if !util.IsValidYoutubeUrl(input.Url) {
-		return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{
-			"status": "error",
-			"error":  "invalid url",
-		})
-	}
-
 	videoId, err := util.GetVideoID(input.Url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
+			"status": "error",
+			"error":  "invalid url",
 		})
 	}
 
