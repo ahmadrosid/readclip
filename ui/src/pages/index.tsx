@@ -62,10 +62,10 @@ export default function Home() {
             <h1 className="py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-6xl sm:leading-[3.5rem] dark:text-white">
               Your Personal Knowledge Library: Readclip Has You Covered.
             </h1>
-            <p className="text-xl text-gray-500 max-w-3xl mx-auto">
-              Build your own personal, accessible knowledge library. Access
-              Anytime, Anywhere with Readclip. Say goodbye to bookmarks and
-              browser tabs cluttering your workspace.
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+              Build your own personal knowledge library. Say goodbye to
+              bookmarks and browser tabs cluttering your workspace. Access
+              Anytime, Anywhere with Readclip.
             </p>
           </div>
           <div className="flex justify-center gap-2 items-center py-6">
