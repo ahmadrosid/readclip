@@ -1,17 +1,16 @@
-# fly.toml app configuration file generated for readclip on 2023-08-24T17:04:57+07:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
+# Docs: https://fly.io/docs/reference/configuration/
 
 app = "readclip"
 primary_region = "sin"
 
-[build]
+[deploy]
+  strategy = "rolling"
 
 [http_service]
   internal_port = 8080
+  protocol = "tcp"
   force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
+  auto_stop_machines = false
+  auto_start_machines = false
+  min_machines_running = 1
   processes = ["app"]
