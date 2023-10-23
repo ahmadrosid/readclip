@@ -104,6 +104,10 @@ Output your analysis in one sentence.`;
       toast.error("Please add openai api key!");
       return;
     }
+    setResult({
+      value: "",
+      content: "",
+    });
     scrapeMutation.mutate(inputUrl);
   };
 
