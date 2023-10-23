@@ -153,6 +153,7 @@ func main() {
 			"POST::/api/youtube/transcript",
 			"GET::/tools/*",
 			"GET::/health-check",
+			"GET::/tools/business-analysis",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
