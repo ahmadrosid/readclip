@@ -1,5 +1,4 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Link } from "@/router";
 import { ArrowRight } from "lucide-react";
