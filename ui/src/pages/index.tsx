@@ -86,7 +86,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-white">
+      <div className="bg-gray-100">
         <div className="max-w-5xl mx-auto space-y-4 py-12 mb-8">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
