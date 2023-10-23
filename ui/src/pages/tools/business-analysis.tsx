@@ -107,16 +107,12 @@ Output your analysis in one sentence.`;
     scrapeMutation.mutate(inputUrl);
   };
 
-  const handleCopy = useCallback(() => {
-    if (!scrapeMutation.data) return;
-    navigator.clipboard
-      .writeText(
-        `# ${scrapeMutation.data.data.Title}\n\n${scrapeMutation.data.data.Title}`
-      )
-      .then(() => {
-        toast.success("Copied to clipboard!");
-      });
-  }, [scrapeMutation.data]);
+  const handleCopy = useCallback((data: string) => {
+    if (!data) return;
+    navigator.clipboard.writeText(data).then(() => {
+      toast.success("Copied to clipboard!");
+    });
+  }, []);
 
   return (
     <div className="container mx-auto min-h-[80vh]">
@@ -199,32 +195,37 @@ Output your analysis in one sentence.`;
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     {result.content !== "" && (
-                      <div className="pb-4 px-2">
+                      <div className="pb-4 px-2 flex justify-between items-center">
                         <CardTitle>Text from landing page</CardTitle>
+                        <div className={cn(result.content === "" && "hidden")}>
+                          <Button
+                            variant="secondary"
+                            onClick={() => handleCopy(`# ${result.content}`)}
+                            className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                          >
+                            <CopyIcon className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     )}
-                    <div className="border rounded-md py-2 relative min-h-[3rem]">
+                    <div className="border rounded-md py-2 min-h-[3rem]">
+                      {scrapeMutation.isLoading && <LoadingSkeleton />}
                       <Markdown>{result.content}</Markdown>
-                      <div
-                        className={cn(
-                          "absolute top-0 right-0 p-2",
-                          result.content === "" && "hidden"
-                        )}
-                      >
-                        <Button
-                          variant="secondary"
-                          onClick={handleCopy}
-                          className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
-                        >
-                          <CopyIcon className="h-3 w-3" />
-                        </Button>
-                      </div>
                     </div>
                   </div>
                   <div>
                     {result.value !== "" || openAiMutation.isLoading ? (
-                      <div className="pb-4">
+                      <div className="pb-4 px-2 flex justify-between items-center">
                         <CardTitle>Value Proposition Statement</CardTitle>
+                        <div className={cn(result.content === "" && "hidden")}>
+                          <Button
+                            variant="secondary"
+                            onClick={() => handleCopy(`# ${result.value}`)}
+                            className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                          >
+                            <CopyIcon className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     ) : (
                       ""
@@ -233,7 +234,9 @@ Output your analysis in one sentence.`;
                       {openAiMutation.isLoading ? (
                         <LoadingSkeleton />
                       ) : (
-                        result.value
+                        <>
+                          <div>{result.value}</div>
+                        </>
                       )}
                     </div>
                   </div>
