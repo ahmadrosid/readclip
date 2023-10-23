@@ -157,6 +157,7 @@ func main() {
 			"POST::/api/clips/scrape",
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
+			"POST::/api/rss/parse",
 			"GET::/tools/*",
 			"GET::/health-check",
 			"GET::/tools/business-analysis",
@@ -175,19 +176,15 @@ func main() {
 		tag.NewTagRepository(db),
 		userRepo,
 	)
-	bookmark.NewHandler(
-		app.Group("/api/bookmarks"),
-	)
-	api.NewYoutubeHandler(
-		app.Group("/api/youtube"),
-	)
-	api.NewRedditHandler(
-		app.Group("/api/reddit"),
-	)
 	user.NewHandler(
 		app.Group("/api/users"),
 		userRepo,
 	)
+
+	bookmark.NewHandler(app.Group("/api/bookmarks"))
+	api.NewYoutubeHandler(app.Group("/api/youtube"))
+	api.NewRedditHandler(app.Group("/api/reddit"))
+	api.NewFeedHandler(app.Group("/api/rss"))
 
 	app.Listen(":" + env.Port)
 }

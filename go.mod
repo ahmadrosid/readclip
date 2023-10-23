@@ -14,6 +14,7 @@ require (
 	github.com/kkdai/youtube/v2 v2.8.3
 	github.com/lib/pq v1.10.9
 	github.com/markusmobius/go-trafilatura v1.5.1
+	github.com/mmcdole/gofeed v1.2.1
 	github.com/sacsand/gofiber-firebaseauth v1.4.3
 	golang.org/x/net v0.17.0
 	google.golang.org/api v0.143.0
@@ -56,6 +57,7 @@ require (
 	github.com/jalaali/go-jalaali v0.0.0-20210801064154-80525e88d958 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.16.3 // indirect
 	github.com/magefile/mage v1.15.0 // indirect
 	github.com/markusmobius/go-dateparser v1.2.1 // indirect
@@ -64,6 +66,9 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mmcdole/goxpp v1.1.0 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
