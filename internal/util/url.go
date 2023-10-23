@@ -36,5 +36,5 @@ func IsRedditUrl(str string) bool {
 	if err != nil {
 		panic(err)
 	}
-	return hostname == "reddit.com" || hostname == "www.reddit.com"
+	return hostname == "reddit.com" || hostname == "www.reddit.com" || hostname == "old.reddit.com"
 }

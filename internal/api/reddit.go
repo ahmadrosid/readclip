@@ -35,7 +35,17 @@ func (h *redditHandler) getRedditpost(c *fiber.Ctx) error {
 		})
 	}
 
-	data, err := reddit.ScrapeReddit(input.Url)
+	var oldRedditUrl = "https://old.reddit.com"
+	var length = len(oldRedditUrl)
+	var url = input.Url
+
+	if url[0:length] == oldRedditUrl {
+		url = "https://reddit.com" + url[length:]
+	}
+
+	println(url)
+
+	data, err := reddit.ScrapeReddit(url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
