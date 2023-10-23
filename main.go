@@ -79,7 +79,7 @@ func main() {
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/youtube-transcriber", -1)
 		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Youtube transcriber"`, -1)
 		newHtml = strings.Replace(newHtml,
-			`content="ReadClip - A better way to bookmark, read news, blog or any internet article without ads."`,
+			`content="ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy - Readclip, Your Reading Companion."`,
 			`content="Youtube Transcriber - Don't really have time to watch videos? Now you can read them!"`, -1)
 
 		c.Type("html")
@@ -101,7 +101,7 @@ func main() {
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/reddit-reader", -1)
 		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Reddit reader"`, -1)
 		newHtml = strings.Replace(newHtml,
-			`content="ReadClip - A better way to bookmark, read news, blog or any internet article without ads."`,
+			`content="ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy - Readclip, Your Reading Companion."`,
 			`content="Read reddit discussion without distraction wihtout a pain!"`, -1)
 
 		c.Type("html")
@@ -123,7 +123,7 @@ func main() {
 		newHtml = strings.Replace(newHtml, "https://readclip.ahmadrosid.com", "https://readclip.ahmadrosid.com/tools/business-analysis", -1)
 		newHtml = strings.Replace(newHtml, `content="ReadClip"`, `content="ReadClip - Business Value Proposition Analysis"`, -1)
 		newHtml = strings.Replace(newHtml,
-			`content="ReadClip - A better way to bookmark, read news, blog or any internet article without ads."`,
+			`content="ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy - Readclip, Your Reading Companion."`,
 			`content="Business Value Proposition Analysis - Find out Business Value Proposition Statement from landing page using AI."`, -1)
 
 		c.Type("html")
