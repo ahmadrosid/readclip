@@ -232,7 +232,9 @@ Output your analysis in one sentence.`;
                     )}
                     <div className="border rounded-md p-3 min-h-[3rem]">
                       {openAiMutation.isLoading ? (
-                        <LoadingSkeleton />
+                        <div className="px-2">
+                          <LoadingSkeleton />
+                        </div>
                       ) : (
                         <>
                           <div>{result.value}</div>
