@@ -1,8 +1,22 @@
 # ReadClip
 
-Read blog post, news or any text from internet without ads without distraction!
+Readclip lets you save articles for later reading. Just add a link and Readclip scrapes and stores the full text and media. Tag your clips to organize and find them easily. Readclip removes ads and distractions so you can focus on content. Build your own personal, accessible knowledge library.
 
 ![demo](https://readclip.ahmadrosid.com/img/readclip.png)
+
+## Before and after Readclip!
+
+Before:
+
+- It's hard to read news because fo widget, ads and a lot distractions.
+- Easily forget something that you have read online before.
+- You save some links but it broken because the website is down, or content removed.
+
+After:
+
+- Reading news or blog post it easier than before.
+- No more forgeting the article that you have read before, you can find it through tags ord hostname of the links you've saved.
+- No more loosing the broken links.
 
 ## Why?
 
