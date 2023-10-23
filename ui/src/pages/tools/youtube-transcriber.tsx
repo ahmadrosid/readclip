@@ -28,7 +28,11 @@ export default function YoutubeTranscriber() {
     if (!transcribeMutation.data) return;
     navigator.clipboard
       .writeText(
-        `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+        `# ${
+          transcribeMutation.data.info.title
+        }\n\n${transcribeMutation.data.content
+          .map((item) => item.text)
+          .join("\n")}`
       )
       .then(() => {
         toast.success("Copied to clipboard!");
@@ -40,7 +44,11 @@ export default function YoutubeTranscriber() {
     const title = `${transcribeMutation.data.info.title}.md`;
     downloadText(
       title,
-      `# ${transcribeMutation.data.info.title}\n\n${transcribeMutation.data.content}`
+      `# ${
+        transcribeMutation.data.info.title
+      }\n\n${transcribeMutation.data.content
+        .map((item) => item.text)
+        .join("\n")}`
     );
     toast.success(`Downloaded "${title}"!`);
   }, [transcribeMutation.data]);
