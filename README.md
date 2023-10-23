@@ -123,7 +123,7 @@ Some feature will be added soon.
 - [x] FREE TOOLS: Reading timme estimator
 - [x] FREE TOOLS: Get youtube transcriptions
 - [x] FREE TOOLS: Markdown viewer
-- [ ] FREE TOOLS: Thesaurus
+- [x] FREE TOOLS: Business Value Proposition Analysis
 - [ ] Daily Reading Digest (explore menu just like instagram etc)
 - [ ] Improve parsing code
 - [ ] FullText search (Opensearch)

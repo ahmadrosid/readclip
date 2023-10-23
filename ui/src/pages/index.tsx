@@ -11,6 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 export function DialogDemo() {
   return (
@@ -48,105 +50,156 @@ export default function Home() {
   }, [howToRef]);
 
   return (
-    <div className="container px-4 sm:px-8 mx-auto pt-8">
-      <div className="max-w-3xl py-16 mx-auto text-left">
-        <p>Save, Organize, and Enjoy - Readclip</p>
-        <p className="py-6 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-5xl sm:leading-[3.5rem] dark:text-white">
-          Your Personal Knowledge Library: Readclip Has You Covered.
-        </p>
-        <div className="flex gap-2 items-center">
-          <Link
-            to="/clip"
-            className={cn(
-              buttonVariants({
-                size: "lg",
-                className:
-                  "items-center justify-between h-10 bg-black dark:bg-white text-white dark:text-black",
-              })
-            )}
-          >
-            Getting started
-          </Link>
-          <DialogDemo />
+    <div>
+      <div className="py-16">
+        <div className="max-w-4xl py-16 mx-auto text-center">
+          <div className="py-6 max-w-4xl">
+            <Badge
+              variant={"secondary"}
+              className="py-2 px-4 rounded-full border border-gray-200"
+            >
+              Save, Organize, and Enjoy
+            </Badge>
+            <h1 className="py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-6xl sm:leading-[3.5rem] dark:text-white">
+              Your Personal Knowledge Library: Readclip Has You Covered.
+            </h1>
+            <p className="text-xl text-gray-500 max-w-3xl mx-auto">
+              Build your own personal, accessible knowledge library. Access
+              Anytime, Anywhere with Readclip. Say goodbye to bookmarks and
+              browser tabs cluttering your workspace.
+            </p>
+          </div>
+          <div className="flex justify-center gap-2 items-center py-6">
+            <Link
+              to="/clip"
+              className={cn(
+                buttonVariants({
+                  size: "lg",
+                  className:
+                    "items-center justify-between h-10  dark:bg-white text-white dark:text-black",
+                })
+              )}
+            >
+              Getting started
+            </Link>
+            <DialogDemo />
+          </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-4 py-12 mb-8">
-        <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
-          Features
-        </h2>
-        <Separator />
-        <div className="space-y-4 pt-8">
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            Reading
-          </h3>
-          <p className="text-lg font-medium">
-            Readclip will download the html content, then do some magic and turn
-            it into markdown, and present it in a simple and clean manner,
-            allowing for easier reading without any ads or distractions. You can
-            choose between dark mode or light mode for your reading preference.
-          </p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            Bookmarking
-          </h3>
-          <p className="text-lg font-medium">
-            When bookmarking links from the internet, you will sometimes lose
-            the content when the link is no longer accessible. With ReadClip, we
-            aim to address this by preserving the content. This way, even if the
-            links are broken, you still have access to it.
-          </p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            Own your data
-          </h3>
-          <p className="text-lg font-medium">
-            When you save a bookmark, we'll download the content and store it in
-            the database, and only you can access the data. You can also export
-            your data to JSON or CSV format. This way, you can always have
-            access to your data even if you delete your account.
-          </p>
+      <div className="bg-white">
+        <div className="max-w-5xl mx-auto space-y-4 py-12 mb-8">
+          <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
+            Features
+          </h2>
+          {/* <Separator /> */}
+          <div className="grid grid-cols-2 gap-5 pt-6 pb-16">
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-[50px] h-20 w-20">💾</div>
+                <CardTitle className="pb-4 text-xl">Content Saving</CardTitle>
+                <p className="text-gray-600">
+                  Save Any Online Article: Readclip allows you to save articles,
+                  blog posts, news, and more from the web with a single click.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-[57px] h-20 w-20">📖</div>
+                <CardTitle className="pb-4 text-xl">
+                  Distraction-Free Reading
+                </CardTitle>
+                <p className="text-gray-600">
+                  Readclip allows you to save articles, blog posts, news, and
+                  more from the web with a single click. Say goodbye to
+                  bookmarks and browser tabs cluttering your workspace.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-[57px] h-20 w-20">🏷️</div>
+                <CardTitle className="pb-4 text-xl">
+                  Easy Organization
+                </CardTitle>
+                <p className="text-gray-600">
+                  Tagging and Categorization: Organize your saved articles
+                  effortlessly with customizable tags. Find what you need
+                  quickly, whether it's by topic, source, or any other criteria.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-[57px] h-20 w-20">📚</div>
+                <CardTitle className="pb-4 text-xl">
+                  Reliable Accessibility
+                </CardTitle>
+                <p className="text-gray-600">
+                  Readclip allows you to save articles, blog posts, news, and
+                  more from the web with a single click. Say goodbye to
+                  bookmarks and browser tabs cluttering your workspace.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 
-      <div
-        ref={howToRef}
-        id="how-to"
-        className="max-w-3xl mx-auto space-y-4 py-12 mb-8"
-      >
-        <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
-          How it works?
-        </h2>
-        <Separator />
-        <p className="text-lg font-medium">
-          You can use Readclip in two simple ways: bookmarklet or submit a link.
-        </p>
-        <div className="space-y-4 pt-8">
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            Submit link.
-          </h3>
-          <p className="text-lg font-medium">
-            Got to to{" "}
-            <Link to={"/clip"} className="underline">
-              Clip
-            </Link>{" "}
-            page and submit your link there.
-            <img
-              src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700714/submit-readclip_hszpvj.png"
-              alt="clip"
-              className="w-full border my-2 rounded-md"
-            />
+      <div className="p-8">
+        <div
+          ref={howToRef}
+          id="how-to"
+          className="max-w-4xl mx-auto space-y-4 py-12 mb-8"
+        >
+          <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
+            How it works?
+          </h2>
+          {/* <Separator /> */}
+          <p className="text-lg font-normal py-2">
+            You can use Readclip in two simple ways: bookmarklet or submit a
+            link.
           </p>
-          <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
-            Bookmarklet
-          </h3>
-          <p className="text-lg font-medium">
-            You also can use bookmarklet to save your link. Drag and drop the
-            bookmarklet link into you bookmark bar.
-            <img
-              src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700583/bookmarklet-readclip_scghdf.png"
-              alt="clip"
-              className="w-full border my-2 rounded-md"
-            />
-          </p>
+          <div className="space-y-4 pt-8">
+            <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
+              Submit link.
+            </h3>
+            <div className="text-lg font-normal">
+              <p className="pb-4">
+                Got to to{" "}
+                <Link to={"/clip"} className="underline">
+                  Clip
+                </Link>{" "}
+                page and submit your link there.
+              </p>
+              <div className="py-2 block">
+                <img
+                  src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700714/submit-readclip_hszpvj.png"
+                  alt="clip"
+                  className="w-full border rounded-md"
+                />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1] text-gray-700 dark:text-gray-300">
+                Bookmarklet
+              </h3>
+              <div className="text-lg font-normal">
+                <p className="py-4">
+                  You also can use bookmarklet to save your link. Drag and drop
+                  the bookmarklet link into you bookmark bar.
+                </p>
+                <div className="py-2">
+                  <img
+                    src="https://res.cloudinary.com/dr15yjl8w/image/upload/v1696700583/bookmarklet-readclip_scghdf.png"
+                    alt="clip"
+                    className="w-full border rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
