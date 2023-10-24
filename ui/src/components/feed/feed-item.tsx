@@ -1,0 +1,172 @@
+import { CheckCircle2, RssIcon } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { RedditIcon } from "@/components/icons/reddit";
+import { HackerNewsIcon } from "@/components/icons/hackernews";
+import { YoutubeIcon } from "@/components/icons/youtube";
+import { GithubIcon } from "@/components/icons/github";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+
+type DeckProps = {
+  type: "github" | "reddit" | "rss" | "youtube" | "hackernews";
+  url: string;
+  options: string[];
+};
+
+type FeedItemValue = {
+  type: DeckProps["type"];
+  url: string;
+  options: string[];
+};
+
+export function FeedItem({
+  type,
+  label,
+  onValueUpdate,
+}: {
+  type: DeckProps["type"];
+  label: string;
+  defaultItem?: FeedItemValue;
+  onValueUpdate: (param: FeedItemValue) => void;
+}) {
+  const [showSelected, setShowSelected] = useState(false);
+  const [selectedGithubValue, setSelectedGithubValue] = useState({
+    language: "go",
+    time: "daily",
+  });
+  let icon = <GithubIcon className="w-5 h-5 mr-4" />;
+  switch (type) {
+    case "github":
+      icon = <GithubIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "rss":
+      icon = <RssIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "youtube":
+      icon = <YoutubeIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "reddit":
+      icon = <RedditIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "hackernews":
+      icon = <HackerNewsIcon className="w-5 h-5 mr-4" />;
+      break;
+  }
+
+  const toggleShowSelected = useCallback(
+    () => setShowSelected((prev) => !prev),
+    []
+  );
+
+  const isComingSoon =
+    type === "youtube" || type === "hackernews" || type === "reddit";
+
+  useEffect(() => {
+    onValueUpdate({
+      type: "github",
+      options: [selectedGithubValue.time, selectedGithubValue.language],
+      url: "",
+    });
+  }, [onValueUpdate, selectedGithubValue]);
+
+  return (
+    <li
+      className={cn(
+        "border-b p-4 hover:bg-gray-50",
+        showSelected && "bg-gray-50"
+      )}
+    >
+      <div className="flex items-center" onClick={toggleShowSelected}>
+        {icon}
+        <p
+          className={cn(
+            "flex-1 cursor-pointer",
+            isComingSoon && "text-gray-400"
+          )}
+        >
+          {label}
+        </p>
+        {isComingSoon ? (
+          <p className="text-xs text-gray-500">Coming soon</p>
+        ) : (
+          <CheckCircle2
+            className={cn("w-5 h-5 text-gray-500", !showSelected && "hidden")}
+          />
+        )}
+      </div>
+      {type === "rss" && showSelected && (
+        <div className="pt-4">
+          <label>
+            <span className="text-sm pb-2 block text-gray-600">
+              Rss Feed Url
+            </span>
+            <Input
+              name="input_url_rss"
+              className="bg-white"
+              placeholder="https://example.com/rss.xml"
+              onChange={(e) =>
+                onValueUpdate({
+                  type: "rss",
+                  url: e.currentTarget.value,
+                  options: [],
+                })
+              }
+            />
+          </label>
+        </div>
+      )}
+      {type === "github" && showSelected && (
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label
+              htmlFor="language"
+              className="text-gray-600 text-sm pb-2 inline-block"
+            >
+              Language
+            </label>
+            <select
+              id="language"
+              name="language"
+              onChange={(e) =>
+                setSelectedGithubValue((prev) => ({
+                  ...prev,
+                  language: e.target.value,
+                }))
+              }
+              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+            >
+              <option value="go">Go</option>
+              <option value="java">Java</option>
+              <option value="php">PHP</option>
+              <option value="rust">Rust</option>
+              <option value="ruby">Ruby</option>
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="time_range"
+              className="text-gray-600 text-sm pb-2 inline-block"
+            >
+              Since
+            </label>
+            <select
+              id="time_range"
+              name="time_range"
+              onChange={(e) => {
+                setSelectedGithubValue((prev) => ({
+                  ...prev,
+                  time: e.target.value,
+                }));
+              }}
+              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+            >
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+      )}
+    </li>
+  );
+}
