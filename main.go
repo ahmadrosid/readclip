@@ -48,6 +48,7 @@ func main() {
 		"/clip",
 		"/register",
 		"/clips",
+		"/feed-deck",
 		"/setting",
 		"/login",
 		"/tools",
