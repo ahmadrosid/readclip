@@ -91,7 +91,6 @@ export default function Home() {
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
           </h2>
-          {/* <Separator /> */}
           <div className="grid grid-cols-2 gap-5 pt-6 pb-16">
             <Card>
               <CardContent className="p-6">
