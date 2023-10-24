@@ -33,7 +33,7 @@ export function Header() {
 
             <Link to="/clip">
               <Button
-                className="dark:text-white text-gray-800 pr-0"
+                className="dark:text-white text-gray-800 px-2"
                 variant="link"
               >
                 Clip
@@ -41,22 +41,37 @@ export function Header() {
             </Link>
 
             <Link to="/clips">
-              <Button className="dark:text-white text-gray-800" variant="link">
-                Saved
+              <Button
+                className="dark:text-white text-gray-800 px-2"
+                variant="link"
+              >
+                History
+              </Button>
+            </Link>
+
+            <Link to="/feed-deck">
+              <Button
+                className="dark:text-white text-gray-800 px-2"
+                variant="link"
+              >
+                Feed deck
               </Button>
             </Link>
 
             <Link to="/setting">
               <Button
-                className="dark:text-white text-gray-800 px-0"
+                className="dark:text-white text-gray-800 px-2"
                 variant="link"
               >
-                Setting
+                Settings
               </Button>
             </Link>
 
             <Link to="/tools" className="hidden sm:block">
-              <Button className="dark:text-white text-gray-800" variant="link">
+              <Button
+                className="dark:text-white text-gray-800 px-2"
+                variant="link"
+              >
                 Free tools
               </Button>
             </Link>

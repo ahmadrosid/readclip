@@ -18,6 +18,7 @@ export const Pending = () => <div>Loading from _app...</div>;
 
 export default function App() {
   const queryClient = new QueryClient();
+  const path = window.location.pathname;
 
   return (
     <ThemeProvider>
@@ -27,7 +28,7 @@ export default function App() {
           <Outlet />
         </main>
         <Toaster richColors />
-        <Footer />
+        {path !== "/feed-deck" ? <Footer /> : null}
       </QueryClientProvider>
     </ThemeProvider>
   );
