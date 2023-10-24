@@ -59,8 +59,8 @@ export default function Home() {
             >
               Save, Organize, and Enjoy
             </Badge>
-            <h1 className="py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-6xl sm:leading-[3.5rem] dark:text-white">
-              Your Personal Knowledge Library: Readclip Has You Covered.
+            <h1 className="py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-white">
+              Personal Knowledge Library for Content creators.
             </h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
               Build your own personal knowledge library. Say goodbye to
@@ -87,7 +87,7 @@ export default function Home() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="max-w-5xl mx-auto space-y-4 py-12 mb-8">
+        <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
           </h2>
