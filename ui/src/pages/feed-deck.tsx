@@ -14,20 +14,15 @@ import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 import { DeckItem } from "@/components/feed/deck-item";
 import { FeedItem } from "@/components/feed/feed-item";
-
-type DeckProps = {
-  type: "github" | "reddit" | "rss" | "youtube" | "hackernews";
-  url: string;
-  options: string[];
-};
+import { type BaseDeck } from "@/components/feed";
 
 type FeedItemValue = {
-  type: DeckProps["type"];
+  type: BaseDeck["type"];
   url: string;
   options: string[];
 };
 
-type SavedComponentItem = DeckProps & { id: string };
+type SavedComponentItem = BaseDeck & { id: string };
 
 export default function FeedDeckPage() {
   const deckItemKey = "saved-decks-items";

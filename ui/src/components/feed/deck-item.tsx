@@ -10,14 +10,9 @@ import { useQuery } from "react-query";
 import { fetchRssFeed } from "@/lib/api/feed";
 import { toast } from "sonner";
 import React from "react";
+import { type BaseDeck } from "@/components/feed/index";
 
-type DeckItemProps = {
-  type: "github" | "reddit" | "rss" | "youtube" | "hackernews";
-  url: string;
-  options: string[];
-};
-
-type DeckComponentProps = DeckItemProps & {
+type DeckComponentProps = BaseDeck & {
   id: string;
   onDeleteDeck: (id: string) => void;
 };

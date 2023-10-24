@@ -6,15 +6,10 @@ import { YoutubeIcon } from "@/components/icons/youtube";
 import { GithubIcon } from "@/components/icons/github";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-
-type DeckProps = {
-  type: "github" | "reddit" | "rss" | "youtube" | "hackernews";
-  url: string;
-  options: string[];
-};
+import { type BaseDeck } from "@/components/feed/index";
 
 type FeedItemValue = {
-  type: DeckProps["type"];
+  type: BaseDeck["type"];
   url: string;
   options: string[];
 };
@@ -24,7 +19,7 @@ export function FeedItem({
   label,
   onValueUpdate,
 }: {
-  type: DeckProps["type"];
+  type: BaseDeck["type"];
   label: string;
   defaultItem?: FeedItemValue;
   onValueUpdate: (param: FeedItemValue) => void;
