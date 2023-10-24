@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "react-query";
 import { fetchRssFeed } from "@/lib/api/feed";
 import { toast } from "sonner";
-import React from "react";
+import React, { useState } from "react";
 import { type BaseDeck } from "@/components/feed/index";
+import { cn } from "@/lib/utils";
 
 type DeckComponentProps = BaseDeck & {
   id: string;
@@ -19,7 +20,11 @@ type DeckComponentProps = BaseDeck & {
 
 export const DeckItem = React.memo<DeckComponentProps>(
   ({ type, url, options, id, onDeleteDeck }) => {
+    const [openPopover, setOpenPopover] = useState(false);
     const queryData = useQuery({
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
       queryFn: () =>
         fetchRssFeed({
           type: type,
@@ -27,6 +32,11 @@ export const DeckItem = React.memo<DeckComponentProps>(
           options: options,
         }),
       queryKey: id,
+      onSuccess: () => {
+        if (openPopover) {
+          setOpenPopover(false);
+        }
+      },
       onError: (err: Error) => {
         toast.error(err.message);
       },
@@ -48,9 +58,9 @@ export const DeckItem = React.memo<DeckComponentProps>(
             />
           )}
           <div className="flex-1">{queryData.data?.data?.title}</div>
-          <Popover>
+          <Popover open={openPopover} onOpenChange={setOpenPopover}>
             <PopoverTrigger>
-              <MoreVertical />
+              <MoreVertical className="w-4 h-4" />
             </PopoverTrigger>
             <PopoverContent side="left" align="start" className="p-2 w-52">
               <div className="grid gap-2">
@@ -60,7 +70,13 @@ export const DeckItem = React.memo<DeckComponentProps>(
                   type="submit"
                   onClick={() => queryData.refetch()}
                 >
-                  <RefreshCcwIcon className="w-4 h-4 mr-3" /> Refresh
+                  <RefreshCcwIcon
+                    className={cn(
+                      "w-4 h-4 mr-3",
+                      queryData.isRefetching && "animate-spin"
+                    )}
+                  />{" "}
+                  Refresh
                 </Button>
                 <Button
                   variant="ghost"
