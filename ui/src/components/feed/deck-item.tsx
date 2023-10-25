@@ -121,19 +121,17 @@ export const DeckItem = React.memo<DeckComponentProps>(
         <div className="grid max-h-[85vh] overflow-y-auto">
           {queryData?.data?.data?.items.map((item) => (
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
-              <a target="_blank" href={item.link}>
+              <a target="_blank" className="hover:underline" href={item.link}>
                 <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
                   {item.title}
                 </h3>
-                <div
-                  className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md max-w-md"
-                  dangerouslySetInnerHTML={{
-                    __html: extractTextContent(
-                      item.description || item.content
-                    ),
-                  }}
-                ></div>
               </a>
+              <div
+                className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md max-w-md"
+                dangerouslySetInnerHTML={{
+                  __html: extractTextContent(item.description || item.content),
+                }}
+              ></div>
             </div>
           ))}
         </div>

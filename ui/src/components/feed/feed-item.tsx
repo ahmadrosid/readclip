@@ -77,12 +77,20 @@ export function FeedItem({
         onValueUpdate({
           type,
           url: "",
-          options: [],
+          options:
+            type === "github"
+              ? [selectedGithubValue.time, selectedGithubValue.language]
+              : [],
         });
       }
       return !prev;
     });
-  }, [onValueUpdate, type]);
+  }, [
+    onValueUpdate,
+    selectedGithubValue.language,
+    selectedGithubValue.time,
+    type,
+  ]);
 
   const isComingSoon = type === "youtube" || type === "hackernews";
 
