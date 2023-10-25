@@ -6,7 +6,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { PlusIcon, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -79,8 +78,9 @@ export default function FeedDeckPage() {
   };
 
   return (
-    <ScrollArea className="w-full">
-      <div className="flex overflow-x-auto border-l">
+    <div className="">
+      {/* <div className="w-full snap-x snap-proximity flex overflow-x-auto border-l"> */}
+      <div className="flex-grow flex overflow-x-auto snap-x snap-mandatory">
         {savedDecksComponents.map((item, idx) => (
           <DeckItem
             key={idx}
@@ -197,7 +197,6 @@ export default function FeedDeckPage() {
           </div>
         </div>
       </div>
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+    </div>
   );
 }

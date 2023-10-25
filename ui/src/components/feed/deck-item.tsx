@@ -17,6 +17,28 @@ type DeckComponentProps = BaseDeck & {
   id: string;
   onDeleteDeck: (id: string) => void;
 };
+import { Skeleton } from "@/components/ui/skeleton";
+
+export function LoadingSkeleton() {
+  return (
+    <>
+      {Array(10)
+        .fill(0)
+        .map((_, idx) => (
+          <div
+            key={idx}
+            className="flex items-center space-x-2 w-full p-2 border-b"
+          >
+            <Skeleton className="h-11 w-11 rounded-md" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[22rem]" />
+              <Skeleton className="h-4 w-[23rem]" />
+            </div>
+          </div>
+        ))}
+    </>
+  );
+}
 
 export const DeckItem = React.memo<DeckComponentProps>(
   ({ type, url, options, id, onDeleteDeck }) => {
@@ -72,7 +94,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
     };
 
     return (
-      <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0">
+      <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0 snap-center">
         <div className="p-2 border-b flex gap-2 items-center min-h-[40px]">
           {queryData.data?.data && (
             <img
@@ -119,6 +141,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
           </Popover>
         </div>
         <div className="grid max-h-[85vh] overflow-y-auto">
+          {queryData.isLoading && <LoadingSkeleton />}
           {queryData?.data?.data?.items.map((item) => (
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
               <a target="_blank" className="hover:underline" href={item.link}>
