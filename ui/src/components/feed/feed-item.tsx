@@ -92,7 +92,7 @@ export function FeedItem({
     type,
   ]);
 
-  const isComingSoon = type === "youtube" || type === "hackernews";
+  const isComingSoon = type === "youtube";
 
   useEffect(() => {
     if (type !== "github") return;

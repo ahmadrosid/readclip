@@ -26,3 +26,22 @@ type Metadata struct {
 	Image       string
 	PageType    string
 }
+
+type FeedMetadata struct {
+	Stars int `json:"stars"`
+}
+
+type FeedItem struct {
+	Title       string       `json:"title"`
+	Description string       `json:"description"`
+	Link        string       `json:"link"`
+	Author      string       `json:"author"`
+	Metadata    FeedMetadata `json:"metadata"`
+}
+
+type FeedResult struct {
+	Title       string     `json:"title"`
+	Description string     `json:"description"`
+	Link        string     `json:"link"`
+	Items       []FeedItem `json:"items"`
+}

@@ -9,10 +9,6 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 )
 
-var (
-	userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
-)
-
 type DataChildren struct {
 	ApprovedAtUtc              interface{}   `json:"approved_at_utc"`
 	Subreddit                  string        `json:"subreddit"`
@@ -156,7 +152,7 @@ func ScrapeReddit(url string) (*util.ContentData, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("User-Agent", util.UserAgent)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

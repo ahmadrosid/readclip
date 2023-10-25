@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ahmadrosid/readclip/internal/util/github"
+	"github.com/ahmadrosid/readclip/internal/util/hckrnews"
 	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mmcdole/gofeed"
@@ -53,6 +54,18 @@ func (*feedHandler) parseRssFeed(c *fiber.Ctx) error {
 				})
 			}
 			input.Url = reddit.GenerateRedditRssUrl(input.Options[0])
+		case "hackernews":
+			result, err := hckrnews.FetchHackernews()
+			if err != nil {
+				return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+					"status": "error",
+					"error":  err.Error(),
+				})
+			}
+
+			return c.Status(http.StatusOK).JSON(fiber.Map{
+				"data": result,
+			})
 		}
 	}
 
