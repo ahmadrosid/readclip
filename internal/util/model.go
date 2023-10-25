@@ -36,6 +36,7 @@ type FeedItem struct {
 	Description string       `json:"description"`
 	Link        string       `json:"link"`
 	Author      string       `json:"author"`
+	Date        string       `json:"date"`
 	Metadata    FeedMetadata `json:"metadata"`
 }
 

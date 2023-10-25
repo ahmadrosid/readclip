@@ -33,7 +33,7 @@ func parseHTMLSource(htmlSource string) (*html.Node, error) {
 }
 
 func parseContent(content string) []HackernewsResponse {
-	var result []HackernewsResponse = make([]HackernewsResponse, 0)
+	var result = make([]HackernewsResponse, 0)
 	doc, err := parseHTMLSource(content)
 	if err != nil {
 		println("Parse error")
@@ -81,7 +81,7 @@ func parseContent(content string) []HackernewsResponse {
 		// parse user name to string
 		ageDom := dom.QuerySelector(subtextDom, ".age")
 		if ageDom != nil {
-			dataItem.Author = dom.GetAttribute(ageDom, "title")
+			dataItem.Date = dom.GetAttribute(ageDom, "title")
 		}
 
 		// parse comments
@@ -146,6 +146,7 @@ func FetchHackernews() (interface{}, error) {
 			Description: fmt.Sprintf("<p class=\"text-gray-500\">%s</p>", item.Link),
 			Link:        item.Link,
 			Author:      item.Author,
+			Date:        item.Date,
 		}
 		feedResult.Items = append(feedResult.Items, feedItem)
 	}
