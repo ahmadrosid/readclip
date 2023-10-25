@@ -14,6 +14,33 @@ type FeedItemValue = {
   options: string[];
 };
 
+const languages = [
+  {
+    label: "Unknown",
+    value: "unknown",
+  },
+  {
+    label: "Golang",
+    value: "go",
+  },
+  {
+    label: "Java",
+    value: "java",
+  },
+  {
+    label: "PHP",
+    value: "php",
+  },
+  {
+    label: "Rust",
+    value: "rust",
+  },
+  {
+    label: "Ruby",
+    value: "ruby",
+  },
+];
+
 export function FeedItem({
   type,
   label,
@@ -130,11 +157,9 @@ export function FeedItem({
               }
               className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
-              <option value="go">Go</option>
-              <option value="java">Java</option>
-              <option value="php">PHP</option>
-              <option value="rust">Rust</option>
-              <option value="ruby">Ruby</option>
+              {languages.map((item) => (
+                <option value={item.value}>{item.label}</option>
+              ))}
             </select>
           </div>
           <div>

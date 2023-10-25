@@ -7,6 +7,11 @@ import (
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/gofiber/fiber/v2"
+)
+
+var (
+	userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
 )
 
 type DataChildren struct {
@@ -141,6 +146,34 @@ type RedditResponse []struct {
 	} `json:"data"`
 }
 
+func ParseFeedSubReddit(url string) (interface{}, error) {
+	req, err := http.NewRequest("GET", strings.TrimRight(url, "/")+".json", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("User-Agent", userAgent)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
+	}
+
+	var redditData fiber.Map
+	if err := json.NewDecoder(resp.Body).Decode(&redditData); err != nil {
+		return nil, err
+	}
+
+	return redditData, nil
+}
+
 func ScrapeReddit(url string) (*util.ContentData, error) {
 	req, err := http.NewRequest("GET", strings.TrimRight(url, "/")+".json", nil)
 	if err != nil {
@@ -148,7 +181,7 @@ func ScrapeReddit(url string) (*util.ContentData, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36")
+	req.Header.Set("User-Agent", userAgent)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

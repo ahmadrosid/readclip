@@ -85,17 +85,46 @@ export default function FeedDeckPage() {
       ))}
       <div
         className={cn(
-          "grid min-w-[28rem] place-content-center h-[80vh]",
-          savedDecksComponents.length === 0 && "w-screen"
+          "min-w-[28rem]",
+          savedDecksComponents.length === 0 &&
+            "w-screen grid place-content-center  h-[80vh]"
         )}
       >
-        <div>
+        <div className="text-center">
+          {savedDecksComponents.length === 0 && (
+            <div className="p-4">
+              <div className="flex justify-center flex-row">
+                <img
+                  className="w-44 h-44 opacity-5"
+                  src="https://cdn-icons-png.flaticon.com/512/4076/4076510.png"
+                  alt="Empty feed"
+                />
+              </div>
+              <p className="max-w-xs text-base font-normal text-gray-700 tracking-tight">
+                Your feeds list is empty. Click 'Add Feed' to add a new one.
+              </p>
+            </div>
+          )}
           <Dialog open={showAddDeckDialog} onOpenChange={setShowAddDeckDialog}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="justify-between px-3">
-                <PlusIcon className="w-4 h-4 mr-1" /> Add feed
-              </Button>
-            </DialogTrigger>
+            {savedDecksComponents.length === 0 ? (
+              <DialogTrigger asChild>
+                <Button variant="outline" className="justify-between px-3 pr-5">
+                  <PlusIcon className="w-4 h-4 mr-1" /> Add feed
+                </Button>
+              </DialogTrigger>
+            ) : (
+              <div className="w-[28rem] border-r border-l border-b h-[91vh] bg-white">
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="rounded-none shadow-none w-full border-b h-[41px]"
+                  >
+                    <PlusIcon className="w-4 h-4 mr-1" />
+                    Add new feed
+                  </Button>
+                </DialogTrigger>
+              </div>
+            )}
             <DialogContent className="p-0 overflow-hidden gap-0">
               <DialogHeader className="px-4 py-4 border-b bg-gray-50">
                 <DialogTitle>Add feed</DialogTitle>

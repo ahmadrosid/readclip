@@ -48,8 +48,8 @@ export const DeckItem = React.memo<DeckComponentProps>(
     };
 
     return (
-      <div className="w-full max-w-md border-r border-b bg-white flex-shrink-0">
-        <div className="p-2 border-b flex gap-2 items-center">
+      <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0">
+        <div className="p-2 border-b flex gap-2 items-center min-h-[40px]">
           {queryData.data?.data && (
             <img
               src={getLogoUrl(queryData.data?.data?.link)}
@@ -62,12 +62,13 @@ export const DeckItem = React.memo<DeckComponentProps>(
             <PopoverTrigger>
               <MoreVertical className="w-4 h-4" />
             </PopoverTrigger>
-            <PopoverContent side="left" align="start" className="p-2 w-52">
-              <div className="grid gap-2">
+            <PopoverContent side="bottom" align="start" className="p-1.5 w-52">
+              <div className="grid gap-1">
                 <Button
                   variant="ghost"
                   className="justify-start"
                   type="submit"
+                  size="sm"
                   onClick={() => queryData.refetch()}
                 >
                   <RefreshCcwIcon
@@ -80,8 +81,12 @@ export const DeckItem = React.memo<DeckComponentProps>(
                 </Button>
                 <Button
                   variant="ghost"
+                  size="sm"
                   className="justify-start"
-                  onClick={() => onDeleteDeck(id)}
+                  onClick={() => {
+                    onDeleteDeck(id);
+                    setOpenPopover(false);
+                  }}
                 >
                   <Trash2 className="w-4 h-4 mr-3" /> Delete
                 </Button>
