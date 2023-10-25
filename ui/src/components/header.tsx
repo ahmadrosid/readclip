@@ -58,7 +58,7 @@ export function Header() {
               </Button>
             </Link>
 
-            <Link to="/setting">
+            <Link to="/setting" className="hidden sm:block">
               <Button
                 className="dark:text-white text-gray-800 px-2"
                 variant="link"

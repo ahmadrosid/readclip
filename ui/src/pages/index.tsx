@@ -50,8 +50,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className="py-16">
-        <div className="max-w-4xl py-16 mx-auto text-center">
+      <div className="py-0 sm:py-16">
+        <div className="max-w-4xl py-0 sm:py-16 mx-auto text-left sm:text-center px-4 sm:px-0">
           <div className="py-6 max-w-4xl">
             <Badge
               variant={"secondary"}
@@ -59,16 +59,15 @@ export default function Home() {
             >
               Save, Organize, and Enjoy
             </Badge>
-            <h1 className="py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-white">
+            <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-white">
               Personal Knowledge Library for Content creators.
             </h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
               Build your own personal knowledge library. Say goodbye to
-              bookmarks and browser tabs cluttering your workspace. Access
-              Anytime, Anywhere with Readclip.
+              bookmarks and browser tabs cluttering your workspace.
             </p>
           </div>
-          <div className="flex justify-center gap-2 items-center py-6">
+          <div className="flex justify-start sm:justify-center gap-2 items-center py-6">
             <Link
               to="/clip"
               className={cn(
@@ -87,11 +86,11 @@ export default function Home() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8">
+        <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8 px-4">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
           </h2>
-          <div className="grid grid-cols-2 gap-5 pt-6 pb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-6 pb-16">
             <Card>
               <CardContent className="p-6">
                 <div className="text-[50px] h-20 w-20">💾</div>
