@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
-	"github.com/gofiber/fiber/v2"
 )
 
 var (
@@ -146,32 +145,8 @@ type RedditResponse []struct {
 	} `json:"data"`
 }
 
-func ParseFeedSubReddit(url string) (interface{}, error) {
-	req, err := http.NewRequest("GET", strings.TrimRight(url, "/")+".json", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", userAgent)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	var redditData fiber.Map
-	if err := json.NewDecoder(resp.Body).Decode(&redditData); err != nil {
-		return nil, err
-	}
-
-	return redditData, nil
+func GenerateRedditRssUrl(room string) string {
+	return "https://www.reddit.com/r/" + room + "/.rss"
 }
 
 func ScrapeReddit(url string) (*util.ContentData, error) {

@@ -46,15 +46,13 @@ func (*feedHandler) parseRssFeed(c *fiber.Ctx) error {
 				"data": result,
 			})
 		case "reddit":
-			result, err := reddit.ParseFeedSubReddit(input.Url)
-			if err != nil {
-				return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			if len(input.Options) == 0 {
+				return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{
 					"status": "error",
-					"error":  err.Error(),
+					"error":  "Please provide reddit room name",
 				})
 			}
-
-			return c.Status(http.StatusOK).JSON(result)
+			input.Url = reddit.GenerateRedditRssUrl(input.Options[0])
 		}
 	}
 

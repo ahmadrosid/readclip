@@ -32,6 +32,9 @@ dependencies:
   '@radix-ui/react-popover':
     specifier: ^1.0.6
     version: 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-scroll-area':
+    specifier: ^1.0.5
+    version: 1.0.5(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-select':
     specifier: ^2.0.0
     version: 2.0.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
@@ -273,7 +276,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.23.2
       '@babel/helper-validator-option': 7.22.15
-      browserslist: 4.21.10
+      browserslist: 4.22.1
       lru-cache: 5.1.1
       semver: 6.3.1
     dev: true
@@ -286,7 +289,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-environment-visitor': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
       '@babel/helper-function-name': 7.22.5
       '@babel/helper-member-expression-to-functions': 7.23.0
       '@babel/helper-optimise-call-expression': 7.22.5
@@ -763,7 +766,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.22.10
-      '@babel/helper-module-imports': 7.22.5
+      '@babel/helper-module-imports': 7.22.15
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-remap-async-to-generator': 7.22.20(@babel/core@7.22.10)
     dev: true
@@ -820,7 +823,7 @@ packages:
       '@babel/core': 7.22.10
       '@babel/helper-annotate-as-pure': 7.22.5
       '@babel/helper-compilation-targets': 7.22.15
-      '@babel/helper-environment-visitor': 7.22.5
+      '@babel/helper-environment-visitor': 7.22.20
       '@babel/helper-function-name': 7.22.5
       '@babel/helper-optimise-call-expression': 7.22.5
       '@babel/helper-plugin-utils': 7.22.5
@@ -837,7 +840,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/template': 7.22.5
+      '@babel/template': 7.22.15
     dev: true
 
   /@babel/plugin-transform-destructuring@7.23.0(@babel/core@7.22.10):
@@ -1011,7 +1014,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.22.10
-      '@babel/helper-module-transforms': 7.22.9(@babel/core@7.22.10)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.22.10)
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -3095,6 +3098,35 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
+  /@radix-ui/react-scroll-area@1.0.5(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-b6PAgH4GQf9QEn8zbT2XUHpW5z8BzqEc7Kl11TwDrvuTrxlkcjTD5qa/bxgKr+nmuXKu4L/W5UZ4mlP/VG/5Gw==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.10
+      '@radix-ui/number': 1.0.1
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@types/react': 18.2.15
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@radix-ui/react-select@2.0.0(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-RH5b7af4oHtkcHS7pG6Sgv5rk5Wxa7XI8W5gvB1N/yiuDGZxko1ynvOiVhFM7Cis2A8zxF9bTOUVbRDzPepe6w==}
     peerDependencies:
@@ -3366,7 +3398,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.22.10
-      '@babel/helper-module-imports': 7.22.5
+      '@babel/helper-module-imports': 7.22.15
       '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
       rollup: 2.79.1
     dev: true
@@ -6379,7 +6411,7 @@ packages:
     peerDependencies:
       rollup: ^2.0.0
     dependencies:
-      '@babel/code-frame': 7.22.10
+      '@babel/code-frame': 7.22.13
       jest-worker: 26.6.2
       rollup: 2.79.1
       serialize-javascript: 4.0.0

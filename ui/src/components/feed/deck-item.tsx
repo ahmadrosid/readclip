@@ -47,6 +47,30 @@ export const DeckItem = React.memo<DeckComponentProps>(
       return `https://logo.clearbit.com/${url.host}`;
     };
 
+    const extractTextContent = (content: string): string => {
+      if (type === "reddit") {
+        return extractRedditContent(content);
+      }
+
+      return content;
+    };
+
+    const extractRedditContent = (content: string) => {
+      const tokens = content.split(/(<!--\s*SC_OFF\s*-->|<!--\s*SC_ON\s*-->)/);
+      const startIndex = tokens.indexOf("<!-- SC_OFF -->");
+      const endIndex = tokens.indexOf("<!-- SC_ON -->");
+
+      console.log(content);
+
+      if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
+        const result = tokens.slice(startIndex + 1, endIndex).join("");
+        console.log(result);
+        return result;
+      } else {
+        return "";
+      }
+    };
+
     return (
       <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0">
         <div className="p-2 border-b flex gap-2 items-center min-h-[40px]">
@@ -98,12 +122,16 @@ export const DeckItem = React.memo<DeckComponentProps>(
           {queryData?.data?.data?.items.map((item) => (
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
               <a target="_blank" href={item.link}>
-                <h3 className="font-bold text-gray-800 tracking-tight text-base pb-1">
+                <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
                   {item.title}
                 </h3>
                 <div
-                  className="text-gray-700 text-sm space-y-1"
-                  dangerouslySetInnerHTML={{ __html: item.description }}
+                  className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md max-w-md"
+                  dangerouslySetInnerHTML={{
+                    __html: extractTextContent(
+                      item.description || item.content
+                    ),
+                  }}
                 ></div>
               </a>
             </div>

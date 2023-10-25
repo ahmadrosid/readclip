@@ -3,6 +3,7 @@ import { handleReturnFetch, getToken } from ".";
 type FeedItem = {
   title: string;
   description: string;
+  content: string;
   link: string;
   links: string[];
   published: string;

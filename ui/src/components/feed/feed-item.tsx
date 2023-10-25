@@ -16,10 +16,6 @@ type FeedItemValue = {
 
 const languages = [
   {
-    label: "Unknown",
-    value: "unknown",
-  },
-  {
     label: "Golang",
     value: "go",
   },
@@ -75,21 +71,30 @@ export function FeedItem({
       break;
   }
 
-  const toggleShowSelected = useCallback(
-    () => setShowSelected((prev) => !prev),
-    []
-  );
+  const toggleShowSelected = useCallback(() => {
+    setShowSelected((prev) => {
+      if (prev === false) {
+        onValueUpdate({
+          type,
+          url: "",
+          options: [],
+        });
+      }
+      return !prev;
+    });
+  }, [onValueUpdate, type]);
 
-  const isComingSoon =
-    type === "youtube" || type === "hackernews" || type === "reddit";
+  const isComingSoon = type === "youtube" || type === "hackernews";
 
   useEffect(() => {
+    if (type !== "github") return;
+
     onValueUpdate({
       type: "github",
       options: [selectedGithubValue.time, selectedGithubValue.language],
       url: "",
     });
-  }, [onValueUpdate, selectedGithubValue]);
+  }, [type, onValueUpdate, selectedGithubValue]);
 
   return (
     <li
@@ -137,6 +142,27 @@ export function FeedItem({
           </label>
         </div>
       )}
+      {type === "reddit" && showSelected && (
+        <div className="pt-4">
+          <label>
+            <span className="text-sm pb-2 block text-gray-600">
+              Sub reddit name without the /r/
+            </span>
+            <Input
+              name="input_sub_reddit"
+              className="bg-white"
+              placeholder="InternetIsBeautiful"
+              onChange={(e) =>
+                onValueUpdate({
+                  type: "reddit",
+                  url: "",
+                  options: [e.currentTarget.value],
+                })
+              }
+            />
+          </label>
+        </div>
+      )}
       {type === "github" && showSelected && (
         <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>
@@ -158,7 +184,9 @@ export function FeedItem({
               className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
               {languages.map((item) => (
-                <option value={item.value}>{item.label}</option>
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
               ))}
             </select>
           </div>
