@@ -140,7 +140,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
             </PopoverContent>
           </Popover>
         </div>
-        <div className="grid max-h-[85vh] overflow-y-auto">
+        <div className="max-h-[85vh] overflow-y-auto">
           {queryData.isLoading && <LoadingSkeleton />}
           {queryData?.data?.data?.items.map((item) => (
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
