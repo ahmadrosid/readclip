@@ -82,11 +82,8 @@ export const DeckItem = React.memo<DeckComponentProps>(
       const startIndex = tokens.indexOf("<!-- SC_OFF -->");
       const endIndex = tokens.indexOf("<!-- SC_ON -->");
 
-      console.log(content);
-
       if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
         const result = tokens.slice(startIndex + 1, endIndex).join("");
-        console.log(result);
         return result;
       } else {
         return "";

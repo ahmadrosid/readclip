@@ -42,7 +42,6 @@ export default function FeedDeckPage() {
   >();
 
   const handleAddNewFeed = useCallback(() => {
-    console.log(selectedFeedItem);
     if (!selectedFeedItem) {
       setShowAddDeckDialog(false);
       return;
