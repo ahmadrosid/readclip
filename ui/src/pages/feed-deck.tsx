@@ -93,9 +93,9 @@ export default function FeedDeckPage() {
         ))}
         <div
           className={cn(
-            "min-w-[28rem]",
+            "min-w-[28rem] snap-center",
             savedDecksComponents.length === 0 &&
-              "w-screen grid place-content-center  h-[80vh]"
+              "w-screen grid place-content-center h-[80vh]"
           )}
         >
           <div className="text-center">
