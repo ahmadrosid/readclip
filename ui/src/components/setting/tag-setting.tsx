@@ -68,9 +68,6 @@ export default function TagSetting() {
               className={cn("w-4 h-4", isLoading && "animate-spin")}
             />
           </Button>
-          {/* <Button variant="ghost" size="sm" onClick={() => console.log()}>
-            <PlusIcon className={cn("w-4 h-4", isLoading && "animate-spin")} />
-          </Button> */}
         </div>
       </div>
       <Separator />
