@@ -16,9 +16,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
 import {
   CalendarCheck,
+  Check,
   DownloadIcon,
   ExternalLink,
   ExternalLinkIcon,
@@ -26,12 +26,8 @@ import {
   MoreVertical,
   PlusIcon,
   TrashIcon,
+  XIcon,
 } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   type Article,
   fetchDeleteClip,
@@ -86,6 +82,8 @@ function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
 }
 
 function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
+  const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
+
   const deleteMutation = useMutation({
     mutationKey: "deleteClip",
     mutationFn: fetchDeleteClip,
@@ -109,7 +107,6 @@ function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
       <DropdownMenuItem
         onSelect={(e) => {
           e.preventDefault();
-          deleteMutation.mutate(clipId);
         }}
         className="cursor-pointer"
       >
@@ -117,8 +114,25 @@ function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
           <Loader2 className="animate-spin mr-2 h-4 w-4" />
         ) : (
           <TrashIcon className="mr-2 h-4 w-4" />
-        )}{" "}
-        Delete
+        )}
+        <span
+          className="flex-1 cursor-pointer"
+          onClick={() => setOpenConfirmDelete(true)}
+        >
+          Delete
+        </span>
+        {openConfirmDelete && (
+          <span className="inline-flex gap-2">
+            <Check
+              className="w-4 h-4 hover:text-rose-500 cursor-pointer"
+              onClick={() => deleteMutation.mutate(clipId)}
+            />
+            <XIcon
+              onClick={() => setOpenConfirmDelete(false)}
+              className="w-4 h-4 hover:text-primary cursor-pointer"
+            />
+          </span>
+        )}
       </DropdownMenuItem>
     </>
   );
@@ -130,37 +144,19 @@ export function ArticleCard({
   onDeleteCallback,
   onAddTagCallback,
 }: Props) {
-  const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [controller, setController] = useState<AbortController | null>(null);
-
-  const handleDeleteArticle = async () => {
-    if (!controller) {
-      const controller = new AbortController();
-      setController(controller);
-    } else {
-      controller.abort();
-    }
-    const res = await fetchDeleteClip(article.Id);
-    if (res.status === "success") {
-      setOpenConfirmDelete(false);
-      onDeleteCallback(article.Id);
-    } else {
-      alert("Failed to delete article");
-    }
-    setController(null);
-  };
 
   return (
-    <Card className="grid dark:bg-gray-800/40">
-      <CardHeader className="grid grid-cols-[1fr_80px] items-start gap-4 space-y-0">
+    <Card className="grid dark:bg-gray-800/40 shadow-none">
+      <CardHeader className="grid grid-cols-[1fr_25px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <a
             href={"/clip?url=" + encodeURIComponent(article.Url)}
             className="hover:underline"
           >
             <CardTitle className="dark:text-gray-200">
-              {article.Title}
+              {article.Title.slice(0, 50)}
+              {article.Title.length > 50 ? "..." : ""}
             </CardTitle>
           </a>
           <CardDescription>
@@ -169,37 +165,6 @@ export function ArticleCard({
           </CardDescription>
         </div>
         <div className="flex items-center rounded-md bg-secondary text-secondary-foreground">
-          <Popover open={openConfirmDelete} onOpenChange={setOpenConfirmDelete}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="secondary"
-                onClick={() => setOpenConfirmDelete(true)}
-                className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600"
-              >
-                <TrashIcon className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="end">
-              <div className="grid gap-2">
-                <div>
-                  <p>Delete this clip?</p>
-                </div>
-                <div className="flex gap-2 ml-auto">
-                  <Button
-                    onClick={() => setOpenConfirmDelete(false)}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Cancel
-                  </Button>
-                  <Button onClick={handleDeleteArticle} size="sm">
-                    {controller ? "Deleting..." : "Yes!"}
-                  </Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-          <Separator orientation="vertical" className="h-[20px]" />
           <DropdownMenu open={openDropdown} onOpenChange={setOpenDropdown}>
             <DropdownMenuTrigger asChild>
               <Button
@@ -223,9 +188,6 @@ export function ArticleCard({
               >
                 <PlusIcon className="mr-2 h-4 w-4" /> Add tags
               </DropdownMenuItem>
-              {/* <DropdownMenuItem className="cursor-pointer">
-                <Edit className="mr-2 h-4 w-4" /> Edit
-              </DropdownMenuItem> */}
               <DownloadMenuItem
                 clipId={article.Id}
                 setOpenDropdown={setOpenDropdown}

@@ -172,8 +172,9 @@ export default function ArticlePage() {
                 }}
                 variant="outline"
                 className={cn(
-                  "hover:bg-gray-200 cursor-pointer",
-                  selectedHost === host && "bg-primary text-white"
+                  "hover:bg-gray-200 cursor-pointer bg-white",
+                  selectedHost === host &&
+                    "bg-primary text-white hover:text-gray-700"
                 )}
                 key={i}
               >
@@ -181,7 +182,7 @@ export default function ArticlePage() {
               </Badge>
             ))}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
             {clips.pages.map((group, i) => (
               <Fragment key={i}>
                 {group.data
@@ -227,11 +228,11 @@ export default function ArticlePage() {
 
 function LoadingSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
       {Array(9)
         .fill(0)
         .map((_, i) => (
-          <Card key={i}>
+          <Card key={i} className="shadow-none">
             <CardContent className="grid gap-4 py-4">
               <div className="flex gap-3">
                 <Skeleton className="flex-1 h-[25px] rounded-sm" />

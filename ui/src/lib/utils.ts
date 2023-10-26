@@ -45,5 +45,5 @@ export function formatNumber(num: number): string {
 export const formatDate = (date: string, currentDate: string) => {
   return formatDistance(new Date(date), new Date(currentDate), {
     addSuffix: false,
-  });
+  }).replace("about ", "");
 };

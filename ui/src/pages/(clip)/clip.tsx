@@ -177,7 +177,7 @@ export default function Home() {
       {isLoading && inputUrl !== "" && <LoadingSkeleton />}
 
       {!data && (
-        <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl">
+        <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl pb-8">
           <div className="py-2 px-3 border w-full rounded-t-md bg-white">
             <span className="pr-3">📖</span>History
           </div>
@@ -202,9 +202,9 @@ export default function Home() {
                 {fetchHistoryQuery.data?.data.slice(0, 10).map((item) => (
                   <tr key={item.Id}>
                     <td className="hidden sm:flex justify-end h-9 items-center">
-                      <span className="text-gray-600 text-sm">
+                      <p className="text-gray-600 text-sm pt-2">
                         {format(new Date(item.CreatedAt), "EEE dd, HH:mm")}
-                      </span>
+                      </p>
                     </td>
                     <td className="pl-2">
                       <p className="py-2">
