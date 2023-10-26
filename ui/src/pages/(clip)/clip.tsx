@@ -27,6 +27,7 @@ import { DialogTag } from "@/components/dialog-tag";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
 import { DialogDemo } from "..";
+import { Link } from "@/router";
 
 function LoadingSkeleton() {
   return (
@@ -217,6 +218,14 @@ export default function Home() {
                   </tr>
                 ))}
               </tbody>
+              {fetchHistoryQuery.data &&
+                fetchHistoryQuery.data.data.length > 0 && (
+                  <div className="p-2 flex gap-2 tracking-tight">
+                    <Link to="/clips" className="hover:underline">
+                      See all history.
+                    </Link>
+                  </div>
+                )}
             </table>
           </div>
         </div>
