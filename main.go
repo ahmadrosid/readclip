@@ -163,6 +163,7 @@ func main() {
 			"POST::/api/youtube/transcript",
 			"POST::/api/rss/parse",
 			"GET::/tools/*",
+			"GET::/assets/*",
 			"GET::/health-check",
 			"GET::/tools/business-analysis",
 		},
