@@ -13,10 +13,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
-export function DialogDemo() {
+export function DialogDemo({ className }: { className?: string }) {
   return (
     <Dialog>
-      <DialogTrigger className="px-6 flex items-center underline">
+      <DialogTrigger
+        className={cn("px-6 flex items-center underline", className)}
+      >
         See Demo <ArrowRight className="w-4 h-4 ml-3" />
       </DialogTrigger>
       <DialogContent className="max-w-2xl">

@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { formatDistance } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -40,3 +41,9 @@ export function formatNumber(num: number): string {
     return (num / 1000000).toFixed(1) + "m";
   }
 }
+
+export const formatDate = (date: string, currentDate: string) => {
+  return formatDistance(new Date(date), new Date(currentDate), {
+    addSuffix: false,
+  });
+};

@@ -45,7 +45,7 @@ export function Header() {
                 className="dark:text-white text-gray-800 px-2"
                 variant="link"
               >
-                History
+                Clips
               </Button>
             </Link>
 

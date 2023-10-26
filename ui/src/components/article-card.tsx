@@ -32,7 +32,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { formatDistance } from "date-fns";
 import {
   type Article,
   fetchDeleteClip,
@@ -40,6 +39,7 @@ import {
 } from "@/lib/api/api";
 import { toast } from "sonner";
 import { useMutation } from "react-query";
+import { formatDate } from "@/lib/utils";
 
 type Props = {
   article: Article;
@@ -149,12 +149,6 @@ export function ArticleCard({
       alert("Failed to delete article");
     }
     setController(null);
-  };
-
-  const formatDate = (date: string, currentDate: string) => {
-    return formatDistance(new Date(date), new Date(currentDate), {
-      addSuffix: false,
-    });
   };
 
   return (

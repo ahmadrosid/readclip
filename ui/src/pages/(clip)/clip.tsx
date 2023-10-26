@@ -12,15 +12,21 @@ import {
   TagIcon,
   TrashIcon,
 } from "lucide-react";
-import { fetchMarkdown, fetchDeleteClip } from "@/lib/api/api";
+import {
+  fetchMarkdown,
+  fetchDeleteClip,
+  fetchAllArticles,
+} from "@/lib/api/api";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { downloadText } from "@/lib/utils";
 import { readingTime } from "reading-time-estimator";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 import { DialogTag } from "@/components/dialog-tag";
 import { useAuth } from "@/hooks/useAuth";
+import { format } from "date-fns";
+import { DialogDemo } from "..";
 
 function LoadingSkeleton() {
   return (
@@ -40,6 +46,18 @@ export default function Home() {
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
   const [openAddTag, setOpenAddTag] = useState(false);
+
+  const fetchHistoryQuery = useQuery({
+    queryFn: fetchAllArticles,
+    queryKey: "fetch-history",
+    enabled: inputUrl == "",
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    onError: (error: Error) => {
+      toast.error("Failed to fetch history " + error.message);
+    },
+  });
 
   const { data, mutate, isLoading, error } = useMutation({
     mutationFn: fetchMarkdown,
@@ -156,6 +174,53 @@ export default function Home() {
       )}
 
       {isLoading && inputUrl !== "" && <LoadingSkeleton />}
+
+      {!data && (
+        <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl">
+          <div className="py-2 px-3 border w-full rounded-t-md bg-white">
+            📖 History
+          </div>
+          <div className="p-2 border-x border-b bg-white rounded-b-md">
+            {fetchHistoryQuery.data?.data.length === 0 && (
+              <div className="p-2 flex gap-2">
+                <p>Your history is empty. Don't know how to use? </p>
+                <DialogDemo className="text-base p-0" />
+              </div>
+            )}
+            <table className="table-auto">
+              <tbody>
+                {fetchHistoryQuery.data?.data.slice(0, 10).map((item) => (
+                  <tr key={item.Id}>
+                    <td className="flex justify-end pr-2 h-9 items-center">
+                      <span className="text-gray-600 text-sm">
+                        {format(new Date(item.CreatedAt), "EEE dd, HH:mm")}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className="h-9 cursor-pointer hover:underline font-medium tracking-tight"
+                        onClick={() => {
+                          setInputUrl(item.Url);
+                          mutate(item.Url);
+                        }}
+                      >
+                        {item.Title}
+                      </span>
+                      <a
+                        href={item.Url}
+                        target="_blank"
+                        className="px-2 text-sm text-gray-500 hover:underline"
+                      >
+                        ({item.Hostname})
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {data?.data && (
         <>
