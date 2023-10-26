@@ -201,7 +201,7 @@ export default function Home() {
               <tbody>
                 {fetchHistoryQuery.data?.data.slice(0, 10).map((item) => (
                   <tr key={item.Id}>
-                    <td className="hidden sm:flex justify-end h-9 items-center">
+                    <td className="hidden sm:flex justify-end h-9 items-center w-[110px]">
                       <p className="text-gray-600 text-sm pt-2">
                         {format(new Date(item.CreatedAt), "EEE dd, HH:mm")}
                       </p>
@@ -220,7 +220,7 @@ export default function Home() {
                         <a
                           href={item.Url}
                           target="_blank"
-                          className="text-sm text-gray-500 hover:underline"
+                          className="text-sm text-gray-500 hover:underline px-1"
                         >
                           ({item.Hostname})
                         </a>
@@ -229,15 +229,15 @@ export default function Home() {
                   </tr>
                 ))}
               </tbody>
-              {fetchHistoryQuery.data &&
-                fetchHistoryQuery.data.data.length > 0 && (
-                  <div className="p-2 flex gap-2 tracking-tight">
-                    <Link to="/clips" className="hover:underline">
-                      See all history.
-                    </Link>
-                  </div>
-                )}
             </table>
+            {fetchHistoryQuery.data &&
+              fetchHistoryQuery.data.data.length > 0 && (
+                <div className="p-2 flex gap-2 tracking-tight text-primary">
+                  <Link to="/clips" className="hover:underline">
+                    See all history
+                  </Link>
+                </div>
+              )}
           </div>
         </div>
       )}

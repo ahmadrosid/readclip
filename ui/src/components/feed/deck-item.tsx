@@ -65,8 +65,12 @@ export const DeckItem = React.memo<DeckComponentProps>(
     });
 
     const getLogoUrl = (link: string) => {
-      const url = new URL(link);
-      return `https://logo.clearbit.com/${url.host}`;
+      try {
+        const url = new URL(link);
+        return `https://logo.clearbit.com/${url.host}`;
+      } catch (e) {
+        return `https://readclip.ahmadrosid.com/favicon.ico`;
+      }
     };
 
     const extractTextContent = (content: string): string => {
