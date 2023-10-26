@@ -67,6 +67,11 @@ func main() {
 		Browse: false,
 	}))
 
+	app.All("/assets/*.js", func(ctx *fiber.Ctx) error {
+		ctx.Set(fiber.HeaderContentType, "application/javascript")
+		return ctx.Next()
+	})
+
 	app.Get("/tools/youtube-transcriber", func(c *fiber.Ctx) error {
 		fs := http.FS(index)
 		oldURL := "https://readclip.ahmadrosid.com/img/readclip.png"
