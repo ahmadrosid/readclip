@@ -179,7 +179,7 @@ export default function Home() {
       {!data && (
         <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl">
           <div className="py-2 px-3 border w-full rounded-t-md bg-white">
-            📖 History
+            <span className="pr-3">📖</span>History
           </div>
           <div className="p-2 border-x border-b bg-white rounded-b-md">
             {fetchHistoryQuery.data?.data.length === 0 && (
@@ -188,32 +188,43 @@ export default function Home() {
                 <DialogDemo className="text-base p-0" />
               </div>
             )}
+            {fetchHistoryQuery.isLoading && (
+              <div className="grid gap-2 p-2">
+                <div className="flex gap-2">
+                  <Skeleton className="w-32 h-8 rounded-md" />
+                  <Skeleton className="w-full h-8 rounded-md" />
+                </div>
+                <Skeleton className="w-full h-8 rounded-md" />
+              </div>
+            )}
             <table className="table-auto">
               <tbody>
                 {fetchHistoryQuery.data?.data.slice(0, 10).map((item) => (
                   <tr key={item.Id}>
-                    <td className="flex justify-end pr-2 h-9 items-center">
+                    <td className="hidden sm:flex justify-end h-9 items-center">
                       <span className="text-gray-600 text-sm">
                         {format(new Date(item.CreatedAt), "EEE dd, HH:mm")}
                       </span>
                     </td>
-                    <td>
-                      <span
-                        className="h-9 cursor-pointer hover:underline font-medium tracking-tight"
-                        onClick={() => {
-                          setInputUrl(item.Url);
-                          mutate(item.Url);
-                        }}
-                      >
-                        {item.Title}
-                      </span>
-                      <a
-                        href={item.Url}
-                        target="_blank"
-                        className="px-2 text-sm text-gray-500 hover:underline"
-                      >
-                        ({item.Hostname})
-                      </a>
+                    <td className="pl-2">
+                      <p className="py-2">
+                        <span
+                          className="h-9 cursor-pointer underline sm:no-underline hover:underline font-medium tracking-tight"
+                          onClick={() => {
+                            setInputUrl(item.Url);
+                            mutate(item.Url);
+                          }}
+                        >
+                          {item.Title}
+                        </span>
+                        <a
+                          href={item.Url}
+                          target="_blank"
+                          className="text-sm text-gray-500 hover:underline"
+                        >
+                          ({item.Hostname})
+                        </a>
+                      </p>
                     </td>
                   </tr>
                 ))}
