@@ -150,7 +150,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                 </h3>
               </a>
               <div
-                className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md max-w-md"
+                className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md"
                 dangerouslySetInnerHTML={{
                   __html: extractTextContent(item.description || item.content),
                 }}
