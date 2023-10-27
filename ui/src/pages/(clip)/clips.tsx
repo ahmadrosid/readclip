@@ -229,17 +229,17 @@ export default function ArticlePage() {
 function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
-      {Array(9)
+      {Array(12)
         .fill(0)
         .map((_, i) => (
           <Card key={i} className="shadow-none">
-            <CardContent className="grid gap-4 py-4">
+            <CardContent className="grid gap-4 p-4">
               <div className="flex gap-3">
-                <Skeleton className="flex-1 h-[25px] rounded-sm" />
-                <Skeleton className="w-[80px] h-[25px] rounded-sm" />
+                <Skeleton className="flex-1 h-[20px] rounded-sm" />
+                <Skeleton className="w-[80px] h-[20px] rounded-sm" />
               </div>
               <Skeleton className="w-full h-[100px] rounded-md" />
-              <Skeleton className="flex-1 h-[25px] rounded-sm" />
+              <Skeleton className="flex-1 h-[20px] rounded-sm" />
             </CardContent>
           </Card>
         ))}

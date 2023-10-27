@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/ahmadrosid/readclip/internal/util"
 )
 
 type VideoInfo struct {
@@ -40,6 +42,21 @@ type VideoData struct {
 	Language string    `json:"language"`
 }
 
+type FindChannelResponse struct {
+	Data []struct {
+		Type       string `json:"type"`
+		ID         string `json:"id"`
+		Text       string `json:"text"`
+		Thumbnails []struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"thumbnails"`
+		SubscriberCount string `json:"subscriber_count,omitempty"`
+		VideoCount      string `json:"video_count"`
+	} `json:"data"`
+}
+
 func GetTranscript(videoURL string) (*VideoData, error) {
 	url := "https://echo-tube.vercel.app/get-transcript"
 	payload := []byte(fmt.Sprintf(`{
@@ -52,7 +69,7 @@ func GetTranscript(videoURL string) (*VideoData, error) {
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36")
+	req.Header.Set("User-Agent", util.UserAgent)
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -71,4 +88,41 @@ func GetTranscript(videoURL string) (*VideoData, error) {
 	}
 
 	return &videoData, nil
+}
+
+func FindChannels(query string) (*FindChannelResponse, error) {
+	url := "https://echo-tube.vercel.app/channels"
+	payload := []byte(fmt.Sprintf(`{
+		"query":"%s"
+	}`, query))
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("User-Agent", util.UserAgent)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusNotFound {
+		return nil, fmt.Errorf("can't not found channel: %s", query)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
+	}
+
+	var result FindChannelResponse
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }

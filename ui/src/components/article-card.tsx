@@ -148,7 +148,7 @@ export function ArticleCard({
 
   return (
     <Card className="grid dark:bg-gray-800/40 shadow-none">
-      <CardHeader className="grid grid-cols-[1fr_25px] items-start gap-4 space-y-0">
+      <CardHeader className="grid grid-cols-[1fr_25px] items-start gap-4 space-y-0 p-4 pr-6">
         <div className="space-y-1">
           <a
             href={"/clip?url=" + encodeURIComponent(article.Url)}
@@ -213,7 +213,7 @@ export function ArticleCard({
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="mt-auto">
+      <CardContent className="mt-auto p-4">
         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <CalendarCheck className="mr-1 h-3 w-3" />
