@@ -1,10 +1,11 @@
-package util
+package youtube
 
 import (
 	"fmt"
 	"net/url"
 	"strings"
 
+	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/kkdai/youtube/v2"
 )
 
@@ -62,7 +63,7 @@ func IsValidYoutubeUrl(genericUrl string) bool {
 	return false
 }
 
-func GrabYoutubeVideoInfo(videoUrl string) (*ContentData, error) {
+func GrabYoutubeVideoInfo(videoUrl string) (*util.ContentData, error) {
 	videoID, err := GetVideoID(videoUrl)
 	if err != nil {
 		return nil, err
@@ -87,11 +88,11 @@ func GrabYoutubeVideoInfo(videoUrl string) (*ContentData, error) {
 		Content = Content + "\n" + ContentLines[i] + "\n"
 	}
 
-	return &ContentData{
+	return &util.ContentData{
 		Url:     videoUrl,
 		Title:   video.Title,
 		Content: Content,
-		Metadata: &Metadata{
+		Metadata: &util.Metadata{
 			Title:       video.Title,
 			Author:      video.Author,
 			Description: video.Description[0:100] + "...",

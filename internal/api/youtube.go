@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
-	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/echotube"
+	"github.com/ahmadrosid/readclip/internal/util/youtube"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -28,7 +28,7 @@ func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
 		})
 	}
 
-	videoId, err := util.GetVideoID(input.Url)
+	videoId, err := youtube.GetVideoID(input.Url)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"status": "error",
