@@ -7,6 +7,7 @@ import {
   CopyIcon,
   DownloadIcon,
   ExternalLink,
+  ExternalLinkIcon,
   RefreshCw,
   Send,
   TagIcon,
@@ -176,7 +177,7 @@ export default function Home() {
 
       {isLoading && inputUrl !== "" && <LoadingSkeleton />}
 
-      {!data && (
+      {inputUrl === "" && (
         <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl pb-8">
           <div className="py-2 px-3 border w-full rounded-t-md bg-white">
             <span className="pr-3">📖</span>History
@@ -199,7 +200,7 @@ export default function Home() {
             )}
             <table className="table-auto">
               <tbody>
-                {fetchHistoryQuery.data?.data.slice(0, 10).map((item) => (
+                {fetchHistoryQuery.data?.data.slice(0, 13).map((item) => (
                   <tr key={item.Id}>
                     <td className="hidden sm:flex justify-end h-9 items-center w-[110px]">
                       <p className="text-gray-600 text-sm pt-2">
@@ -207,7 +208,7 @@ export default function Home() {
                       </p>
                     </td>
                     <td className="pl-2">
-                      <p className="py-2">
+                      <p className="py-1">
                         <span
                           className="h-9 cursor-pointer underline sm:no-underline hover:underline font-medium tracking-tight"
                           onClick={() => {
@@ -220,9 +221,12 @@ export default function Home() {
                         <a
                           href={item.Url}
                           target="_blank"
-                          className="text-sm text-gray-500 hover:underline px-1"
+                          className="text-sm text-gray-500 hover:underline mx-1 inline-flex items-center"
                         >
-                          ({item.Hostname})
+                          {"("}
+                          {item.Hostname.replace("www.", "")}
+                          <ExternalLinkIcon className="ml-1 h-3 w-3" />
+                          {")"}
                         </a>
                       </p>
                     </td>

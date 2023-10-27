@@ -4,7 +4,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { MoreVertical, RefreshCcwIcon, Trash2 } from "lucide-react";
+import {
+  BookmarkIcon,
+  MoreVertical,
+  RefreshCcwIcon,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "react-query";
 import { fetchRssFeed } from "@/lib/api/feed";
@@ -167,35 +172,61 @@ export const DeckItem = React.memo<DeckComponentProps>(
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
               {type === "youtube" ? (
                 <>
-                  <a
-                    target="_blank"
-                    className="hover:underline"
-                    href={item.link}
-                  >
-                    <img
-                      src={getThumbnailUrl(item.extensions)}
-                      alt={item.title}
-                      className="aspect-video object-cover rounded-md mb-2"
-                    />
-                    <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
-                      {item.title}
-                    </h3>
-                  </a>
+                  <img
+                    src={getThumbnailUrl(item.extensions)}
+                    alt={item.title}
+                    className="aspect-video object-cover rounded-md mb-2"
+                  />
+                  <div className="flex">
+                    <a
+                      target="_blank"
+                      className="hover:underline flex-1"
+                      href={item.link}
+                    >
+                      <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                        {item.title}
+                      </h3>
+                    </a>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="px-2 hover:bg-blue-300"
+                      onClick={() =>
+                        (window.location.href =
+                          window.location.origin + "/clip?url=" + item.link)
+                      }
+                    >
+                      <BookmarkIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
                   <div className="text-sm text-gray-500">
                     {getTextDescription(item.extensions)}
                   </div>
                 </>
               ) : (
                 <>
-                  <a
-                    target="_blank"
-                    className="hover:underline"
-                    href={item.link}
-                  >
-                    <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
-                      {item.title}
-                    </h3>
-                  </a>
+                  <div className="flex">
+                    <a
+                      target="_blank"
+                      className="hover:underline flex-1"
+                      href={item.link}
+                    >
+                      <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                        {item.title}
+                      </h3>
+                    </a>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="px-2 hover:bg-blue-300"
+                      onClick={() =>
+                        (window.location.href =
+                          window.location.origin + "/clip?url=" + item.link)
+                      }
+                    >
+                      <BookmarkIcon className="w-4 h-4" />
+                    </Button>
+                  </div>
                   <div
                     className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md"
                     dangerouslySetInnerHTML={{
