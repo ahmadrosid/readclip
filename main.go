@@ -172,6 +172,7 @@ func main() {
 			"GET::/assets/*",
 			"GET::/health-check",
 			"GET::/tools/business-analysis",
+			"GET::/explore-rss",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))

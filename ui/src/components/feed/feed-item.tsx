@@ -131,11 +131,19 @@ export function FeedItem({
         )}
       </div>
       {type === "rss" && showSelected && (
-        <div className="pt-4">
+        <div className="pt-2">
           <label>
-            <span className="text-sm pb-2 block text-gray-600">
-              Rss Feed Url
-            </span>
+            <p className="pb-2 inline-flex">
+              <span className="flex-1 text-sm pb-2 text-gray-600">
+                {"Rss feed url or "}
+              </span>
+              <a
+                href="/explore-rss"
+                className="text-sm px-1 text-gray-600 underline"
+              >
+                explore rss
+              </a>
+            </p>
             <Input
               name="input_url_rss"
               className="bg-white"

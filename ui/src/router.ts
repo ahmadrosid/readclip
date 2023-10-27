@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/clip`
   | `/clips`
+  | `/explore-rss`
   | `/feed-deck`
   | `/login`
   | `/register`
