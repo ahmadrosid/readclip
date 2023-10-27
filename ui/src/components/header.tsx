@@ -108,7 +108,7 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="px-4 block md:hidden">
+        <div className="pr-2 pl-4 block md:hidden">
           <ModeToggle />
         </div>
       </div>
