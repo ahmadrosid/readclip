@@ -1,3 +1,4 @@
+import { MediaExtensions } from "@/components/feed";
 import { handleReturnFetch, getToken } from ".";
 
 type FeedItem = {
@@ -8,6 +9,7 @@ type FeedItem = {
   links: string[];
   published: string;
   publishedParsed: string;
+  extensions: MediaExtensions;
 };
 
 type ApiResponse = {

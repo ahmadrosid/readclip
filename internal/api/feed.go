@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/ahmadrosid/readclip/internal/util/github"
@@ -66,6 +67,8 @@ func (*feedHandler) parseRssFeed(c *fiber.Ctx) error {
 			return c.Status(http.StatusOK).JSON(fiber.Map{
 				"data": result,
 			})
+		case "youtube":
+			input.Url = fmt.Sprintf("https://www.youtube.com/feeds/videos.xml?channel_id=%s", input.Options[0])
 		}
 	}
 

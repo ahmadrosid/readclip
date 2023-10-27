@@ -7,6 +7,7 @@ import { GithubIcon } from "@/components/icons/github";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { type BaseDeck } from "@/components/feed/index";
+import { FeedItemYoutube } from "./feed-item-youtube";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -92,7 +93,7 @@ export function FeedItem({
     type,
   ]);
 
-  const isComingSoon = type === "youtube";
+  const isComingSoon = false;
 
   useEffect(() => {
     if (type !== "github") return;
@@ -171,6 +172,19 @@ export function FeedItem({
           </label>
         </div>
       )}
+
+      {type === "youtube" && showSelected && (
+        <FeedItemYoutube
+          onSubmit={(channelId) => {
+            onValueUpdate({
+              type,
+              url: "",
+              options: [channelId],
+            });
+          }}
+        />
+      )}
+
       {type === "github" && showSelected && (
         <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div>

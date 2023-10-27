@@ -150,7 +150,7 @@ export default function FeedDeckPage() {
                   />
                 </div>
                 <div className="max-h-[400px] overflow-y-auto border-t">
-                  <ul className="grid">
+                  <ul className="relative">
                     <FeedItem
                       type="github"
                       label="Github Trending"

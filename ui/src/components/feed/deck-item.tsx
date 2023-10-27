@@ -10,7 +10,7 @@ import { useQuery } from "react-query";
 import { fetchRssFeed } from "@/lib/api/feed";
 import { toast } from "sonner";
 import React, { useState } from "react";
-import { type BaseDeck } from "@/components/feed/index";
+import { MediaExtensions, type BaseDeck } from "@/components/feed/index";
 import { cn } from "@/lib/utils";
 
 type DeckComponentProps = BaseDeck & {
@@ -94,6 +94,26 @@ export const DeckItem = React.memo<DeckComponentProps>(
       }
     };
 
+    const getTextDescription = (ext: MediaExtensions): string => {
+      try {
+        const value = ext.media.group[0].children.description[0].value;
+        if (value.length > 160) {
+          return value.slice(0, 160) + "...";
+        }
+        return value;
+      } catch (e) {
+        return "";
+      }
+    };
+
+    const getThumbnailUrl = (ext: MediaExtensions): string => {
+      try {
+        return ext.media.group[0].children.thumbnail[0].attrs.url;
+      } catch (e) {
+        return "";
+      }
+    };
+
     return (
       <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0 snap-center">
         <div className="p-2 border-b flex gap-2 items-center min-h-[40px]">
@@ -145,17 +165,47 @@ export const DeckItem = React.memo<DeckComponentProps>(
           {queryData.isLoading && <LoadingSkeleton />}
           {queryData?.data?.data?.items.map((item) => (
             <div key={item.link} className="hover:bg-gray-100 border-b p-2">
-              <a target="_blank" className="hover:underline" href={item.link}>
-                <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
-                  {item.title}
-                </h3>
-              </a>
-              <div
-                className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md"
-                dangerouslySetInnerHTML={{
-                  __html: extractTextContent(item.description || item.content),
-                }}
-              ></div>
+              {type === "youtube" ? (
+                <>
+                  <a
+                    target="_blank"
+                    className="hover:underline"
+                    href={item.link}
+                  >
+                    <img
+                      src={getThumbnailUrl(item.extensions)}
+                      alt={item.title}
+                      className="aspect-video object-cover rounded-md mb-2"
+                    />
+                    <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                      {item.title}
+                    </h3>
+                  </a>
+                  <div className="text-sm text-gray-500">
+                    {getTextDescription(item.extensions)}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <a
+                    target="_blank"
+                    className="hover:underline"
+                    href={item.link}
+                  >
+                    <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                      {item.title}
+                    </h3>
+                  </a>
+                  <div
+                    className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md"
+                    dangerouslySetInnerHTML={{
+                      __html: extractTextContent(
+                        item.description || item.content
+                      ),
+                    }}
+                  ></div>
+                </>
+              )}
             </div>
           ))}
         </div>

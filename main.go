@@ -166,6 +166,7 @@ func main() {
 			"POST::/api/clips/scrape",
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
+			"POST::/api/youtube/channels",
 			"POST::/api/rss/parse",
 			"GET::/tools/*",
 			"GET::/assets/*",

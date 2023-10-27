@@ -42,19 +42,25 @@ type VideoData struct {
 	Language string    `json:"language"`
 }
 
-type FindChannelResponse struct {
-	Data []struct {
-		Type       string `json:"type"`
-		ID         string `json:"id"`
-		Text       string `json:"text"`
-		Thumbnails []struct {
-			URL    string `json:"url"`
-			Width  int    `json:"width"`
-			Height int    `json:"height"`
-		} `json:"thumbnails"`
-		SubscriberCount string `json:"subscriber_count,omitempty"`
-		VideoCount      string `json:"video_count"`
-	} `json:"data"`
+// type FindChannelResponse struct {
+// 	Data []struct {
+// 		Type       string `json:"type"`
+// 		ID         string `json:"id"`
+// 		Text       string `json:"text"`
+// 		Thumbnails []struct {
+// 			URL    string `json:"url"`
+// 			Width  int    `json:"width"`
+// 			Height int    `json:"height"`
+// 		} `json:"thumbnails"`
+// 		SubscriberCount string `json:"subscriber_count,omitempty"`
+// 		VideoCount      string `json:"video_count"`
+// 	} `json:"data"`
+// }
+
+type FindChannelResponse []struct {
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	Thumbnail string `json:"thumbnail"`
 }
 
 func GetTranscript(videoURL string) (*VideoData, error) {
@@ -91,12 +97,13 @@ func GetTranscript(videoURL string) (*VideoData, error) {
 }
 
 func FindChannels(query string) (*FindChannelResponse, error) {
-	url := "https://echo-tube.vercel.app/channels"
-	payload := []byte(fmt.Sprintf(`{
-		"query":"%s"
-	}`, query))
-
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	// url := "https://echo-tube.vercel.app/channels"
+	url := "https://feedful.app/api/youtube?search=" + query
+	// payload := []byte(fmt.Sprintf(`{
+	// 	"query":"%s"
+	// }`, query))
+	// req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}

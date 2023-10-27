@@ -18,10 +18,11 @@ type FindChannelRequest struct {
 
 type youtubeHandler struct{}
 
+// api/youtube/*
 func NewYoutubeHandler(route fiber.Router) {
 	handler := &youtubeHandler{}
 	route.Post("/transcript", handler.getYoutubeTranscript)
-	route.Post("/youtube/channels", handler.findYoutubeChannels)
+	route.Post("/channels", handler.findYoutubeChannels)
 }
 
 func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
@@ -62,17 +63,7 @@ func (h *youtubeHandler) findYoutubeChannels(c *fiber.Ctx) error {
 		})
 	}
 
-	videoId, err := youtube.GetVideoID(input.Query)
-	if err != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"status": "error",
-			"error":  "invalid url",
-		})
-	}
-
-	video, err := echotube.FindChannels(
-		"https://www.youtube.com/watch?v=" + videoId,
-	)
+	video, err := echotube.FindChannels(input.Query)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),

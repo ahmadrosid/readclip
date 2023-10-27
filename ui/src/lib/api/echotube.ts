@@ -33,6 +33,12 @@ type VideoData = {
   language: string;
 };
 
+export type FindChannelResponse = {
+  id: string;
+  name: string;
+  thumbnail: string;
+};
+
 export const fetchYoutubeTranscript = async (
   url: string
 ): Promise<VideoData> => {
@@ -43,9 +49,22 @@ export const fetchYoutubeTranscript = async (
         "Content-Type": "application/json",
         Authorization: getToken(),
       },
-      body: JSON.stringify({
-        url,
-      }),
+      body: JSON.stringify({ url }),
+    })
+  );
+};
+
+export const findYoutubeChannels = async (
+  query: string
+): Promise<FindChannelResponse[]> => {
+  return handleReturnFetch(
+    await fetch("/api/youtube/channels", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify({ query }),
     })
   );
 };
