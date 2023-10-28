@@ -8,35 +8,13 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { type BaseDeck } from "@/components/feed/index";
 import { FeedItemYoutube } from "./feed-item-youtube";
+import { languages } from "@/lib/data/github";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
   url: string;
   options: string[];
 };
-
-const languages = [
-  {
-    label: "Golang",
-    value: "go",
-  },
-  {
-    label: "Java",
-    value: "java",
-  },
-  {
-    label: "PHP",
-    value: "php",
-  },
-  {
-    label: "Rust",
-    value: "rust",
-  },
-  {
-    label: "Ruby",
-    value: "ruby",
-  },
-];
 
 export function FeedItem({
   type,
@@ -50,7 +28,7 @@ export function FeedItem({
 }) {
   const [showSelected, setShowSelected] = useState(false);
   const [selectedGithubValue, setSelectedGithubValue] = useState({
-    language: "go",
+    language: "",
     time: "daily",
   });
   let icon = <GithubIcon className="w-5 h-5 mr-4" />;
@@ -214,7 +192,7 @@ export function FeedItem({
               className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
               {languages.map((item) => (
-                <option key={item.value} value={item.value}>
+                <option key={item.label} value={item.value}>
                   {item.label}
                 </option>
               ))}

@@ -174,6 +174,7 @@ func main() {
 			"GET::/health-check",
 			"GET::/tools/business-analysis",
 			"GET::/explore-rss",
+			"GET::/api/rss/github/languages",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))

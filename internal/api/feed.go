@@ -22,6 +22,19 @@ type feedHandler struct{}
 func NewFeedHandler(route fiber.Router) {
 	handler := &feedHandler{}
 	route.Post("/parse", handler.parseRssFeed)
+	route.Get("/github/languages", handler.githubLanguages)
+}
+
+func (*feedHandler) githubLanguages(c *fiber.Ctx) error {
+	result, err := github.FetchLanguages()
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(result)
 }
 
 func (*feedHandler) parseRssFeed(c *fiber.Ctx) error {

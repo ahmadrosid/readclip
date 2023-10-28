@@ -25,6 +25,30 @@ type TrendingResult struct {
 	Items       []TrendingItem `json:"items"`
 }
 
+type Language struct {
+	Label string `json:"label"`
+	Value string `json:"value"`
+}
+
+func FetchLanguages() ([]Language, error) {
+	trend := trending.NewTrending()
+
+	result, err := trend.GetLanguages()
+	if err != nil {
+		return nil, err
+	}
+
+	var languages []Language
+	for _, item := range result {
+		languages = append(languages, Language{
+			Label: item.Name,
+			Value: item.URLName,
+		})
+	}
+
+	return languages, nil
+}
+
 func FetchTrending(time string, language string) (*TrendingResult, error) {
 	trend := trending.NewTrending()
 
