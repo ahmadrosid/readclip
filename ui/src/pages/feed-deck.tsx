@@ -78,7 +78,6 @@ export default function FeedDeckPage() {
 
   return (
     <div className="">
-      {/* <div className="w-full snap-x snap-proximity flex overflow-x-auto border-l"> */}
       <div className="flex-grow flex overflow-x-auto snap-x snap-mandatory">
         {savedDecksComponents.map((item, idx) => (
           <DeckItem
@@ -87,7 +86,7 @@ export default function FeedDeckPage() {
             url={item.url}
             options={item.options}
             id={item.id}
-            onDeleteDeck={(id) => handleDeleteSavedDeckById(id)}
+            onDeleteDeck={handleDeleteSavedDeckById}
           />
         ))}
         <div

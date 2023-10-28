@@ -84,6 +84,15 @@ func FetchTrending(time string, language string) (*TrendingResult, error) {
 		})
 	}
 
+	if language == "" {
+		return &TrendingResult{
+			Items:       items,
+			Title:       fmt.Sprintf("Github Trending (All - %s)", time),
+			Link:        fmt.Sprintf("https://github.com/trending?since=%s", time),
+			Description: "Daily Trending in GitHub",
+		}, nil
+	}
+
 	return &TrendingResult{
 		Items:       items,
 		Title:       fmt.Sprintf("Github Trending (%s - %s)", language, time),

@@ -54,6 +54,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
       refetchOnReconnect: false,
       queryFn: () =>
         fetchRssFeed({
+          id,
           type: type,
           url: url,
           options: options,

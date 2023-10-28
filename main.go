@@ -9,6 +9,7 @@ import (
 	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 
 	"github.com/ahmadrosid/readclip/internal/api"
+	"github.com/ahmadrosid/readclip/internal/api/feed"
 	"github.com/ahmadrosid/readclip/internal/bookmark"
 	"github.com/ahmadrosid/readclip/internal/clip"
 	"github.com/ahmadrosid/readclip/internal/tag"
@@ -38,6 +39,11 @@ func main() {
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
+
+	// app.Use(logger.New())
+	// app.Use("/api", logger.New(logger.Config{
+	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
+	// }))
 
 	serveUI := func(ctx *fiber.Ctx) error {
 		return filesystem.SendFile(ctx, http.FS(index), "index.html")
@@ -168,7 +174,6 @@ func main() {
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
 			"POST::/api/youtube/channels",
-			"POST::/api/rss/parse",
 			"GET::/tools/*",
 			"GET::/assets/*",
 			"GET::/health-check",
@@ -185,9 +190,9 @@ func main() {
 	user.NewHandler(app.Group("/api/users"), userRepo)
 	bookmark.NewHandler(app.Group("/api/bookmarks"))
 
+	feed.NewHandler(app.Group("/api/rss"), feed.NewFeedRepository(db), userRepo)
 	api.NewYoutubeHandler(app.Group("/api/youtube"))
 	api.NewRedditHandler(app.Group("/api/reddit"))
-	api.NewFeedHandler(app.Group("/api/rss"))
 
 	app.Listen(":" + env.Port)
 }
