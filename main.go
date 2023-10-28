@@ -55,6 +55,7 @@ func main() {
 		"/tools/word-counter",
 		"/tools/reading-time",
 		"/tools/markdown-editor",
+		"/explore-rss",
 	}
 
 	for _, path := range uiPaths {
