@@ -27,9 +27,7 @@ func parseHTMLSource(htmlSource string) (*html.Node, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	body := dom.QuerySelector(doc, "body")
-	return body, nil
+	return doc, nil
 }
 
 func parseContent(content string) []HackernewsResponse {
@@ -72,27 +70,22 @@ func parseContent(content string) []HackernewsResponse {
 			dataItem.Points = points
 		}
 
-		// parse user name to string
+		// parse author name to string
 		hnuserDom := dom.QuerySelector(subtextDom, ".hnuser")
 		if hnuserDom != nil {
 			dataItem.Author = dom.InnerText(hnuserDom)
 		}
 
-		// parse user name to string
+		// parse date to string
 		ageDom := dom.QuerySelector(subtextDom, ".age")
 		if ageDom != nil {
 			dataItem.Date = dom.GetAttribute(ageDom, "title")
 		}
 
-		// parse comments
 		subtextDomChildren := dom.QuerySelectorAll(subtextDom, "a")
 		if len(subtextDomChildren) > 0 {
 			lastEl := subtextDomChildren[len(subtextDomChildren)-1]
-			commentLabel := " comments"
-			commnetText := dom.InnerText(lastEl)
-
-			if strings.HasSuffix(commnetText, commentLabel) {
-				comments, _ := strconv.Atoi(commnetText[:len(commnetText)-len(commentLabel)])
+			if comments, err := strconv.Atoi(strings.TrimSuffix(dom.InnerText(lastEl), " comments")); err == nil {
 				dataItem.Comments = comments
 			}
 		}

@@ -13,10 +13,10 @@ export default function ExploreRss() {
   };
   return (
     <div className="p-4 sm:p-8">
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center items-center gap-2">
         {blogRss.map((item) => (
           <Card className="shadow-none p-2 flex-1 sm:flex-auto">
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center">
               <div>
                 <Button
                   onClick={() => handleCopy(item)}
