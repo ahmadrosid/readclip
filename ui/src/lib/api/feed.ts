@@ -1,5 +1,5 @@
 import { MediaExtensions } from "@/components/feed";
-import { handleReturnFetch, getToken } from ".";
+import { handleReturnFetch } from ".";
 
 type FeedItem = {
   title: string;
@@ -36,7 +36,8 @@ type RequestRssFeed = {
 };
 
 export async function fetchRssFeed(
-  request: RequestRssFeed
+  request: RequestRssFeed,
+  token?: string
 ): Promise<ApiResponse> {
   if (!request.id) {
     throw new Error("ID is required!");
@@ -47,7 +48,7 @@ export async function fetchRssFeed(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getToken(),
+        Authorization: token || "",
       },
       body: JSON.stringify(request),
     })

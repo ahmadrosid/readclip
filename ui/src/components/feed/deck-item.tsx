@@ -23,6 +23,7 @@ type DeckComponentProps = BaseDeck & {
   onDeleteDeck: (id: string) => void;
 };
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/useAuth";
 
 export function LoadingSkeleton() {
   return (
@@ -47,19 +48,28 @@ export function LoadingSkeleton() {
 
 export const DeckItem = React.memo<DeckComponentProps>(
   ({ type, url, options, id, onDeleteDeck }) => {
+    const { user } = useAuth();
+
     const [openPopover, setOpenPopover] = useState(false);
     const queryData = useQuery({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
-      queryFn: () =>
-        fetchRssFeed({
-          id,
-          type: type,
-          url: url,
-          options: options,
-        }),
-      queryKey: id,
+      enabled: user !== undefined,
+      queryFn: async () => {
+        if (!user) return;
+        const token = await user.getIdToken();
+        return fetchRssFeed(
+          {
+            id,
+            type: type,
+            url: url,
+            options: options,
+          },
+          token
+        );
+      },
+      queryKey: [id, user],
       onSuccess: () => {
         if (openPopover) {
           setOpenPopover(false);

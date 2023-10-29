@@ -25,6 +25,10 @@ func (repo *feedRepository) DeleteFeedByID(id string, userID uuid.UUID) error {
 		Delete(&Feed{}).Error
 }
 
+func (repo *feedRepository) UpdateFeed(feed Feed) error {
+	return repo.db.Save(feed).Error
+}
+
 func (repo *feedRepository) GetFeedById(id string, userID uuid.UUID) (Feed, error) {
 	var feed Feed
 	err := repo.db.Where("id = ?", id).Where("user_id = ?", userID).First(&feed).Error

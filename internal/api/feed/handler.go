@@ -55,13 +55,21 @@ func (h *FeedHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 	return &user.ID, nil
 }
 
-func (h *FeedHandler) saveToDB(c *fiber.Ctx, data fiber.Map, id string) (Feed, error) {
+func (h *FeedHandler) saveToDB(c *fiber.Ctx, data fiber.Map, id string, savedFeed *Feed) (Feed, error) {
 	userID, err := h.getUserID(c)
 	if err != nil {
 		return Feed{}, err
 	}
 
 	var expired = time.Now().UTC().Add(time.Minute * 5)
+	if savedFeed != nil {
+		savedFeed.Content = JSONB{
+			"data": data["data"],
+		}
+		savedFeed.ExpiredAt = &expired
+		return *savedFeed, h.repo.UpdateFeed(*savedFeed)
+	}
+
 	var feed = Feed{
 		Id:     uuid.MustParse(id),
 		UserID: *userID,
@@ -95,7 +103,7 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 
 		feed, err := h.saveToDB(c, fiber.Map{
 			"data": trending,
-		}, id)
+		}, id, data)
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",
@@ -117,7 +125,7 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 
 		feed, err := h.saveToDB(c, fiber.Map{
 			"data": news,
-		}, id)
+		}, id, data)
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",
@@ -152,7 +160,7 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 
 		feedDb, err := h.saveToDB(c, fiber.Map{
 			"data": feed,
-		}, id)
+		}, id, data)
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",

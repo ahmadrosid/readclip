@@ -42,4 +42,5 @@ type FeedRepository interface {
 	GetFeedById(id string, userID uuid.UUID) (Feed, error)
 	CreateFeed(feed Feed) (Feed, error)
 	DeleteFeedByID(id string, userID uuid.UUID) error
+	UpdateFeed(feed Feed) error
 }

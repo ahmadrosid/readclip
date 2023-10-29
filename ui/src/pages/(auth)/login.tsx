@@ -64,7 +64,14 @@ export default function LoginPage() {
       !loginMutation.isLoading &&
       !loginMutation.isError
     ) {
-      navigate("/");
+      // const redirectUrl = window.localStorage.getItem("redirect-auth");
+      // // alert("redirected to= " + redirectUrl);
+      // if (redirectUrl) {
+      //   window.localStorage.removeItem("redirect-auth");
+      //   window.location.href = redirectUrl;
+      //   return;
+      // }
+      // navigate("/");
     }
   }, [loginMutation, navigate, open]);
 
