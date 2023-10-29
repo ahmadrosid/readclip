@@ -55,6 +55,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false,
+      retry: 2,
       enabled: user !== undefined,
       queryFn: async () => {
         if (!user) return;
@@ -137,6 +138,10 @@ export const DeckItem = React.memo<DeckComponentProps>(
             <img
               src={getLogoUrl(queryData.data?.data?.link)}
               alt={queryData.data?.data?.title}
+              onError={(el) => {
+                el.currentTarget.src =
+                  "https://readclip.ahmadrosid.com/favicon.ico";
+              }}
               className="w-6 h-6"
             />
           )}
