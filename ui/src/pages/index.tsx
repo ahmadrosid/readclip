@@ -110,9 +110,10 @@ export default function Home() {
                   Distraction-Free Reading
                 </CardTitle>
                 <p className="text-gray-600">
-                  Readclip allows you to save articles, blog posts, news, and
-                  more from the web with a single click. Say goodbye to
-                  bookmarks and browser tabs cluttering your workspace.
+                  Readclip downloads the HTML content from links you save and
+                  then uses advanced technology to remove ads, widgets, and
+                  other distractions, presenting you with clean, easy-to-read
+                  content.
                 </p>
               </CardContent>
             </Card>
@@ -131,14 +132,12 @@ export default function Home() {
             </Card>
             <Card>
               <CardContent className="p-6">
-                <div className="text-[57px] h-20 w-20">📚</div>
-                <CardTitle className="pb-4 text-xl">
-                  Reliable Accessibility
-                </CardTitle>
+                <div className="text-[57px] h-20 w-20">💡</div>
+                <CardTitle className="pb-4 text-xl">Discoverability</CardTitle>
                 <p className="text-gray-600">
-                  Readclip allows you to save articles, blog posts, news, and
-                  more from the web with a single click. Say goodbye to
-                  bookmarks and browser tabs cluttering your workspace.
+                  Setup news feed from popular media like reddit, hackernews,
+                  youtube channel you like to get the latest update save it with
+                  a single click.
                 </p>
               </CardContent>
             </Card>
