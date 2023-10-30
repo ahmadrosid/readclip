@@ -7,8 +7,9 @@ import { GithubIcon } from "@/components/icons/github";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { type BaseDeck } from "@/components/feed/index";
-import { FeedItemYoutube } from "./feed-item-youtube";
+import { FeedItemYoutube } from "./item/youtube";
 import { languages } from "@/lib/data/github";
+import { FeedItemReddit } from "./item/reddit";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -137,30 +138,21 @@ export function FeedItem({
           </label>
         </div>
       )}
-      {type === "reddit" && showSelected && (
-        <div className="pt-4">
-          <label>
-            <span className="text-sm pb-2 block text-gray-600">
-              Sub reddit name without the /r/
-            </span>
-            <Input
-              name="input_sub_reddit"
-              className="bg-white"
-              placeholder="InternetIsBeautiful"
-              onChange={(e) =>
-                onValueUpdate({
-                  type: "reddit",
-                  url: "",
-                  options: [e.currentTarget.value],
-                })
-              }
-            />
-          </label>
-        </div>
-      )}
 
       {type === "youtube" && showSelected && (
         <FeedItemYoutube
+          onSubmit={(channelId) => {
+            onValueUpdate({
+              type,
+              url: "",
+              options: [channelId],
+            });
+          }}
+        />
+      )}
+
+      {type === "reddit" && showSelected && (
+        <FeedItemReddit
           onSubmit={(channelId) => {
             onValueUpdate({
               type,
