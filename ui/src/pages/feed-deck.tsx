@@ -78,7 +78,7 @@ export default function FeedDeckPage() {
 
   return (
     <div className="">
-      <div className="flex-grow flex overflow-x-auto snap-x snap-mandatory">
+      <div className="flex-grow flex overflow-x-auto snap-x snap-mandatory scrollbar-thin">
         {savedDecksComponents.map((item, idx) => (
           <DeckItem
             key={idx}
@@ -125,7 +125,7 @@ export default function FeedDeckPage() {
                   </Button>
                 </DialogTrigger>
               ) : (
-                <div className="w-[28rem] border-r border-l border-b h-[91vh] bg-white">
+                <div className="w-[28rem] border-r border-l border-b h-[93vh] bg-white dark:bg-transparent">
                   <DialogTrigger asChild>
                     <Button
                       variant="ghost"
@@ -137,8 +137,8 @@ export default function FeedDeckPage() {
                   </DialogTrigger>
                 </div>
               )}
-              <DialogContent className="p-0 overflow-hidden gap-0">
-                <DialogHeader className="px-4 py-4 border-b bg-gray-50">
+              <DialogContent className="p-0 overflow-hidden gap-0 dark:bg-gray-800">
+                <DialogHeader className="px-4 py-4 border-b bg-gray-50 dark:bg-gray-900">
                   <DialogTitle>Add feed</DialogTitle>
                 </DialogHeader>
                 {/*<div className="px-4 py-2 flex items-center gap-2">
@@ -178,7 +178,7 @@ export default function FeedDeckPage() {
                     />
                   </ul>
                 </div>
-                <DialogFooter className="px-4 py-3 bg-gray-50">
+                <DialogFooter className="px-4 py-3 bg-gray-50 dark:bg-gray-900">
                   <Button
                     variant="outline"
                     size="sm"

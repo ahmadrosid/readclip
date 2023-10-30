@@ -160,7 +160,7 @@ export default function ArticlePage() {
       )}
       {clips ? (
         <>
-          <div className="flex gap-2 pt-4 pb-4 sm:pb-2 max-w-screen-2xl overflow-x-auto">
+          <div className="flex gap-2 pt-4 pb-4 sm:pb-2 max-w-screen-2xl overflow-x-auto scrollbar-thin border-b">
             {Array.from(hosts.values()).map((host, i) => (
               <Badge
                 onClick={() => {
@@ -172,9 +172,9 @@ export default function ArticlePage() {
                 }}
                 variant="outline"
                 className={cn(
-                  "hover:bg-gray-200 cursor-pointer bg-white",
+                  "hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
                   selectedHost === host &&
-                    "bg-primary text-white hover:text-gray-700"
+                    "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
                 )}
                 key={i}
               >

@@ -132,7 +132,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
     };
 
     return (
-      <div className="w-full max-w-md border-l border-b bg-white flex-shrink-0 snap-center">
+      <div className="w-full max-w-md border-l border-b bg-white dark:bg-transparent flex-shrink-0 snap-center">
         <div className="p-2 border-b flex gap-2 items-center min-h-[40px]">
           {queryData.data?.data && (
             <img
@@ -142,10 +142,12 @@ export const DeckItem = React.memo<DeckComponentProps>(
                 el.currentTarget.src =
                   "https://readclip.ahmadrosid.com/favicon.ico";
               }}
-              className="w-6 h-6"
+              className="w-6 h-6 dark:opacity-50"
             />
           )}
-          <div className="flex-1">{queryData.data?.data?.title}</div>
+          <div className="flex-1 dark:text-gray-300">
+            {queryData.data?.data?.title}
+          </div>
           <Popover open={openPopover} onOpenChange={setOpenPopover}>
             <PopoverTrigger>
               <MoreVertical className="w-4 h-4" />
@@ -182,10 +184,13 @@ export const DeckItem = React.memo<DeckComponentProps>(
             </PopoverContent>
           </Popover>
         </div>
-        <div className="max-h-[85vh] overflow-y-auto">
+        <div className="max-h-[85vh] scrollbar-thin overflow-y-auto">
           {queryData.isLoading && <LoadingSkeleton />}
           {queryData?.data?.data?.items.map((item) => (
-            <div key={item.link} className="hover:bg-gray-100 border-b p-2">
+            <div
+              key={item.link}
+              className="hover:bg-gray-100 dark:hover:bg-gray-800 border-b p-2"
+            >
               {type === "youtube" ? (
                 <>
                   <img
@@ -199,7 +204,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                       className="hover:underline flex-1"
                       href={item.link}
                     >
-                      <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                      <h3 className="font-medium text-gray-800 dark:text-gray-300 tracking-tight text-base pb-1">
                         {item.title}
                       </h3>
                     </a>
@@ -227,7 +232,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                       className="hover:underline flex-1"
                       href={item.link}
                     >
-                      <h3 className="font-medium text-gray-800 tracking-tight text-base pb-1">
+                      <h3 className="font-medium text-gray-800 dark:text-gray-400 tracking-tight text-base pb-1">
                         {item.title}
                       </h3>
                     </a>
@@ -244,7 +249,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                     </Button>
                   </div>
                   <div
-                    className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md"
+                    className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md dark:text-gray-400"
                     dangerouslySetInnerHTML={{
                       __html: extractTextContent(
                         item.description || item.content

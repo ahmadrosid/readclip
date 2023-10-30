@@ -28,12 +28,14 @@ export function Header() {
           <nav className="flex items-center space-x-2">
             <Link to="/" className="text-lg flex items-center gap-2">
               <BookMarkedIcon className="w-5 h-5" />
-              <span className="font-bold hidden sm:block">ReadClip</span>
+              <span className="font-bold hidden sm:block dark:text-gray-300">
+                ReadClip
+              </span>
             </Link>
 
             <Link to="/clip">
               <Button
-                className="dark:text-white text-gray-800 px-2"
+                className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Home
@@ -42,7 +44,7 @@ export function Header() {
 
             <Link to="/clips">
               <Button
-                className="dark:text-white text-gray-800 px-2"
+                className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Clips
@@ -51,7 +53,7 @@ export function Header() {
 
             <Link to="/feed-deck">
               <Button
-                className="dark:text-white text-gray-800 px-2"
+                className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Feed deck
@@ -60,7 +62,7 @@ export function Header() {
 
             <Link to="/setting" className="hidden sm:block">
               <Button
-                className="dark:text-white text-gray-800 px-2"
+                className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Settings
@@ -69,7 +71,7 @@ export function Header() {
 
             <Link to="/tools" className="hidden sm:block">
               <Button
-                className="dark:text-white text-gray-800 px-2"
+                className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Free tools
@@ -95,7 +97,7 @@ export function Header() {
                 <Link to="/login">
                   <Button
                     variant="link"
-                    className="text-gray-600 dark:text-white"
+                    className="text-gray-600 dark:text-gray-300"
                   >
                     Sign in
                   </Button>

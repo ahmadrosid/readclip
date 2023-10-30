@@ -178,11 +178,11 @@ export default function Home() {
       {isLoading && inputUrl !== "" && <LoadingSkeleton />}
 
       {inputUrl === "" && (
-        <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl pb-8">
-          <div className="py-2 px-3 border w-full rounded-t-md bg-white">
+        <div className="mx-auto min-w-xs max-w-md sm:max-w-3xl mb-8 bg-white dark:bg-gray-800/40 rounded-md overflow-hidden">
+          <div className="py-2 px-3 border w-full rounded-t-md dark:text-gray-400">
             <span className="pr-3">📖</span>History
           </div>
-          <div className="p-2 border-x border-b bg-white rounded-b-md">
+          <div className="p-2 border-x border-b  rounded-b-md">
             {fetchHistoryQuery.data?.data.length === 0 && (
               <div className="p-2 flex gap-2">
                 <p>Your history is empty. Don't know how to use? </p>
@@ -208,7 +208,7 @@ export default function Home() {
                       </p>
                     </td>
                     <td className="pl-2">
-                      <p className="py-1">
+                      <p className="py-1 dark:text-gray-400">
                         <span
                           className="h-9 cursor-pointer underline sm:no-underline hover:underline font-medium tracking-tight"
                           onClick={() => {

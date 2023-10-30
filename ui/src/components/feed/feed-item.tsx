@@ -72,8 +72,6 @@ export function FeedItem({
     type,
   ]);
 
-  const isComingSoon = false;
-
   useEffect(() => {
     if (type !== "github") return;
 
@@ -87,45 +85,34 @@ export function FeedItem({
   return (
     <li
       className={cn(
-        "border-b p-4 hover:bg-gray-50",
-        showSelected && "bg-gray-50"
+        "border-b dark:border-gray-700/30 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/10",
+        showSelected && "bg-gray-50 dark:bg-gray-700/5"
       )}
     >
       <div className="flex items-center" onClick={toggleShowSelected}>
         {icon}
-        <p
-          className={cn(
-            "flex-1 cursor-pointer",
-            isComingSoon && "text-gray-400"
-          )}
-        >
-          {label}
-        </p>
-        {isComingSoon ? (
-          <p className="text-xs text-gray-500">Coming soon</p>
-        ) : (
-          <CheckCircle2
-            className={cn("w-5 h-5 text-gray-500", !showSelected && "hidden")}
-          />
-        )}
+        <p className={cn("flex-1 cursor-pointer")}>{label}</p>
+        <CheckCircle2
+          className={cn("w-5 h-5 text-gray-500", !showSelected && "hidden")}
+        />
       </div>
       {type === "rss" && showSelected && (
         <div className="pt-2">
           <label>
             <p className="pb-2 inline-flex">
-              <span className="flex-1 text-sm pb-2 text-gray-600">
+              <span className="flex-1 text-sm pb-2 text-gray-600 dark:text-gray-500">
                 {"Rss feed url or "}
               </span>
               <a
                 href="/explore-rss"
-                className="text-sm px-1 text-gray-600 underline"
+                className="text-sm px-1 text-gray-600 underline dark:text-gray-500"
               >
                 explore rss
               </a>
             </p>
             <Input
               name="input_url_rss"
-              className="bg-white"
+              className="bg-white dark:bg-gray-700"
               placeholder="https://example.com/rss.xml"
               onChange={(e) =>
                 onValueUpdate({

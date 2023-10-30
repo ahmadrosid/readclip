@@ -35,7 +35,7 @@ export function FeedItemYoutube({
     <>
       <div className="pt-4 relative">
         {selected ? (
-          <div className="bg-white border pl-1.5 pr-0.5 py-0.5 rounded-md flex">
+          <div className="bg-white dark:bg-gray-700 border pl-2.5 pr-0.5 py-0.5 rounded-md flex">
             <div className="flex gap-3 items-center flex-1">
               <img
                 src={selected.thumbnail}
@@ -55,7 +55,7 @@ export function FeedItemYoutube({
           </div>
         ) : (
           <div className="rounded-md overflow-hidden border">
-            <Command>
+            <Command className="dark:bg-gray-700">
               <CommandInput
                 onChangeCapture={(e) => debounced(e.currentTarget.value)}
                 placeholder="Search channels..."
@@ -77,7 +77,7 @@ export function FeedItemYoutube({
                         setSelected(item);
                       }}
                       key={item.id}
-                      className="flex gap-3 p-1.5 hover:bg-gray-50 cursor-pointer"
+                      className="flex gap-3 p-1.5 cursor-pointer"
                     >
                       <img
                         src={item.thumbnail}

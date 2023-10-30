@@ -52,19 +52,20 @@ export default function Home() {
 
   return (
     <div>
-      <div className="py-0 sm:py-16">
+      <div className="py-0 sm:py-16 relative">
+        <div className="absolute inset-0 -z-10 h-full w-full bg-gray-50 dark:bg-gray-900 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="max-w-4xl py-0 sm:py-16 mx-auto text-left sm:text-center px-4 sm:px-0">
           <div className="py-6 max-w-4xl">
             <Badge
               variant={"secondary"}
-              className="py-2 px-4 rounded-full border border-gray-200"
+              className="py-2 px-4 rounded-full border border-gray-200 dark:border-gray-500"
             >
               Save, Organize, and Enjoy
             </Badge>
-            <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-white">
+            <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
               Personal Knowledge Library for Content creators.
             </h1>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
               Build your own personal knowledge library. Say goodbye to
               bookmarks and browser tabs cluttering your workspace.
             </p>
@@ -76,7 +77,7 @@ export default function Home() {
                 buttonVariants({
                   size: "lg",
                   className:
-                    "items-center justify-between h-10  dark:bg-white text-white dark:text-black",
+                    "items-center justify-between h-10  dark:text-gray-100 text-white dark:bg-gray-700 dark:hover:bg-gray-800",
                 })
               )}
             >
@@ -87,7 +88,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-gray-100">
+      <div className="bg-gray-100 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8 px-4">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
@@ -145,7 +146,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="p-8">
+      <div className="p-8 dark:bg-gray-800">
         <div
           ref={howToRef}
           id="how-to"

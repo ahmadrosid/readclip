@@ -29,7 +29,7 @@ export function FeedItemReddit({
     <>
       <div className="pt-4 relative">
         {selected ? (
-          <div className="bg-white border pl-1.5 pr-0.5 py-0.5 rounded-md flex">
+          <div className="bg-white dark:bg-gray-700 border pl-2.5 pr-0.5 py-0.5 rounded-md flex">
             <div className="flex gap-3 items-center flex-1">
               <img
                 src={selected.icon || "https://logo.clearbit.com/reddit.com"}
@@ -52,7 +52,7 @@ export function FeedItemReddit({
           </div>
         ) : (
           <div className="rounded-md overflow-hidden border">
-            <Command>
+            <Command className="dark:bg-gray-700">
               <CommandInput placeholder="Search sub-reddit..." />
               <CommandList>
                 {subReddits.map((item) => (
@@ -65,7 +65,7 @@ export function FeedItemReddit({
                           setSelected(room);
                         }}
                         key={room.name}
-                        className="flex gap-3 p-1.5 hover:bg-gray-50 cursor-pointer"
+                        className="flex gap-3 p-1.5 cursor-pointer"
                       >
                         <img
                           src={
