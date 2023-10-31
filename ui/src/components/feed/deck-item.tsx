@@ -142,7 +142,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                 el.currentTarget.src =
                   "https://readclip.ahmadrosid.com/favicon.ico";
               }}
-              className="w-6 h-6 dark:opacity-50"
+              className="w-6 h-6"
             />
           )}
           <div className="flex-1 dark:text-gray-300">
@@ -220,7 +220,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                       <BookmarkIcon className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-400">
                     {getTextDescription(item.extensions)}
                   </div>
                 </>
@@ -232,7 +232,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                       className="hover:underline flex-1"
                       href={item.link}
                     >
-                      <h3 className="font-medium text-gray-800 dark:text-gray-400 tracking-tight text-base pb-1">
+                      <h3 className="font-medium text-gray-800 dark:text-gray-300 tracking-tight text-base pb-1">
                         {item.title}
                       </h3>
                     </a>
