@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyIcon, DownloadIcon, ExternalLink, Loader2 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { downloadText } from "@/lib/utils";
 import { Markdown } from "@/components/markdown";
@@ -57,6 +57,18 @@ export default function YoutubeTranscriber() {
     Transcribe
   </a>`;
 
+  useEffect(() => {
+    if (transcribeMutation.isLoading) return;
+    if (inputUrl !== "") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const urlParam = params.get("url");
+    if (urlParam) {
+      setInputUrl(urlParam);
+      transcribeMutation.mutate(urlParam);
+    }
+  }, [inputUrl, transcribeMutation]);
+
   return (
     <div className="container max-w-6xl mx-auto min-h-[80vh] px-2 sm:px-8">
       <div className="pt-6">
@@ -86,6 +98,7 @@ export default function YoutubeTranscriber() {
                 name="youtube_url"
                 placeholder="Paste youtube video link here..."
                 className="bg-white dark:bg-gray-800 h-10"
+                value={inputUrl}
                 onChange={(e) => setInputUrl(e.currentTarget.value)}
               />
               <Button
