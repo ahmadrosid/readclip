@@ -53,12 +53,21 @@ export default function YoutubeTranscriber() {
     toast.success(`Downloaded "${title}"!`);
   }, [transcribeMutation.data]);
 
+  const rawLink = `<a href="javascript:window.location='${window.location.origin}/tools/youtube-transcriber?url='+encodeURIComponent(document.location)">
+    Transcribe
+  </a>`;
+
   return (
     <div className="container max-w-6xl mx-auto min-h-[80vh] px-2 sm:px-8">
       <div className="pt-6">
         <Title className="pb-2">{tool?.title}</Title>
-        <p className="text-lg text-gray-600">{tool?.description}</p>
-
+        <p className="text-lg text-gray-600 dark:text-gray-400">
+          {tool?.description}
+        </p>
+        <div
+          className="flex-shrink-0 hover:underline cursor-pointer text-sm dark:text-gray-400"
+          dangerouslySetInnerHTML={{ __html: rawLink }}
+        />
         <Separator className="mt-4" />
       </div>
       <div className="grid py-6 gap-6">
