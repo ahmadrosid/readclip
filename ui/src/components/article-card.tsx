@@ -124,7 +124,7 @@ function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
         {openConfirmDelete && (
           <span className="inline-flex gap-2">
             <Check
-              className="w-4 h-4 hover:text-rose-500 cursor-pointer"
+              className="w-4 h-4 hover:text-green-500 cursor-pointer"
               onClick={() => deleteMutation.mutate(clipId)}
             />
             <XIcon
