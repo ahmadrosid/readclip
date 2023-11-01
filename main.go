@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io/fs"
 	"net/http"
 	"strings"
@@ -39,7 +40,6 @@ func main() {
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
-
 	// app.Use(logger.New())
 	// app.Use("/api", logger.New(logger.Config{
 	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
@@ -67,6 +67,13 @@ func main() {
 	for _, path := range uiPaths {
 		app.Get(path, serveUI)
 	}
+
+	app.Use("/", func(ctx *fiber.Ctx) error {
+		if ctx.BaseURL() == "https://readclip.ahmadrosid.com" {
+			return ctx.Redirect(fmt.Sprintf("https://readclip.site%s", ctx.Path()))
+		}
+		return ctx.Next()
+	})
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
