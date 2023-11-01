@@ -24,6 +24,7 @@ type DeckComponentProps = BaseDeck & {
 };
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
+import HtmlTransformer from "@/lib/html-transformer";
 
 export function LoadingSkeleton() {
   return (
@@ -250,12 +251,17 @@ export const DeckItem = React.memo<DeckComponentProps>(
                   </div>
                   <div
                     className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md dark:text-gray-400"
-                    dangerouslySetInnerHTML={{
-                      __html: extractTextContent(
-                        item.description || item.content
-                      ),
-                    }}
-                  ></div>
+                    // dangerouslySetInnerHTML={{
+                    //   __html: extractTextContent(
+                    //     item.description || item.content
+                    //   ),
+                    // }}
+                  >
+                    {HtmlTransformer(
+                      extractTextContent(item.description || item.content),
+                      type
+                    )}
+                  </div>
                 </>
               )}
             </div>
