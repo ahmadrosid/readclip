@@ -45,6 +45,15 @@ func main() {
 	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
 	// }))
 
+	app.Use("/", func(ctx *fiber.Ctx) error {
+		// fmt.Println(ctx.OriginalURL())
+		if ctx.BaseURL() == "https://readclip.ahmadrosid.com" {
+			// if ctx.BaseURL() == "http://localhost:8000" {
+			return ctx.Redirect(fmt.Sprintf("https://readclip.site%s", ctx.Path()), http.StatusMovedPermanently)
+		}
+		return ctx.Next()
+	})
+
 	serveUI := func(ctx *fiber.Ctx) error {
 		return filesystem.SendFile(ctx, http.FS(index), "index.html")
 	}
@@ -67,13 +76,6 @@ func main() {
 	for _, path := range uiPaths {
 		app.Get(path, serveUI)
 	}
-
-	app.Use("/", func(ctx *fiber.Ctx) error {
-		if ctx.BaseURL() == "https://readclip.ahmadrosid.com" {
-			return ctx.Redirect(fmt.Sprintf("https://readclip.site%s", ctx.Path()))
-		}
-		return ctx.Next()
-	})
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
