@@ -46,9 +46,7 @@ func main() {
 	// }))
 
 	app.Use("/", func(ctx *fiber.Ctx) error {
-		// fmt.Println(ctx.OriginalURL())
 		if ctx.BaseURL() == "https://readclip.ahmadrosid.com" {
-			// if ctx.BaseURL() == "http://localhost:8000" {
 			return ctx.Redirect(fmt.Sprintf("https://readclip.site%s", ctx.Path()), http.StatusMovedPermanently)
 		}
 		return ctx.Next()
