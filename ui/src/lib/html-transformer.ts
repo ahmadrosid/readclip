@@ -1,6 +1,7 @@
+import { BaseDeck } from "@/components/feed";
 import ReactHtmlParser from "react-html-parser";
 
-export default function HtmlTransformer(html: string, type: string) {
+export default function HtmlTransformer(html: string, type: BaseDeck["type"]) {
   return ReactHtmlParser(html, {
     transform(node) {
       if (node.type === "tag" && node.name === "a") {

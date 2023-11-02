@@ -231,7 +231,11 @@ export const DeckItem = React.memo<DeckComponentProps>(
                     <a
                       target="_blank"
                       className="hover:underline flex-1"
-                      href={item.link}
+                      href={
+                        type === "reddit" && item.link.startsWith("item?id=")
+                          ? "https://news.ycombinator.com/" + item.link
+                          : item.link
+                      }
                     >
                       <h3 className="font-medium text-gray-800 dark:text-gray-300 tracking-tight text-base pb-1">
                         {item.title}
@@ -249,14 +253,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                       <BookmarkIcon className="w-4 h-4" />
                     </Button>
                   </div>
-                  <div
-                    className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md dark:text-gray-400"
-                    // dangerouslySetInnerHTML={{
-                    //   __html: extractTextContent(
-                    //     item.description || item.content
-                    //   ),
-                    // }}
-                  >
+                  <div className="prose-sm break-words prose-h1:text-base prose-h1:py-0 prose-p:text-sm prose-p:m-0 prose-pre:m-1 prose-img:my-2 prose-img:rounded-md prose-img:border max-w-md dark:text-gray-400">
                     {HtmlTransformer(
                       extractTextContent(item.description || item.content),
                       type
