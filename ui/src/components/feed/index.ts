@@ -1,5 +1,5 @@
 export type BaseDeck = {
-  type: "github" | "reddit" | "rss" | "youtube" | "hackernews";
+  type: "github" | "reddit" | "rss" | "youtube" | "hackernews" | "indiehacker";
   url: string;
   options: string[];
 };

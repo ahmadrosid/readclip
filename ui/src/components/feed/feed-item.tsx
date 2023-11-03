@@ -10,6 +10,7 @@ import { type BaseDeck } from "@/components/feed/index";
 import { FeedItemYoutube } from "./item/youtube";
 import { languages } from "@/lib/data/github";
 import { FeedItemReddit } from "./item/reddit";
+import { IndiehackerIcon } from "../icons/indiehacker";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -48,6 +49,9 @@ export function FeedItem({
       break;
     case "hackernews":
       icon = <HackerNewsIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "indiehacker":
+      icon = <IndiehackerIcon className="w-5 h-5 mr-4" />;
       break;
   }
 

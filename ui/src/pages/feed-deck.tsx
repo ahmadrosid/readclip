@@ -162,6 +162,11 @@ export default function FeedDeckPage() {
                       onValueUpdate={setSelectedFeedItem}
                     />
                     <FeedItem
+                      type="indiehacker"
+                      label="Indiehacker"
+                      onValueUpdate={setSelectedFeedItem}
+                    />
+                    <FeedItem
                       type="reddit"
                       label="Sub Reddit"
                       onValueUpdate={setSelectedFeedItem}
