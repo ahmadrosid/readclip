@@ -29,6 +29,7 @@ export function FeedItem({
   onValueUpdate: (param: FeedItemValue) => void;
 }) {
   const [showSelected, setShowSelected] = useState(false);
+  const [indihackerNews, setSelectedIndiehackersValue] = useState("featured");
   const [selectedGithubValue, setSelectedGithubValue] = useState({
     language: "",
     time: "daily",
@@ -58,13 +59,17 @@ export function FeedItem({
   const toggleShowSelected = useCallback(() => {
     setShowSelected((prev) => {
       if (prev === false) {
+        const options = [];
+        if (type === "github") {
+          options.push(selectedGithubValue.time);
+          options.push(selectedGithubValue.language);
+        } else if (type === "indiehacker") {
+          options.push(indihackerNews);
+        }
         onValueUpdate({
           type,
           url: "",
-          options:
-            type === "github"
-              ? [selectedGithubValue.time, selectedGithubValue.language]
-              : [],
+          options: options,
         });
       }
       return !prev;
@@ -74,17 +79,25 @@ export function FeedItem({
     selectedGithubValue.language,
     selectedGithubValue.time,
     type,
+    indihackerNews,
   ]);
 
   useEffect(() => {
-    if (type !== "github") return;
-
-    onValueUpdate({
-      type: "github",
-      options: [selectedGithubValue.time, selectedGithubValue.language],
-      url: "",
-    });
-  }, [type, onValueUpdate, selectedGithubValue]);
+    if (type === "github") {
+      onValueUpdate({
+        type,
+        options: [selectedGithubValue.time, selectedGithubValue.language],
+        url: "",
+      });
+      return;
+    } else if (type === "indiehacker") {
+      onValueUpdate({
+        type,
+        options: [indihackerNews],
+        url: "",
+      });
+    }
+  }, [type, onValueUpdate, selectedGithubValue, indihackerNews]);
 
   return (
     <li
@@ -202,6 +215,28 @@ export function FeedItem({
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+      )}
+
+      {type === "indiehacker" && showSelected && (
+        <div className="pt-4 grid grid-cols-1">
+          <div>
+            <label
+              htmlFor="mode"
+              className="text-gray-600 text-sm pb-2 inline-block"
+            >
+              News
+            </label>
+            <select
+              id="mode"
+              name="mode"
+              onChange={(e) => setSelectedIndiehackersValue(e.target.value)}
+              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+            >
+              <option value={"featured"}>Featured</option>
+              <option value={"latest"}>Latest</option>
             </select>
           </div>
         </div>

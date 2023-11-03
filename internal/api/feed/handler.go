@@ -138,7 +138,7 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 			"id":   feed.Id,
 		})
 	case "indiehacker":
-		news, err := indihacker.FetchIndihacker()
+		news, err := indihacker.FetchIndihacker(input.Options[0])
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",
