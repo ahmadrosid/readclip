@@ -159,7 +159,7 @@ func ParseFeatured() (*util.FeedResult, error) {
 	for _, item := range items {
 		feedItem := util.FeedItem{
 			Title:       item.Title,
-			Description: fmt.Sprintf("<div><img src=\"%s\" alt=\"indiehackers\" /> <p class=\"text-gray-500\">%s</p></div>", item.Image, item.Description),
+			Description: fmt.Sprintf("<p class=\"text-gray-500\">%s</p>", item.Description),
 			Link:        item.Link,
 			Author:      item.Author,
 		}
