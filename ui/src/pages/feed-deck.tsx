@@ -15,6 +15,8 @@ import { cn } from "@/lib/utils";
 import { DeckItem } from "@/components/feed/deck-item";
 import { FeedItem } from "@/components/feed/feed-item";
 import { type BaseDeck } from "@/components/feed";
+import { deleteFeedById } from "@/lib/api/feed";
+import { getToken } from "@/lib/api";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -67,13 +69,19 @@ export default function FeedDeckPage() {
     setShowAddDeckDialog(false);
   }, [selectedFeedItem]);
 
-  const handleDeleteSavedDeckById = (id: string) => {
+  const handleDeleteSavedDeckById = async (id: string, title: string) => {
     setSavedDecksComponents((prev) => {
       const data = [...prev];
       const newDeck = data.filter((item) => item.id != id);
       window.localStorage.setItem(deckItemKey, JSON.stringify(newDeck));
       return newDeck;
     });
+    const newDeck = savedDecksComponents.filter((item) => item.id == id);
+    if (newDeck[0]) {
+      deleteFeedById(id, getToken()).then(() => {
+        toast.success(title + " deleted!");
+      });
+    }
   };
 
   return (

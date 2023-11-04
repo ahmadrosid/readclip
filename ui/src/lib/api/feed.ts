@@ -54,3 +54,19 @@ export async function fetchRssFeed(
     })
   );
 }
+
+export async function deleteFeedById(id: string, token?: string) {
+  if (id === "") {
+    throw new Error("ID is required!");
+  }
+
+  return handleReturnFetch(
+    await fetch("/api/rss/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token || "",
+      },
+    })
+  );
+}

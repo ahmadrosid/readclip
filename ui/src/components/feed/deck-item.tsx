@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 
 type DeckComponentProps = BaseDeck & {
   id: string;
-  onDeleteDeck: (id: string) => void;
+  onDeleteDeck: (id: string, title: string) => void;
 };
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
@@ -175,7 +175,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
                   size="sm"
                   className="justify-start"
                   onClick={() => {
-                    onDeleteDeck(id);
+                    onDeleteDeck(id, queryData.data?.data?.title || "");
                     setOpenPopover(false);
                   }}
                 >

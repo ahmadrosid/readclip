@@ -40,6 +40,7 @@ func main() {
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
+
 	// app.Use(logger.New())
 	// app.Use("/api", logger.New(logger.Config{
 	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
