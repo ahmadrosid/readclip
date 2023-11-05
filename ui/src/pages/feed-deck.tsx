@@ -185,6 +185,11 @@ export default function FeedDeckPage() {
                       onValueUpdate={setSelectedFeedItem}
                     />
                     <FeedItem
+                      type="laravelnews"
+                      label="Laravelnews"
+                      onValueUpdate={setSelectedFeedItem}
+                    />
+                    <FeedItem
                       type="youtube"
                       label="Youtube Channel"
                       onValueUpdate={setSelectedFeedItem}

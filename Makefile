@@ -9,7 +9,7 @@ start-ui-dev:
 	cd ui && npm run dev
 
 dev:
-	# go run cli/scraper/indihacker.go        
+	# go run cli/scraper/laravel-news.go
 	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
 
 start:

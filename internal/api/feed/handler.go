@@ -9,6 +9,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util/github"
 	"github.com/ahmadrosid/readclip/internal/util/hckrnews"
 	"github.com/ahmadrosid/readclip/internal/util/indihacker"
+	"github.com/ahmadrosid/readclip/internal/util/laravelnews"
 	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -139,6 +140,28 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 		})
 	case "indiehacker":
 		news, err := indihacker.FetchIndihacker(input.Options[0])
+		if err != nil {
+			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+
+		feed, err := h.saveToDB(c, fiber.Map{
+			"data": news,
+		}, id, data)
+		if err != nil {
+			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"data": news,
+			"id":   feed.Id,
+		})
+	case "laravelnews":
+		news, err := laravelnews.ParseBlogPage()
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",
