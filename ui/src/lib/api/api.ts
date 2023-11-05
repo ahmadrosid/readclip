@@ -91,15 +91,19 @@ export const fetchAllArticles = async ({
   );
 };
 
-export const fetchDeleteClip = async (
-  id: string
-): Promise<{ status: string }> => {
+export const fetchDeleteClip = async ({
+  id,
+  token,
+}: {
+  id: string;
+  token: string;
+}): Promise<{ status: string }> => {
   return handleReturnFetch(
     await fetch(`api/clips/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getToken(),
+        Authorization: token,
       },
     })
   );

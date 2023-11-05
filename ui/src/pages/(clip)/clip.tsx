@@ -8,6 +8,7 @@ import {
   DownloadIcon,
   ExternalLink,
   ExternalLinkIcon,
+  Loader2,
   RefreshCw,
   Send,
   TagIcon,
@@ -43,7 +44,7 @@ function LoadingSkeleton() {
 }
 
 export default function Home() {
-  const { navigate } = useAuth();
+  const { navigate, user } = useAuth();
   const params = new URLSearchParams(window.location.search);
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
@@ -121,10 +122,11 @@ export default function Home() {
   }, [data]);
 
   const handleDeleteClip = useCallback(async () => {
-    if (data?.data.Id) {
-      deleteMutation.mutate(data.data.Id);
+    if (data?.data.Id && user) {
+      const token = await user.getIdToken();
+      deleteMutation.mutate({ id: data.data.Id, token });
     }
-  }, [data?.data.Id, deleteMutation]);
+  }, [data, deleteMutation, user]);
 
   const handleAddTag = useCallback(() => setOpenAddTag(true), []);
 
@@ -286,7 +288,11 @@ export default function Home() {
                         onClick={handleDeleteClip}
                         className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
                       >
-                        <TrashIcon className="h-3 w-3" />
+                        {deleteMutation.isLoading ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          <TrashIcon className="h-3 w-3" />
+                        )}
                       </Button>
                       <Separator orientation="vertical" className="h-[20px]" />
                       <Button
