@@ -26,67 +26,65 @@ export function FeedItemReddit({
   const [selected, setSelected] = useState<RedditItem | undefined>();
 
   return (
-    <>
-      <div className="pt-4 relative">
-        {selected ? (
-          <div className="bg-white dark:bg-gray-700 border pl-2.5 pr-0.5 py-0.5 rounded-md flex">
-            <div className="flex gap-3 items-center flex-1">
-              <img
-                src={selected.icon || "https://logo.clearbit.com/reddit.com"}
-                alt={selected.name}
-                className="rounded-full h-5 w-5"
-              />
-              <p className="text-sm">{selected.name}</p>
-              <p className="text-xs">
-                Member:{formatNumber(selected.count_users)}
-              </p>
-            </div>
-            <Button
-              variant={"ghost"}
-              size="sm"
-              className="px-2"
-              onClick={() => setSelected(undefined)}
-            >
-              <XIcon className="w-4 h-4" />
-            </Button>
+    <div className="pt-4 relative">
+      {selected ? (
+        <div className="bg-white dark:bg-gray-700 border pl-2.5 pr-0.5 py-0.5 rounded-md flex">
+          <div className="flex gap-3 items-center flex-1">
+            <img
+              src={selected.icon || "https://logo.clearbit.com/reddit.com"}
+              alt={selected.name}
+              className="rounded-full h-5 w-5"
+            />
+            <p className="text-sm">{selected.name}</p>
+            <p className="text-xs">
+              Member:{formatNumber(selected.count_users)}
+            </p>
           </div>
-        ) : (
-          <div className="rounded-md overflow-hidden border">
-            <Command className="dark:bg-gray-700">
-              <CommandInput placeholder="Search sub-reddit..." />
-              <CommandList>
-                {subReddits.map((item) => (
-                  <CommandGroup key={item.group} heading={item.group}>
-                    {item.items.map((room) => (
-                      <CommandItem
-                        value={room.name}
-                        onSelect={() => {
-                          onSubmit(room.name);
-                          setSelected(room);
-                        }}
-                        key={room.name}
-                        className="flex gap-3 p-1.5 cursor-pointer"
-                      >
-                        <img
-                          src={
-                            room.icon || "https://logo.clearbit.com/reddit.com"
-                          }
-                          alt={room.name}
-                          className="rounded-full h-5 w-5"
-                        />
-                        <p>{room.name}</p>
-                        <p className="text-xs text-gray-500">
-                          Member:{formatNumber(room.count_users)}
-                        </p>
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                ))}
-              </CommandList>
-            </Command>
-          </div>
-        )}
-      </div>
-    </>
+          <Button
+            variant={"ghost"}
+            size="sm"
+            className="px-2"
+            onClick={() => setSelected(undefined)}
+          >
+            <XIcon className="w-4 h-4" />
+          </Button>
+        </div>
+      ) : (
+        <div className="rounded-md overflow-hidden border">
+          <Command className="dark:bg-gray-700">
+            <CommandInput placeholder="Search sub-reddit..." />
+            <CommandList>
+              {subReddits.map((item) => (
+                <CommandGroup key={item.group} heading={item.group}>
+                  {item.items.map((room) => (
+                    <CommandItem
+                      value={room.name}
+                      onSelect={() => {
+                        onSubmit(room.name);
+                        setSelected(room);
+                      }}
+                      key={room.name}
+                      className="flex gap-3 p-1.5 cursor-pointer"
+                    >
+                      <img
+                        src={
+                          room.icon || "https://logo.clearbit.com/reddit.com"
+                        }
+                        alt={room.name}
+                        className="rounded-full h-5 w-5"
+                      />
+                      <p>{room.name}</p>
+                      <p className="text-xs text-gray-500">
+                        Member:{formatNumber(room.count_users)}
+                      </p>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              ))}
+            </CommandList>
+          </Command>
+        </div>
+      )}
+    </div>
   );
 }
