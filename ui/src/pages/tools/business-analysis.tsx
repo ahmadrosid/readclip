@@ -240,9 +240,7 @@ Output your analysis in one sentence.`;
                           <LoadingSkeleton />
                         </div>
                       ) : (
-                        <>
-                          <div>{result.value}</div>
-                        </>
+                        <div>{result.value}</div>
                       )}
                     </div>
                   </div>

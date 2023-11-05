@@ -1,4 +1,10 @@
 export const blogRss = [
+  "https://www.freecodecamp.org/news/rss",
+  "https://dev.to/feed/",
+  "https://levelup.gitconnected.com/feed",
+  "https://stackoverflow.blog/feed/",
+  "https://cult.honeypot.io/rss.xml",
+  "https://feeds.dzone.com/home",
   "https://www.craigkerstiens.com/index.xml",
   "https://thedarkside.frantzmiccoli.com/feed.xml",
   "https://blanchardjulien.com/index.xml",
