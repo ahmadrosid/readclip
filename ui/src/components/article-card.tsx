@@ -63,22 +63,20 @@ function DownloadMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
   });
 
   return (
-    <>
-      <DropdownMenuItem
-        onSelect={(e) => {
-          e.preventDefault();
-          downloadMutation.mutate(clipId);
-        }}
-        className="cursor-pointer"
-      >
-        {downloadMutation.isLoading ? (
-          <Loader2 className="animate-spin mr-2 h-4 w-4" />
-        ) : (
-          <DownloadIcon className="mr-2 h-4 w-4" />
-        )}{" "}
-        Download
-      </DropdownMenuItem>
-    </>
+    <DropdownMenuItem
+      onSelect={(e) => {
+        e.preventDefault();
+        downloadMutation.mutate(clipId);
+      }}
+      className="cursor-pointer"
+    >
+      {downloadMutation.isLoading ? (
+        <Loader2 className="animate-spin mr-2 h-4 w-4" />
+      ) : (
+        <DownloadIcon className="mr-2 h-4 w-4" />
+      )}{" "}
+      Download
+    </DropdownMenuItem>
   );
 }
 
