@@ -81,7 +81,7 @@ func ParseBlogPage() (*util.FeedResult, error) {
 		items = append(items, LaravelnewsResponse{
 			Title:       dom.InnerText(title),
 			Description: dom.InnerText(description),
-			Link:        fmt.Sprintf("https://www.indiehackers.com%s", url),
+			Link:        url,
 			Image:       dom.GetAttribute(thumbnail, "src"),
 		})
 	}
