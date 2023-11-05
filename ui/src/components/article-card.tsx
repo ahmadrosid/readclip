@@ -36,6 +36,7 @@ import {
 import { toast } from "sonner";
 import { useMutation } from "react-query";
 import { formatDate } from "@/lib/utils";
+import { getToken } from "@/lib/api";
 
 type Props = {
   article: Article;
@@ -125,7 +126,10 @@ function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
           <span className="inline-flex gap-2">
             <Check
               className="w-4 h-4 hover:text-green-500 cursor-pointer"
-              onClick={() => deleteMutation.mutate(clipId)}
+              onClick={async () => {
+                const token = getToken();
+                deleteMutation.mutate({ id: clipId, token });
+              }}
             />
             <XIcon
               onClick={() => setOpenConfirmDelete(false)}
