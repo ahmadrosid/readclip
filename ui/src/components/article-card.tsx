@@ -104,41 +104,39 @@ function DeleteMenuItem({ clipId, setOpenDropdown }: MenuItemProps) {
   });
 
   return (
-    <>
-      <DropdownMenuItem
-        onSelect={(e) => {
-          e.preventDefault();
-        }}
-        className="cursor-pointer"
+    <DropdownMenuItem
+      onSelect={(e) => {
+        e.preventDefault();
+      }}
+      className="cursor-pointer"
+    >
+      {deleteMutation.isLoading ? (
+        <Loader2 className="animate-spin mr-2 h-4 w-4" />
+      ) : (
+        <TrashIcon className="mr-2 h-4 w-4" />
+      )}
+      <span
+        className="flex-1 cursor-pointer"
+        onClick={() => setOpenConfirmDelete(true)}
       >
-        {deleteMutation.isLoading ? (
-          <Loader2 className="animate-spin mr-2 h-4 w-4" />
-        ) : (
-          <TrashIcon className="mr-2 h-4 w-4" />
-        )}
-        <span
-          className="flex-1 cursor-pointer"
-          onClick={() => setOpenConfirmDelete(true)}
-        >
-          Delete
+        Delete
+      </span>
+      {openConfirmDelete && (
+        <span className="inline-flex gap-2">
+          <Check
+            className="w-4 h-4 hover:text-green-500 cursor-pointer"
+            onClick={async () => {
+              const token = getToken();
+              deleteMutation.mutate({ id: clipId, token });
+            }}
+          />
+          <XIcon
+            onClick={() => setOpenConfirmDelete(false)}
+            className="w-4 h-4 hover:text-primary cursor-pointer"
+          />
         </span>
-        {openConfirmDelete && (
-          <span className="inline-flex gap-2">
-            <Check
-              className="w-4 h-4 hover:text-green-500 cursor-pointer"
-              onClick={async () => {
-                const token = getToken();
-                deleteMutation.mutate({ id: clipId, token });
-              }}
-            />
-            <XIcon
-              onClick={() => setOpenConfirmDelete(false)}
-              className="w-4 h-4 hover:text-primary cursor-pointer"
-            />
-          </span>
-        )}
-      </DropdownMenuItem>
-    </>
+      )}
+    </DropdownMenuItem>
   );
 }
 
