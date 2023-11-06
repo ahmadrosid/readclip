@@ -6,6 +6,7 @@ export type BaseDeck = {
     | "youtube"
     | "hackernews"
     | "indiehacker"
+    | "producthunt"
     | "laravelnews";
   url: string;
   options: string[];

@@ -28,7 +28,8 @@ type Metadata struct {
 }
 
 type FeedMetadata struct {
-	Stars int `json:"stars"`
+	Stars int    `json:"stars"`
+	Vote  string `json:"vote"`
 }
 
 type FeedItem struct {

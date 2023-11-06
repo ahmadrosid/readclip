@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	filePath := "./cli/scraper/html/laravelnews.html"
+	filePath := "./cli/scraper/html/producthunt.html"
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("Error reading file: %v\n", err)
@@ -26,34 +26,53 @@ func main() {
 		return
 	}
 
-	sections := dom.QuerySelectorAll(body, "section")
-	doc := sections[1]
+	doc := dom.QuerySelector(body, `[data-test="homepage-section-0"]`)
 
 	type DataItem struct {
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		Link        string `json:"link"`
 		Image       string `json:"image"`
-		Author      string `json:"author"`
+		Vote        string `json:"vote"`
 	}
 
 	var items []DataItem
 
-	for _, item := range dom.QuerySelectorAll(doc, ".group") {
-		title := dom.QuerySelector(item, "h3")
-		description := dom.QuerySelector(item, "p")
-		thumbnail := dom.QuerySelector(item, "img")
+	for _, item := range dom.Children(doc) {
 		link := dom.QuerySelector(item, "a")
 		url := dom.GetAttribute(link, "href")
-		if url == "/advertising" {
+		if url == "/sponsor" {
 			continue
 		}
 
+		title := dom.GetAttribute(link, "aria-label")
+		if title == "" {
+			continue
+		}
+
+		thumbnail := dom.QuerySelector(item, "img")
+		if thumbnail == nil {
+			continue
+		}
+
+		vote := dom.QuerySelector(item, "[data-test=\"vote-button\"]")
+		if vote == nil {
+			continue
+		}
+
+		links := dom.QuerySelectorAll(item, "a")
+		if len(links) < 3 {
+			continue
+		}
+
+		description := dom.InnerText(links[3])
+
 		items = append(items, DataItem{
-			Title:       dom.InnerText(title),
-			Description: dom.InnerText(description),
-			Link:        fmt.Sprintf("https://www.indiehackers.com%s", url),
+			Title:       title,
+			Description: description,
+			Link:        fmt.Sprintf("https://producthunt.com%s", url),
 			Image:       dom.GetAttribute(thumbnail, "src"),
+			Vote:        dom.InnerText(vote),
 		})
 	}
 

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ahmadrosid/readclip/internal/scraper/producthunt"
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util/github"
 	"github.com/ahmadrosid/readclip/internal/util/hckrnews"
@@ -162,6 +163,28 @@ func (h *FeedHandler) parseRssFeed(c *fiber.Ctx, data *Feed, id string) error {
 		})
 	case "laravelnews":
 		news, err := laravelnews.ParseBlogPage()
+		if err != nil {
+			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+
+		feed, err := h.saveToDB(c, fiber.Map{
+			"data": news,
+		}, id, data)
+		if err != nil {
+			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"data": news,
+			"id":   feed.Id,
+		})
+	case "producthunt":
+		news, err := producthunt.ParseHomePage()
 		if err != nil {
 			return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 				"status": "error",

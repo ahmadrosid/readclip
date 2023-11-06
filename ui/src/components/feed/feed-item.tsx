@@ -12,6 +12,7 @@ import { languages } from "@/lib/data/github";
 import { FeedItemReddit } from "./item/reddit";
 import { IndiehackerIcon } from "../icons/indiehacker";
 import { LaravelnewsIcon } from "../icons/laravelnews";
+import { ProductHuntIcon } from "../icons/producthunt";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -57,6 +58,9 @@ export function FeedItem({
       break;
     case "laravelnews":
       icon = <LaravelnewsIcon className="w-5 h-5 mr-4" />;
+      break;
+    case "producthunt":
+      icon = <ProductHuntIcon className="w-5 h-5 mr-4" />;
       break;
   }
 

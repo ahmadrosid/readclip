@@ -22,7 +22,7 @@ func parseHTMLSource(htmlSource string) (*html.Node, error) {
 }
 
 func main() {
-	filePath := "./cli/scraper/sample.html"
+	filePath := "./cli/scraper/html/sample.html"
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("Error reading file: %v\n", err)
