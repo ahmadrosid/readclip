@@ -2,11 +2,10 @@ package producthunt
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/go-shiori/dom"
 	"golang.org/x/net/html"
 )
@@ -19,39 +18,10 @@ type ProducthuntResponse struct {
 	Vote        string `json:"vote"`
 }
 
-func fetchProductHunt() (string, error) {
-	req, err := http.NewRequest("GET", "https://producthunt.com", nil)
-	if err != nil {
-		return "", err
-	}
-
-	req.Header.Set("Content-Type", " */*")
-	req.Header.Set("User-Agent", util.UserAgent)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	htmlContent, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	return string(htmlContent), nil
-
-}
-
 func ParseHomePage() (*util.FeedResult, error) {
 	var items []ProducthuntResponse
 
-	htmlSource, err := fetchProductHunt()
+	htmlSource, err := fetch.Fetch("https://producthunt.com")
 	if err != nil {
 		return nil, err
 	}

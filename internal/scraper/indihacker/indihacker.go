@@ -2,11 +2,10 @@ package indihacker
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/go-shiori/dom"
 	"golang.org/x/net/html"
 )
@@ -17,34 +16,6 @@ type IndihackerResponse struct {
 	Link        string `json:"link"`
 	Image       string `json:"image"`
 	Author      string `json:"author"`
-}
-
-func FetchIndihackerHomepage() (string, error) {
-	req, err := http.NewRequest("GET", "https://www.indiehackers.com/", nil)
-	if err != nil {
-		return "", err
-	}
-
-	req.Header.Set("Content-Type", " */*")
-	req.Header.Set("User-Agent", util.UserAgent)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	htmlContent, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	return string(htmlContent), nil
 }
 
 func FetchIndihacker(option string) (*util.FeedResult, error) {
@@ -58,7 +29,7 @@ func FetchIndihacker(option string) (*util.FeedResult, error) {
 func ParseLatest() (*util.FeedResult, error) {
 	var items []IndihackerResponse
 
-	htmlSource, err := FetchIndihackerHomepage()
+	htmlSource, err := fetch.Fetch("https://www.indiehackers.com/")
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +86,7 @@ func ParseLatest() (*util.FeedResult, error) {
 func ParseFeatured() (*util.FeedResult, error) {
 	var items []IndihackerResponse
 
-	htmlSource, err := FetchIndihackerHomepage()
+	htmlSource, err := fetch.Fetch("https://www.indiehackers.com/")
 	if err != nil {
 		return nil, err
 	}

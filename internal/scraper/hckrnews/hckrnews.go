@@ -2,12 +2,11 @@ package hckrnews
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/go-shiori/dom"
 	"golang.org/x/net/html"
 )
@@ -96,29 +95,10 @@ func parseContent(content string) []HackernewsResponse {
 	return result
 }
 
-func FetchHackernews() (interface{}, error) {
-	req, err := http.NewRequest("GET", "https://news.ycombinator.com/", nil)
+func FetchHackernews() (*util.FeedResult, error) {
+	htmlContent, err := fetch.Fetch("https://news.ycombinator.com")
 	if err != nil {
 		return nil, err
-	}
-
-	req.Header.Set("Content-Type", " */*")
-	req.Header.Set("User-Agent", util.UserAgent)
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
-	}
-
-	htmlContent, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
 	}
 
 	var response = parseContent(string(htmlContent))
@@ -144,5 +124,5 @@ func FetchHackernews() (interface{}, error) {
 		feedResult.Items = append(feedResult.Items, feedItem)
 	}
 
-	return feedResult, nil
+	return &feedResult, nil
 }
