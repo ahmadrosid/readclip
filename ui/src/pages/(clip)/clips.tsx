@@ -153,6 +153,27 @@ export default function ArticlePage() {
           onOpenChange={setOpenAddTag}
         />
       </div>
+      <div className="flex flex-wrap justify-center gap-2 pt-4 pb-4 sm:pb-2 overflow-x-auto scrollbar-thin border-b">
+        {tagsQuery.data?.data.map((item) => (
+          <Badge
+            className={cn(
+              "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
+              tagId === item.Id &&
+                "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
+            )}
+            key={item.Id}
+            onClick={() => {
+              if (tagId === item.Id) {
+                setTagId("");
+              } else {
+                setTagId(item.Id);
+              }
+            }}
+          >
+            {item.Name}
+          </Badge>
+        ))}
+      </div>
       {isFetching && !isFetchingNextPage && <LoadingSkeleton />}
       {isError && (
         <div className="grid place-content-center">
@@ -166,48 +187,6 @@ export default function ArticlePage() {
       )}
       {clips ? (
         <>
-          <div className="flex flex-wrap justify-center gap-2 pt-4 pb-4 sm:pb-2 overflow-x-auto scrollbar-thin border-b">
-            {/* {Array.from(hosts.values()).map((host, i) => (
-              <Badge
-                onClick={() => {
-                  if (selectedHost === host) {
-                    setSelectedHost("");
-                  } else {
-                    setSelectedHost(host);
-                  }
-                }}
-                variant="outline"
-                className={cn(
-                  "hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
-                  selectedHost === host &&
-                    "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
-                )}
-                key={i}
-              >
-                {host}
-              </Badge>
-            ))} */}
-
-            {tagsQuery.data?.data.map((item) => (
-              <Badge
-                className={cn(
-                  "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
-                  tagId === item.Id &&
-                    "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
-                )}
-                key={item.Id}
-                onClick={() => {
-                  if (tagId === item.Id) {
-                    setTagId("");
-                  } else {
-                    setTagId(item.Id);
-                  }
-                }}
-              >
-                {item.Name}
-              </Badge>
-            ))}
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
             {clips.pages.map((group, i) => (
               <Fragment key={i}>
