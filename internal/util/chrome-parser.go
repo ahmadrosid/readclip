@@ -49,6 +49,7 @@ func ParseBookmarks(fileReader io.Reader) ([]Bookmark, error) {
 			f(c)
 		}
 	}
+
 	f(doc)
 
 	return filterBookmarks(bookmarks), nil
