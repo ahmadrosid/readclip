@@ -35,6 +35,9 @@ func ParseHomePage() (*util.FeedResult, error) {
 
 	for _, item := range dom.Children(doc) {
 		link := dom.QuerySelector(item, "a")
+		if link == nil {
+			continue
+		}
 		url := dom.GetAttribute(link, "href")
 		if url == "/sponsor" {
 			continue

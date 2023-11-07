@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/go-shiori/dom"
 	"golang.org/x/net/html"
 )
@@ -22,14 +22,11 @@ func parseHTMLSource(htmlSource string) (*html.Node, error) {
 }
 
 func main() {
-	filePath := "./cli/scraper/html/sample.html"
-	content, err := os.ReadFile(filePath)
+	htmlContent, err := fetch.Fetch("https://news.ycombinator.com/")
 	if err != nil {
 		fmt.Printf("Error reading file: %v\n", err)
 		return
 	}
-
-	htmlContent := string(content)
 
 	doc, err := parseHTMLSource(htmlContent)
 	if err != nil {

@@ -1,24 +1,20 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 	"strings"
 
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/go-shiori/dom"
 	"golang.org/x/net/html"
 )
 
 func main() {
-	filePath := "./cli/scraper/html/producthunt.html"
-	content, err := os.ReadFile(filePath)
+	htmlContent, err := fetch.Fetch("https://www.producthunt.com/")
 	if err != nil {
 		fmt.Printf("Error reading file: %v\n", err)
 		return
 	}
-
-	htmlContent := string(content)
 
 	body, err := html.Parse(strings.NewReader(htmlContent))
 	if err != nil {
@@ -36,10 +32,14 @@ func main() {
 		Vote        string `json:"vote"`
 	}
 
-	var items []DataItem
+	var items []DataItem = make([]DataItem, 0)
 
 	for _, item := range dom.Children(doc) {
 		link := dom.QuerySelector(item, "a")
+		if link == nil {
+			continue
+		}
+
 		url := dom.GetAttribute(link, "href")
 		if url == "/sponsor" {
 			continue
@@ -66,23 +66,16 @@ func main() {
 		}
 
 		description := dom.InnerText(links[3])
-
-		items = append(items, DataItem{
+		dataItem := DataItem{
 			Title:       title,
 			Description: description,
 			Link:        fmt.Sprintf("https://producthunt.com%s", url),
 			Image:       dom.GetAttribute(thumbnail, "src"),
 			Vote:        dom.InnerText(vote),
-		})
-	}
+		}
 
-	jsonData, err := json.Marshal(items)
-	if err != nil {
-		fmt.Println("Error marshaling JSON:", err)
-		return
+		items = append(items, dataItem)
+		fmt.Printf("%v\n", dataItem)
 	}
-
-	jsonString := string(jsonData)
-	fmt.Println(jsonString)
 
 }
