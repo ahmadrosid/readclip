@@ -234,7 +234,7 @@ export default function ArticlePage() {
 function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
-      {Array(12)
+      {Array(8)
         .fill(0)
         .map((_, i) => (
           <Card key={i} className="shadow-none">
