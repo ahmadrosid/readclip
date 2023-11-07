@@ -36,10 +36,10 @@ export function FeedItem({
     language: "",
     time: "daily",
   });
-  let icon = <GithubIcon className="w-5 h-5 mr-4" />;
+  let icon = <GithubIcon className="w-5 h-5 mr-4 dark:text-gray-100" />;
   switch (type) {
     case "github":
-      icon = <GithubIcon className="w-5 h-5 mr-4" />;
+      icon = <GithubIcon className="w-5 h-5 mr-4 dark:text-gray-100" />;
       break;
     case "rss":
       icon = <RssIcon className="w-5 h-5 mr-4" />;
@@ -118,7 +118,10 @@ export function FeedItem({
         {icon}
         <p className={cn("flex-1 cursor-pointer")}>{label}</p>
         <CheckCircle2
-          className={cn("w-5 h-5 text-gray-500", !showSelected && "hidden")}
+          className={cn(
+            "w-5 h-5 text-gray-500 dark:text-gray-300",
+            !showSelected && "hidden"
+          )}
         />
       </div>
       {type === "rss" && showSelected && (
@@ -180,7 +183,7 @@ export function FeedItem({
           <div>
             <label
               htmlFor="language"
-              className="text-gray-600 text-sm pb-2 inline-block"
+              className="text-gray-600 text-sm pb-2 inline-block dark:text-gray-300"
             >
               Language
             </label>
@@ -193,7 +196,7 @@ export function FeedItem({
                   language: e.target.value,
                 }))
               }
-              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+              className="w-full text-sm ring-1 ring-gray-200 dark:ring-gray-600 dark:bg-gray-700 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
               {languages.map((item) => (
                 <option key={item.label} value={item.value}>
@@ -205,7 +208,7 @@ export function FeedItem({
           <div>
             <label
               htmlFor="time_range"
-              className="text-gray-600 text-sm pb-2 inline-block"
+              className="text-gray-600 text-sm pb-2 inline-block dark:text-gray-300"
             >
               Since
             </label>
@@ -218,7 +221,7 @@ export function FeedItem({
                   time: e.target.value,
                 }));
               }}
-              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+              className="w-full text-sm ring-1 ring-gray-200 dark:ring-gray-600 dark:bg-gray-700 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
@@ -233,7 +236,7 @@ export function FeedItem({
           <div>
             <label
               htmlFor="mode"
-              className="text-gray-600 text-sm pb-2 inline-block"
+              className="text-gray-600 text-sm pb-2 inline-block dark:text-gray-300"
             >
               News
             </label>
@@ -241,7 +244,7 @@ export function FeedItem({
               id="mode"
               name="mode"
               onChange={(e) => setSelectedIndiehackersValue(e.target.value)}
-              className="w-full text-sm ring-1 ring-gray-200 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
+              className="w-full text-sm ring-1 ring-gray-200 dark:ring-gray-600 dark:bg-gray-700 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
             >
               <option value={"featured"}>Featured</option>
               <option value={"latest"}>Latest</option>
