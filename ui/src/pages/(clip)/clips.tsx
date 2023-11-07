@@ -11,10 +11,10 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { CommandSeparator } from "cmdk";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
-import { fetchAllArticles, Article } from "@/lib/api/api";
+import { fetchAllArticles, Article, fetchAllTags } from "@/lib/api/api";
 import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "@/components/ui/input";
@@ -45,6 +45,15 @@ export default function ArticlePage() {
       });
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+
+  const tagsQuery = useQuery({
+    queryKey: "tags",
+    queryFn: fetchAllTags,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    retry: 2,
   });
 
   const [openCommandDialog, setOpenCommandDialog] = useState(false);
@@ -96,12 +105,9 @@ export default function ArticlePage() {
             }}
           />
           <FilterTag
-            onSelect={(tag) => {
-              if (tag) {
-                setTagId(tag.Id);
-              } else {
-                setTagId("");
-              }
+            data={Array.from(hosts.values())}
+            onSelect={(host) => {
+              setSelectedHost(host);
             }}
           />
         </div>
@@ -160,8 +166,8 @@ export default function ArticlePage() {
       )}
       {clips ? (
         <>
-          <div className="flex gap-2 pt-4 pb-4 sm:pb-2 max-w-screen-2xl overflow-x-auto scrollbar-thin border-b">
-            {Array.from(hosts.values()).map((host, i) => (
+          <div className="flex flex-wrap justify-center gap-2 pt-4 pb-4 sm:pb-2 overflow-x-auto scrollbar-thin border-b">
+            {/* {Array.from(hosts.values()).map((host, i) => (
               <Badge
                 onClick={() => {
                   if (selectedHost === host) {
@@ -179,6 +185,26 @@ export default function ArticlePage() {
                 key={i}
               >
                 {host}
+              </Badge>
+            ))} */}
+
+            {tagsQuery.data?.data.map((item) => (
+              <Badge
+                className={cn(
+                  "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
+                  tagId === item.Id &&
+                    "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
+                )}
+                key={item.Id}
+                onClick={() => {
+                  if (tagId === item.Id) {
+                    setTagId("");
+                  } else {
+                    setTagId(item.Id);
+                  }
+                }}
+              >
+                {item.Name}
               </Badge>
             ))}
           </div>

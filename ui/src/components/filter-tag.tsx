@@ -15,22 +15,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { fetchAllTags, type Tag } from "@/lib/api/api";
-import { useQuery } from "react-query";
+
 import { Separator } from "./ui/separator";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  onSelect: (tag?: Tag) => void;
+  data: string[];
+  onSelect: (tag: string) => void;
 };
 
-export function FilterTag({ onSelect }: Props) {
-  const [selectedValues, setSelectedValues] = React.useState(new Set<Tag>());
+export function FilterTag({ data, onSelect }: Props) {
+  const [selectedValues, setSelectedValues] = React.useState(new Set<string>());
   const [open, setOpen] = React.useState(false);
-  const { data } = useQuery({
-    queryKey: "tags",
-    queryFn: fetchAllTags,
-  });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -57,15 +53,15 @@ export function FilterTag({ onSelect }: Props) {
                     {selectedValues.size} selected
                   </Badge>
                 ) : (
-                  data?.data
-                    .filter((option) => selectedValues.has(option))
-                    .map((option) => (
+                  data
+                    .filter((label) => selectedValues.has(label))
+                    .map((label, idx) => (
                       <Badge
                         variant="secondary"
-                        key={option.Id}
+                        key={idx}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {option.Name}
+                        {label}
                       </Badge>
                     ))
                 )}
@@ -82,39 +78,37 @@ export function FilterTag({ onSelect }: Props) {
         <Command>
           <CommandInput placeholder="Search tag..." />
           <CommandEmpty>No tag found.</CommandEmpty>
-          <CommandGroup>
-            {data?.data
-              .filter((item) => !selectedValues.has(item))
-              .map((tag) => (
-                <CommandItem
-                  key={tag.Id}
-                  onSelect={() => {
-                    onSelect(tag);
-                    setOpen(false);
-                    setSelectedValues(() => {
-                      const next = new Set<Tag>();
-                      next.add(tag);
-                      return next;
-                    });
-                  }}
+          <CommandGroup className="max-h-[400px] overflow-y-auto scrollbar-thin">
+            {data.map((tag, idx) => (
+              <CommandItem
+                key={idx}
+                onSelect={() => {
+                  onSelect(tag);
+                  setOpen(false);
+                  setSelectedValues(() => {
+                    const next = new Set<string>();
+                    next.add(tag);
+                    return next;
+                  });
+                }}
+              >
+                <div
+                  className={cn(
+                    "mr-2 flex h-4 w-4 p-0.5",
+                    selectedValues.has(tag)
+                      ? "text-black dark:text-white"
+                      : "opacity-0 [&_svg]:invisible"
+                  )}
                 >
-                  <div
-                    className={cn(
-                      "mr-2 flex h-4 w-4 p-0.5",
-                      selectedValues.has(tag)
-                        ? "text-black dark:text-white"
-                        : "opacity-0 [&_svg]:invisible"
-                    )}
-                  >
-                    <CheckIcon className="h-4 w-4" />
-                  </div>
-                  <span>{tag.Name}</span>
-                </CommandItem>
-              ))}
+                  <CheckIcon className="h-4 w-4" />
+                </div>
+                <span>{tag}</span>
+              </CommandItem>
+            ))}
             <CommandSeparator className="my-1" />
             <CommandItem
               onSelect={() => {
-                onSelect();
+                onSelect("");
                 setOpen(false);
                 setSelectedValues(new Set());
               }}
