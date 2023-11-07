@@ -156,7 +156,7 @@ export default function FeedDeckPage() {
                     className="p-2 w-full focus:outline-none"
                   />
               </div>*/}
-                <div className="max-h-[400px] overflow-y-auto">
+                <div className="max-h-[400px] overflow-y-auto scrollbar-thin">
                   <ul className="relative">
                     <FeedItem
                       type="github"
