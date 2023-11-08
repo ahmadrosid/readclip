@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
     <link rel="manifest" href="/manifest.json" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,6 +48,20 @@
       data-domain="readclip.site"
       src="https://plausible.kasihkode.com/js/script.js"
     ></script>
+    <script>
+      const favicon = document.querySelector('link[rel="icon"]');
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", () => {
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            console.log("Hello dark mode!");
+            favicon.href = "/readclip.svg";
+          } else {
+            console.log("Hello light mode!");
+            favicon.href = "/favicon.ico";
+          }
+        });
+    </script>
   </head>
   <body class="scrollbar-thin">
     <div id="root"></div>
