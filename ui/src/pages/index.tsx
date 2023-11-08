@@ -63,7 +63,8 @@ export default function Home() {
               Save, Organize, and Enjoy
             </Badge>
             <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
-              Personal Knowledge Library for Content creators.
+              {/* Bookmarks manager that saves both links and their content. */}
+              Bookmarks manager with content backup
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
               Build your own personal knowledge library. Say goodbye to
@@ -122,12 +123,12 @@ export default function Home() {
               <CardContent className="p-6">
                 <div className="text-[57px] h-20 w-20">🏷️</div>
                 <CardTitle className="pb-4 text-xl">
-                  Easy Organization
+                  Tagging and Categorization
                 </CardTitle>
                 <p className="text-gray-600">
-                  Tagging and Categorization: Organize your saved articles
-                  effortlessly with customizable tags. Find what you need
-                  quickly, whether it's by topic, source, or any other criteria.
+                  Organize your saved links easily with customizable tags. Find
+                  what you need quickly, whether it's by topic, source, or any
+                  other criteria.
                 </p>
               </CardContent>
             </Card>
