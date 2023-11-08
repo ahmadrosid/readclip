@@ -9,6 +9,7 @@ start-ui-dev:
 	cd ui && npm run dev
 
 dev:
+	# npx tsx cli/nodejs/analysis-rss.ts
 	# go run cli/scraper/producthunt.go
 	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
 

@@ -36,6 +36,9 @@ export default function ArticlePage() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
     queryKey: ["clips", tagId],
     enabled: user !== null,
     queryFn: (param) => {
