@@ -74,9 +74,11 @@ export type AddArticleTagRequest = {
 export const fetchAllArticles = async ({
   pageParam = 1,
   tagId = "",
+  token,
 }: {
   tagId?: string;
   pageParam?: number;
+  token: string;
 }): Promise<ArticleListResponse> => {
   let url = "/api/clips?page=" + pageParam;
   if (tagId !== "") {
@@ -85,7 +87,7 @@ export const fetchAllArticles = async ({
   return handleReturnFetch(
     await fetch(url, {
       headers: {
-        Authorization: getToken(),
+        Authorization: token || getToken(),
       },
     })
   );

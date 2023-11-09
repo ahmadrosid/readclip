@@ -41,10 +41,12 @@ export default function ArticlePage() {
     refetchOnReconnect: false,
     queryKey: ["clips", tagId],
     enabled: user !== null,
-    queryFn: (param) => {
+    queryFn: async (param) => {
+      const token = await user?.getIdToken();
       return fetchAllArticles({
         pageParam: param.pageParam || 1,
         tagId: tagId,
+        token: token || "",
       });
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
