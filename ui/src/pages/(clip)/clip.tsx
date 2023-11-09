@@ -51,7 +51,12 @@ export default function Home() {
   const [openAddTag, setOpenAddTag] = useState(false);
 
   const fetchHistoryQuery = useQuery({
-    queryFn: fetchAllArticles,
+    queryFn: async () => {
+      const token = await user?.getIdToken();
+      return fetchAllArticles({
+        token: token || "",
+      });
+    },
     queryKey: "fetch-history",
     enabled: inputUrl == "",
     refetchOnWindowFocus: false,
