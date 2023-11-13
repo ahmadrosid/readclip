@@ -14,7 +14,10 @@ export default function ExploreRss() {
 
   return (
     <div className="p-4 sm:p-8">
-      <div className="flex flex-wrap justify-center items-center gap-2">
+      <div className="px-1 grid sm:flex gap-4 justify-between items-center">
+        <h2 className="text-2xl font-bold tracking-tight">Explore RSS Urls</h2>
+      </div>
+      <div className="flex flex-wrap justify-center items-center gap-2 py-6">
         {blogRss.map((item) => (
           <Card className="shadow-none p-2 flex-1 sm:flex-auto">
             <div className="flex gap-1 items-center">
