@@ -14,6 +14,7 @@ import { IndiehackerIcon } from "../icons/indiehacker";
 import { LaravelnewsIcon } from "../icons/laravelnews";
 import { ProductHuntIcon } from "../icons/producthunt";
 import Select from "react-select";
+import { useTheme } from "@/components/theme-provider";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -31,6 +32,8 @@ export function FeedItem({
   defaultItem?: FeedItemValue;
   onValueUpdate: (param: FeedItemValue) => void;
 }) {
+  const { theme } = useTheme();
+
   const [showSelected, setShowSelected] = useState(false);
   const [indihackerNews, setSelectedIndiehackersValue] = useState("featured");
   const [selectedGithubValue, setSelectedGithubValue] = useState({
@@ -193,19 +196,21 @@ export function FeedItem({
               styles={{
                 input: (baseStyles) => ({
                   ...baseStyles,
-                  background: "transparent",
+                  background: theme === "dark" ? "transparent" : "",
                 }),
                 control: (baseStyles) => ({
                   ...baseStyles,
-                  background: "transparent",
+                  background: theme === "dark" ? "transparent" : "",
+                  color: theme === "dark" ? "white" : "",
                 }),
                 singleValue: (baseStyles) => ({
                   ...baseStyles,
-                  color: "inherit",
+                  background: theme === "dark" ? "transparent" : "",
+                  color: theme === "dark" ? "white" : "",
                 }),
                 menu: (baseStyles) => ({
                   ...baseStyles,
-                  background: "inherit",
+                  background: theme === "dark" ? "inherit" : "",
                 }),
               }}
               defaultValue={{
@@ -234,19 +239,21 @@ export function FeedItem({
               styles={{
                 input: (baseStyles) => ({
                   ...baseStyles,
-                  background: "transparent",
+                  background: theme === "dark" ? "transparent" : "",
                 }),
                 control: (baseStyles) => ({
                   ...baseStyles,
-                  background: "transparent",
+                  background: theme === "dark" ? "transparent" : "",
+                  color: theme === "dark" ? "white" : "",
                 }),
                 singleValue: (baseStyles) => ({
                   ...baseStyles,
-                  color: "inherit",
+                  background: theme === "dark" ? "transparent" : "",
+                  color: theme === "dark" ? "white" : "",
                 }),
                 menu: (baseStyles) => ({
                   ...baseStyles,
-                  background: "inherit",
+                  background: theme === "dark" ? "inherit" : "",
                 }),
               }}
               defaultValue={{
