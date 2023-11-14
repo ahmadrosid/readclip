@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ahmadrosid/readclip/internal/util/str"
 	"github.com/go-shiori/dom"
 	"github.com/markusmobius/go-trafilatura"
 )
@@ -70,8 +71,13 @@ func Scrape(url string, format string) (*ContentData, error) {
 	}
 
 	if len(textResult) > 0 && textResult[0] == '#' {
-		title = textResult[1:strings.Index(textResult, "\n")]
 		textResult = textResult[strings.Index(textResult, "\n")+1:]
+	}
+
+	var Description = result.Metadata.Description
+
+	if Description == "" {
+		Description = str.TrimTo(textResult, 70)
 	}
 
 	return &ContentData{
@@ -83,7 +89,7 @@ func Scrape(url string, format string) (*ContentData, error) {
 			Author:      result.Metadata.Author,
 			URL:         result.Metadata.URL,
 			Hostname:    result.Metadata.Hostname,
-			Description: result.Metadata.Description,
+			Description: Description,
 			Sitename:    result.Metadata.Sitename,
 			Date:        result.Metadata.Date,
 			Categories:  result.Metadata.Categories,

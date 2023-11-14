@@ -192,9 +192,10 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 	}()
 
 	if err != nil {
-		return c.Status(http.StatusOK).JSON(fiber.Map{
-			"status":  "success",
+		return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{
+			"status":  "error",
 			"message": err.Error(),
+			"error":   err.Error(),
 		})
 	}
 
