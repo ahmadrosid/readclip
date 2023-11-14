@@ -13,6 +13,7 @@ import { FeedItemReddit } from "./item/reddit";
 import { IndiehackerIcon } from "../icons/indiehacker";
 import { LaravelnewsIcon } from "../icons/laravelnews";
 import { ProductHuntIcon } from "../icons/producthunt";
+import Select from "react-select";
 
 type FeedItemValue = {
   type: BaseDeck["type"];
@@ -33,7 +34,7 @@ export function FeedItem({
   const [showSelected, setShowSelected] = useState(false);
   const [indihackerNews, setSelectedIndiehackersValue] = useState("featured");
   const [selectedGithubValue, setSelectedGithubValue] = useState({
-    language: "",
+    language: "All",
     time: "daily",
   });
   let icon = <GithubIcon className="w-5 h-5 mr-4 dark:text-gray-100" />;
@@ -119,7 +120,7 @@ export function FeedItem({
         <p className={cn("flex-1 cursor-pointer")}>{label}</p>
         <CheckCircle2
           className={cn(
-            "w-5 h-5 text-gray-500 dark:text-gray-300",
+            "w-5 h-5 text-green-500 dark:text-green-300",
             !showSelected && "hidden"
           )}
         />
@@ -187,23 +188,39 @@ export function FeedItem({
             >
               Language
             </label>
-            <select
-              id="language"
-              name="language"
-              onChange={(e) =>
+            <Select
+              className="dark:bg-gray-700 dark:text-gray-300"
+              styles={{
+                input: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "transparent",
+                }),
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "transparent",
+                }),
+                singleValue: (baseStyles) => ({
+                  ...baseStyles,
+                  color: "inherit",
+                }),
+                menu: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "inherit",
+                }),
+              }}
+              defaultValue={{
+                value: "",
+                label: selectedGithubValue.language,
+              }}
+              onChange={(option) => {
                 setSelectedGithubValue((prev) => ({
                   ...prev,
-                  language: e.target.value,
-                }))
-              }
-              className="w-full text-sm ring-1 ring-gray-200 dark:ring-gray-600 dark:bg-gray-700 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
-            >
-              {languages.map((item) => (
-                <option key={item.label} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
+                  language: option?.value || "",
+                }));
+              }}
+              isMulti={false}
+              options={languages}
+            />
           </div>
           <div>
             <label
@@ -212,21 +229,52 @@ export function FeedItem({
             >
               Since
             </label>
-            <select
-              id="time_range"
-              name="time_range"
-              onChange={(e) => {
+            <Select
+              className="dark:bg-gray-700 dark:text-gray-300"
+              styles={{
+                input: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "transparent",
+                }),
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "transparent",
+                }),
+                singleValue: (baseStyles) => ({
+                  ...baseStyles,
+                  color: "inherit",
+                }),
+                menu: (baseStyles) => ({
+                  ...baseStyles,
+                  background: "inherit",
+                }),
+              }}
+              defaultValue={{
+                value: "daily",
+                label: "Daily",
+              }}
+              onChange={(value) => {
                 setSelectedGithubValue((prev) => ({
                   ...prev,
-                  time: e.target.value,
+                  language: value?.value || "",
                 }));
               }}
-              className="w-full text-sm ring-1 ring-gray-200 dark:ring-gray-600 dark:bg-gray-700 focus:outline-none shadow-sm p-2 rounded border-r-8 border-transparent"
-            >
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-            </select>
+              isMulti={false}
+              options={[
+                {
+                  label: "Daily",
+                  value: "daily",
+                },
+                {
+                  label: "Weekly",
+                  value: "weekly",
+                },
+                {
+                  label: "Monthly",
+                  value: "monthly",
+                },
+              ]}
+            />
           </div>
         </div>
       )}

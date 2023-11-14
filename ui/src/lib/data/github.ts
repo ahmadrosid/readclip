@@ -1,4 +1,7 @@
-export const languages = [
+import { OptionsOrGroups, GroupBase } from "react-select";
+type Option = { label: string; value: string };
+
+export const languages: OptionsOrGroups<Option, GroupBase<Option>> = [
   {
     label: "All",
     value: "",

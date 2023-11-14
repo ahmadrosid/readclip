@@ -39,6 +39,7 @@
     "react-markdown": "^8.0.7",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.15.0",
+    "react-select": "^5.8.0",
     "reading-time-estimator": "^1.9.0",
     "remark-gfm": "^3.0.1",
     "sonner": "^0.7.0",
