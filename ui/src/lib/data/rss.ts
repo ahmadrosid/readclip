@@ -1,4 +1,5 @@
 export const blogRss = [
+  "https://unwrapped.news/feed.xml",
   "https://www.thinkmill.com.au/rss.xml",
   "https://www.remotedxb.com/rss",
   "https://www.freecodecamp.org/news/rss",
