@@ -10,6 +10,7 @@ export type Path =
   | `/explore-rss`
   | `/feed-deck`
   | `/login`
+  | `/page`
   | `/register`
   | `/setting`
   | `/tools`

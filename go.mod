@@ -5,10 +5,12 @@ go 1.19
 require (
 	firebase.google.com/go v3.13.0+incompatible
 	github.com/JohannesKaufmann/html-to-markdown v1.4.1
+	github.com/andygrunwald/go-trending v0.0.0-20231024092240-c15f8d9c1844
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c
 	github.com/goccy/go-json v0.10.2
 	github.com/gofiber/fiber/v2 v2.48.0
+	github.com/gofiber/template/html/v2 v2.0.5
 	github.com/google/uuid v1.3.1
 	github.com/joho/godotenv v1.5.1
 	github.com/kkdai/youtube/v2 v2.8.3
@@ -34,7 +36,6 @@ require (
 	github.com/abadojack/whatlanggo v1.0.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
-	github.com/andygrunwald/go-trending v0.0.0-20231024092240-c15f8d9c1844 // indirect
 	github.com/bitly/go-simplejson v0.5.1 // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/dop251/goja v0.0.0-20230812105242-81d76064690d // indirect
@@ -42,6 +43,8 @@ require (
 	github.com/forPelevin/gomoji v1.1.8 // indirect
 	github.com/go-shiori/go-readability v0.0.0-20230421032831-c66949dfc0ad // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
+	github.com/gofiber/template v1.8.2 // indirect
+	github.com/gofiber/utils v1.1.0 // indirect
 	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect

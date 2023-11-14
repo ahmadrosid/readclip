@@ -25,6 +25,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html/v2"
 	_ "github.com/lib/pq"
 )
 
@@ -35,16 +36,29 @@ func main() {
 		panic(err)
 	}
 
+	template, err := fs.Sub(ui.Template, "template")
+	if err != nil {
+		panic(err)
+	}
+
+	engine := html.NewFileSystem(http.FS(template), ".html")
 	db, _ := util.ConnectToDatabase(env.DatabaseUrl)
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
+		Views:       engine,
 	})
 
 	// app.Use(logger.New())
 	// app.Use("/api", logger.New(logger.Config{
 	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
 	// }))
+
+	app.Get("/page", func(c *fiber.Ctx) error {
+		return c.Render("index", fiber.Map{
+			"Title": "Welcome home",
+		})
+	})
 
 	app.Use("/", func(ctx *fiber.Ctx) error {
 		if ctx.BaseURL() == "https://readclip.ahmadrosid.com" {

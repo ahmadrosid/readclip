@@ -87,7 +87,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
         const url = new URL(link);
         return `https://logo.clearbit.com/${url.host}`;
       } catch (e) {
-        return `https://readclip.ahmadrosid.com/favicon.ico`;
+        return `https://readclip.site/favicon.ico`;
       }
     };
 
@@ -140,8 +140,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
               src={getLogoUrl(queryData.data?.data?.link)}
               alt={queryData.data?.data?.title}
               onError={(el) => {
-                el.currentTarget.src =
-                  "https://readclip.ahmadrosid.com/favicon.ico";
+                el.currentTarget.src = "https://readclip.site/favicon.ico";
               }}
               className="w-6 h-6"
             />
