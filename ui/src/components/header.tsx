@@ -56,18 +56,29 @@ export function Header() {
                 className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
-                Feed deck
+                Feeds
               </Button>
             </Link>
 
-            <Link to="/setting" className="hidden sm:block">
+            {/* <Link to="/wiki/builder">
               <Button
                 className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
-                Settings
+                Wiki <span className="text-gray-400 pl-2">(beta)</span>
               </Button>
-            </Link>
+            </Link> */}
+
+            {hasToken && (
+              <Link to="/setting" className="hidden sm:block">
+                <Button
+                  className="dark:text-gray-300 text-gray-800 px-2"
+                  variant="link"
+                >
+                  Settings
+                </Button>
+              </Link>
+            )}
 
             <Link to="/tools" className="hidden sm:block">
               <Button
