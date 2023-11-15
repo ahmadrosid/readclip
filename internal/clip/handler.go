@@ -11,6 +11,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
+	"github.com/ahmadrosid/readclip/internal/util/openai"
 	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/ahmadrosid/readclip/internal/util/youtube"
 	"github.com/gofiber/fiber/v2"
@@ -37,6 +38,7 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 	}
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
+	route.Get("/summarize/:id", handler.summarizeByID)
 	route.Delete("/:id", handler.deleteClipByID)
 	route.Get("/:id/download", handler.downloadClipByID)
 	route.Post("/export", handler.exportClips)
@@ -262,6 +264,59 @@ func (h *ClipHandler) deleteClipByID(c *fiber.Ctx) error {
 	}
 
 	err = h.repo.DeleteClipByID(id, *userID)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status": "success",
+	})
+}
+
+func (h *ClipHandler) summarizeByID(c *fiber.Ctx) error {
+	id := c.Params("id")
+	if id == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "id is required",
+		})
+	}
+
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  "Please upgrade your account to pro plan!",
+		})
+	}
+
+	clip, err := h.repo.GetClipById(id, *userID)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	summary, err := openai.SummarizeContent(clip.Content)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	err = h.repo.UpdateSummaryByID(id, *userID, summary)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"status": "error",

@@ -8,6 +8,7 @@ export type Article = {
   Content: string;
   CreatedAt: string;
   Hostname: string;
+  Summary: string;
 };
 
 type BaseResponse = {
@@ -233,6 +234,20 @@ export const fetchDeleteClipTag = async (
   return handleReturnFetch(
     await fetch(`/api/tags/clip/${tagId}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+  );
+};
+
+export const fetchSummarizeClip = async (
+  clipId: string
+): Promise<{ status: string }> => {
+  return handleReturnFetch(
+    await fetch(`/api/clips/summarize/${clipId}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken(),

@@ -13,6 +13,7 @@ type Clip struct {
 	HashUrl     string    `gorm:"size:32;unique"`
 	Description string
 	Content     string
+	Summary     string     `gorm:"default:NULL"`
 	Hostname    string     `gorm:"size:255"`
 	UserID      uuid.UUID  `gorm:"type:uuid"`
 	CreatedAt   *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
@@ -26,5 +27,6 @@ type ClipRepository interface {
 	GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error)
 	CreateClip(clip Clip) (Clip, error)
 	DeleteClipByID(id string, userID uuid.UUID) error
+	UpdateSummaryByID(id string, userID uuid.UUID, summary string) error
 	ExportClips(format string, userID uuid.UUID) (string, error)
 }

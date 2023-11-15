@@ -30,6 +30,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
 import { DialogDemo } from "..";
 import { Link } from "@/router";
+import { SummaryCard } from "@/components/summary-card";
+import { SummaryButton } from "@/components/summary-button";
 
 function LoadingSkeleton() {
   return (
@@ -142,7 +144,7 @@ export default function Home() {
   }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading]);
 
   return (
-    <div className="px-4 gap-4 min-h-[80vh]">
+    <div className="px-4 gap-4 min-h-[80vh] relative">
       <div className="py-4 w-full bg-gray-50 dark:bg-gray-900/90 dark:backdrop-blur">
         <div className="max-w-3xl mx-auto">
           <form
@@ -171,6 +173,8 @@ export default function Home() {
           </form>
         </div>
       </div>
+
+      <SummaryCard summaryContent={data?.data.Summary || ""} />
 
       {!isLoading && error !== null && inputUrl !== "" && (
         <div className="py-4 flex justify-center">
@@ -299,6 +303,11 @@ export default function Home() {
                           <TrashIcon className="h-3 w-3" />
                         )}
                       </Button>
+                      <Separator orientation="vertical" className="h-[20px]" />
+                      <SummaryButton
+                        clipId={data.data.Id}
+                        onSummarize={() => mutate(inputUrl)}
+                      />
                       <Separator orientation="vertical" className="h-[20px]" />
                       <Button
                         variant="secondary"

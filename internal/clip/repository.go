@@ -57,6 +57,11 @@ func (repo *clipRepository) DeleteClipByID(id string, userID uuid.UUID) error {
 	return err
 }
 
+func (repo *clipRepository) UpdateSummaryByID(id string, userID uuid.UUID, summary string) error {
+	err := repo.db.Unscoped().Model(&Clip{}).Where("id = ?", id).Where("user_id = ?", userID).Update("summary", summary).Error
+	return err
+}
+
 func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string, error) {
 	var clips []Clip
 	err := repo.db.Where("user_id = ?", userID).Find(&clips).Error
