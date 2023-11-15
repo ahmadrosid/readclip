@@ -60,15 +60,16 @@ export default function Home() {
               variant={"secondary"}
               className="py-2 px-4 rounded-full border border-gray-200 dark:border-gray-500"
             >
-              Save, Organize, and Enjoy
+              Read, Save, Organize and Enjoy
             </Badge>
             <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
               {/* Bookmarks manager that saves both links and their content. */}
-              Bookmarks manager with content backup
+              {/* Bookmarks manager with content backup */}
+              Read article without ads widget or any distractions.
             </h1>
-            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              Build your own personal knowledge library. Say goodbye to
-              bookmarks and browser tabs cluttering your workspace.
+            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
+              Save time with AI article summarization, organize articles you
+              read anytime, anywhere.
             </p>
           </div>
           <div className="flex justify-start sm:justify-center gap-2 items-center py-6">
