@@ -49,6 +49,10 @@ func SummarizeContent(content string) (string, error) {
 		Messages: []Message{
 			{
 				Role:    "system",
+				Content: "Be concise",
+			},
+			{
+				Role:    "system",
 				Content: "Summarize this article, ensuring the original meaning and context are retained. Format it in a list.",
 			},
 			{
