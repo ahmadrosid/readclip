@@ -53,7 +53,11 @@ func SummarizeContent(content string) (string, error) {
 			},
 			{
 				Role:    "system",
-				Content: "Summarize this article, ensuring the original meaning and context are retained. Format it in a list.",
+				Content: "Detect the language and reply with the same language.",
+			},
+			{
+				Role:    "system",
+				Content: "Summarize this article, ensuring the original meaning and context are retained. Format it into a bullet points.",
 			},
 			{
 				Role:    "user",
