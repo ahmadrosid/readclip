@@ -265,7 +265,7 @@ export default function Home() {
             onOpenChange={setOpenAddTag}
           />
           <div className="pb-4">
-            <div className="bg-white dark:bg-gray-800 py-4 rounded-md w-full min-w-xs max-w-md sm:max-w-3xl border block mx-auto">
+            <div className="bg-white dark:bg-gray-800/40 py-4 rounded-md w-full min-w-xs max-w-md sm:max-w-3xl border block mx-auto">
               {data.data && (
                 <div className="px-4 flex items-center flex-col-reverse sm:flex-row gap-4">
                   <div className="flex flex-1 gap-2">
