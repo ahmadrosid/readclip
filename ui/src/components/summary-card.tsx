@@ -18,7 +18,7 @@ export function SummaryCard({ summaryContent }: { summaryContent: string }) {
           showSummary ? "w-full" : ""
         )}
       >
-        <div className="bg-white dark:bg-gray-800/40 shadow-sm border rounded-md sticky top-0">
+        <div className="bg-white dark:bg-gray-800 shadow-sm border rounded-md sticky top-0">
           <div
             className={cn(
               "flex items-center gap-1",
