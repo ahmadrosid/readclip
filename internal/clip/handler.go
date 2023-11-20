@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ahmadrosid/readclip/internal/scraper/reddit"
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
 	"github.com/ahmadrosid/readclip/internal/util/openai"
-	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/ahmadrosid/readclip/internal/util/youtube"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
