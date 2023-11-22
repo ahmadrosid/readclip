@@ -246,6 +246,12 @@ export const subReddits = [
         name: "webdev",
         title: "webdev: reddit for web developers",
         icon: "https://styles.redditmedia.com/t5_2qs0q/styles/communityIcon_kxcmzy9bt1381.jpg?width=256&s=4daf7298776111d25a50c359914d9cfaa1c10e94",
+        count_users: 859809,
+      },
+      {
+        name: "web_design",
+        title: "web_design: Web Design",
+        icon: "https://styles.redditmedia.com/t5_2qh1m/styles/communityIcon_cpdgauc6r8g01.png?width=256&s=cbb79c27efefde431fc712a9911f66310caf1cc8",
         count_users: 1831351,
       },
       {
