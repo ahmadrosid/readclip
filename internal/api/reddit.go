@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
+	"github.com/ahmadrosid/readclip/internal/scraper/reddit"
 	"github.com/ahmadrosid/readclip/internal/util"
-	"github.com/ahmadrosid/readclip/internal/util/reddit"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -42,8 +42,6 @@ func (h *redditHandler) getRedditpost(c *fiber.Ctx) error {
 	if url[0:length] == oldRedditUrl {
 		url = "https://reddit.com" + url[length:]
 	}
-
-	println(url)
 
 	data, err := reddit.ScrapeReddit(url)
 	if err != nil {

@@ -213,6 +213,12 @@ export const subReddits = [
         count_users: 365642,
       },
       {
+        name: "nextjs",
+        title: "/r/nextjs - Next.js is an open-source React framework created and maintained by Vercel.",
+        icon: "https://styles.redditmedia.com/t5_3h7yi/styles/communityIcon_nsrozhr9igl91.png?width=256&s=f48c940b5231ceb6cb810b8bb0bcf503395839bc",
+        count_users: 53667,
+      },
+      {
         name: "reactnative",
         title: "React Native - Learn once, write anywhere.",
         icon: "https://styles.redditmedia.com/t5_37k5y/styles/communityIcon_e9xvw609p7r21.png?width=256&s=c99f815fefd71859bc0149534586c32366a7ab36",

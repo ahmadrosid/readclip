@@ -92,24 +92,7 @@ export const DeckItem = React.memo<DeckComponentProps>(
     };
 
     const extractTextContent = (content: string): string => {
-      if (type === "reddit") {
-        return extractRedditContent(content);
-      }
-
       return content;
-    };
-
-    const extractRedditContent = (content: string) => {
-      const tokens = content.split(/(<!--\s*SC_OFF\s*-->|<!--\s*SC_ON\s*-->)/);
-      const startIndex = tokens.indexOf("<!-- SC_OFF -->");
-      const endIndex = tokens.indexOf("<!-- SC_ON -->");
-
-      if (startIndex !== -1 && endIndex !== -1 && startIndex < endIndex) {
-        const result = tokens.slice(startIndex + 1, endIndex).join("");
-        return result;
-      } else {
-        return "";
-      }
     };
 
     const getTextDescription = (ext: MediaExtensions): string => {

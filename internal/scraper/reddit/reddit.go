@@ -400,7 +400,7 @@ type ResponseRedditJson struct {
 	} `json:"data"`
 }
 
-func GetSubreddit(room string) (interface{}, error) {
+func GetSubreddit(room string) (*util.FeedResult, error) {
 	url := GenerateRedditJsonUrl(room)
 	resp, err := fetch.Fetch(url)
 	if err != nil {
@@ -414,5 +414,37 @@ func GetSubreddit(room string) (interface{}, error) {
 		return nil, err
 	}
 
-	return data, err
+	feedResult := util.FeedResult{
+		Title:       "Reddit - " + room,
+		Description: "Reddit " + room + " Front page",
+		Link:        "https://reddit.com/r/" + room,
+		Items:       make([]util.FeedItem, 0),
+	}
+
+	for _, item := range data.Data.Children {
+		feedItem := util.FeedItem{
+			Title: item.Data.Title,
+			Link:  fmt.Sprintf("https://reddit.com%s", item.Data.Permalink),
+		}
+
+		// if item.Data.Thumbnail != "self" {
+		// 	render := fmt.Sprintf(
+		// 		`<div className="text-sm text-gray-400"><p>%s</p><div class="flex gap-2"><img src="%s" alt="source" class="w-12 aspect-square object-cover rounded-md border" /><p>%.120s...</p></div></div>`,
+		// 		item.Data.SubredditNamePrefixed,
+		// 		item.Data.Thumbnail,
+		// 		item.Data.Selftext,
+		// 	)
+		// 	feedItem.Description = render
+		// } else {
+		render := fmt.Sprintf(
+			`<div><span>%s</span><p>%.160s</p></div>`,
+			item.Data.SubredditNamePrefixed,
+			item.Data.Selftext,
+		)
+		feedItem.Description = render
+		// }
+		feedResult.Items = append(feedResult.Items, feedItem)
+	}
+
+	return &feedResult, err
 }
