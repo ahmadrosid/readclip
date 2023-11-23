@@ -17,7 +17,7 @@ func NewHandler(route fiber.Router, repo WikiRepository, userRepo user.UserRepos
 		repo, userRepo,
 	}
 	route.Post("/", handler.Create)
-	route.Get("/", handler.Get)
+	route.Get("/:id", handler.Get)
 	route.Delete("/:id", handler.Delete)
 	route.Patch("/:id", handler.Update)
 }
