@@ -19,6 +19,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util/config"
 	"github.com/ahmadrosid/readclip/internal/util/embedfile"
 	"github.com/ahmadrosid/readclip/internal/util/firebase"
+	"github.com/ahmadrosid/readclip/internal/wiki"
 	"github.com/ahmadrosid/readclip/ui"
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
@@ -208,6 +209,7 @@ func main() {
 
 	userRepo := user.NewUserRepository(db)
 	clip.NewHandler(app.Group("/api/clips"), clip.NewClipRepository(db), userRepo)
+	wiki.NewHandler(app.Group("/api/wikis"), wiki.NewWikiRepository(db), userRepo)
 	tag.NewHandler(app.Group("/api/tags"), tag.NewTagRepository(db), userRepo)
 	user.NewHandler(app.Group("/api/users"), userRepo)
 	bookmark.NewHandler(app.Group("/api/bookmarks"))
