@@ -152,6 +152,14 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 				"error":  err.Error(),
 			})
 		}
+	} else if util.IsMediumUrl(input.Url) {
+		res, err = util.Scrape("https://freedium.cfd/"+input.Url, "markdown")
+		if err != nil {
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
 	} else {
 		res, err = util.Scrape(input.Url, "markdown")
 		if err != nil {

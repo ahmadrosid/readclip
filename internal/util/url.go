@@ -42,3 +42,11 @@ func IsRedditUrl(str string) bool {
 	}
 	return hostname == "reddit.com" || hostname == "www.reddit.com" || hostname == "old.reddit.com"
 }
+
+func IsMediumUrl(str string) bool {
+	hostname, err := GetHostname(str)
+	if err != nil {
+		panic(err)
+	}
+	return hostname == "medium.com" || hostname == "www.medium.com"
+}
