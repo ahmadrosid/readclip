@@ -23,12 +23,12 @@ export default function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <Header />
+        {path === "/404" ? null : <Header />}
         <main>
           <Outlet />
         </main>
         <Toaster richColors />
-        {path !== "/feed-deck" ? <Footer /> : null}
+        {["/feed-deck",'/404'].includes(path) ? null : <Footer />}
       </QueryClientProvider>
     </ThemeProvider>
   );
