@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@blocknote/core": "^0.9.6",
-    "@blocknote/react": "^0.9.6",
     "@generouted/react-router": "^1.15.8",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
