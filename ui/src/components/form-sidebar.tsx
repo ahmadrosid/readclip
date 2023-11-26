@@ -2,12 +2,13 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SidebarAndSectionsState } from '@/pages/wiki/builder';
 
 interface FormSidebarProps {
-  setSidebar: React.Dispatch<React.SetStateAction<string[]>>;
+  setSidebar: React.Dispatch<React.SetStateAction<SidebarAndSectionsState>>;
 }
 
-const FormSidebar: React.FC<FormSidebarProps> = ({ setSidebar }) => {
+export function FormSidebar({ setSidebar }: FormSidebarProps) {
   const [label, setLabel] = useState('');
   const [error, setError] = useState(false);
 
@@ -25,7 +26,15 @@ const FormSidebar: React.FC<FormSidebarProps> = ({ setSidebar }) => {
       return;
     }
 
-    setSidebar((prev) => [...prev, label]);
+    setSidebar((prevState) => {
+      const newSection = [...prevState.sections, ["Section"]];
+      const newSidebar = [...prevState.sidebars, label];
+      return {
+        sections: newSection,
+        sidebars: newSidebar
+      };
+    });
+
     setLabel('');
     setError(false);
   };
@@ -45,6 +54,4 @@ const FormSidebar: React.FC<FormSidebarProps> = ({ setSidebar }) => {
       <Button type="submit">Add</Button>
     </form>
   );
-};
-
-export default FormSidebar;
+}

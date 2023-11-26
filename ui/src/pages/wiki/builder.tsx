@@ -1,11 +1,10 @@
 import { Title } from "@/components/ui/title";
 import "@blocknote/core/style.css";
 import { useState } from "react";
-import FormSidebar from "@/components/form-sidebar";
-import SidebarItem from "@/components/sidebar-item";
+import { FormSidebar } from "@/components/form-sidebar";
+import { SidebarItem } from "@/components/sidebar-item";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-("use client");
 
 import * as React from "react";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
@@ -23,7 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { EyeIcon, Pencil } from "lucide-react";
+import { EyeIcon, Pencil, Trash2Icon } from "lucide-react";
 
 const frameworks = [
   {
@@ -97,10 +96,17 @@ export function SectionCategory() {
   );
 }
 
+export type SidebarAndSectionsState = {
+  sidebars: string[];
+  sections: string[][];
+};
+
 export default function WikiBuilderPage() {
-  const [sidebars, setSidebar] = useState<string[]>(["Home"]);
-  const [sections, setSections] = useState<string[]>(["Section name"]);
   const [selectedSidebar, setSelectedSidebar] = useState(0);
+  const [sidebars, setSidebar] = useState<SidebarAndSectionsState>({
+    sidebars: ["Home"],
+    sections: [["Section"]],
+  });
 
   return (
     <div className="px-4 sm:px-8 pb-16 min-h-[80vh]">
@@ -117,7 +123,7 @@ export default function WikiBuilderPage() {
           <div className="w-full max-w-xs border-r space-y-4">
             <FormSidebar setSidebar={setSidebar} />
             <ul className="list-disc list-inside px-3 space-y-1">
-              {sidebars.map((item, idx) => (
+              {sidebars.sidebars.map((item, idx) => (
                 <SidebarItem
                   key={idx}
                   item={item}
@@ -135,16 +141,17 @@ export default function WikiBuilderPage() {
                   key={selectedSidebar}
                   placeholder="Page name"
                   className="p-4 text-2xl font-bold w-full focus:outline-none"
-                  defaultValue={sidebars[selectedSidebar]}
+                  defaultValue={sidebars.sidebars[selectedSidebar]}
                 />
                 <div className="p-4 space-y-4">
-                  {sections.map((item, idx) => (
+                  {sidebars.sections[selectedSidebar].map((item, idx) => (
                     <div key={idx} className="flex flex-col gap-2 border rounded-md overflow-hidden">
                       <div className="bg-gray-50 p-2 border-b flex items-center">
                         <div className="flex-1">Section</div>
                         <div className="flex gap-1">
                           <Button variant="ghost" className="px-2"><Pencil className="w-4 h-4" /></Button>
                           <Button variant="ghost" className="px-2"><EyeIcon className="w-4 h-4" /></Button>
+                          <Button variant="ghost" className="px-2"><Trash2Icon className="w-4 h-4" /></Button>
                         </div>
                       </div>
                     <div className="p-4 flex flex-col gap-2">
@@ -163,9 +170,13 @@ export default function WikiBuilderPage() {
                 <div className="px-4">
                   <Button
                     size="sm"
-                    variant="secondary"
-                    onClick={() =>
-                      setSections((prev) => [...prev, `Section name`])
+                    onClick={() =>{
+                      setSidebar((prev) => {
+                        const next = {...prev};
+                        next.sections[selectedSidebar].push("Section")
+                        return next;
+                      })
+                    }
                     }
                   >
                     Add section
