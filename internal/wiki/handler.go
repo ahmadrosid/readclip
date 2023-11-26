@@ -23,9 +23,18 @@ func NewHandler(route fiber.Router, repo WikiRepository, userRepo user.UserRepos
 	route.Patch("/:id", handler.Update)
 }
 
-func (h *WikiHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
+func (h *WikiHandler) getUser(c *fiber.Ctx) (*user.User, error) {
 	authUser := c.Locals("user").(gofiberfirebaseauth.User)
 	user, err := h.userRepo.FindByFirebaseID(authUser.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (h *WikiHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
+	user, err := h.getUser(c)
 	if err != nil {
 		return nil, err
 	}
@@ -44,14 +53,16 @@ func (h *WikiHandler) Create(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
 	}
 
-	// Get user ID using the getUserID function
-	userID, err := h.getUserID(c)
+	user, err := h.getUser(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	// Call the repository to create a new Wiki
-	wiki, err := h.repo.Create(createRequest.Title, createRequest.Description, createRequest.Sidebar, *userID)
+	if user.Username == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Please create username"})
+	}
+
+	wiki, err := h.repo.Create(createRequest.Title, createRequest.Description, createRequest.Sidebar, user.ID)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create Wiki"})
 	}
@@ -60,89 +71,85 @@ func (h *WikiHandler) Create(c *fiber.Ctx) error {
 }
 
 func (h *WikiHandler) GetByUserID(c *fiber.Ctx) error {
-	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	// Call the repository to get the Wiki
 	wiki, err := h.repo.GetByUserID(*userID)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Wiki not found"})
 	}
 
-	// Return the retrieved Wiki in the response
 	return c.JSON(wiki)
 }
 
 func (h *WikiHandler) Get(c *fiber.Ctx) error {
-	// Get Wiki ID from the request parameters
 	wikiID := c.Params("id")
 
-	// Get user ID using the getUserID function
+	if wikiID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "WikiID is Required!"})
+	}
+
 	userID, err := h.getUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	// Call the repository to get the Wiki
 	wiki, err := h.repo.Get(wikiID, *userID)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Wiki not found"})
 	}
 
-	// Return the retrieved Wiki in the response
 	return c.JSON(wiki)
 }
 
 func (h *WikiHandler) Update(c *fiber.Ctx) error {
-	// Get Wiki ID from the request parameters
 	wikiID := c.Params("id")
 
-	// Parse request body
-	var updateRequest struct {
+	if wikiID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "WikiID is Required!"})
+	}
+
+	var updateRequestBody struct {
 		Title       string                 `json:"title"`
 		Description string                 `json:"description"`
 		Sidebar     map[string]interface{} `json:"sidebar"`
 	}
 
-	if err := c.BodyParser(&updateRequest); err != nil {
+	if err := c.BodyParser(&updateRequestBody); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
 	}
 
-	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	// Call the repository to update the Wiki
-	wiki, err := h.repo.Update(wikiID, updateRequest.Title, updateRequest.Description, updateRequest.Sidebar, *userID)
+	wiki, err := h.repo.Update(wikiID, updateRequestBody.Title, updateRequestBody.Description, updateRequestBody.Sidebar, *userID)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Wiki not found"})
 	}
 
-	// Return the updated Wiki in the response
 	return c.JSON(wiki)
 }
 
 func (h *WikiHandler) Delete(c *fiber.Ctx) error {
-	// Get Wiki ID from the request parameters
 	wikiID := c.Params("id")
 
-	// Get user ID using the getUserID function
+	if wikiID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "WikiID is Required!"})
+	}
+
 	userID, err := h.getUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	// Call the repository to delete the Wiki
 	err = h.repo.Delete(wikiID, *userID)
 	if err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Wiki not found"})
 	}
 
-	// Return a success message in the response
 	return c.JSON(fiber.Map{"message": "Wiki deleted successfully"})
 }
