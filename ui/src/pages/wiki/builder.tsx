@@ -1,5 +1,4 @@
 import { Title } from "@/components/ui/title";
-import "@blocknote/core/style.css";
 import { useState } from "react";
 import { FormSidebar } from "@/components/form-sidebar";
 import { SidebarItem } from "@/components/sidebar-item";
