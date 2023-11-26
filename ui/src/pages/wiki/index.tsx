@@ -104,7 +104,7 @@ export function FormCreateWiki() {
                 />
               </FormControl>
               <FormDescription>
-                {`The username will be used as prefix for your wiki url eg. https://readclip.site/wiki/{username}`}
+                {`The username will be used as prefix for your wiki public url eg. https://readclip.site/wiki/{username}`}
               </FormDescription>
               <FormMessage />
             </FormItem>
