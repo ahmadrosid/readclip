@@ -2,6 +2,7 @@ package util
 
 import (
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -48,5 +49,5 @@ func IsMediumUrl(str string) bool {
 	if err != nil {
 		panic(err)
 	}
-	return hostname == "medium.com" || hostname == "www.medium.com"
+	return hostname == "medium.com" || hostname == "www.medium.com" || strings.Contains(hostname, "medium.com")
 }

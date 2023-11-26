@@ -21,6 +21,7 @@ func NewHandler(route fiber.Router, repo UserRepository) {
 	route.Post("/login", handler.login)
 	route.Post("/register", handler.register)
 	route.Delete("/delete", handler.delete)
+	route.Patch("/update-username", handler.updateUserName)
 }
 
 func (h *handler) login(c *fiber.Ctx) error {
@@ -125,6 +126,13 @@ func (h *handler) delete(c *fiber.Ctx) error {
 			"error":  err.Error(),
 		})
 	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status": "success",
+	})
+}
+
+func (h *handler) updateUserName(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",

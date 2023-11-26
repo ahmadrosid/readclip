@@ -60,14 +60,14 @@ export function Header() {
               </Button>
             </Link>
 
-            {/* <Link to="/wiki/builder">
+            <Link to="/wiki">
               <Button
                 className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
-                Wiki <span className="text-gray-400 pl-2">(beta)</span>
+                Wiki <span className="text-rose-400 pl-2">(beta)</span>
               </Button>
-            </Link> */}
+            </Link>
 
             {hasToken && (
               <Link to="/setting" className="hidden sm:block">
