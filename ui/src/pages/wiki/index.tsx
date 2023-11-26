@@ -53,7 +53,7 @@ const FormSchema = z.object({
     }),
 });
 
-export function TextareaForm() {
+export function FormCreateWiki() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -162,39 +162,7 @@ export default function WikiBuilderPage() {
               </DialogDescription>
             </DialogHeader>
             <div>
-              <TextareaForm />
-              {/* <form onSubmit={handleCreateWiki} className="space-y-4">
-                <div>
-                  <label>
-                    <span>Username: </span>
-                    <Input name="username" placeholder="eg. jhon_doe" />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    <span>Title: </span>
-                    <Input
-                      name="title"
-                      placeholder="eg. Things i've learn oneline"
-                    />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    <span>Descriptions: *</span>
-                    <Textarea
-                      name="description"
-                      placeholder="The descriptions will be shown in Google search meta descriptions."
-                    />
-                  </label>
-                </div>
-                <div className="flex gap-2 justify-end">
-                  <Button type="reset" variant={"secondary"}>
-                    Cancel
-                  </Button>
-                  <Button type="submit">Submit</Button>
-                </div>
-              </form> */}
+              <FormCreateWiki />
             </div>
           </DialogContent>
         </Dialog>

@@ -69,6 +69,15 @@ export function Header() {
               </Button>
             </Link>
 
+            <Link to="/tools" className="hidden sm:block">
+              <Button
+                className="dark:text-gray-300 text-gray-800 px-2"
+                variant="link"
+              >
+                Tools
+              </Button>
+            </Link>
+
             {hasToken && (
               <Link to="/setting" className="hidden sm:block">
                 <Button
@@ -80,14 +89,6 @@ export function Header() {
               </Link>
             )}
 
-            <Link to="/tools" className="hidden sm:block">
-              <Button
-                className="dark:text-gray-300 text-gray-800 px-2"
-                variant="link"
-              >
-                Free tools
-              </Button>
-            </Link>
           </nav>
         </div>
 
