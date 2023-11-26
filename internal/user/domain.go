@@ -13,6 +13,7 @@ type InputRegister struct {
 type User struct {
 	ID         uuid.UUID  `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
 	Name       string     `gorm:"size:255"`
+	Username   string     `gorm:"size:255;unique"`
 	Email      string     `gorm:"size:255;unique"`
 	FirebaseID string     `gorm:"size:255;unique"`
 	CreatedAt  *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
