@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Check, Pencil, Trash2 } from "lucide-react";
 import { Input } from "./ui/input";
 import { SidebarAndSectionsState } from "@/pages/wiki/builder";
+import { cn, slugify } from "@/lib/utils";
 
 interface SidebarItemProps {
-  item: string;
+  item: SidebarAndSectionsState["sidebars"][0];
   idx: number;
   setSelectedSidebar: (idx: number) => void;
   setSidebar: React.Dispatch<React.SetStateAction<SidebarAndSectionsState>>;
@@ -23,21 +24,24 @@ export function SidebarItem({
     setEditMode(false);
     setSidebar((prev) => {
       const next = {...prev};
-      next.sidebars[idx] = editValue;
+      next.sidebars[idx] = {
+        label: editValue,
+        slug: slugify(editValue)
+      };
       return next;
     });
   };
   
   return (
-    <li key={item} className="p-1 bg-gray-50 rounded-lg flex justify-between items-center group gap-1">
+    <li key={idx} className={cn("p-1 border-b flex justify-between items-center group gap-1")}>
       {editMode ? (
-        <Input defaultValue={item} onChange={(e) => setEditValue(e.currentTarget.value)} />
+        <Input defaultValue={item.label} onChange={(e) => setEditValue(e.currentTarget.value)} />
       ) : (
         <p
           onClick={() => setSelectedSidebar(idx)}
-          className="cursor-pointer hover:underline rounded-md flex-1 p-2"
+          className="cursor-pointer hover:underline rounded-md flex-1 text-sm py-2 px-3"
         >
-          {item}
+          {item.label}
         </p>
       )}
       <div className="inline-flex gap-2">
@@ -53,7 +57,7 @@ export function SidebarItem({
         ) : (
           <Button
             onClick={() => {
-                setEditValue(item);
+                setEditValue(item.label);
                 setEditMode(true);
             }}
             size="sm"

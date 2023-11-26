@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SidebarAndSectionsState } from '@/pages/wiki/builder';
+import { slugify } from '@/lib/utils';
 
 interface FormSidebarProps {
   setSidebar: React.Dispatch<React.SetStateAction<SidebarAndSectionsState>>;
@@ -28,7 +29,10 @@ export function FormSidebar({ setSidebar }: FormSidebarProps) {
 
     setSidebar((prevState) => {
       const newSection = [...prevState.sections, ["Section"]];
-      const newSidebar = [...prevState.sidebars, label];
+      const newSidebar = [...prevState.sidebars, {
+        label,
+        slug: slugify(label)
+      }];
       return {
         sections: newSection,
         sidebars: newSidebar
@@ -44,6 +48,7 @@ export function FormSidebar({ setSidebar }: FormSidebarProps) {
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 items-center border-b p-4">
       <Input
+        autoComplete='off'
         name="label"
         type="text"
         placeholder="Sidebar label"
