@@ -20,7 +20,7 @@ export type Path =
   | `/tools/reddit-reader`
   | `/tools/word-counter`
   | `/tools/youtube-transcriber`
-  | `/wiki/builder`
+  | `/wiki`
 
 export type Params = {
   

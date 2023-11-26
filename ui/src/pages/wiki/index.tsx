@@ -117,6 +117,9 @@ export default function WikiBuilderPage() {
           Create public wiki from your bookmarked links.
         </p>
       </div>
+      <div className="pb-4">
+        <Button>Create Wiki</Button>
+      </div>
       <div>
         <div className="flex border rounded-md overflow-hidden bg-white">
           <div className="w-full max-w-xs border-r">
@@ -145,7 +148,7 @@ export default function WikiBuilderPage() {
                 <div className="p-4 space-y-4">
                   {sidebars.sections[selectedSidebar].map((item, idx) => (
                     <div key={idx} className="flex flex-col gap-2 border rounded-md overflow-hidden">
-                      <div className="bg-gray-50 p-2 border-b flex items-center">
+                      <div className="bg-gray-50 px-2 py-1 border-b flex items-center">
                         <div className="flex-1">Section</div>
                         <div className="flex gap-1">
                           <Button variant="ghost" className="px-2"><EyeIcon className="w-4 h-4" /></Button>
