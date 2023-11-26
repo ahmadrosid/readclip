@@ -21,6 +21,7 @@ export type Path =
   | `/tools/word-counter`
   | `/tools/youtube-transcriber`
   | `/wiki`
+  | `/wiki/builder`
 
 export type Params = {
   

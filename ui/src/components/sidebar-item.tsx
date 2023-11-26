@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Pencil, Trash2 } from "lucide-react";
 import { Input } from "./ui/input";
-import { SidebarAndSectionsState } from "@/pages/wiki";
+import { SidebarAndSectionsState } from "@/pages/wiki/builder";
 import { cn, slugify } from "@/lib/utils";
 
 interface SidebarItemProps {

@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { toast } from 'sonner';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SidebarAndSectionsState } from '@/pages/wiki';
+import { SidebarAndSectionsState } from '@/pages/wiki/builder';
 import { slugify } from '@/lib/utils';
 
 interface FormSidebarProps {

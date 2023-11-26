@@ -16,7 +16,8 @@ func NewHandler(route fiber.Router, repo WikiRepository, userRepo user.UserRepos
 	handler := &WikiHandler{
 		repo, userRepo,
 	}
-	route.Post("/", handler.Create)
+	route.Post("/create", handler.Create)
+	route.Get("/current", handler.GetByUserID)
 	route.Get("/:id", handler.Get)
 	route.Delete("/:id", handler.Delete)
 	route.Patch("/:id", handler.Update)
@@ -33,7 +34,6 @@ func (h *WikiHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 }
 
 func (h *WikiHandler) Create(c *fiber.Ctx) error {
-	// Parse request body
 	var createRequest struct {
 		Title       string                 `json:"title"`
 		Description string                 `json:"description"`
@@ -47,7 +47,7 @@ func (h *WikiHandler) Create(c *fiber.Ctx) error {
 	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to get user ID"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
 	// Call the repository to create a new Wiki
@@ -56,7 +56,23 @@ func (h *WikiHandler) Create(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create Wiki"})
 	}
 
-	// Return the created Wiki in the response
+	return c.JSON(wiki)
+}
+
+func (h *WikiHandler) GetByUserID(c *fiber.Ctx) error {
+	// Get user ID using the getUserID function
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
+	}
+
+	// Call the repository to get the Wiki
+	wiki, err := h.repo.GetByUserID(*userID)
+	if err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Wiki not found"})
+	}
+
+	// Return the retrieved Wiki in the response
 	return c.JSON(wiki)
 }
 
@@ -67,7 +83,7 @@ func (h *WikiHandler) Get(c *fiber.Ctx) error {
 	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to get user ID"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
 	// Call the repository to get the Wiki
@@ -98,7 +114,7 @@ func (h *WikiHandler) Update(c *fiber.Ctx) error {
 	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to get user ID"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
 	// Call the repository to update the Wiki
@@ -118,7 +134,7 @@ func (h *WikiHandler) Delete(c *fiber.Ctx) error {
 	// Get user ID using the getUserID function
 	userID, err := h.getUserID(c)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to get user ID"})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
 	// Call the repository to delete the Wiki

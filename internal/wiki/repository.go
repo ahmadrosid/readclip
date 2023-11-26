@@ -33,6 +33,12 @@ func (repo *wikipository) Get(id string, userID uuid.UUID) (Wiki, error) {
 	return wiki, err
 }
 
+func (repo *wikipository) GetByUserID(userID uuid.UUID) (Wiki, error) {
+	var wiki Wiki
+	err := repo.db.Where("user_id = ?", userID).First(&wiki).Error
+	return wiki, err
+}
+
 func (repo *wikipository) Update(id string, newTitle string, newDescription string, newSidebar map[string]interface{}, userID uuid.UUID) (Wiki, error) {
 	var wiki Wiki
 	err := repo.db.Where("id = ?", id).Where("user_id = ?", userID).First(&wiki).Error
