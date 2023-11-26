@@ -60,14 +60,14 @@ export function Header() {
               </Button>
             </Link>
 
-            <Link to="/wiki">
+            {/* <Link to="/wiki">
               <Button
                 className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Wiki <span className="text-rose-400 pl-2">(beta)</span>
               </Button>
-            </Link>
+            </Link> */}
 
             <Link to="/tools" className="hidden sm:block">
               <Button

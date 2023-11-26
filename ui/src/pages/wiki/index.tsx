@@ -25,6 +25,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useMutation } from "react-query";
+import { fetchCreateWiki, RequestCreateWiki } from "@/lib/api/wiki";
+import { Loader } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { fetchUpdateUsername } from "@/lib/api/user";
 
 const FormSchema = z.object({
   username: z
@@ -36,13 +41,13 @@ const FormSchema = z.object({
       message: "Username must not be longer than 30 characters.",
     }),
   title: z
-      .string()
-      .min(2, {
-        message: "Title must be at least 2 characters.",
-      })
-      .max(160, {
-        message: "Title must not be longer than 30 characters.",
-      }),
+    .string()
+    .min(2, {
+      message: "Title must be at least 2 characters.",
+    })
+    .max(160, {
+      message: "Title must not be longer than 30 characters.",
+    }),
   description: z
     .string()
     .min(10, {
@@ -53,20 +58,37 @@ const FormSchema = z.object({
     }),
 });
 
-export function FormCreateWiki() {
+function FormCreateWiki() {
+  const createWikiMutation = useMutation({
+    mutationKey: "create-wiki",
+    mutationFn: async (data: RequestCreateWiki & { username: string }) => {
+      await fetchUpdateUsername({ username: data.username });
+      return fetchCreateWiki(data);
+    },
+    onSuccess: () => {
+      window.location.href = "/wiki/builder";
+    },
+    onError: (err) => {
+      console.log(err);
+      if (err instanceof Error) {
+        toast.error(err.message || "Failed to create wiki!");
+        return;
+      }
+      toast.error("Failed to create wiki!");
+    },
+  });
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.error(
-      <div>
-        <p>You submitted the following values:</p>
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      </div>
-    );
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const defaultSidebar = {
+      sections: [["Section"]],
+      sidebars: [{ label: "Home", slug: "home" }],
+    };
+    const wiki = { ...data, sidebar: defaultSidebar };
+    createWikiMutation.mutate(wiki);
   }
 
   return (
@@ -79,11 +101,7 @@ export function FormCreateWiki() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="My Wiki..."
-                  className="resize-none"
-                  {...field}
-                />
+                <Input placeholder="My Wiki..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,11 +115,7 @@ export function FormCreateWiki() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Username..."
-                  className="resize-none"
-                  {...field}
-                />
+                <Input placeholder="Username..." {...field} />
               </FormControl>
               <FormDescription>
                 {`The username will be used as prefix for your wiki public url eg. https://readclip.site/wiki/{username}`}
@@ -118,11 +132,7 @@ export function FormCreateWiki() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Descriptions..."
-                  className="resize-none"
-                  {...field}
-                />
+                <Textarea placeholder="Descriptions..." {...field} />
               </FormControl>
               <FormDescription>
                 The descriptions will be shown in Google search meta
@@ -132,13 +142,21 @@ export function FormCreateWiki() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={createWikiMutation.isLoading}>
+          {createWikiMutation.isLoading ? (
+            <Loader className="w-4 h-4 animate-spin" />
+          ) : (
+            "Submit"
+          )}
+        </Button>
       </form>
     </Form>
   );
 }
 
 export default function WikiBuilderPage() {
+  useAuth();
+
   return (
     <div className="px-4 sm:px-8 pb-16 min-h-[80vh]">
       <div className="pb-4 border-b mb-4">

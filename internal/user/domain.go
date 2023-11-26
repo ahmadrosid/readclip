@@ -26,5 +26,6 @@ type UserRepository interface {
 	FindByFirebaseID(firebaseID string) (*User, error)
 	Create(user *User) (*User, error)
 	Update(user *User) (*User, error)
+	UpdateUsername(user *User, username string) (*User, error)
 	Delete(id uuid.UUID) error
 }

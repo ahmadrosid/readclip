@@ -21,7 +21,7 @@ func NewHandler(route fiber.Router, repo UserRepository) {
 	route.Post("/login", handler.login)
 	route.Post("/register", handler.register)
 	route.Delete("/delete", handler.delete)
-	route.Patch("/update-username", handler.updateUserName)
+	route.Post("/update-username", handler.updateUserName)
 }
 
 func (h *handler) login(c *fiber.Ctx) error {
@@ -134,7 +134,33 @@ func (h *handler) delete(c *fiber.Ctx) error {
 
 func (h *handler) updateUserName(c *fiber.Ctx) error {
 
+	var updateRequest struct {
+		Username string `json:"username"`
+	}
+
+	currentUser := c.Locals("user").(gofiberfirebaseauth.User)
+	user, err := h.repo.FindByFirebaseID(currentUser.UserID)
+
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	if err := c.BodyParser(&updateRequest); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
+	}
+
+	updatedUser, err := h.repo.UpdateUsername(user, updateRequest.Username)
+	if err != nil {
+		return c.Status(http.StatusUnprocessableEntity).JSON(fiber.Map{
+			"error": "Failed to update username! " + err.Error(),
+		})
+	}
+
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",
+		"data":   updatedUser,
 	})
 }

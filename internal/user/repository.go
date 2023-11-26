@@ -55,7 +55,19 @@ func (repo *dbService) FindByID(id uuid.UUID) (*User, error) {
 	return user, nil
 }
 
-// Update implements UserRepository.
-func (*dbService) Update(user *User) (*User, error) {
-	panic("unimplemented")
+func (repo *dbService) Update(user *User) (*User, error) {
+	err := repo.db.Save(user).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (repo *dbService) UpdateUsername(user *User, username string) (*User, error) {
+	user.Username = username
+	err := repo.db.Save(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }

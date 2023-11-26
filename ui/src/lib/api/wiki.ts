@@ -14,7 +14,7 @@ type CreateWikiResponse = {
   };
 };
 
-type RequestCreateWiki = {
+export type RequestCreateWiki = {
   title: string;
   description: string;
   sidebar: {
@@ -27,32 +27,30 @@ type RequestCreateWiki = {
 };
 
 export const fetchCreateWiki = async (
-    data: RequestCreateWiki
-  ): Promise<CreateWikiResponse> => {
-    return handleReturnFetch(
-      await fetch("/api/wikis/create", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: getToken(),
-        },
-        body: JSON.stringify(data),
-      })
-    );
-  };
-  
+  data: RequestCreateWiki
+): Promise<CreateWikiResponse> => {
+  return handleReturnFetch(
+    await fetch("/api/wikis/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+      body: JSON.stringify(data),
+    })
+  );
+};
 
 export const fetchWikiCurrentUser = async (
-    token: string
-  ): Promise<CreateWikiResponse> => {
-    return handleReturnFetch(
-      await fetch("/api/wikis/current", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      })
-    );
-  };
-  
+  token: string
+): Promise<CreateWikiResponse> => {
+  return handleReturnFetch(
+    await fetch("/api/wikis/current", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    })
+  );
+};
