@@ -104,7 +104,7 @@ export function TextareaForm() {
                 />
               </FormControl>
               <FormDescription>
-                {`The username will be previx for you wiki url eg. https://readclip.site/wiki/{username}`}
+                {`The username will be used as prefix for you wiki url eg. https://readclip.site/wiki/{username}`}
               </FormDescription>
               <FormMessage />
             </FormItem>
