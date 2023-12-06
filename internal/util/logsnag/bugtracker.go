@@ -9,33 +9,20 @@ import (
 	"strings"
 )
 
-type Data struct {
-	Project     string                 `json:"project"`
-	Event       string                 `json:"event"`
-	UserID      string                 `json:"user_id"`
-	Description string                 `json:"description"`
-	Icon        string                 `json:"icon"`
-	Tags        map[string]interface{} `json:"tags"`
-	Notify      bool                   `json:"notify"`
-	Channel     string                 `json:"channel"`
-}
-
-func SendEventUserRegister(name string, id string) {
+func SendBugEvent(tags map[string]interface{}, id string) {
 
 	url := "https://api.logsnag.com/v1/log"
 	method := "POST"
 
 	dataPayload := Data{
 		Project:     "readclip",
-		Event:       "New User Signup",
+		Event:       "Bug Report",
 		UserID:      id,
-		Description: "New user " + name,
-		Icon:        "🙋",
-		Tags: map[string]interface{}{
-			"user": "register",
-		},
-		Notify:  false,
-		Channel: "user-register",
+		Description: "Bug report",
+		Icon:        "🐛",
+		Tags:        tags,
+		Notify:      false,
+		Channel:     "bookmark",
 	}
 
 	payload, err := json.Marshal(dataPayload)

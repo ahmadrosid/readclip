@@ -20,7 +20,7 @@ func SendClipEvent(link string, title string, id string) {
 		UserID:      id,
 		Description: title,
 		Icon:        "📝",
-		Tags: map[string]string{
+		Tags: map[string]interface{}{
 			"link": link,
 		},
 		Notify:  false,

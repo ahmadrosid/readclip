@@ -199,6 +199,15 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
 			logsnag.SendClipEvent(input.Url, res.Title, userID.String())
 		}
+
+		if userID.String() == "00000000-0000-0000-0000-000000000000" {
+			authUser := c.Locals("user").(gofiberfirebaseauth.User)
+			dataEvent := map[string]interface{}{
+				"user":   authUser,
+				"userId": userID,
+			}
+			logsnag.SendBugEvent(dataEvent, userID.String())
+		}
 	}()
 
 	if err != nil {
