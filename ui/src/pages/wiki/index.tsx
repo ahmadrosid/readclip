@@ -25,8 +25,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { useMutation } from "react-query";
-import { fetchCreateWiki, RequestCreateWiki } from "@/lib/api/wiki";
+import { useMutation, useQuery } from "react-query";
+import { fetchCreateWiki, fetchWikiCurrentUser, RequestCreateWiki } from "@/lib/api/wiki";
 import { Loader } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { fetchUpdateUsername } from "@/lib/api/user";
@@ -155,7 +155,18 @@ function FormCreateWiki() {
 }
 
 export default function WikiBuilderPage() {
-  useAuth();
+  const { user } = useAuth();
+
+  useQuery({
+    queryFn: async () => {
+      const token = await user?.getIdToken();
+      return fetchWikiCurrentUser(token||"");
+    },
+    queryKey: "fetchWikiCurrentUser",
+    onSuccess: (res) => {
+      console.log(res)
+    }
+  })
 
   return (
     <div className="px-4 sm:px-8 pb-16 min-h-[80vh]">

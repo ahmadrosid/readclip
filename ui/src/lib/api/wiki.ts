@@ -14,6 +14,8 @@ type CreateWikiResponse = {
   };
 };
 
+type CurrentWikiResponse = CreateWikiResponse;
+
 export type RequestCreateWiki = {
   title: string;
   description: string;
@@ -43,7 +45,7 @@ export const fetchCreateWiki = async (
 
 export const fetchWikiCurrentUser = async (
   token: string
-): Promise<CreateWikiResponse> => {
+): Promise<CurrentWikiResponse> => {
   return handleReturnFetch(
     await fetch("/api/wikis/current", {
       method: "POST",

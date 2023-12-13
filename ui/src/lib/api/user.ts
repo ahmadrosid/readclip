@@ -24,7 +24,7 @@ export const fetchUpdateUsername = async (
 ): Promise<UpdateUsernameResponse> => {
   return handleReturnFetch(
     await fetch("/api/user/update-username", {
-      method: "PATCH",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: getToken(),
