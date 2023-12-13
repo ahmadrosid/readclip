@@ -437,7 +437,7 @@ func GetSubreddit(room string) (*util.FeedResult, error) {
 		// 	feedItem.Description = render
 		// } else {
 		render := fmt.Sprintf(
-			`<div><span>%s</span><p>%.160s</p></div>`,
+			"<div><span>%s</span><p>%.160s</p></div>",
 			item.Data.SubredditNamePrefixed,
 			item.Data.Selftext,
 		)
