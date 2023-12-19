@@ -70,6 +70,7 @@ func (h *handler) register(c *fiber.Ctx) error {
 	user, err := h.repo.Create(&User{
 		ID:         uuid.New(),
 		Name:       input.Name,
+		Username:   nil,
 		Email:      currentUser.Email,
 		FirebaseID: currentUser.UserID,
 		CreatedAt:  &now,

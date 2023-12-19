@@ -22,7 +22,7 @@ func NewClipRepository(db *gorm.DB) ClipRepository {
 func (repo *clipRepository) GetAllClipData(perPage int, offset int, tagId string, userID uuid.UUID) ([]Clip, error) {
 	var clips []Clip
 	query := repo.db.
-		Select("clips.id, clips.url, clips.title, clips.hash_url, clips.description, clips.hostname, clips.created_at").
+		Select("clips.id, clips.url, clips.title, clips.hash_url, clips.description, clips.hostname, clips.user_id, clips.created_at").
 		Where("clips.user_id = ?", userID)
 	if tagId != "" {
 		query = query.Joins("INNER JOIN clip_tags ON clips.id = clip_tags.clip_id").Where("clip_tags.tag_id = ?", tagId)

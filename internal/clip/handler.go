@@ -53,6 +53,7 @@ func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 		return nil, err
 	}
 
+	println(userData.ID.String())
 	if userData.ID.String() == "00000000-0000-0000-0000-000000000000" {
 		currentUser := c.Locals("user").(gofiberfirebaseauth.User)
 
@@ -271,8 +272,6 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 			"error":  err,
 		})
 	}
-
-	fmt.Println(userID.String())
 
 	clips, err := h.repo.GetAllClipData(perPage, offset, tagId, *userID)
 	if err != nil {

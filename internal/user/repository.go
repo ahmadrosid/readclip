@@ -39,7 +39,7 @@ func (repo *dbService) Delete(id uuid.UUID) error {
 
 func (repo *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
 	var result User
-	err := repo.db.Model(User{FirebaseID: firebaseID}).First(&result).Error
+	err := repo.db.Where("firebase_id = ?", firebaseID).First(&result).Error
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (repo *dbService) Update(user *User) (*User, error) {
 }
 
 func (repo *dbService) UpdateUsername(user *User, username string) (*User, error) {
-	user.Username = username
+	user.Username = &username
 	err := repo.db.Save(&user).Error
 	if err != nil {
 		return nil, err

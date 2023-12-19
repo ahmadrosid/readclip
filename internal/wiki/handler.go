@@ -58,9 +58,7 @@ func (h *WikiHandler) Create(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Failed to get user ID"})
 	}
 
-	println(len(user.Username))
-
-	if len(user.Username) == 0 {
+	if len(*user.Username) == 0 {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Please create username"})
 	}
 
