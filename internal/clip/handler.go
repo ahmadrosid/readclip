@@ -125,6 +125,19 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		})
 	}
 
+	if userID.String() == "00000000-0000-0000-0000-000000000000" {
+		authUser := c.Locals("user").(gofiberfirebaseauth.User)
+		dataEvent := map[string]interface{}{
+			"user":   authUser,
+			"userId": userID,
+		}
+		logsnag.SendBugEvent(dataEvent, userID.String())
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  fmt.Errorf("failed to get user information!"),
+		})
+	}
+
 	hashURL := md5.Sum([]byte(input.Url))
 	data, err := h.repo.GetClipByHashUrl(hex.EncodeToString(hashURL[:]), *userID)
 	if err == nil {
