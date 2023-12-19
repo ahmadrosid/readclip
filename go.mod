@@ -17,7 +17,6 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/markusmobius/go-trafilatura v1.5.1
 	github.com/mmcdole/gofeed v1.2.1
-	github.com/sacsand/gofiber-firebaseauth v1.4.3
 	golang.org/x/net v0.17.0
 	google.golang.org/api v0.143.0
 	gorm.io/driver/postgres v1.5.2

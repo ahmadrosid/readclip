@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/ahmadrosid/readclip/internal/user"
+	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 	"github.com/gofiber/fiber/v2"
-	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
 type TagHandler struct {

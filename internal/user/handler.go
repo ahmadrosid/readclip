@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
+	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 	"gorm.io/gorm"
 )
 

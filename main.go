@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
+	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 
 	"github.com/ahmadrosid/readclip/internal/api"
 	"github.com/ahmadrosid/readclip/internal/api/feed"

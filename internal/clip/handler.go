@@ -14,9 +14,9 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
 	"github.com/ahmadrosid/readclip/internal/util/openai"
 	"github.com/ahmadrosid/readclip/internal/util/youtube"
+	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
 type GrabMarkdownRequest struct {
@@ -47,12 +47,32 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 	authUser := c.Locals("user").(gofiberfirebaseauth.User)
-	user, err := h.userRepo.FindByFirebaseID(authUser.UserID)
+	fmt.Println("authUser.UserID", authUser.UserID)
+	userData, err := h.userRepo.FindByFirebaseID(authUser.UserID)
 	if err != nil {
 		return nil, err
 	}
 
-	return &user.ID, nil
+	if userData.ID.String() == "00000000-0000-0000-0000-000000000000" {
+		currentUser := c.Locals("user").(gofiberfirebaseauth.User)
+
+		now := time.Now().UTC()
+		newUser, err := h.userRepo.Create(&user.User{
+			ID:         uuid.New(),
+			Name:       currentUser.Name,
+			Email:      currentUser.Email,
+			FirebaseID: currentUser.UserID,
+			CreatedAt:  &now,
+			UpdatedAt:  &now,
+			DeletedAt:  nil,
+		})
+		if err != nil {
+			return nil, err
+		}
+		return &newUser.ID, nil
+	}
+
+	return &userData.ID, nil
 }
 
 func (h *ClipHandler) publicScrape(c *fiber.Ctx) error {
@@ -251,6 +271,8 @@ func (h *ClipHandler) getAllClips(c *fiber.Ctx) error {
 			"error":  err,
 		})
 	}
+
+	fmt.Println(userID.String())
 
 	clips, err := h.repo.GetAllClipData(perPage, offset, tagId, *userID)
 	if err != nil {

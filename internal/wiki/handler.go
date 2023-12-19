@@ -2,9 +2,9 @@ package wiki
 
 import (
 	"github.com/ahmadrosid/readclip/internal/user"
+	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	gofiberfirebaseauth "github.com/sacsand/gofiber-firebaseauth"
 )
 
 type WikiHandler struct {

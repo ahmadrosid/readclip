@@ -38,12 +38,12 @@ func (repo *dbService) Delete(id uuid.UUID) error {
 }
 
 func (repo *dbService) FindByFirebaseID(firebaseID string) (*User, error) {
-	user := &User{}
-	err := repo.db.Find(user, "firebase_id", firebaseID).Error
+	var result User
+	err := repo.db.Model(User{FirebaseID: firebaseID}).First(&result).Error
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
+	return &result, nil
 }
 
 func (repo *dbService) FindByID(id uuid.UUID) (*User, error) {
