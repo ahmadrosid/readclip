@@ -47,13 +47,11 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
 	authUser := c.Locals("user").(gofiberfirebaseauth.User)
-	fmt.Println("authUser.UserID", authUser.UserID)
 	userData, err := h.userRepo.FindByFirebaseID(authUser.UserID)
 	if err != nil {
 		return nil, err
 	}
 
-	println(userData.ID.String())
 	if userData.ID.String() == "00000000-0000-0000-0000-000000000000" {
 		currentUser := c.Locals("user").(gofiberfirebaseauth.User)
 
