@@ -294,31 +294,30 @@ type SubChildren struct {
 		Edited              OptionalTime  `json:"edited"`
 		AuthorFlairCSSClass interface{}   `json:"author_flair_css_class"`
 		AuthorFlairRichtext []interface{} `json:"author_flair_richtext"`
-		Gildings            struct {
-		} `json:"gildings"`
-		PostHint            string      `json:"post_hint"`
-		ContentCategories   interface{} `json:"content_categories"`
-		IsSelf              bool        `json:"is_self"`
-		SubredditType       string      `json:"subreddit_type"`
-		Created             float64     `json:"created"`
-		LinkFlairType       string      `json:"link_flair_type"`
-		Wls                 int         `json:"wls"`
-		RemovedByCategory   interface{} `json:"removed_by_category"`
-		BannedBy            interface{} `json:"banned_by"`
-		AuthorFlairType     string      `json:"author_flair_type"`
-		Domain              string      `json:"domain"`
-		AllowLiveComments   bool        `json:"allow_live_comments"`
-		SelftextHTML        interface{} `json:"selftext_html"`
-		Likes               interface{} `json:"likes"`
-		SuggestedSort       interface{} `json:"suggested_sort"`
-		BannedAtUtc         interface{} `json:"banned_at_utc"`
-		URLOverriddenByDest string      `json:"url_overridden_by_dest"`
-		ViewCount           interface{} `json:"view_count"`
-		Archived            bool        `json:"archived"`
-		NoFollow            bool        `json:"no_follow"`
-		IsCrosspostable     bool        `json:"is_crosspostable"`
-		Pinned              bool        `json:"pinned"`
-		Over18              bool        `json:"over_18"`
+		Gildings            struct{}      `json:"gildings"`
+		PostHint            string        `json:"post_hint"`
+		ContentCategories   interface{}   `json:"content_categories"`
+		IsSelf              bool          `json:"is_self"`
+		SubredditType       string        `json:"subreddit_type"`
+		Created             float64       `json:"created"`
+		LinkFlairType       string        `json:"link_flair_type"`
+		Wls                 int           `json:"wls"`
+		RemovedByCategory   interface{}   `json:"removed_by_category"`
+		BannedBy            interface{}   `json:"banned_by"`
+		AuthorFlairType     string        `json:"author_flair_type"`
+		Domain              string        `json:"domain"`
+		AllowLiveComments   bool          `json:"allow_live_comments"`
+		SelftextHTML        interface{}   `json:"selftext_html"`
+		Likes               interface{}   `json:"likes"`
+		SuggestedSort       interface{}   `json:"suggested_sort"`
+		BannedAtUtc         interface{}   `json:"banned_at_utc"`
+		URLOverriddenByDest string        `json:"url_overridden_by_dest"`
+		ViewCount           interface{}   `json:"view_count"`
+		Archived            bool          `json:"archived"`
+		NoFollow            bool          `json:"no_follow"`
+		IsCrosspostable     bool          `json:"is_crosspostable"`
+		Pinned              bool          `json:"pinned"`
+		Over18              bool          `json:"over_18"`
 		Preview             struct {
 			Images []struct {
 				Source struct {
