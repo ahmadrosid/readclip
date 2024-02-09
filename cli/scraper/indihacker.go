@@ -53,13 +53,17 @@ func main() {
 		link := dom.QuerySelector(item, ".story__link-element")
 		author := dom.QuerySelector(item, ".user-link__name--username")
 		url := dom.GetAttribute(link, "href")
+		author_name := ""
+		if author != nil {
+			author_name = dom.InnerText(author)
+		}
 
 		items = append(items, DataItem{
 			Title:       dom.InnerText(title),
 			Description: dom.InnerText(description),
 			Link:        fmt.Sprintf("https://www.indiehackers.com%s", url),
 			Image:       dom.GetAttribute(thumbnail, "src"),
-			Author:      dom.InnerText(author),
+			Author:      author_name,
 		})
 	}
 
