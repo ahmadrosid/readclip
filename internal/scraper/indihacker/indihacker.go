@@ -49,7 +49,6 @@ func ParseLatest() (*util.FeedResult, error) {
 		url := dom.GetAttribute(link, "href")
 
 		img := ""
-
 		if thumbnail != nil {
 			img = dom.GetAttribute(thumbnail, "src")
 		}
@@ -111,7 +110,6 @@ func ParseFeatured() (*util.FeedResult, error) {
 		url := dom.GetAttribute(link, "href")
 
 		img := ""
-
 		if thumbnail != nil {
 			img = dom.GetAttribute(thumbnail, "src")
 		}
