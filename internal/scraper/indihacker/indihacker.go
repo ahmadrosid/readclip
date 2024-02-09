@@ -116,12 +116,17 @@ func ParseFeatured() (*util.FeedResult, error) {
 			img = dom.GetAttribute(thumbnail, "src")
 		}
 
+		author_name := ""
+		if author != nil {
+			author_name = dom.InnerText(author)
+		}
+
 		items = append(items, IndihackerResponse{
 			Title:       dom.InnerText(title),
 			Description: dom.InnerText(description),
 			Link:        fmt.Sprintf("https://www.indiehackers.com%s", url),
 			Image:       img,
-			Author:      dom.InnerText(author),
+			Author:      author_name,
 		})
 	}
 
