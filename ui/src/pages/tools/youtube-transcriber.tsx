@@ -120,7 +120,7 @@ export default function YoutubeTranscriber() {
                     <CardTitle className="text-2xl flex justify-between items-center">
                       <div>
                         {transcribeMutation.data
-                          ? transcribeMutation.data.info.title
+                          ? transcribeMutation.data.info?.title
                           : ""}
                       </div>
                       <div className="flex items-center gap-2">
