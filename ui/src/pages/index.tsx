@@ -100,7 +100,7 @@ export default function Home() {
               <CardContent className="p-6">
                 <div className="text-[50px] h-20 w-20">💾</div>
                 <CardTitle className="pb-4 text-xl">Content Saving</CardTitle>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Save Any Online Article: Readclip allows you to save articles,
                   blog posts, news, and more from the web with a single click.
                 </p>
@@ -112,7 +112,7 @@ export default function Home() {
                 <CardTitle className="pb-4 text-xl">
                   Distraction-Free Reading
                 </CardTitle>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Readclip downloads the HTML content from links you save and
                   then uses advanced technology to remove ads, widgets, and
                   other distractions, presenting you with clean, easy-to-read
@@ -126,7 +126,7 @@ export default function Home() {
                 <CardTitle className="pb-4 text-xl">
                   Tagging and Categorization
                 </CardTitle>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Organize your saved links easily with customizable tags. Find
                   what you need quickly, whether it's by topic, source, or any
                   other criteria.
@@ -137,7 +137,7 @@ export default function Home() {
               <CardContent className="p-6">
                 <div className="text-[57px] h-20 w-20">💡</div>
                 <CardTitle className="pb-4 text-xl">Discoverability</CardTitle>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Setup news feed from popular media like reddit, hackernews,
                   youtube channel you like to get the latest update save it with
                   a single click.
