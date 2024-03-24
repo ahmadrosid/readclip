@@ -1,12 +1,15 @@
 .PHONY: build
 TARGET_DIR ?= build/app
-build: 
-	(set -e; cd ui && pnpm i && pnpm run build)
+build: build-ui
 	go generate ./...
 	CGO_ENABLED=0 go build -o ${TARGET_DIR} -buildvcs=false
 
 start-ui-dev:
 	cd ui && npm run dev
+
+build-ui:
+	(set -e; cd ui && pnpm i && pnpm run build)
+	cp ui/home.html ui/dist
 
 dev:
 	# npx tsx cli/nodejs/analysis-rss.ts

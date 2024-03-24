@@ -73,7 +73,6 @@ func main() {
 	}
 
 	uiPaths := []string{
-		"/",
 		"/clip",
 		"/register",
 		"/clips",
@@ -93,7 +92,7 @@ func main() {
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
-		Index:  "index.html",
+		Index:  "home.html",
 		Browse: false,
 	}))
 
