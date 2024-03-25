@@ -9,10 +9,10 @@ export const subReddits = [
         count_users: 4119,
       },
       {
-        name: "EnglishStudy",
-        title: "English Study",
-        icon: null,
-        count_users: 547,
+        name: "bun",
+        title: "bun",
+        icon: "https://styles.redditmedia.com/t5_2ug38/styles/communityIcon_fa96t4u3lj1c1.png",
+        count_users: 364,
       },
       {
         name: "learnEnglishOnline",
