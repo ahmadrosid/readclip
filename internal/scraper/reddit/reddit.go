@@ -148,11 +148,12 @@ func GenerateRedditRssUrl(room string) string {
 }
 
 func GenerateRedditJsonUrl(room string) string {
-	return "https://www.reddit.com/r/" + room + ".json"
+	return "https://api.ahmadrosid.com/reddit/r/" + room
 }
 
 func ScrapeReddit(url string) (*util.ContentData, error) {
-	req, err := http.NewRequest("GET", strings.TrimRight(url, "/")+".json", nil)
+	redditUrl := strings.Replace(url, "https://reddit.com/", "https://api.ahmadrosid.com/reddit/", -1)
+	req, err := http.NewRequest("GET", redditUrl, nil)
 	if err != nil {
 		return nil, err
 	}
