@@ -9,12 +9,6 @@ export const subReddits = [
         count_users: 4119,
       },
       {
-        name: "bun",
-        title: "bun",
-        icon: "https://styles.redditmedia.com/t5_2ug38/styles/communityIcon_fa96t4u3lj1c1.png",
-        count_users: 364,
-      },
-      {
         name: "learnEnglishOnline",
         title: "Learn English Online",
         icon: null,
@@ -49,6 +43,12 @@ export const subReddits = [
   {
     group: "Software Developers",
     items: [
+      {
+        name: "bun",
+        title: "bun",
+        icon: "https://styles.redditmedia.com/t5_2ug38/styles/communityIcon_fa96t4u3lj1c1.png",
+        count_users: 364,
+      },
       {
         name: "software",
         title: "Software - Anything software-related",
