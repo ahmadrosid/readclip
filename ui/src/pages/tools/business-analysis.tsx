@@ -71,8 +71,8 @@ Output your analysis in one sentence.`;
         content: data.data.Content,
       });
       openAiMutation.mutate({
-        model: "gpt-3.5-turbo",
-        // model: "gpt-4",
+        // model: "gpt-3.5-turbo",
+        model: "gpt-4-turbo-preview",
         messages: [
           {
             role: "system",
@@ -83,7 +83,7 @@ Output your analysis in one sentence.`;
             content: `This is the text from landing page ${inputUrl}\n${data.data.Content}`,
           },
         ],
-        temperature: 0,
+        temperature: 1,
         max_tokens: 1024,
         // top_p: 1,
         // frequency_penalty: 0,
