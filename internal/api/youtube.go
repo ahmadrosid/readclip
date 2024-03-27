@@ -18,7 +18,6 @@ type FindChannelRequest struct {
 
 type youtubeHandler struct{}
 
-// api/youtube/*
 func NewYoutubeHandler(route fiber.Router) {
 	handler := &youtubeHandler{}
 	route.Post("/transcript", handler.getYoutubeTranscript)
