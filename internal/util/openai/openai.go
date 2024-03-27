@@ -49,19 +49,11 @@ func SummarizeContent(content string) (string, error) {
 		Messages: []Message{
 			{
 				Role:    "system",
-				Content: "Be concise",
-			},
-			{
-				Role:    "system",
-				Content: "Detect the language and reply with the same language.",
-			},
-			{
-				Role:    "system",
-				Content: "Summarize this article, ensuring the original meaning and context are retained. Format it into a bullet points.",
+				Content: "Be concise. Detect the language and reply with the same language.",
 			},
 			{
 				Role:    "user",
-				Content: content,
+				Content: content + "\n\nSummarize this article, ensuring the original meaning and context are retained. Format it into a bullet points.",
 			},
 		},
 		Temperature:      1,
