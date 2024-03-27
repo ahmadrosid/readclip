@@ -2,8 +2,6 @@ module github.com/ahmadrosid/readclip
 
 go 1.21
 
-toolchain go1.21.1
-
 require (
 	firebase.google.com/go v3.13.0+incompatible
 	github.com/JohannesKaufmann/html-to-markdown v1.4.1
