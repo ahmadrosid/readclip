@@ -23,6 +23,7 @@ func NewYoutubeHandler(route fiber.Router) {
 	handler := &youtubeHandler{}
 	route.Post("/transcript", handler.getYoutubeTranscript)
 	route.Post("/channels", handler.findYoutubeChannels)
+	route.Get("/video", handler.getVideoInfo)
 }
 
 func (h *youtubeHandler) getYoutubeTranscript(c *fiber.Ctx) error {
@@ -64,6 +65,19 @@ func (h *youtubeHandler) findYoutubeChannels(c *fiber.Ctx) error {
 	}
 
 	video, err := echotube.FindChannels(input.Query)
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(video)
+}
+
+func (h *youtubeHandler) getVideoInfo(c *fiber.Ctx) error {
+	videoId := c.Query("url")
+
+	video, err := youtube.GetVideoInfo(videoId)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),

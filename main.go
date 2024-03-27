@@ -196,6 +196,7 @@ func main() {
 			"GET::/setting",
 			"POST::/api/youtube/transcript",
 			"POST::/api/youtube/channels",
+			"GET::/api/youtube/video",
 			"GET::/tools/*",
 			"GET::/assets/*",
 			"GET::/health-check",

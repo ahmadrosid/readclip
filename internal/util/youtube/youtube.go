@@ -63,7 +63,7 @@ func IsValidYoutubeUrl(genericUrl string) bool {
 	return false
 }
 
-func GrabYoutubeVideoInfo(videoUrl string) (*util.ContentData, error) {
+func GetVideoInfo(videoUrl string) (*youtube.Video, error) {
 	videoID, err := GetVideoID(videoUrl)
 	if err != nil {
 		return nil, err
@@ -72,6 +72,15 @@ func GrabYoutubeVideoInfo(videoUrl string) (*util.ContentData, error) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(videoID)
+	if err != nil {
+		return nil, err
+	}
+
+	return video, nil
+}
+
+func GrabYoutubeVideoInfo(videoUrl string) (*util.ContentData, error) {
+	video, err := GetVideoInfo(videoUrl)
 	if err != nil {
 		return nil, err
 	}
