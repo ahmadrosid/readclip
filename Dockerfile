@@ -1,4 +1,4 @@
-FROM golang:1.20.1-alpine as base
+FROM golang:1.21.1-alpine as base
 RUN apk add curl bash nodejs npm make
 RUN npm install --global pnpm
 
