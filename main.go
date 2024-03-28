@@ -32,6 +32,11 @@ import (
 
 func main() {
 	env := config.Load()
+	db, err := util.ConnectToDatabase(env.DatabaseUrl)
+	if err != nil {
+		panic(err)
+	}
+
 	index, err := fs.Sub(ui.Index, "dist")
 	if err != nil {
 		panic(err)
@@ -43,10 +48,6 @@ func main() {
 	}
 
 	engine := html.NewFileSystem(http.FS(template), ".html")
-	db, err := util.ConnectToDatabase(env.DatabaseUrl)
-	if err != nil {
-		panic(err)
-	}
 
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
