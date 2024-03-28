@@ -2,4 +2,3 @@ readclip
 .env
 build/
 cli/scraper/html/
-docker_pwd.txt
