@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -26,6 +25,5 @@ func ConnectToDatabase(dsn string) (*gorm.DB, error) {
 		log.Printf("Failed to connect to the database: %v", err)
 		return nil, err
 	}
-	fmt.Println("Connected to the database!")
 	return db, nil
 }
