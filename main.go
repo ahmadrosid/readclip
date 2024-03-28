@@ -43,7 +43,11 @@ func main() {
 	}
 
 	engine := html.NewFileSystem(http.FS(template), ".html")
-	db, _ := util.ConnectToDatabase(env.DatabaseUrl)
+	db, err := util.ConnectToDatabase(env.DatabaseUrl)
+	if err != nil {
+		panic(err)
+	}
+
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
