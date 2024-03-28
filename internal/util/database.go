@@ -1,8 +1,9 @@
 package util
 
 import (
-	"log"
 	"os"
+
+	"database/sql"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -20,9 +21,14 @@ func ConnectToDatabase(dsn string) (*gorm.DB, error) {
 		}
 	}
 
-	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
+	sqlDB, err := sql.Open("postgres", dsn)
 	if err != nil {
-		log.Printf("Failed to connect to the database: %v", err)
+		return nil, err
+	}
+
+	pgConf := postgres.Config{Conn: sqlDB}
+	db, err := gorm.Open(postgres.New(pgConf), gormConfig)
+	if err != nil {
 		return nil, err
 	}
 	return db, nil
