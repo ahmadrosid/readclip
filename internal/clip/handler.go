@@ -27,6 +27,10 @@ type ExportClipRequest struct {
 	Format string
 }
 
+type RequestConvertHtmlToMarkdown struct {
+	Html string
+}
+
 type ClipHandler struct {
 	repo     ClipRepository
 	userRepo user.UserRepository
@@ -43,6 +47,7 @@ func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepos
 	route.Get("/:id/download", handler.downloadClipByID)
 	route.Post("/export", handler.exportClips)
 	route.Post("/scrape", handler.publicScrape)
+	route.Post("/convert/html", handler.convertHtmlToMarkdown)
 }
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
@@ -453,4 +458,27 @@ func (h *ClipHandler) exportClips(c *fiber.Ctx) error {
 	}
 
 	return c.SendStream(bytes.NewReader([]byte(result)))
+}
+
+func (h *ClipHandler) convertHtmlToMarkdown(c *fiber.Ctx) error {
+	c.Accepts("application/json")
+	var req RequestConvertHtmlToMarkdown
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	_, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusForbidden).JSON(fiber.Map{
+			"status": "error",
+			"error":  err,
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status": "success",
+	})
 }
