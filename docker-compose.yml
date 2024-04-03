@@ -7,5 +7,3 @@ services:
     ports:
       - "${PORT:-8000}:${PORT:-8000}"
     restart: unless-stopped
-
-version: "3.9"

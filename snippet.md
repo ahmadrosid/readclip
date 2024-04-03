@@ -19,3 +19,9 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 ```
+
+## Run docker
+
+```bash
+docker run -d -p 7000:8000 --env-file=.env readclip:latest
+```
