@@ -36,5 +36,6 @@ ssh root@api.ahmadrosid.com "cd /root/readclip && ./rollout.sh"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose build"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose up -d"
 ssh root@api.ahmadrosid.com "docker images"
+ssh root@api.ahmadrosid.com "docker rmi "
 ```
 
