@@ -64,7 +64,7 @@ Then visit this link:
 Clone this project
 
 ```bash
-git clone https://github.com/ahmadrosid/ReadClip.git
+git clone git@github.com:ahmadrosid/readclip.git
 ```
 
 Build UI:

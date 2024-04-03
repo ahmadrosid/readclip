@@ -25,3 +25,15 @@ jobs:
 ```bash
 docker run -d -p 7000:8000 --env-file=.env readclip:latest
 ```
+
+## VPS
+
+```bash
+scp $(pwd)/.env root@api.ahmadrosid.com:/root/readclip/.env
+
+ssh root@api.ahmadrosid.com "cd /root/readclip && git pull origin main"
+ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose build"
+ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose up -d"
+ssh root@api.ahmadrosid.com "docker images"
+```
+
