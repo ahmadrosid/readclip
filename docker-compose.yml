@@ -1,7 +1,6 @@
 services:
   app:
     build: .
-    container_name: app
     env_file:
       - .env
     ports:
