@@ -38,5 +38,11 @@ ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose up -d"
 ssh root@api.ahmadrosid.com "docker images"
 ssh root@api.ahmadrosid.com "docker rmi e00b5b29b462"
 ssh root@api.ahmadrosid.com "sudo systemctl restart nginx"
+
+scp $(pwd)/readclip.site.conf root@api.ahmadrosid.com:/etc/nginx/sites-enabled/readclip.site.conf
+scp $(pwd)/readclip.site.conf root@api.ahmadrosid.com:/etc/nginx/sites-available/readclip.site.conf
+
+ssh root@api.ahmadrosid.com "rm /etc/nginx/sites-enabled/readclip.site.conf"
+ssh root@api.ahmadrosid.com "rm /etc/nginx/sites-available/readclip.site.conf"
 ```
 
