@@ -9,7 +9,6 @@ start-ui-dev:
 
 build-ui:
 	(set -e; cd ui && pnpm i && pnpm run build)
-	cp ui/home.html ui/dist
 
 dev:
 	# npx tsx cli/nodejs/analysis-rss.ts

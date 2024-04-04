@@ -97,7 +97,7 @@ func main() {
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:   http.FS(index),
-		Index:  "home.html",
+		Index:  "index.html",
 		Browse: false,
 	}))
 
