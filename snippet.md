@@ -30,6 +30,7 @@ docker run -d -p 8000:8000 --env-file=/root/readclip/.env ghcr.io/ahmadrosid/rea
 
 ```bash
 scp $(pwd)/.env root@api.ahmadrosid.com:/root/readclip/.env
+ssh root@api.ahmadrosid.com "rm /root/readclip/.env"
 
 ssh root@api.ahmadrosid.com "cd /root/readclip/ && git pull origin main"
 ssh root@api.ahmadrosid.com "cd /root/readclip/ && ./deploy.sh"
