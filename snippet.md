@@ -36,6 +36,7 @@ ssh root@api.ahmadrosid.com "cd /root/readclip && ./rollout.sh"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose build"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose up -d"
 ssh root@api.ahmadrosid.com "docker images"
-ssh root@api.ahmadrosid.com "docker rmi "
+ssh root@api.ahmadrosid.com "docker rmi e00b5b29b462"
+ssh root@api.ahmadrosid.com "sudo systemctl restart nginx"
 ```
 
