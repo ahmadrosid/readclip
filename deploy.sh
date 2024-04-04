@@ -1,9 +1,4 @@
 #!/bin/bash
-# Stop all containers
-docker stop $(docker ps -aq)
-
-# Remove all containers
-docker rm $(docker ps -aq)
 
 echo "Pull code changes.."
 git pull origin main
