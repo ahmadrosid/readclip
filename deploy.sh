@@ -1,7 +1,9 @@
 #!/bin/bash
 
-echo "Start redeploying..."
+echo "Pull code changes.."
+git pull origin main
 
+echo "Start redeploying..."
 # Stop and remove the existing container, if any
 if [ "$(docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip")" ]; then
     docker stop $(docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip")
