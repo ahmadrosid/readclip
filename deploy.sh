@@ -12,6 +12,6 @@ fi
 echo "Removing ghcr.io/ahmadrosid/readclip:latest";
 docker rmi -f ghcr.io/ahmadrosid/readclip:latest
 
-docker compose up -f /root/readclip/docker-compose.yml -d
+docker compose up -d
 
 echo "Rollout deployment done for version $VERSION_TAG"
