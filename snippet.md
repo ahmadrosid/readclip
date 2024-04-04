@@ -23,7 +23,7 @@ jobs:
 ## Run docker
 
 ```bash
-docker run -d -p 7000:8000 --env-file=.env readclip:latest
+docker run -d -p 8000:8000 --env-file=/root/readclip/.env ghcr.io/ahmadrosid/readclip:latest
 ```
 
 ## VPS
@@ -31,12 +31,15 @@ docker run -d -p 7000:8000 --env-file=.env readclip:latest
 ```bash
 scp $(pwd)/.env root@api.ahmadrosid.com:/root/readclip/.env
 
+ssh root@api.ahmadrosid.com "docker run -d -p 8000:8000 --env-file=/root/readclip/.env ghcr.io/ahmadrosid/readclip:latest"
 ssh root@api.ahmadrosid.com "cd /root/readclip && git pull origin main"
 ssh root@api.ahmadrosid.com "cd /root/readclip && ./rollout.sh"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose build"
 ssh root@api.ahmadrosid.com "cd /root/readclip && docker compose up -d"
 ssh root@api.ahmadrosid.com "docker images"
-ssh root@api.ahmadrosid.com "docker rmi e00b5b29b462"
+ssh root@api.ahmadrosid.com "docker ps"
+ssh root@api.ahmadrosid.com "docker kill 6a14baf2b750"
+ssh root@api.ahmadrosid.com "docker rmi d5442cda1d5a -f"
 ssh root@api.ahmadrosid.com "sudo systemctl restart nginx"
 
 scp $(pwd)/readclip.site.conf root@api.ahmadrosid.com:/etc/nginx/sites-enabled/readclip.site.conf
