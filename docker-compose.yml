@@ -1,7 +1,6 @@
 services:
   app:
     image: ghcr.io/ahmadrosid/readclip:latest
-    name: readclip
     env_file:
       - .env
     restart: unless-stopped
