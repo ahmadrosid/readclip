@@ -3,9 +3,9 @@
 echo "Start redeploying..."
 
 # Stop and remove the existing container, if any
-if [ "$(docker ps -aq --filter "ancestor=readclip")" ]; then
-    docker stop $(docker ps -aq --filter "ancestor=readclip")
-    docker rm $(docker ps -aq --filter "ancestor=readclip")
+if [ "$(docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip")" ]; then
+    docker stop $(docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip")
+    docker rm $(docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip")
 fi
 
 # Remove image from local registry

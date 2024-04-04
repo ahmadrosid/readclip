@@ -32,6 +32,7 @@ docker run -d -p 8000:8000 --env-file=/root/readclip/.env ghcr.io/ahmadrosid/rea
 scp $(pwd)/.env root@api.ahmadrosid.com:/root/readclip/.env
 
 ssh root@api.ahmadrosid.com "cd /root/readclip/ && git pull origin main"
+ssh root@api.ahmadrosid.com 'docker ps -aq --filter "ancestor=ghcr.io/ahmadrosid/readclip"'
 
 ssh root@api.ahmadrosid.com "docker run -d -p 8000:8000 --env-file=/root/readclip/.env ghcr.io/ahmadrosid/readclip:latest"
 ssh root@api.ahmadrosid.com "cd /root/readclip && git pull origin main"
