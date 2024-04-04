@@ -53,3 +53,14 @@ ssh root@api.ahmadrosid.com "rm /etc/nginx/sites-enabled/readclip.site.conf"
 ssh root@api.ahmadrosid.com "rm /etc/nginx/sites-available/readclip.site.conf"
 ```
 
+Backup db:
+
+```bash
+pg_dump -U alahmadrosid -d neondb -h ep-nameless-shape-59949167.ap-southeast-1.aws.neon.tech -p 5432 > readclip.sql
+```
+
+Restore db:
+
+```bash
+pg_restore -h ep-ancient-mode-a1fbkbqv.ap-southeast-1.aws.neon.tech -p 5432 -U alahmadrosid -d neondb readclip.sql
+```

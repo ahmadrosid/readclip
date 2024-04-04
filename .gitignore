@@ -2,3 +2,4 @@ readclip
 .env
 build/
 cli/scraper/html/
+readclip.sql
