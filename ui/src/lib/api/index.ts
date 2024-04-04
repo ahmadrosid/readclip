@@ -1,6 +1,5 @@
 export const handleReturnFetch = async (res: Response) => {
   const data = await res.json();
-  console.log(data);
   if (!res.ok) {
     if (res.status === 401) {
       throw new Error("Unauthorized");
