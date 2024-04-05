@@ -136,7 +136,7 @@ Output your analysis in one sentence.`;
             <div className="flex gap-4">
               <Input
                 placeholder="Paste landing page url here..."
-                className="flex-1 bg-white h-10"
+                className="flex-1 bg-white dark:bg-transparent dark:text-white h-10"
                 value={inputUrl}
                 name="input_url"
                 onChange={(e) => setInputUrl(e.currentTarget.value)}
