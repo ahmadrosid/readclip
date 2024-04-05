@@ -347,12 +347,13 @@ func (h *ClipHandler) summarizeByID(c *fiber.Ctx) error {
 		})
 	}
 
-	if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
-		return c.Status(http.StatusForbidden).JSON(fiber.Map{
-			"status": "error",
-			"error":  "Please upgrade your account to pro plan!",
-		})
-	}
+	// Now it's free
+	// if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
+	// 	return c.Status(http.StatusForbidden).JSON(fiber.Map{
+	// 		"status": "error",
+	// 		"error":  "Please upgrade your account to pro plan!",
+	// 	})
+	// }
 
 	clip, err := h.repo.GetClipById(id, *userID)
 	if err != nil {
