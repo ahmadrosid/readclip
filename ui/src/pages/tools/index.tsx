@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "@/router";
 
 export const tools = [
   {
@@ -12,38 +13,38 @@ export const tools = [
     title: "Youtube Transcriber",
     description:
       "Don't really have time to watch videos? Now you can read them!",
-    link: "/tools/youtube-transcriber",
+    link: `/tools/youtube-transcriber` as const,
   },
   {
     slug: "reddit-reader",
     title: "Reddit reader",
     description: "Read reddit discussion without distraction wihtout pain!",
-    link: "/tools/reddit-reader",
+    link: "/tools/reddit-reader" as const,
   },
   {
     slug: "markdown-editor",
     title: "Markdown Editor",
     description: "Write, edit and view Markdown texts.",
-    link: "/tools/markdown-editor",
+    link: "/tools/markdown-editor" as const,
   },
   {
     slug: "word-counter",
     title: "Words counter",
     description: "Count the words in your text",
-    link: "/tools/word-counter",
+    link: "/tools/word-counter" as const,
   },
   {
     slug: "reading-time",
     title: "Reading time estimator",
     description: "Estimate the reading time of your text",
-    link: "/tools/reading-time",
+    link: "/tools/reading-time" as const,
   },
   {
     slug: "business-analysis",
     title: "Business Value Proposition Analysis",
     description:
       "Find out Business Value Proposition Statement from landing page using AI.",
-    link: "/tools/business-analysis",
+    link: "/tools/business-analysis" as const,
   },
 ];
 
@@ -58,16 +59,65 @@ export default function Tools() {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pb-8">
-        {tools.map((tool) => (
-          <Card key={tool.title}>
-            <a href={tool.link}>
-              <CardHeader>
-                <CardTitle>{tool.title}</CardTitle>
-                <CardDescription>{tool.description}</CardDescription>
-              </CardHeader>
-            </a>
-          </Card>
-        ))}
+        <Card>
+          <Link to="/tools/markdown-editor">
+            <CardHeader>
+              <CardTitle>Markdown Editor</CardTitle>
+              <CardDescription>
+                Write, edit and view Markdown texts.
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/word-counter">
+            <CardHeader>
+              <CardTitle>Word counter</CardTitle>
+              <CardDescription>Count the words in your text.</CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/reading-time">
+            <CardHeader>
+              <CardTitle>Reading time estimator</CardTitle>
+              <CardDescription>
+                Estimate the reading time of your text.
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/business-analysis">
+            <CardHeader>
+              <CardTitle>Business Value Proposition Analysis</CardTitle>
+              <CardDescription>
+                Find out Business Value Proposition Statement from landing page
+                using AI.
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/reddit-reader">
+            <CardHeader>
+              <CardTitle>Reddit reader</CardTitle>
+              <CardDescription>
+                Read reddit discussion without distraction wihtout pain!
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/youtube-transcriber">
+            <CardHeader>
+              <CardTitle>Youtube Transcriber</CardTitle>
+              <CardDescription>
+                Don't really have time to watch videos? Now you can read them!
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
       </div>
     </div>
   );
