@@ -63,7 +63,8 @@ func SummarizeContent(content string) (string, error) {
 		PresencePenalty:  0,
 	}
 
-	url := "https://api.openai.com/v1/chat/completions"
+	// url := "https://api.openai.com/v1/chat/completions"
+	url := "http://45.55.197.227:3040/v1/chat/completions"
 	Authorization := os.Getenv("OPENAI_API_KEY")
 	response, err := fetch.Post(url, request, Authorization)
 	if err != nil {
