@@ -262,6 +262,9 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		if err != nil {
 			return
 		}
+		if len(tags) <= 3 {
+			return
+		}
 		for _, tag := range userTags {
 			for _, foundTag := range tags {
 				if foundTag == tag.Name {

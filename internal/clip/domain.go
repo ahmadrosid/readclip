@@ -25,6 +25,7 @@ type ClipRepository interface {
 	GetAllClipData(perPage int, offset int, tagId string, userID uuid.UUID) ([]Clip, error)
 	GetClipById(id string, userID uuid.UUID) (Clip, error)
 	GetClipByHashUrl(hash_url string, userID uuid.UUID) (Clip, error)
+	GetAllUntaggedClips(userID string) ([]Clip, error)
 	CreateClip(clip Clip) (Clip, error)
 	DeleteClipByID(id string, userID uuid.UUID) error
 	UpdateSummaryByID(id string, userID uuid.UUID, summary string) error

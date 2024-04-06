@@ -47,6 +47,17 @@ func (repo *clipRepository) GetClipByHashUrl(hash_url string, userID uuid.UUID) 
 	return clip, err
 }
 
+func (repo *clipRepository) GetAllUntaggedClips(userID string) ([]Clip, error) {
+	var clips []Clip
+	err := repo.db.Model(&Clip{}).
+		Joins("LEFT JOIN clip_tags ON clips.id = clip_tags.clip_id").
+		Where("clip_tags.clip_id IS NULL").
+		Where("clips.user_id = ?", userID).
+		Limit(100).
+		Find(&clips).Error
+	return clips, err
+}
+
 func (repo *clipRepository) CreateClip(clip Clip) (Clip, error) {
 	err := repo.db.Create(&clip).Error
 	return clip, err

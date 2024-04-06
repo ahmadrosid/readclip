@@ -87,13 +87,21 @@ func SummarizeContent(content string) (string, error) {
 }
 
 func AnalyzeContentForTags(content string, existingTags []string) ([]string, error) {
+	lengthContent := strings.Count(content, " ")
+	trimmedContent := ""
+	if lengthContent > 3000 {
+		trimmedContent = content[0:3000]
+	} else {
+		trimmedContent = content
+	}
+
 	existingTagsContext := strings.Join(existingTags, ", ")
 	request := OpenaiRequest{
-		Model: "text-davinci-003",
+		Model: "gpt-3.5-turbo-16k",
 		Messages: []Message{
 			{
 				Role:    "user",
-				Content: content + "\nAnalyze the content. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag nothing else.",
+				Content: trimmedContent + "\nAnalyze the content. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag nothing else.",
 			},
 		},
 		Temperature:      0,
@@ -120,7 +128,6 @@ func AnalyzeContentForTags(content string, existingTags []string) ([]string, err
 		return nil, fmt.Errorf("no reply from openai")
 	}
 
-	fmt.Println("openai reply", openaiResponse.Choices[0].Message.Content)
 	tags := strings.Split(openaiResponse.Choices[0].Message.Content, ",")
 	for i, tag := range tags {
 		tags[i] = strings.TrimSpace(tag)

@@ -55,7 +55,7 @@ func (repo *tagRepository) CreateNewTag(name string, userId string) (*Tag, error
 
 func (repo *tagRepository) GetAllTag(userId string) ([]Tag, error) {
 	var tags []Tag
-	err := repo.db.Where("user_id = ?", userId).Find(&tags).Error
+	err := repo.db.Where("user_id = ?", userId).Order("name ASC").Find(&tags).Error
 	return tags, err
 }
 
