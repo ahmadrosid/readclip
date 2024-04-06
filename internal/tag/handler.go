@@ -23,7 +23,7 @@ func NewHandler(route fiber.Router, repo TagRepository, userRepo user.UserReposi
 	route.Post("/clip", handler.createClipTag)
 	route.Get("/clip/:id", handler.getClipTags)
 	route.Delete("/:id", handler.deleteClipTag)
-	route.Delete("/clip/:id", handler.deleteSelectedClipTag)
+	route.Delete("/clip/:tag_id/:clip_id", handler.deleteSelectedClipTag)
 }
 
 func (h *TagHandler) getUserID(c *fiber.Ctx) (string, error) {
@@ -152,8 +152,9 @@ func (h *TagHandler) deleteClipTag(c *fiber.Ctx) error {
 }
 
 func (h *TagHandler) deleteSelectedClipTag(c *fiber.Ctx) error {
-	id := c.Params("id")
-	err := h.repo.DeleteClipTagByTagId(id)
+	tag_id := c.Params("tag_id")
+	clip_id := c.Params("clip_id")
+	err := h.repo.RemoveTagFromClip(tag_id, clip_id)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error":  err.Error(),

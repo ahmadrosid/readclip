@@ -15,6 +15,10 @@ func (repo *tagRepository) DeleteClipTagByTagId(id string) error {
 	return repo.db.Where("tag_id = ?", id).Delete(&ClipTag{}).Error
 }
 
+func (repo *tagRepository) RemoveTagFromClip(tagId string, clipId string) error {
+	return repo.db.Where("tag_id = ?", tagId).Where("clip_id = ?", clipId).Delete(&ClipTag{}).Error
+}
+
 func (repo *tagRepository) DeleteTag(id string) error {
 	return repo.db.Where("id = ?", id).Delete(&Tag{}).Error
 }

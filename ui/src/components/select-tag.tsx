@@ -133,11 +133,13 @@ function CommanSearchTag({
 }
 
 export function BadgeSelected({
+  clipId,
   value,
   tags,
   refetch,
   setSelectedValues,
 }: {
+  clipId: string;
   tags: Tag[];
   value: string;
   refetch: () => void;
@@ -162,7 +164,10 @@ export function BadgeSelected({
 
       const tag = tags.filter((tag) => tag.Name === label)[0];
       if (tag) {
-        await deleteTagMutation.mutateAsync(tag.Id);
+        await deleteTagMutation.mutateAsync({
+          tagId: tag.Id,
+          clipId: clipId,
+        });
 
         setSelectedValues((prev) => {
           const next = new Set<string>(prev);
@@ -171,7 +176,7 @@ export function BadgeSelected({
         });
       }
     },
-    [deleteTagMutation, setSelectedValues, tags]
+    [clipId, deleteTagMutation, setSelectedValues, tags]
   );
 
   return (
@@ -258,6 +263,7 @@ export function SelecTag({ clipId }: { clipId: string }) {
         {Array.from(selectedValues.values()).map((value) => (
           <BadgeSelected
             key={value}
+            clipId={clipId}
             value={value}
             tags={tags}
             refetch={refetch}

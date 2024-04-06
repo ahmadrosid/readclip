@@ -228,11 +228,15 @@ export const fetchDeleteClipTagAndTag = async (
   );
 };
 
-export const fetchDeleteClipTag = async (
-  tagId: string
-): Promise<{ status: string }> => {
+export const fetchDeleteClipTag = async ({
+  tagId,
+  clipId,
+}: {
+  tagId: string;
+  clipId: string;
+}): Promise<{ status: string }> => {
   return handleReturnFetch(
-    await fetch(`/api/tags/clip/${tagId}`, {
+    await fetch(`/api/tags/clip/${tagId}/${clipId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -111,7 +111,8 @@ func AnalyzeContentForTags(content string, existingTags []string) ([]string, err
 		PresencePenalty:  0,
 	}
 
-	url := "http://45.55.197.227:3040/v1/chat/completions"
+	// url := "http://45.55.197.227:3040/v1/chat/completions"
+	url := "http://localhost:3040/v1/chat/completions"
 	Authorization := env.GetEnv("OPENAI_API_KEY")
 	response, err := fetch.Post(url, request, Authorization)
 	if err != nil {

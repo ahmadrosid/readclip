@@ -36,5 +36,6 @@ type TagRepository interface {
 	AddTagToClip(articleId string, tagId string) (*ClipTag, error)
 	GetClipTag(clipId string) ([]Tag, error)
 	DeleteClipTagByTagId(id string) error
+	RemoveTagFromClip(tagId string, clipId string) error
 	DeleteTag(id string) error
 }
