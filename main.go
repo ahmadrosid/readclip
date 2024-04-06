@@ -213,9 +213,10 @@ func main() {
 	}))
 
 	userRepo := user.NewUserRepository(db)
-	clip.NewHandler(app.Group("/api/clips"), clip.NewClipRepository(db), userRepo)
+	tagRepo := tag.NewTagRepository(db)
+	clip.NewHandler(app.Group("/api/clips"), clip.NewClipRepository(db), userRepo, tagRepo)
 	wiki.NewHandler(app.Group("/api/wikis"), wiki.NewWikiRepository(db), userRepo)
-	tag.NewHandler(app.Group("/api/tags"), tag.NewTagRepository(db), userRepo)
+	tag.NewHandler(app.Group("/api/tags"), tagRepo, userRepo)
 	user.NewHandler(app.Group("/api/users"), userRepo)
 	bookmark.NewHandler(app.Group("/api/bookmarks"))
 

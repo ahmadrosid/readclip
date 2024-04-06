@@ -3,8 +3,10 @@ package openai
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 
+	"strings"
+
+	"github.com/ahmadrosid/readclip/internal/util/env"
 	"github.com/ahmadrosid/readclip/internal/util/fetch"
 )
 
@@ -65,7 +67,7 @@ func SummarizeContent(content string) (string, error) {
 
 	// url := "https://api.openai.com/v1/chat/completions"
 	url := "http://45.55.197.227:3040/v1/chat/completions"
-	Authorization := os.Getenv("OPENAI_API_KEY")
+	Authorization := env.GetEnv("OPENAI_API_KEY")
 	response, err := fetch.Post(url, request, Authorization)
 	if err != nil {
 		return "", err
@@ -82,4 +84,47 @@ func SummarizeContent(content string) (string, error) {
 	}
 
 	return openaiResponse.Choices[0].Message.Content, nil
+}
+
+func AnalyzeContentForTags(content string, existingTags []string) ([]string, error) {
+	existingTagsContext := strings.Join(existingTags, ", ")
+	request := OpenaiRequest{
+		Model: "text-davinci-003",
+		Messages: []Message{
+			{
+				Role:    "user",
+				Content: content + "\nAnalyze the content. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag nothing else.",
+			},
+		},
+		Temperature:      0,
+		TopP:             1,
+		MaxTokens:        100,
+		FrequencyPenalty: 0,
+		PresencePenalty:  0,
+	}
+
+	url := "http://45.55.197.227:3040/v1/chat/completions"
+	Authorization := env.GetEnv("OPENAI_API_KEY")
+	response, err := fetch.Post(url, request, Authorization)
+	if err != nil {
+		return nil, err
+	}
+
+	var openaiResponse OpenaiResponse
+	err = json.Unmarshal([]byte(response), &openaiResponse)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(openaiResponse.Choices) == 0 {
+		return nil, fmt.Errorf("no reply from openai")
+	}
+
+	fmt.Println("openai reply", openaiResponse.Choices[0].Message.Content)
+	tags := strings.Split(openaiResponse.Choices[0].Message.Content, ",")
+	for i, tag := range tags {
+		tags[i] = strings.TrimSpace(tag)
+	}
+
+	return tags, nil
 }

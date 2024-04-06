@@ -9,6 +9,12 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 )
 
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+var Client HTTPClient = &http.Client{}
+
 func Fetch(path string) (string, error) {
 	req, err := http.NewRequest("GET", path, nil)
 	if err != nil {
@@ -18,7 +24,7 @@ func Fetch(path string) (string, error) {
 	req.Header.Add("Content-Type", "*/*")
 	req.Header.Set("User-Agent", util.UserAgent)
 
-	client := http.Client{}
+	client := Client
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
@@ -40,7 +46,7 @@ func Post(path string, requestBody interface{}, authToken string) (string, error
 	}
 	bodyPost := bytes.NewReader(payloadBytes)
 
-	client := &http.Client{}
+	client := Client
 	req, err := http.NewRequest("POST", path, bodyPost)
 	if err != nil {
 		return "", err

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/ahmadrosid/readclip/internal/scraper/reddit"
+	"github.com/ahmadrosid/readclip/internal/tag"
 	"github.com/ahmadrosid/readclip/internal/user"
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
@@ -34,11 +35,12 @@ type RequestConvertHtmlToMarkdown struct {
 type ClipHandler struct {
 	repo     ClipRepository
 	userRepo user.UserRepository
+	tagRepo  tag.TagRepository
 }
 
-func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepository) {
+func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepository, tagRepo tag.TagRepository) {
 	handler := &ClipHandler{
-		repo, userRepo,
+		repo, userRepo, tagRepo,
 	}
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
@@ -158,7 +160,7 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		logsnag.SendBugEvent(dataEvent, userID.String())
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"status": "error",
-			"error":  fmt.Errorf("failed to get user information!"),
+			"error":  fmt.Errorf("failed to get user information"),
 		})
 	}
 
@@ -244,6 +246,28 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 				"userId": userID,
 			}
 			logsnag.SendBugEvent(dataEvent, userID.String())
+		}
+	}()
+
+	go func() {
+		userTags, err := h.tagRepo.GetAllTag(userID.String())
+		existingTags := make([]string, 0)
+		for _, tag := range userTags {
+			existingTags = append(existingTags, tag.Name)
+		}
+		if err != nil {
+			return
+		}
+		tags, err := openai.AnalyzeContentForTags(res.Content, existingTags)
+		if err != nil {
+			return
+		}
+		for _, tag := range userTags {
+			for _, foundTag := range tags {
+				if foundTag == tag.Name {
+					h.tagRepo.AddTagToClip(clipData.Id.String(), tag.Id.String())
+				}
+			}
 		}
 	}()
 
@@ -347,7 +371,7 @@ func (h *ClipHandler) summarizeByID(c *fiber.Ctx) error {
 		})
 	}
 
-	// Now it's free
+	// If not free!
 	// if userID.String() != "4e868d22-439a-4b62-87d1-eba963774bca" {
 	// 	return c.Status(http.StatusForbidden).JSON(fiber.Map{
 	// 		"status": "error",
