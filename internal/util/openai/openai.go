@@ -66,7 +66,7 @@ func SummarizeContent(content string) (string, error) {
 	}
 
 	// url := "https://api.openai.com/v1/chat/completions"
-	url := "http://178.128.165.197:3040/v1/chat/completions"
+	url := "http://143.198.16.88:3040/v1/chat/completions"
 	Authorization := env.GetEnv("OPENAI_API_KEY")
 	response, err := fetch.Post(url, request, Authorization)
 	if err != nil {
@@ -111,7 +111,7 @@ func AnalyzeContentForTags(content string, existingTags []string) ([]string, err
 		PresencePenalty:  0,
 	}
 
-	url := "http://178.128.165.197:3040/v1/chat/completions"
+	url := "http://143.198.16.88:3040/v1/chat/completions"
 	// url := "http://localhost:3040/v1/chat/completions"
 	// url := "https://api.openai.com/v1/chat/completions"
 	Authorization := env.GetEnv("OPENAI_API_KEY")
