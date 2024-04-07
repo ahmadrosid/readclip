@@ -89,8 +89,8 @@ func SummarizeContent(content string) (string, error) {
 func AnalyzeContentForTags(content string, existingTags []string) ([]string, error) {
 	lengthContent := strings.Count(content, " ")
 	trimmedContent := ""
-	if lengthContent > 3000 {
-		trimmedContent = content[0:3000]
+	if lengthContent > 2000 {
+		trimmedContent = content[0:2000]
 	} else {
 		trimmedContent = content
 	}

@@ -57,10 +57,16 @@ type VideoData struct {
 // 	} `json:"data"`
 // }
 
+type ResponseSearchChannel struct {
+	Total int                 `json:"total"`
+	Data  FindChannelResponse `json:"data"`
+}
+
 type FindChannelResponse []struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	Thumbnail string `json:"thumbnail"`
+	ID              string `json:"id"`
+	Name            string `json:"name"`
+	Thumbnail       string `json:"thumbnail"`
+	SubscriberCount string `json:"subscriber_count"`
 }
 
 func GetTranscript(videoURL string) (*VideoData, error) {
@@ -99,6 +105,7 @@ func GetTranscript(videoURL string) (*VideoData, error) {
 func FindChannels(query string) (*FindChannelResponse, error) {
 	// url := "https://echo-tube.vercel.app/channels"
 	url := "https://feedful.app/api/youtube?search=" + query
+	// url := "https://api.ahmadrosid.com/youtube/channel/search?query=" + query
 	// payload := []byte(fmt.Sprintf(`{
 	// 	"query":"%s"
 	// }`, query))
@@ -126,10 +133,10 @@ func FindChannels(query string) (*FindChannelResponse, error) {
 		return nil, fmt.Errorf("HTTP request failed with status code: %d", resp.StatusCode)
 	}
 
-	var result FindChannelResponse
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	var result ResponseSearchChannel
+	if err := json.NewDecoder(resp.Body).Decode(&result.Data); err != nil {
 		return nil, err
 	}
 
-	return &result, nil
+	return &result.Data, nil
 }

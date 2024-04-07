@@ -41,7 +41,7 @@ func main() {
 		tags, err := openai.AnalyzeContentForTags(clip.Content, existingTags)
 		if err != nil {
 			fmt.Println(err)
-			return
+			continue
 		}
 		for _, tag := range userTags {
 			for _, foundTag := range tags {
