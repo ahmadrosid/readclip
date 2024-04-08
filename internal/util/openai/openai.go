@@ -89,19 +89,20 @@ func SummarizeContent(content string) (string, error) {
 func AnalyzeContentForTags(content string, existingTags []string) ([]string, error) {
 	lengthContent := strings.Count(content, " ")
 	trimmedContent := ""
-	if lengthContent > 2000 {
-		trimmedContent = content[0:2000]
+	if lengthContent > 2500 {
+		trimmedContent = content[0:2500]
 	} else {
 		trimmedContent = content
 	}
 
 	existingTagsContext := strings.Join(existingTags, ", ")
+	prompt := trimmedContent + "\nAnalyze these text. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag from the options nothing else."
 	request := OpenaiRequest{
 		Model: "gpt-3.5-turbo-16k",
 		Messages: []Message{
 			{
 				Role:    "user",
-				Content: trimmedContent + "\nAnalyze the content. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag nothing else.",
+				Content: prompt,
 			},
 		},
 		Temperature:      0,

@@ -37,19 +37,25 @@ func main() {
 	}
 	fmt.Println("Total tags : " + fmt.Sprint(len(userTags)))
 
+	index := 0
 	for _, clip := range clips {
+		index++
 		tags, err := openai.AnalyzeContentForTags(clip.Content, existingTags)
 		if err != nil {
 			fmt.Println(err)
+			fmt.Printf("%d: Error analyzing content for clip: %v\n Clip url: %v", index, clip.Title, clip.Url)
 			continue
 		}
+		fmt.Printf("url: %v [ ", clip.Url)
 		for _, tag := range userTags {
+			// fmt.Printf("\n---\ntags: %v\n---\n", tags)
 			for _, foundTag := range tags {
 				if foundTag == tag.Name {
-					fmt.Println("Assigning tag ['" + tag.Name + "'] to:  " + clip.Title)
+					fmt.Printf("%d. Assigning tag ['%s'] to: %s URL: %s\n", index, tag.Name, clip.Title, clip.Url)
 					tagRepo.AddTagToClip(clip.Id.String(), tag.Id.String())
 				}
 			}
 		}
+		fmt.Printf("not found ]\n")
 	}
 }

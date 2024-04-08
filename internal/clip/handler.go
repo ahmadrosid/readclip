@@ -258,11 +258,12 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 		if err != nil {
 			return
 		}
-		tags, err := openai.AnalyzeContentForTags(res.Content, existingTags)
-		if err != nil {
+		if len(existingTags) <= 3 {
 			return
 		}
-		if len(tags) <= 3 {
+
+		tags, err := openai.AnalyzeContentForTags(res.Content, existingTags)
+		if err != nil {
 			return
 		}
 		for _, tag := range userTags {
