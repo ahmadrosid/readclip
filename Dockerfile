@@ -1,8 +1,9 @@
 FROM golang:1.21.1-alpine as base
 RUN apk add curl bash make
 RUN curl -fsSL https://bun.sh/install | bash
-ENV BUN_INSTALL="$HOME/.bun"
-ENV PATH="$BUN_INSTALL/bin:$PATH"
+
+ENV BUN_INSTALL "$HOME/.bun"
+ENV PATH "$BUN_INSTALL/bin:$PATH"
 
 WORKDIR /go/src/app
 COPY go.* .
