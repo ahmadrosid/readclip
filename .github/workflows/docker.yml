@@ -28,3 +28,15 @@ jobs:
       with:
         push: true
         tags: ghcr.io/${{ github.repository }}:latest
+
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H api.ahmadrosid.com > ~/.ssh/known_hosts
+    - name: connect and pull
+      run: ssh root@api.ahmadrosid.com "cd /root/readclip && git checkout main && git pull origin main && bash ./deploy.sh && exit"
+    - name: cleanup
+      run: rm -rf ~/.ssh
