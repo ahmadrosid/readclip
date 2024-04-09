@@ -4,6 +4,7 @@ WORKDIR /app
 COPY ./ui/* .
 
 RUN bun install --production
+RUN ls .
 RUN bunx --bun vite build
 
 FROM golang:1.21.1-alpine as base
