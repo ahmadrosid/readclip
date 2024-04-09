@@ -5,7 +5,7 @@ COPY ./ui/* .
 
 RUN bun install --production
 RUN ls .
-RUN bunx --bun vite build
+RUN bun run build
 
 FROM golang:1.21.1-alpine as base
 RUN apk add curl bash make
