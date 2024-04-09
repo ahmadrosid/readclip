@@ -11,8 +11,6 @@ build-ui:
 	(set -e; cd ui && bun i && bun run build)
 
 dev:
-	# npx tsx cli/nodejs/analysis-rss.ts
-	# go run cli/scraper/producthunt.go
 	@source .env && npx concurrently "cd ui && bun run dev" "go run main.go"
 
 start:
@@ -22,4 +20,4 @@ start-clean:
 	docker compose up --force-recreate --build app
 
 deploy:
-	flyctl deploy
+	ssh root@api.ahmadrosid.com "cd /root/readclip/ && ./deploy.sh"
