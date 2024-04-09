@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur dark:bg-gray-900/75 dark:border-gray-800">
-      <div className="pl-4 sm:pl-8 pr-8 flex h-14 items-center">
+      <div className="px-4 sm:px-8 flex h-14 items-center">
         <div className="mr-4 flex flex-1">
           <nav className="flex items-center space-x-2">
             <Link to="/" className="text-lg flex items-center gap-2">
@@ -79,7 +79,7 @@ export function Header() {
             </Link>
 
             {hasToken && (
-              <Link to="/setting" className="hidden sm:block">
+              <Link to="/setting">
                 <Button
                   className="dark:text-gray-300 text-gray-800 px-2"
                   variant="link"
@@ -122,7 +122,7 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="pr-2 pl-4 block md:hidden">
+        <div className="px-0 sm:pr-2 sm:pl-4 block md:hidden">
           <ModeToggle />
         </div>
       </div>
