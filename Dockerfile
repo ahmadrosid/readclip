@@ -1,6 +1,5 @@
 FROM golang:1.21.1-alpine as base
-RUN apk add curl bash make
-RUN curl -fsSL https://bun.sh/install | bash
+RUN apk add curl bash make bun
 
 WORKDIR /go/src/app
 COPY go.* .
