@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button.tsx";
 import { Google } from "./icons/google";
 import type { UserCredential } from "firebase/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
+import app, { auth } from "@/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export function GoogleSignIn({

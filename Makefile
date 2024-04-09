@@ -5,15 +5,15 @@ build: build-ui
 	CGO_ENABLED=0 go build -o ${TARGET_DIR} -buildvcs=false
 
 start-ui-dev:
-	cd ui && npm run dev
+	cd ui && bun run dev
 
 build-ui:
-	(set -e; cd ui && pnpm i && pnpm run build)
+	(set -e; cd ui && bun i && bun run build)
 
 dev:
 	# npx tsx cli/nodejs/analysis-rss.ts
 	# go run cli/scraper/producthunt.go
-	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
+	@source .env && npx concurrently "cd ui && bun run dev" "go run main.go"
 
 start:
 	docker compose up -d

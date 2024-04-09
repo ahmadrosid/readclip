@@ -42,7 +42,7 @@ export default function ReadingTime() {
     },
     [config]
   );
-
+  
   const countryNamesObject = {
     en: "English",
     fr: "French",
@@ -53,8 +53,11 @@ export default function ReadingTime() {
     "pt-br": "Portuguese (Brazil)",
     tr: "Turkish",
     ro: "Romanian",
+    bn: "Bengali",
+    sk: "Slovak",
+    cs: "Czech"
   };
-
+  
   useEffect(() => {
     if (textareaRef.current) {
       handleWordCount(textareaRef.current.value);

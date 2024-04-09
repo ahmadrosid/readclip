@@ -1,6 +1,6 @@
 FROM golang:1.21.1-alpine as base
-RUN apk add curl bash nodejs npm make
-RUN npm install --global pnpm
+RUN apk add curl bash make
+RUN curl -fsSL https://bun.sh/install | bash
 
 WORKDIR /go/src/app
 COPY go.* .
