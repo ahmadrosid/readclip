@@ -7,7 +7,7 @@ RUN bun install --production
 RUN bun run build
 
 FROM golang:1.21.1-alpine as base
-RUN apk add curl bash make bun
+RUN apk add curl bash make
 
 WORKDIR /go/src/app
 COPY go.* .
