@@ -1,3 +1,11 @@
+FROM oven/bun as ui-builder
+WORKDIR /app
+
+COPY ./ui .
+
+RUN bun install --production
+RUN bun run build
+
 FROM golang:1.21.1-alpine as base
 RUN apk add curl bash make bun
 
@@ -6,7 +14,9 @@ COPY go.* .
 RUN go mod download
 
 COPY . .
-RUN make build TARGET_DIR=/go/bin/app
+COPY --from=ui-builder /app/dist ./ui
+RUN go generate ./...
+RUN CGO_ENABLED=0 go build -o /go/bin/app -buildvcs=false
 
 FROM alpine:3.17.2
 COPY --from=base /go/bin/app /app
