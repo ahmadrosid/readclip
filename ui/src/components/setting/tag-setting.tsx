@@ -36,7 +36,7 @@ function TagItem({ tag, className, refetch }: TagProps) {
         className
       )}
     >
-      <label className="block text-sm text-gray-500">{tag.Name}</label>
+      <label className="block text-sm text-gray-500 dark:text-gray-300">{tag.Name}</label>
       <Button
         variant="ghost"
         size="sm"
