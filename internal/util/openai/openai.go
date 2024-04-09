@@ -45,7 +45,19 @@ type OpenaiResponse struct {
 	} `json:"usage"`
 }
 
+func TrimText(content string, length int) string {
+	lengthContent := strings.Count(content, " ")
+	trimmedContent := content
+	if lengthContent > length {
+		splits := strings.Split(content, " ")
+		trimmedContent = strings.Join(splits[0:length], " ")
+	}
+	return trimmedContent
+}
+
 func SummarizeContent(content string) (string, error) {
+	trimmedContent := TrimText(content, 2500)
+
 	request := OpenaiRequest{
 		Model: "gpt-3.5-turbo-16k",
 		Messages: []Message{
@@ -55,7 +67,7 @@ func SummarizeContent(content string) (string, error) {
 			},
 			{
 				Role:    "user",
-				Content: content + "\n\nSummarize this article, ensuring the original meaning and context are retained. Format it into a bullet points.",
+				Content: trimmedContent + "\n\nSummarize this article, ensuring the original meaning and context are retained. Format it into a bullet points.",
 			},
 		},
 		Temperature:      1,
@@ -87,13 +99,7 @@ func SummarizeContent(content string) (string, error) {
 }
 
 func AnalyzeContentForTags(content string, existingTags []string) ([]string, error) {
-	lengthContent := strings.Count(content, " ")
-	trimmedContent := ""
-	if lengthContent > 2500 {
-		trimmedContent = content[0:2500]
-	} else {
-		trimmedContent = content
-	}
+	trimmedContent := TrimText(content, 2500)
 
 	existingTagsContext := strings.Join(existingTags, ", ")
 	prompt := trimmedContent + "\nAnalyze these text. I want you to choose a tags to describe this content. Here the tags options for you to use: " + existingTagsContext + "\n Only give me the tag from the options nothing else."
