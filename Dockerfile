@@ -1,7 +1,7 @@
 FROM oven/bun as ui-builder
 WORKDIR /app
 
-COPY ./ui .
+COPY ./ui/* .
 
 RUN bun install --production
 RUN bun run build
