@@ -1,9 +1,9 @@
 import { BaseDeck } from "@/components/feed";
-import { convertHtmlToReact, convertNodeToReactElement } from "@hedgedoc/html-to-react";
+import ReactHtmlParser from "react-html-parser";
 
 export default function HtmlTransformer(html: string, type: BaseDeck["type"]) {
-  return convertHtmlToReact(html, {
-    transform: (node, idx) =>{
+  return ReactHtmlParser(html, {
+    transform(node) {
       if (node.type === "tag" && node.name === "a") {
         if (node.attribs) {
           node.attribs.target = "_blank";
@@ -11,7 +11,6 @@ export default function HtmlTransformer(html: string, type: BaseDeck["type"]) {
           if (type === "reddit" && node.attribs.href[0] === "/") {
             node.attribs.href = "https://www.reddit.com" + node.attribs.href;
           }
-          return convertNodeToReactElement(node, idx);
         }
       }
     },

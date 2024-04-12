@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY ./ui/* .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 RUN npm run build
 
 FROM golang:1.21.1-alpine as base
