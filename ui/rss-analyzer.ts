@@ -35,8 +35,13 @@ fetch(blogRss[0])
             if (err) {
                 console.error('Error parsing XML:', err);
             } else {
-                const item = result.rss.channel[0].item[0];
-                console.log(item.title.join(" "));
+                const items = result.rss.channel[0].item;
+                console.log(items.map(item => {
+                    return {
+                        title: item.title.join(" "),
+                        description: item.description.join(" "),
+                    }
+                }));
             }
         });
     })
