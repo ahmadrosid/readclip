@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./ui/* .
 
 RUN bun install --production
-RUN ls -l node_modules/.bin
+RUN ls -l
 RUN bun run build
 
 FROM golang:1.21.1-alpine as base
