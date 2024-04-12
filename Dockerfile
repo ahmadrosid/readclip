@@ -1,4 +1,5 @@
 FROM node:lts-alpine3.19 as ui-builder
+RUN apk add bash
 RUN curl -fsSL https://bun.sh/install | bash
 WORKDIR /app
 
