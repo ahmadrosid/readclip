@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { blogRss } from "@/lib/data/rss";
+import { rssCategories } from "@/lib/data/rss-categories";
 import { CopyIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -18,12 +19,12 @@ export default function ExploreRss() {
         <h2 className="text-2xl font-bold tracking-tight">Explore RSS Urls</h2>
       </div>
       <div className="flex flex-wrap justify-center items-center gap-2 py-6">
-        {blogRss.map((item) => (
+        {rssCategories.map((item) => (
           <Card className="shadow-none p-2 flex-1 sm:flex-auto">
             <div className="flex gap-1 items-center">
               <div>
                 <Button
-                  onClick={() => handleCopy(item)}
+                  onClick={() => handleCopy(item.link)}
                   variant={"ghost"}
                   className="px-2"
                   size="sm"
@@ -32,8 +33,11 @@ export default function ExploreRss() {
                 </Button>
               </div>
               <p className="whitespace-break-spaces text-sm sm:text-base">
-                {item}
+                {item.link}
               </p>
+              <div className="whitespace-break-spaces text-xs sm:text-base py-2">
+                {item.category.map(item=>`- ${item}`).join("\n")}
+              </div>
             </div>
           </Card>
         ))}

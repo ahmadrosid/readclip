@@ -667,7 +667,6 @@ export const blogRss = [
   "https://sklivvz.com/feed",
   "https://blog.lawrencejones.dev/feed.xml",
   "https://www.qword.net/feed.xml",
-  "https://bryanhogan.me/rss/",
   "https://neilvedi.github.io/index.xml",
   "https://apurva-shukla.me/rss.xml",
   "https://callmeo.live/feed.xml",

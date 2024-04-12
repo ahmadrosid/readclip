@@ -1,9 +1,18 @@
 import { blogRss } from './src/lib/data/rss';
-import xml2js from "xml2js";
+import TurndownService from 'turndown';
+import Parser from 'rss-parser';
+import fs from "fs";
 
 const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY';
 
-export async function fetchOpenai() {
+function toMarkdown(html: string) {
+    const turndownService = new TurndownService();
+    const markdown: string = turndownService.turndown(html);
+    return markdown
+}
+
+export async function fetchOpenai(prompt: string) {
+    console.log("analyzing categories")
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -15,7 +24,7 @@ export async function fetchOpenai() {
           "messages": [
             {
               "role": "user",
-              "content": "Hello!"
+              "content": prompt
             }
           ]
         })
@@ -26,23 +35,51 @@ export async function fetchOpenai() {
         .then(data => data.choices[0].message.content);
 }
 
-console.log(blogRss[0]);
+function appendFile(path: string, content: string) {
+    fs.appendFileSync(path, content);
+}
 
-fetch(blogRss[0])
-    .then(response => response.text())
-    .then(data => {
-        xml2js.parseString(data, (err, result) => {
-            if (err) {
-                console.error('Error parsing XML:', err);
-            } else {
-                const items = result.rss.channel[0].item;
-                console.log(items.map(item => {
-                    return {
-                        title: item.title.join(" "),
-                        description: item.description.join(" "),
-                    }
-                }));
-            }
-        });
-    })
-    .catch(error => console.error(error));
+const link = blogRss[blogRss.length - 11];
+// const content = await parseRss(link);
+const parser = new Parser();
+const feed = await parser.parseURL(link);
+
+let page = "";
+page += "---\n";
+page += "title: " + feed.title + "\n";
+page += "link: " + feed.link + "\n";
+page += "description: " + (feed.description ? feed.description : "") + "\n";
+page += "---\n\n";
+let index = 0;
+page += feed.items.map(item => {
+    let description = "";
+    if (item.content) {
+        description = item.content
+    } else if (item.description) {
+        description = item.description
+    }
+    if (description === "") return;
+    let md = toMarkdown(description);
+    const words = md.split(" ");
+    if (words.length > 200) {
+        md = words.slice(0, 200).join(" ") + "...";
+    }
+    index++;
+    return `# ${index}. ${item.title}\n${md}\n`;
+}).join("\n");
+
+const result = await fetchOpenai(`Here's the snippet of rss from some website. I want to know what is this site about and what are the category of the content they made. Give me only the category in a bullet point nothing more.
+
+${page}
+`)
+
+console.log(result);
+
+
+appendFile(
+    "./src/lib/data/rss-categories.ts", 
+    `${JSON.stringify({
+        link: link,
+        category: result.split("- ")
+    })},\n`
+);
