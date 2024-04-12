@@ -1,6 +1,5 @@
 FROM golang:1.21.1-alpine as base
 RUN apk add curl bash nodejs npm make
-RUN npm install --global pnpm
 
 WORKDIR /go/src/app
 COPY go.* .

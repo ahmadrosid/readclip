@@ -8,7 +8,7 @@ start-ui-dev:
 	cd ui && npm run dev
 
 build-ui:
-	(set -e; cd ui && npm i && npm run build)
+	(set -e; cd ui && npm install --legacy-peer-deps && npm run build)
 
 dev:
 	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
