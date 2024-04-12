@@ -3,8 +3,9 @@ RUN apk add bash
 RUN curl -fsSL https://bun.sh/install | bash
 WORKDIR /app
 
-COPY ./ui/* .
+COPY . .
 
+RUN cd ui
 RUN npm install --legacy-peer-deps
 RUN npm run build
 
@@ -15,7 +16,7 @@ COPY go.* .
 RUN go mod download
 
 COPY . .
-COPY --from=ui-builder /app/dist ./ui
+COPY --from=ui-builder /app/ui/dist ./ui
 RUN go generate ./...
 RUN CGO_ENABLED=0 go build -o /go/bin/app -buildvcs=false
 
