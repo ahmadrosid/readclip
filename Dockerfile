@@ -5,12 +5,10 @@ WORKDIR /app
 
 COPY ./ui/* .
 
-RUN bun install --production
-RUN ls -l
-RUN bun run build
+RUN npm install
+RUN npm run build
 
 FROM golang:1.21.1-alpine as base
-RUN apk add curl bash make
 
 WORKDIR /go/src/app
 COPY go.* .
