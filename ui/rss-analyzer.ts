@@ -39,7 +39,7 @@ function appendFile(path: string, content: string) {
     fs.appendFileSync(path, content);
 }
 
-const link = blogRss[blogRss.length - 11];
+const link = blogRss[blogRss.length - 21];
 // const content = await parseRss(link);
 const parser = new Parser();
 const feed = await parser.parseURL(link);
@@ -66,7 +66,9 @@ page += feed.items.map(item => {
     }
     index++;
     return `# ${index}. ${item.title}\n${md}\n`;
-}).join("\n");
+}).slice(0, 5).join("\n");
+
+// console.log(page);
 
 const result = await fetchOpenai(`Here's the snippet of rss from some website. I want to know what is this site about and what are the category of the content they made. Give me only the category in a bullet point nothing more.
 
