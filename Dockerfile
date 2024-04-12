@@ -1,6 +1,5 @@
 FROM node:lts-alpine3.19 as ui-builder
-RUN apk add bash
-RUN curl -fsSL https://bun.sh/install | bash
+
 WORKDIR /app
 
 COPY . .
@@ -10,11 +9,10 @@ RUN cd ui && npm install --legacy-peer-deps && npm run build
 FROM golang:1.21.1-alpine as base
 
 WORKDIR /go/src/app
-COPY go.* .
-RUN go mod download
 
-COPY . .
-COPY --from=ui-builder /app/ui/dist ./ui
+COPY --from=ui-builder /app/* .
+
+RUN go mod download
 RUN go generate ./...
 RUN CGO_ENABLED=0 go build -o /go/bin/app -buildvcs=false
 
