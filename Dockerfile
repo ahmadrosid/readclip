@@ -1,4 +1,5 @@
-FROM oven/bun as ui-builder
+FROM node:lts-alpine3.19 as ui-builder
+RUN curl -fsSL https://bun.sh/install | bash
 WORKDIR /app
 
 COPY ./ui/* .
