@@ -1,20 +1,13 @@
-FROM node:lts-alpine3.19 as ui-builder
-
-WORKDIR /app
-
-COPY . .
-
-RUN cd ui && npm install --legacy-peer-deps && npm run build
-
 FROM golang:1.21.1-alpine as base
+RUN apk add curl bash nodejs npm make
+RUN npm install --global pnpm
 
 WORKDIR /go/src/app
-
-COPY --from=ui-builder /app/* .
-
+COPY go.* .
 RUN go mod download
-RUN go generate ./...
-RUN CGO_ENABLED=0 go build -o /go/bin/app -buildvcs=false
+
+COPY . .
+RUN make build TARGET_DIR=/go/bin/app
 
 FROM alpine:3.17.2
 COPY --from=base /go/bin/app /app

@@ -5,13 +5,13 @@ build: build-ui
 	CGO_ENABLED=0 go build -o ${TARGET_DIR} -buildvcs=false
 
 start-ui-dev:
-	cd ui && bun run dev
+	cd ui && npm run dev
 
 build-ui:
-	(set -e; cd ui && bun i && bun run build)
+	(set -e; cd ui && npm i && npm run build)
 
 dev:
-	@source .env && npx concurrently "cd ui && bun run dev" "go run main.go"
+	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
 
 start:
 	docker compose up -d
