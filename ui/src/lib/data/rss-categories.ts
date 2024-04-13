@@ -32,4 +32,5 @@ export const rssCategories = [
 {"link":"https://shashanksthoughts.blogspot.com/feeds/posts/default?alt=rss","category":["","Life observations\n","Technology reflections"]},
 {"link":"https://vaclavkosar.com/feed.xml","category":["","Technology\n","Machine Learning\n","Programming\n","Artificial Intelligence"]},
 {"link":"https://newsletter.eng-leadership.com/feed","category":["","Engineering Leadership\n","Team Management\n","Software Development Best Practices\n","Productivity Improvement\n","Workplace Culture\n","Incident Management\n","Human-centric Engineering\n","Decision-making Processes\n","Career Development"]},
-]
+{"link":"https://olickel.com/rss/feed.xml","category":["","Personal Writings\n","Technology\n","Programming\n","Self-Improvement"]},
+];

@@ -30,7 +30,7 @@ export async function fetchOpenai(prompt: string) {
         })
       };
       
-    return fetch('http://localhost:3040/v1/chat/completions', requestOptions)
+    return fetch('http://143.198.16.88:3040/v1/chat/completions', requestOptions)
         .then(response => response.json())
         .then(data => data.choices[0].message.content);
 }
@@ -39,7 +39,8 @@ function appendFile(path: string, content: string) {
     fs.appendFileSync(path, content);
 }
 
-const link = blogRss[blogRss.length - 38];
+// const link = blogRss[blogRss.length - 38];
+const link = 'https://olickel.com/rss/feed.xml';
 // const content = await parseRss(link);
 const parser = new Parser();
 const feed = await parser.parseURL(link);
