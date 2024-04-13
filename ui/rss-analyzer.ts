@@ -39,7 +39,7 @@ function appendFile(path: string, content: string) {
     fs.appendFileSync(path, content);
 }
 
-const link = blogRss[blogRss.length - 21];
+const link = blogRss[blogRss.length - 38];
 // const content = await parseRss(link);
 const parser = new Parser();
 const feed = await parser.parseURL(link);
@@ -66,7 +66,7 @@ page += feed.items.map(item => {
     }
     index++;
     return `# ${index}. ${item.title}\n${md}\n`;
-}).slice(0, 5).join("\n");
+}).slice(0, 10).join("\n");
 
 // console.log(page);
 
