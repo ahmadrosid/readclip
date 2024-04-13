@@ -219,7 +219,7 @@ export function ArticleCard({
             <CalendarCheck className="mr-1 h-3 w-3" />
             {formatDate(article.CreatedAt, current_datetime)} ago
           </div>
-          <a href={article.Url} target="_blank" className="hover:text-gray-800">
+          <a href={article.Url} target="_blank" className="hover:text-gray-800 dark:hover:text-gray-600">
             <div className="flex items-center">
               <ExternalLinkIcon className="mr-1 h-3 w-3" />
               {article.Hostname.length > 20 ? "..."+article.Hostname.slice(-20) : article.Hostname}
