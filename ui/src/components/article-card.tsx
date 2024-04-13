@@ -222,7 +222,7 @@ export function ArticleCard({
           <a href={article.Url} target="_blank" className="hover:text-gray-800">
             <div className="flex items-center">
               <ExternalLinkIcon className="mr-1 h-3 w-3" />
-              {article.Hostname}
+              {article.Hostname.length > 20 ? "..."+article.Hostname.slice(-20) : article.Hostname}
             </div>
           </a>
         </div>
