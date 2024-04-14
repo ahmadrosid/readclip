@@ -96,11 +96,11 @@ export default function ArticlePage() {
 
   return (
     <div className="p-4 md:p-8 min-h-[80vh]">
-      <div className="px-1 grid sm:flex gap-4 justify-between items-center">
-        <h2 className="text-2xl font-bold tracking-tight">Saved Clips</h2>
-        <div className="flex gap-2">
+      <div className="px-1 flex-col sm:flex gap-4 justify-between items-center">
+        <h2 className="text-2xl font-bold tracking-tight flex-1">Saved Clips</h2>
+        <div className="flex gap-2 py-2 sm:py-0">
           <Input
-            className="bg-white dark:bg-gray-800 flex-1 w-full sm:w-64"
+            className="bg-white dark:bg-gray-800 flex-1 sm:w-64"
             placeholder="Search clips..."
             onClick={(e) => {
               e.preventDefault();

@@ -159,9 +159,9 @@ export function ArticleCard({
               {article.Title.length > 50 ? "..." : ""}
             </CardTitle>
           </a>
-          <CardDescription>
-            {article.Description.slice(0, 100)}
-            {article.Description.length > 100 ? "..." : ""}
+          <CardDescription className="pt-1 text-xs">
+              {article.Description.slice(0, 100)}
+              {article.Description.length > 100 ? "..." : ""}
           </CardDescription>
         </div>
         <div className="flex items-center rounded-md bg-secondary text-secondary-foreground">
