@@ -1,7 +1,6 @@
 package echotube
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -30,9 +29,9 @@ type VideoInfo struct {
 }
 
 type Content struct {
-	Text     string `json:"text"`
-	Duration int    `json:"duration"`
-	Offset   int    `json:"offset"`
+	Text  string `json:"text"`
+	Start string `json:"start"`
+	End   string `json:"end"`
 }
 
 type VideoData struct {
@@ -41,21 +40,6 @@ type VideoData struct {
 	Content  []Content `json:"content"`
 	Language string    `json:"language"`
 }
-
-// type FindChannelResponse struct {
-// 	Data []struct {
-// 		Type       string `json:"type"`
-// 		ID         string `json:"id"`
-// 		Text       string `json:"text"`
-// 		Thumbnails []struct {
-// 			URL    string `json:"url"`
-// 			Width  int    `json:"width"`
-// 			Height int    `json:"height"`
-// 		} `json:"thumbnails"`
-// 		SubscriberCount string `json:"subscriber_count,omitempty"`
-// 		VideoCount      string `json:"video_count"`
-// 	} `json:"data"`
-// }
 
 type ResponseSearchChannel struct {
 	Total int                 `json:"total"`
@@ -70,12 +54,9 @@ type FindChannelResponse []struct {
 }
 
 func GetTranscript(videoURL string) (*VideoData, error) {
-	url := "https://echo-tube.vercel.app/get-transcript"
-	payload := []byte(fmt.Sprintf(`{
-		"videoUrl":"%s"
-	}`, videoURL))
+	url := "https://api.ahmadrosid.com/youtube/transcript?videoUrl=" + videoURL
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
