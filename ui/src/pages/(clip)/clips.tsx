@@ -96,7 +96,7 @@ export default function ArticlePage() {
 
   return (
     <div className="p-4 md:p-8 min-h-[80vh]">
-      <div className="px-1 flex-col sm:flex gap-4 justify-between items-center">
+      <div className="px-1 flex flex-col sm:flex-row gap-4 justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight flex-1">Saved Clips</h2>
         <div className="flex gap-2 py-2 sm:py-0">
           <Input
@@ -158,7 +158,7 @@ export default function ArticlePage() {
           onOpenChange={setOpenAddTag}
         />
       </div>
-      <div className="flex flex-wrap justify-center gap-2 pt-4 pb-4 sm:pb-2 overflow-x-auto scrollbar-thin border-b">
+      <div className="flex flex-wrap justify-center gap-2 pt-4 sm:pb-2 overflow-x-auto scrollbar-thin">
         {tagsQuery.data?.data.map((item) => (
           <Badge
             className={cn(
