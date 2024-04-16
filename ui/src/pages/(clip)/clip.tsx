@@ -105,6 +105,10 @@ export default function Home() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (inputUrl === "https://readclip.site/clips") {
+        toast.error("You can't save this url into a clip!");
+        return;
+      }
       if (inputUrl !== "") {
         mutate(inputUrl);
       }
@@ -139,6 +143,10 @@ export default function Home() {
 
   useEffect(() => {
     if (urlParam !== null && !isLoading && !data && !deleteMutation.isLoading) {
+      if (urlParam === "https://readclip.site/clips") {
+        toast.error("You can't save this url into a clip!");
+        return;
+      }
       mutate(urlParam);
     }
   }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading]);
