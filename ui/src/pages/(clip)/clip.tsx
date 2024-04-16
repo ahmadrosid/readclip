@@ -144,7 +144,9 @@ export default function Home() {
   useEffect(() => {
     if (urlParam !== null && !isLoading && !data && !deleteMutation.isLoading) {
       if (urlParam === "https://readclip.site/clips") {
-        toast.error("You can't save this url into a clip!");
+        setTimeout(() => {
+          toast.error("You can't save this url into a clip!");
+        })
         return;
       }
       mutate(urlParam);
