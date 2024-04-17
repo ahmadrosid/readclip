@@ -16,7 +16,7 @@ type handler struct {
 	repo UserRepository
 }
 
-func NewHandler(route fiber.Router, repo UserRepository) {
+func NewUserHandler(route fiber.Router, repo UserRepository) {
 	handler := &handler{repo}
 	route.Post("/login", handler.login)
 	route.Post("/register", handler.register)

@@ -38,7 +38,7 @@ type ClipHandler struct {
 	tagRepo  tag.TagRepository
 }
 
-func NewHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepository, tagRepo tag.TagRepository) {
+func NewClipHandler(route fiber.Router, repo ClipRepository, userRepo user.UserRepository, tagRepo tag.TagRepository) {
 	handler := &ClipHandler{
 		repo, userRepo, tagRepo,
 	}

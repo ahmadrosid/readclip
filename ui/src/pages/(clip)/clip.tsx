@@ -224,12 +224,12 @@ export default function Home() {
                 {fetchHistoryQuery.data?.data.slice(0, 15).map((item) => (
                   <tr key={item.Id}>
                     <td className="hidden sm:flex justify-end h-9 items-center w-[110px]">
-                      <p className="text-gray-600 text-sm pt-2">
+                      <p className="text-gray-500 text-sm pt-2">
                         {format(new Date(item.CreatedAt), "EEE dd, HH:mm")}
                       </p>
                     </td>
                     <td className="pl-2">
-                      <p className="py-1 dark:text-gray-400">
+                      <p className="py-1 dark:text-gray-300">
                         <span
                           className="h-9 cursor-pointer underline sm:no-underline hover:underline font-medium tracking-tight"
                           onClick={() => {

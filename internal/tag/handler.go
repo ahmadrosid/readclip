@@ -13,7 +13,7 @@ type TagHandler struct {
 	userRepo user.UserRepository
 }
 
-func NewHandler(route fiber.Router, repo TagRepository, userRepo user.UserRepository) {
+func NewTagHandler(route fiber.Router, repo TagRepository, userRepo user.UserRepository) {
 	handler := &TagHandler{
 		repo,
 		userRepo,

@@ -1,0 +1,63 @@
+package api
+
+import (
+	"fmt"
+	"net/http"
+	"strings"
+
+	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/go-shiori/dom"
+	"github.com/gofiber/fiber/v2"
+	"github.com/markusmobius/go-trafilatura"
+)
+
+type HtmlRequest struct {
+	HtmlText string `json:"html_text"`
+}
+
+type htmlHandler struct{}
+
+func NewConvertHtmlHandler(route fiber.Router) *htmlHandler {
+	handler := &htmlHandler{}
+	route.Post("/html", handler.convertHtmlToMarkdown)
+	return handler
+}
+
+func (h *htmlHandler) convertHtmlToMarkdown(c *fiber.Ctx) error {
+	var input HtmlRequest
+	if err := c.BodyParser(&input); err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	opts := trafilatura.Options{
+		IncludeImages: true,
+		IncludeLinks:  true,
+	}
+
+	reader := strings.NewReader(input.HtmlText)
+	result, err := trafilatura.Extract(reader, opts)
+	if err != nil {
+		fmt.Printf("failed to extract: %v", err)
+	}
+	doc := trafilatura.CreateReadableDocument(result)
+	renderHtml := dom.OuterHTML(doc)
+	var title = result.Metadata.Title
+	markdown, err := util.ConvertHtmlToMarkdown(renderHtml)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status": "success",
+		"data": fiber.Map{
+			"title":   title,
+			"content": markdown,
+		},
+	})
+}

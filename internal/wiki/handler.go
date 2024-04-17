@@ -12,7 +12,7 @@ type WikiHandler struct {
 	userRepo user.UserRepository
 }
 
-func NewHandler(route fiber.Router, repo WikiRepository, userRepo user.UserRepository) {
+func NewWikiHandler(route fiber.Router, repo WikiRepository, userRepo user.UserRepository) {
 	handler := &WikiHandler{
 		repo, userRepo,
 	}

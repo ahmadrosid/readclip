@@ -10,7 +10,7 @@ import (
 
 type handler struct{}
 
-func NewHandler(route fiber.Router) {
+func NewBookmarkHandler(route fiber.Router) {
 	handler := &handler{}
 	route.Post("/import/chrome", handler.parseChromeBookmark)
 }

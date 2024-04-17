@@ -23,7 +23,7 @@ type FeedHandler struct {
 	userRepo user.UserRepository
 }
 
-func NewHandler(route fiber.Router, repo FeedRepository, userRepo user.UserRepository) {
+func NewFeedHandler(route fiber.Router, repo FeedRepository, userRepo user.UserRepository) {
 	handler := &FeedHandler{
 		repo, userRepo,
 	}

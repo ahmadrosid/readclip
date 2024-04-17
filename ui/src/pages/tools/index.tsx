@@ -46,6 +46,12 @@ export const tools = [
       "Find out Business Value Proposition Statement from landing page using AI.",
     link: "/tools/business-analysis" as const,
   },
+  {
+    slug: "html-to-markdown",
+    title: "Html to markdown",
+    description: "Convert HTML to markdown.",
+    link: "/tools/html-to-markdown" as const,
+  },
 ];
 
 export default function Tools() {
@@ -114,6 +120,16 @@ export default function Tools() {
               <CardTitle>Youtube Transcriber</CardTitle>
               <CardDescription>
                 Don't really have time to watch videos? Now you can read them!
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/html-to-markdown">
+            <CardHeader>
+              <CardTitle>Html to markdown</CardTitle>
+              <CardDescription>
+                Convert HTML to markdown.
               </CardDescription>
             </CardHeader>
           </Link>

@@ -208,21 +208,23 @@ func main() {
 			"GET::/tools/business-analysis",
 			"GET::/explore-rss",
 			"GET::/api/rss/github/languages",
+			"POST::/api/convert/html",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
 
 	userRepo := user.NewUserRepository(db)
 	tagRepo := tag.NewTagRepository(db)
-	clip.NewHandler(app.Group("/api/clips"), clip.NewClipRepository(db), userRepo, tagRepo)
-	wiki.NewHandler(app.Group("/api/wikis"), wiki.NewWikiRepository(db), userRepo)
-	tag.NewHandler(app.Group("/api/tags"), tagRepo, userRepo)
-	user.NewHandler(app.Group("/api/users"), userRepo)
-	bookmark.NewHandler(app.Group("/api/bookmarks"))
+	clip.NewClipHandler(app.Group("/api/clips"), clip.NewClipRepository(db), userRepo, tagRepo)
+	wiki.NewWikiHandler(app.Group("/api/wikis"), wiki.NewWikiRepository(db), userRepo)
+	tag.NewTagHandler(app.Group("/api/tags"), tagRepo, userRepo)
+	user.NewUserHandler(app.Group("/api/users"), userRepo)
+	bookmark.NewBookmarkHandler(app.Group("/api/bookmarks"))
 
-	feed.NewHandler(app.Group("/api/rss"), feed.NewFeedRepository(db), userRepo)
+	feed.NewFeedHandler(app.Group("/api/rss"), feed.NewFeedRepository(db), userRepo)
 	api.NewYoutubeHandler(app.Group("/api/youtube"))
 	api.NewRedditHandler(app.Group("/api/reddit"))
+	api.NewConvertHtmlHandler(app.Group("/api/convert"))
 
 	app.Listen(":" + env.Port)
 }
