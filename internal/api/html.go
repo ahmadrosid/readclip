@@ -41,7 +41,12 @@ func (h *htmlHandler) convertHtmlToMarkdown(c *fiber.Ctx) error {
 	result, err := trafilatura.Extract(reader, opts)
 	if err != nil {
 		fmt.Printf("failed to extract: %v", err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
 	}
+
 	doc := trafilatura.CreateReadableDocument(result)
 	renderHtml := dom.OuterHTML(doc)
 	var title = result.Metadata.Title
