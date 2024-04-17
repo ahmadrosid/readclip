@@ -59,9 +59,8 @@ export default function Tools() {
     <div className="container px-4 sm:px-8 mx-auto min-h-[80vh]">
       <div className="pt-6 pb-4">
         <Title className="pb-4">Free tools from Readclip</Title>
-        <p className="text-lg text-gray-600">
-          Free tools from readclip to help with your day to day works no ads no
-          distractions.
+        <p className="text-lg text-gray-600 dark:text-gray-300">
+          ReadClip offers free tools to help streamline your daily tasks, without ads or distractions.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pb-8">
@@ -98,8 +97,7 @@ export default function Tools() {
             <CardHeader>
               <CardTitle>Business Value Proposition Analysis</CardTitle>
               <CardDescription>
-                Find out Business Value Proposition Statement from landing page
-                using AI.
+                Discover a Business's Value Proposition Statement from its Landing Page Using AI.
               </CardDescription>
             </CardHeader>
           </Link>
@@ -109,7 +107,7 @@ export default function Tools() {
             <CardHeader>
               <CardTitle>Reddit reader</CardTitle>
               <CardDescription>
-                Read reddit discussion without distraction wihtout pain!
+                Read Reddit discussions without distractions or eye strain!
               </CardDescription>
             </CardHeader>
           </Link>
