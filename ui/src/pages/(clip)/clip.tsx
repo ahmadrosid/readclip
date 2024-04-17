@@ -221,7 +221,7 @@ export default function Home() {
             )}
             <table className="table-auto">
               <tbody>
-                {fetchHistoryQuery.data?.data.slice(0, 13).map((item) => (
+                {fetchHistoryQuery.data?.data.slice(0, 15).map((item) => (
                   <tr key={item.Id}>
                     <td className="hidden sm:flex justify-end h-9 items-center w-[110px]">
                       <p className="text-gray-600 text-sm pt-2">
