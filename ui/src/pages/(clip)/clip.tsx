@@ -51,6 +51,7 @@ export default function Home() {
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
   const [openAddTag, setOpenAddTag] = useState(false);
+  const [failedErrorMessage, setFailedError] = useState<string>("Failed to fetch article. Please check your url.");
 
   const fetchHistoryQuery = useQuery({
     queryFn: async () => {
@@ -149,9 +150,13 @@ export default function Home() {
         })
         return;
       }
+      if (error) {
+        setFailedError(error.message);
+        return;
+      }
       mutate(urlParam);
     }
-  }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading]);
+  }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading, failedErrorMessage]);
 
   return (
     <div className="px-4 gap-4 min-h-[80vh] relative">
@@ -190,7 +195,7 @@ export default function Home() {
         <div className="py-4 flex justify-center">
           <div className="bg-white dark:bg-secondary py-4 rounded-md w-full max-w-3xl px-4 border space-y-4">
             <p className="text-center text-rose-500 dark:text-rose-500/75">
-              Failed to fetch article. Please check your url.
+              {failedErrorMessage}
             </p>
           </div>
         </div>
