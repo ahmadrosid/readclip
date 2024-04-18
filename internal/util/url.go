@@ -51,3 +51,11 @@ func IsMediumUrl(str string) bool {
 	}
 	return hostname == "medium.com" || hostname == "www.medium.com" || strings.Contains(hostname, "medium.com")
 }
+
+func IsTweeterUrl(str string) bool {
+	hostname, err := GetHostname(str)
+	if err != nil {
+		panic(err)
+	}
+	return hostname == "twitter.com" || hostname == "www.twitter.com" || strings.Contains(hostname, "x.com")
+}

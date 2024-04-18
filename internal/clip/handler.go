@@ -14,6 +14,7 @@ import (
 	"github.com/ahmadrosid/readclip/internal/util"
 	"github.com/ahmadrosid/readclip/internal/util/logsnag"
 	"github.com/ahmadrosid/readclip/internal/util/openai"
+	"github.com/ahmadrosid/readclip/internal/util/twitter"
 	"github.com/ahmadrosid/readclip/internal/util/youtube"
 	gofiberfirebaseauth "github.com/ahmadrosid/readclip/pkg/gofiberfirebaseauth"
 	"github.com/gofiber/fiber/v2"
@@ -199,6 +200,15 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 				"error":  err.Error(),
 			})
 		}
+	} else if util.IsTweeterUrl(input.Url) {
+		status, err := twitter.GetTwitterSttusInfo(input.Url)
+		if err != nil {
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"status": "error",
+				"error":  err.Error(),
+			})
+		}
+		res = twitter.MapTwitterStatusToClip(input.Url, status)
 	} else {
 		res, err = util.Scrape(input.Url, "markdown")
 		if err != nil {
