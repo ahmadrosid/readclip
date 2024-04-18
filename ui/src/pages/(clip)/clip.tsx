@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Markdown } from "@/components/markdown";
 import {
   Circle,
@@ -80,6 +80,21 @@ export default function Home() {
         return;
       }
       toast.error(err.message);
+      setFailedError(err.message);
+    },
+    onMutate: () => {
+      if (urlParam === "https://readclip.site/clips") {
+        setTimeout(() => {
+          toast.error("You can't save this url into a clip!");
+        });
+      } else if (urlParam !== null && urlParam !== "") {
+        mutate(urlParam);
+      }
+    },
+    onSuccess: () => {
+      if (urlParam !== null && urlParam !== "") {
+        setInputUrl(urlParam);
+      }
     },
   });
 
@@ -141,22 +156,6 @@ export default function Home() {
   }, [data, deleteMutation, user]);
 
   const handleAddTag = useCallback(() => setOpenAddTag(true), []);
-
-  useEffect(() => {
-    if (urlParam !== null && !isLoading && !data && !deleteMutation.isLoading) {
-      if (urlParam === "https://readclip.site/clips") {
-        setTimeout(() => {
-          toast.error("You can't save this url into a clip!");
-        })
-        return;
-      }
-      if (error) {
-        setFailedError(error.message);
-        return;
-      }
-      mutate(urlParam);
-    }
-  }, [urlParam, isLoading, error, data, mutate, deleteMutation.isLoading, failedErrorMessage]);
 
   return (
     <div className="px-4 gap-4 min-h-[80vh] relative">
