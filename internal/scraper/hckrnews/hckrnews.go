@@ -51,6 +51,10 @@ func parseContent(content string) []HackernewsResponse {
 			Link:  dom.GetAttribute(titleEl, "href"),
 		}
 
+		if strings.HasPrefix(dataItem.Link, "item?id=") {
+			dataItem.Link = "https://news.ycombinator.com/" + dataItem.Link
+		}
+
 		// parse source link
 		sitestrEl := dom.QuerySelector(titleNode, ".sitestr")
 		if sitestrEl != nil {

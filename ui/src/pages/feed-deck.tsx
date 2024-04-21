@@ -109,12 +109,12 @@ export default function FeedDeckPage() {
               <div className="p-4">
                 <div className="flex justify-center flex-row">
                   <img
-                    className="w-44 h-44 opacity-5"
+                    className="w-44 h-44 opacity-5 dark:invert"
                     src="https://cdn-icons-png.flaticon.com/512/4076/4076510.png"
                     alt="Empty feed"
                   />
                 </div>
-                <p className="max-w-xs text-base font-normal text-gray-700 tracking-tight">
+                <p className="max-w-xs text-base font-normal text-gray-700 tracking-tight dark:text-gray-400">
                   Your feeds list is empty. Click 'Add Feed' to add a new one.
                 </p>
               </div>
