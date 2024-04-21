@@ -29,7 +29,7 @@ export const subReddits = [
       {
         name: "language_exchange",
         title: "r/Language_Exchange - Find a language partner here!",
-        icon: "https://styles.redditmedia.com/t5_2tdbm/styles/communityIcon_0umcwqftwdk51.png?width=256&s=182469699e17894a167e9f00c791de17480be3ca",
+        icon: "https://styles.redditmedia.com/t5_2tdbm/styles/communityIcon_yfjvakd1flhc1.png",
         count_users: 136919,
       },
       {
