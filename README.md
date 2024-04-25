@@ -127,6 +127,7 @@ Some feature will be added soon.
 - [x] FREE TOOLS: Markdown viewer
 - [x] FREE TOOLS: Business Value Proposition Analysis
 - [ ] Daily Reading Digest (explore menu just like instagram etc)
-- [ ] Improve parsing code
+- [x] Improve parsing code
 - [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
+- [ ] Email news letter subscriptions. [https://github.com/foxcpp/maddy](https://github.com/foxcpp/maddy)
