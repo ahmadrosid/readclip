@@ -5,15 +5,15 @@ chrome.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
 document.getElementById("getContentBtn").addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   console.log(tab)
-  const currentPageUrl = new URL(tab.url);
 
   chrome.scripting.executeScript(
     {
       target: { tabId: tab.id },
-      func: (pageUrl) => {
-        const tempElement = document.createElement("div");
-        tempElement.innerHTML = document.documentElement.outerHTML;
+      func: () => {
+        const tempElement = document.createElement("html");
+        tempElement.innerHTML = document.documentElement.innerHTML;
 
+        const currentPageUrl = new URL(document.URL);
         // Remove script tags
         tempElement
           .querySelectorAll("script")
@@ -46,12 +46,11 @@ document.getElementById("getContentBtn").addEventListener("click", async () => {
         tempElement.querySelectorAll("img[src]").forEach((img) => {
           const imgSrc = img.getAttribute("src");
           if (!imgSrc.startsWith("http")) {
-            img.setAttribute('src', `${window.origin}/${imgSrc.replace(/^\//, '')}`);
+            img.setAttribute('src', `${currentPageUrl.origin}/${imgSrc.replace(/^\//, '')}`);
           }
         });
         return tempElement.outerHTML;
       },
-      args: [currentPageUrl]
     },
     (results) => {
       console.log(results[0].result);
