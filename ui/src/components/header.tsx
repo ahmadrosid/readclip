@@ -69,14 +69,14 @@ export function Header() {
               </Button>
             </Link> */}
 
-            <Link to="/tools" className="hidden sm:block">
+            {/* <Link to="/tools" className="hidden sm:block">
               <Button
                 className="dark:text-gray-300 text-gray-800 px-2"
                 variant="link"
               >
                 Tools
               </Button>
-            </Link>
+            </Link> */}
 
             {hasToken && (
               <Link to="/setting">
