@@ -131,3 +131,9 @@ Some feature will be added soon.
 - [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
 - [ ] Email news letter subscriptions. [https://github.com/foxcpp/maddy](https://github.com/foxcpp/maddy)
+- [ ] Blogs
+
+## Marketing Materials
+
+- [User Persona](https://founderpal.ai/user-persona-generator?persona=1BXO6H4579)
+- [Your Value Proposition](https://founderpal.ai/value-proposition-generator?key=Z3KCH7S1AB)
