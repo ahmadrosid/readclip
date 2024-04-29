@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/str"
 	"github.com/go-shiori/dom"
 	"github.com/gofiber/fiber/v2"
 	"github.com/markusmobius/go-trafilatura"
@@ -49,7 +50,17 @@ func (h *htmlHandler) convertHtmlToMarkdown(c *fiber.Ctx) error {
 
 	doc := trafilatura.CreateReadableDocument(result)
 	renderHtml := dom.OuterHTML(doc)
-	var title = result.Metadata.Title
+
+	// Parse title
+	title := result.Metadata.Title
+	htmlNode, err := str.StringToHtmlNode(input.HtmlText)
+	if err == nil {
+		titleNode := dom.GetElementsByTagName(htmlNode, "title")
+		if len(titleNode) > 0 {
+			title = dom.InnerText(titleNode[0])
+		}
+	}
+
 	markdown, err := util.ConvertHtmlToMarkdown(renderHtml)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{

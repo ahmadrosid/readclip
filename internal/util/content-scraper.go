@@ -54,7 +54,15 @@ func Scrape(url string, format string) (*ContentData, error) {
 	doc := trafilatura.CreateReadableDocument(result)
 
 	var textResult string
+	// Parse title
 	var title = result.Metadata.Title
+	htmlNode, err := str.ReaderToHtmlNode(resp.Body)
+	if err == nil {
+		titleNode := dom.GetElementsByTagName(htmlNode, "title")
+		if len(titleNode) > 0 {
+			title = dom.InnerText(titleNode[0])
+		}
+	}
 
 	if format == "text" {
 		textResult = dom.InnerText(doc)
