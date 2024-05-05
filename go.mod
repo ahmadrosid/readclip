@@ -6,7 +6,7 @@ require (
 	firebase.google.com/go v3.13.0+incompatible
 	github.com/JohannesKaufmann/html-to-markdown v1.4.1
 	github.com/andygrunwald/go-trending v0.0.0-20231024092240-c15f8d9c1844
-	github.com/caarlos0/env v3.5.0+incompatible
+	github.com/caarlos0/env/v11 v11.0.0
 	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c
 	github.com/goccy/go-json v0.10.2
 	github.com/gofiber/fiber/v2 v2.48.0
@@ -16,8 +16,10 @@ require (
 	github.com/kkdai/youtube/v2 v2.10.1
 	github.com/lib/pq v1.10.9
 	github.com/markusmobius/go-trafilatura v1.5.1
+	github.com/milosgajdos/go-embeddings v0.3.2
 	github.com/mmcdole/gofeed v1.2.1
 	github.com/stretchr/testify v1.9.0
+	github.com/upstash/vector-go v0.4.0
 	golang.org/x/net v0.22.0
 	google.golang.org/api v0.143.0
 	gorm.io/driver/postgres v1.5.2
@@ -78,7 +80,6 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
-	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/tetratelabs/wazero v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.48.0 // indirect
@@ -88,7 +89,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
-	golang.org/x/oauth2 v0.12.0 // indirect
+	golang.org/x/oauth2 v0.15.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
@@ -99,7 +100,7 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20230913181813-007df8e322eb // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13 // indirect
 	google.golang.org/grpc v1.57.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
