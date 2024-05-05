@@ -2,7 +2,7 @@
 
 ![how-it-works](./how-it-works.png)
 
-Readclip lets you save articles for later reading. Just add a link and Readclip scrapes and stores the full text and media. Tag your clips to organize and find them easily. Readclip removes ads and distractions so you can focus on content. Build your own personal, accessible knowledge library.
+ReadClip lets you save articles for later reading. Just add a link and Readclip scrapes and stores the full text and media. Tag your clips to organize and find them easily. Readclip removes ads and distractions so you can focus on content. Build your own personal, accessible knowledge library.
 
 ![demo](https://readclip.site/img/readclip.png)
 
