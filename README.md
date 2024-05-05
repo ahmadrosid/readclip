@@ -6,19 +6,18 @@ Readclip lets you save articles for later reading. Just add a link and Readclip 
 
 ![demo](https://readclip.site/img/readclip.png)
 
-## Before and after Readclip!
+## Before and after ReadClip!
 
 Before:
-
-- It's hard to read news because fo widget, ads and a lot distractions.
-- Easily forget something that you have read online before.
-- You save some links but it broken because the website is down, or content removed.
+- It's hard to read news because of widgets, ads, and many other distractions.
+- It's easy to forget something you have read online before.
+- You save some links, but they become broken because the website is down or the content is removed.
 
 After:
 
-- Reading news or blog post it easier than before.
-- No more forgeting the article that you have read before, you can find it through tags ord hostname of the links you've saved.
-- No more loosing the broken links.
+- Reading news or blog posts is easier than before.
+- You no longer have to worry about forgetting articles you've read, as you can find them through tags or the hostnames of the links you've saved.
+- No more losing broken links.
 
 ## Why?
 
@@ -41,7 +40,7 @@ This project is a fullstack web app created using Golang for the backend and Vit
 
 Make sure you have installed golang, and nodejs and to get up and running with the local development just run this command.
 
-First instal node dependencies in `ui` folder.
+First install node dependencies in `ui` folder.
 
 ```bash
 cd ui
