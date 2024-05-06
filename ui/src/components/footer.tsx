@@ -26,6 +26,12 @@ export default function Footer() {
           </Link>
           <a
             className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
+            href="https://readclip.features.vote/board"
+          >
+            Roadmap
+          </a>
+          <a
+            className="font-medium text-muted-foreground hover:underline hover:text-primary text-sm"
             href="mailto:alahmadrosid@gmail.com"
           >
             Contact
