@@ -101,7 +101,7 @@ export default function Home() {
             <Card className="bg-red-200">
               <CardContent className="p-6">
                 <CardTitle className="pb-4 text-xl">😩 Reading Without ReadClip</CardTitle>
-                <ul className="list-disc list-inside px-4">
+                <ul className="list-disc list-inside px-4 space-y-4 py-4">
                   <li>Constant distractions from ads & widgets</li>
                   <li>Easily lose track of interesting reads</li>
                   <li>Links break when sites go down</li>
@@ -112,7 +112,7 @@ export default function Home() {
             <Card className="bg-green-200">
               <CardContent className="p-6">
                 <CardTitle className="pb-4 text-xl">😎 Reading With ReadClip</CardTitle>
-                <ul className="list-disc list-inside px-4">
+                <ul className="list-disc list-inside px-4 space-y-4 py-4">
                   <li>Strip away ads for uninterrupted focus</li>
                   <li>Build a personal library of saved articles</li>
                   <li>Access content even if original link breaks</li>
