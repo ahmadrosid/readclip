@@ -101,8 +101,8 @@ export default function Home() {
                 <div className="text-[50px] h-20 w-20">💾</div>
                 <CardTitle className="pb-4 text-xl">Content Saving</CardTitle>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Save Any Online Article: Readclip allows you to save articles,
-                  blog posts, news, and more from the web with a single click.
+                  Save Any Online Article: Readclip lets you save articles, blog
+                  posts, news, and more from the web with a single click.
                 </p>
               </CardContent>
             </Card>
@@ -113,10 +113,8 @@ export default function Home() {
                   Distraction-Free Reading
                 </CardTitle>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Readclip downloads the HTML content from links you save and
-                  then uses advanced technology to remove ads, widgets, and
-                  other distractions, presenting you with clean, easy-to-read
-                  content.
+                  Readclip downloads saved links' HTML content, removing ads,
+                  widgets, and distractions for clean, easy reading.
                 </p>
               </CardContent>
             </Card>
@@ -127,20 +125,19 @@ export default function Home() {
                   Tagging and Categorization
                 </CardTitle>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Organize your saved links easily with customizable tags. Find
-                  what you need quickly, whether it's by topic, source, or any
-                  other criteria.
+                  Easily organize saved links with customizable tags. Quickly
+                  find what you need by topic, source, or other criteria.
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-6">
                 <div className="text-[57px] h-20 w-20">💡</div>
-                <CardTitle className="pb-4 text-xl">Discoverability</CardTitle>
+                <CardTitle className="pb-4 text-xl">Feeds</CardTitle>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Setup news feed from popular media like reddit, hackernews,
-                  youtube channel you like to get the latest update save it with
-                  a single click.
+                  Setup news feeds from popular media like Reddit, Hacker News,
+                  and YouTube channels you like to get the latest updates with a
+                  single click.
                 </p>
               </CardContent>
             </Card>
