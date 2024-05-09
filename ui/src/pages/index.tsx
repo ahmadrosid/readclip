@@ -96,8 +96,8 @@ export default function Home() {
           The Better Way to Bookmark and Read
           </h2>
         </div>
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="grid grid-cols-2 gap-6">
+        <div className="max-w-5xl mx-auto mb-16 px-4">
+          <div className="grid sm:grid-cols-2 gap-6">
             <Card className="bg-red-200">
               <CardContent className="p-6">
                 <CardTitle className="pb-4 text-xl">😩 Reading Without ReadClip</CardTitle>
