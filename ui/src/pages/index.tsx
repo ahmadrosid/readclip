@@ -90,6 +90,40 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="p-8 dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto space-y-4 py-12 mb-2 px-4">
+          <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
+          The Better Way to Bookmark and Read
+          </h2>
+        </div>
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-2 gap-6">
+            <Card className="bg-red-200">
+              <CardContent className="p-6">
+                <CardTitle className="pb-4 text-xl">😩 Reading Without ReadClip</CardTitle>
+                <ul className="list-disc list-inside px-4">
+                  <li>Constant distractions from ads & widgets</li>
+                  <li>Easily lose track of interesting reads</li>
+                  <li>Links break when sites go down</li>
+                  <li>Content gets removed or paywalled</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="bg-green-200">
+              <CardContent className="p-6">
+                <CardTitle className="pb-4 text-xl">😎 Reading With ReadClip</CardTitle>
+                <ul className="list-disc list-inside px-4">
+                  <li>Strip away ads for uninterrupted focus</li>
+                  <li>Build a personal library of saved articles</li>
+                  <li>Access content even if original link breaks</li>
+                  <li>Easily find & rediscover reads with tagging</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
       <div className="bg-gray-100 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8 px-4">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
