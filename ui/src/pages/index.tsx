@@ -21,14 +21,12 @@ export function DialogDemo({ className }: { className?: string }) {
       >
         See Demo <ArrowRight className="w-4 h-4 ml-3" />
       </DialogTrigger>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-lg sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>Demo</DialogTitle>
-          <div className="pt-4">
+          <div className="pt-4 aspect-video">
             <iframe
-              className="overflow-hidden rounded-md"
-              width="620"
-              height="400"
+              className="w-full h-full overflow-hidden rounded-md"
               src="https://www.youtube.com/embed/PZbvBXEPvFk?si=9EW0yHgN10Q3GVY_"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
