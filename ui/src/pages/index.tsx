@@ -234,6 +234,32 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <div className="p-8 bg-gray-100 dark:bg-gray-800">
+        <div className="max-w-4xl mx-auto space-y-4 py-8 mb-2 px-4">
+          <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white text-center">
+            Start Building Your Distraction-Free Library Today
+          </h2>
+        </div>
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="flex justify-start sm:justify-center gap-2 items-center py-2">
+            <Link
+              to="/clip"
+              className={cn(
+                buttonVariants({
+                  size: "lg",
+                  className:
+                    "items-center justify-between h-10  dark:text-gray-100 text-white dark:bg-gray-700 dark:hover:bg-gray-800",
+                })
+              )}
+            >
+              Getting started
+            </Link>
+            <DialogDemo />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
