@@ -90,7 +90,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="p-8 dark:bg-gray-800">
+      <div className="p-4 sm:p-8 dark:bg-gray-800">
         <div className="max-w-4xl mx-auto space-y-4 py-12 mb-2">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
           The Better Way to Bookmark and Read
