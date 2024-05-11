@@ -61,9 +61,6 @@ export default function Home() {
               Read, Save, Organize and Enjoy
             </Badge>
             <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
-              {/* Bookmarks manager that saves both links and their content. */}
-              {/* Bookmarks manager with content backup */}
-              {/* Read article without ads widget or any distractions. */}
               Curate Your Own Clutter-Free Content Library
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
