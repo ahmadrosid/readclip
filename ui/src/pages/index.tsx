@@ -230,7 +230,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="p-8 bg-gray-100 dark:bg-gray-800">
+      <div className="p-8 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto space-y-4 py-8 mb-2 px-4">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white text-center">
             Start Building Your Distraction-Free Library Today
