@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "sonner";
 import { MainLayout } from "@/components/main-layout";
 import { NewLayout } from "@/components/new-layout";
-import useMobileDetect from "use-mobile-detect-hook";
+import {isMobile} from 'react-device-detect';
 
 export const Catch = () => {
   const error = useRouteError();
@@ -19,7 +19,6 @@ export const Pending = () => <div>Loading from _app...</div>;
 
 export default function App() {
   const queryClient = new QueryClient();
-  const detectMobile = useMobileDetect();
   const location = useLocation();
 
   const shouldNotNavigateToNewLayout = (pathname: string) => {
@@ -29,7 +28,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        {detectMobile.isMobile() || shouldNotNavigateToNewLayout(location.pathname) ? (
+        {isMobile || shouldNotNavigateToNewLayout(location.pathname) ? (
           <MainLayout>
             <Outlet />
           </MainLayout>
