@@ -6,7 +6,7 @@ import { UserPopover } from "@/components/user-popover";
 export function NewLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-screen bg-gray-100 flex dark:bg-gray-900/75 dark:border-gray-800">
-      <div className="h-full w-full max-w-[50px] sm:max-w-[260px] flex-col hidden sm:flex">
+      <div className="h-full w-full max-w-[50px] sm:min-w-[260px] sm:max-w-[260px] flex-col hidden sm:flex">
         <div className="p-4">
           <Link to="/" className="text-lg flex items-center gap-2">
             <BookMarkedIcon className="w-5 h-5 block sm:hidden" />
