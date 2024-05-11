@@ -1,9 +1,8 @@
-import { Header } from "@/components/header";
 import { Outlet, useRouteError } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "sonner";
-import Footer from "@/components/footer";
+import { MainLayout } from "@/components/main-layout";
 
 export const Catch = () => {
   const error = useRouteError();
@@ -18,17 +17,17 @@ export const Pending = () => <div>Loading from _app...</div>;
 
 export default function App() {
   const queryClient = new QueryClient();
-  const path = window.location.pathname;
+  // const path = window.location.pathname;
 
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        {path === "/404" ? null : <Header />}
-        <main>
+        {/* {path === "/404" ? null : <Header />} */}
+        <MainLayout>
           <Outlet />
-        </main>
+        </MainLayout>
         <Toaster richColors />
-        {["/feed-deck",'/404'].includes(path) ? null : <Footer />}
+        {/* {["/feed-deck",'/404'].includes(path) ? null : <Footer />} */}
       </QueryClientProvider>
     </ThemeProvider>
   );

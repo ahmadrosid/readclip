@@ -1,7 +1,7 @@
 import { Link } from "@/router";
 import { ModeToggle } from "./mode-toggle";
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="py-0 border-t bg-white dark:bg-transparent">
       <div className="px-8 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
