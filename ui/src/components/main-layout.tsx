@@ -5,7 +5,9 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      {children}
+      <div className="min-h-[93vh]">
+        {children}
+      </div>
       <Footer />
     </>
   );
