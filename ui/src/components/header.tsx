@@ -5,6 +5,7 @@ import { ModeToggle } from "./mode-toggle";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { auth } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export function Header() {
   const navigate = useNavigate();
@@ -98,8 +99,14 @@ export function Header() {
               <div className="flex gap-4 items-center">
                 <div
                   className="flex-shrink-0 hover:underline cursor-pointer text-sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toast.error("This is a bookmarklet, please drag it to your bookmarks bar!");
+                  }}
                   dangerouslySetInnerHTML={{ __html: rawLink }}
                 />
+
+                <ModeToggle />
                 <Button variant="outline" onClick={handleLogout}>
                   Logout
                 </Button>
