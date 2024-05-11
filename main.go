@@ -89,6 +89,7 @@ func main() {
 		"/tools/reading-time",
 		"/tools/markdown-editor",
 		"/explore-rss",
+		"/collections",
 	}
 
 	for _, path := range uiPaths {
