@@ -160,7 +160,7 @@ export default function Home() {
 
   return (
     <div className="px-4 gap-4 min-h-[80vh] relative">
-      <div className="py-4 w-full bg-gray-50 dark:bg-gray-900/90 dark:backdrop-blur">
+      <div className="py-4 w-full dark:backdrop-blur">
         <div className="max-w-3xl mx-auto">
           <form
             onSubmit={handleSubmit}
@@ -173,11 +173,11 @@ export default function Home() {
                 type="text"
                 placeholder="https://..."
                 name="web_url"
-                className="bg-white h-12 dark:bg-secondary"
+                className="bg-white h-12 dark:bg-gray-700"
               />
             </div>
             <div className="py-2">
-              <Button className="h-12 dark:bg-secondary text-white">
+              <Button className="h-12 dark:bg-gray-700 text-white">
                 {isLoading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (

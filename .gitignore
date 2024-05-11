@@ -4,4 +4,4 @@ build/
 cli/scraper/html/
 readclip.sql
 .idea/
-
+backupdb.sh

@@ -1,8 +1,10 @@
-import { Outlet, useRouteError } from "react-router-dom";
+import { Outlet, useLocation, useRouteError } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "sonner";
 import { MainLayout } from "@/components/main-layout";
+import { NewLayout } from "@/components/new-layout";
+import useMobileDetect from "use-mobile-detect-hook";
 
 export const Catch = () => {
   const error = useRouteError();
@@ -17,17 +19,26 @@ export const Pending = () => <div>Loading from _app...</div>;
 
 export default function App() {
   const queryClient = new QueryClient();
-  // const path = window.location.pathname;
+  const detectMobile = useMobileDetect();
+  const location = useLocation();
+
+  const shouldNotNavigateToNewLayout = (pathname: string) => {
+    return pathname === "/" || pathname === "/login" || pathname === "/register";
+  };
 
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        {/* {path === "/404" ? null : <Header />} */}
-        <MainLayout>
-          <Outlet />
-        </MainLayout>
+        {detectMobile.isMobile() || shouldNotNavigateToNewLayout(location.pathname) ? (
+          <MainLayout>
+            <Outlet />
+          </MainLayout>
+        ) : (
+          <NewLayout>
+            <Outlet />
+          </NewLayout>
+        )}
         <Toaster richColors />
-        {/* {["/feed-deck",'/404'].includes(path) ? null : <Footer />} */}
       </QueryClientProvider>
     </ThemeProvider>
   );

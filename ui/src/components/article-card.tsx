@@ -147,7 +147,7 @@ export function ArticleCard({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <Card className="grid shadow-none">
+    <Card className="grid shadow-none dark:border-gray-700/50">
       <CardHeader className="grid grid-cols-[1fr_25px] items-start gap-4 space-y-0 p-4 pr-6">
         <div className="space-y-1">
           <a

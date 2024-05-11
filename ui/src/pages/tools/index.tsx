@@ -63,7 +63,7 @@ export default function Tools() {
           ReadClip offers free tools to help streamline your daily tasks, without ads or distractions.
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
         <Card>
           <Link to="/tools/markdown-editor">
             <CardHeader>
