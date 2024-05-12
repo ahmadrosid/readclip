@@ -1,13 +1,6 @@
-import os
-import sys
-from groq import Groq
 from utils import read_file_to_string
 from llm import ask_groq, ask_together
 from prompt_toolkit import prompt as get_input
-
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-)
 
 messages = []
 
