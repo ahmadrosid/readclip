@@ -348,7 +348,7 @@ func main() {
 }
 ```
 
-Sometime some module might not need a database, so for that you can skip the creation of the database gorm struct and the repository might don't do any database operation.
+Sometimes a module might not need a database, so in that case, you can skip creating the database gorm struct, and the repository might not perform any database operations.
 
 ## For your reference
 
