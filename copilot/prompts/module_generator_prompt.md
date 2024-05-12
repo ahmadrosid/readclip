@@ -16,7 +16,7 @@ In readclip codebase module are placed in the `internal` folder. Inside that fol
 
 Here's and example code for module `tag`:
 
-**tag/domain.go:** A file to define the domain model for the tag module. It contains gorm struct model for table `clip_tag` and `tag`. Struct to model user request body eg `RequestCreateTag` and `RequestCreateClipTag`. Struct to model the interface for the tag repository (eg `TagRepository`).
+**internal/tag/domain.go:** A file to define the domain model for the tag module. It contains gorm struct model for table `clip_tag` and `tag`. Struct to model user request body eg `RequestCreateTag` and `RequestCreateClipTag`. Struct to model the interface for the tag repository (eg `TagRepository`).
 
 ```go
 // tag/domain.go
@@ -63,7 +63,7 @@ type TagRepository interface {
 }
 ```
 
-**tag/handler.go:** A file to define the handler for the tag module. It will handle the endpoint for creating a new tag, creating a clip tag, getting all tags, getting clip tags, deleting a tag, and deleting a clip tag.
+**internal/tag/handler.go:** A file to define the handler for the tag module. It will handle the endpoint for creating a new tag, creating a clip tag, getting all tags, getting clip tags, deleting a tag, and deleting a clip tag.
 
 ```go
 // tag/handler.go
@@ -237,7 +237,7 @@ func (h *TagHandler) deleteSelectedClipTag(c *fiber.Ctx) error {
 }
 ```
 
-**tag/repository.go:** A file to define the repository for the tag module. In this file you can do any operation related to data mutation or querying the database using gorm.
+**internal/tag/repository.go:** A file to define the repository for the tag module. In this file you can do any operation related to data mutation or querying the database using gorm.
 
 ```go
 // tag/repository.go
@@ -348,6 +348,8 @@ func main() {
 }
 ```
 
+Sometime some module might not need a database, so for that you can skip the creation of the database gorm struct and the repository might don't do any database operation.
+
 ## For your reference
 
 In the `main.go` file we have everything ready like database connection setup, registering the modules, and starting the server.
@@ -390,3 +392,36 @@ func Load() *Config {
 ```
 
 You can add more config variables to this file and if you need and use them in your modules. But most of the time you don't to add more config.
+
+The other note you might want to know is the go.mod file, which is you can use to see what are the dependencies of the readclip project. Here's the code for the `go.mod` file:
+
+```
+module github.com/ahmadrosid/readclip
+
+go 1.21
+
+require (
+	firebase.google.com/go v3.13.0+incompatible
+	github.com/JohannesKaufmann/html-to-markdown v1.4.1
+	github.com/andygrunwald/go-trending v0.0.0-20231024092240-c15f8d9c1844
+	github.com/caarlos0/env/v11 v11.0.0
+	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c
+	github.com/goccy/go-json v0.10.2
+	github.com/gofiber/fiber/v2 v2.48.0
+	github.com/gofiber/template/html/v2 v2.0.5
+	github.com/google/uuid v1.3.1
+	github.com/joho/godotenv v1.5.1
+	github.com/kkdai/youtube/v2 v2.10.1
+	github.com/lib/pq v1.10.9
+	github.com/markusmobius/go-trafilatura v1.5.1
+	github.com/milosgajdos/go-embeddings v0.3.2
+	github.com/mmcdole/gofeed v1.2.1
+	github.com/stretchr/testify v1.9.0
+	github.com/upstash/vector-go v0.4.0
+	golang.org/x/net v0.22.0
+	google.golang.org/api v0.143.0
+	gorm.io/driver/postgres v1.5.2
+	gorm.io/gorm v1.25.4
+)
+```
+

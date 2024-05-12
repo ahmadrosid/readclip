@@ -19,7 +19,7 @@ def ask(question):
 
 reset_messages()
 
-ask(question="create new module to store collection of clips this collection is like a folder that you can share it to the world.")
+ask(question="Create a new module for the blog. The blog post content will not be stored in the database; instead, it will be stored in a folder called 'posts' as a markdown file. This module will not accept post requests from users since it will only read the markdown files and compile them into HTML.")
 
 # try:
 #     while True:
