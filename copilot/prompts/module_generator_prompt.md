@@ -425,3 +425,38 @@ require (
 )
 ```
 
+We also have some util package you can use.
+
+This util package is used to convert markdown to html.
+
+```go
+package util
+
+import (
+	md "github.com/JohannesKaufmann/html-to-markdown"
+	"github.com/JohannesKaufmann/html-to-markdown/plugin"
+)
+
+func ConvertHtmlToMarkdown(html string) (string, error) {
+	converter := md.NewConverter("", true, nil)
+	converter.Use(plugin.GitHubFlavored())
+	markdown, err := converter.ConvertString(html)
+	if err != nil {
+		return "", err
+	}
+	return markdown, nil
+}
+```
+
+Usage example:
+
+```go
+import (
+    ...
+	"github.com/ahmadrosid/readclip/internal/util"
+    ...
+)
+
+markdown, err := util.ConvertHtmlToMarkdown(renderHtml)
+```
+
