@@ -5,7 +5,7 @@ from prompt_toolkit import prompt as get_input
 messages = []
 
 def reset_messages():
-    prompt = read_file_to_string("./prompts/api_generator.md") 
+    prompt = read_file_to_string("./prompts/api_generator_prompt.md") 
     messages.append({"role": "system", "content": prompt})
 
 def ask(question): 
