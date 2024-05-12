@@ -21,11 +21,11 @@ type Tag struct {
 	UpdatedAt *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
 }
 
-type InputCreateTag struct {
+type RequestCreateTag struct {
 	Name string `json:"name"`
 }
 
-type InputCreateClipTag struct {
+type RequestCreateClipTag struct {
 	ClipId string `json:"clip_id"`
 	TagId  string `json:"tag_id"`
 }

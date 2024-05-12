@@ -37,7 +37,7 @@ func (h *TagHandler) getUserID(c *fiber.Ctx) (string, error) {
 }
 
 func (h *TagHandler) createNewTag(c *fiber.Ctx) error {
-	createTag := &InputCreateTag{}
+	createTag := &RequestCreateTag{}
 	if err := c.BodyParser(createTag); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "error",
@@ -68,7 +68,7 @@ func (h *TagHandler) createNewTag(c *fiber.Ctx) error {
 }
 
 func (h *TagHandler) createClipTag(c *fiber.Ctx) error {
-	createClipTag := &InputCreateClipTag{}
+	createClipTag := &RequestCreateClipTag{}
 	if err := c.BodyParser(createClipTag); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "error",
