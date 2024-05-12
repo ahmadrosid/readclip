@@ -19,7 +19,39 @@ To create API endpoints, there are two ways to do it:
 1. Create a new folder in the `api` folder and add a `domain.go`, `handler.go` and `repository.go` file.
 2. Create new file in the `api` folder and add the api resource name for example `api/youtube.go`.
 
-Let's break down the first method:
+## For your reference
+
+Currently in the `main.go` file we have everything set up for you to create API endpoints.
+
+```go
+
+func main() {
+	env := config.Load()
+	db, err := util.ConnectToDatabase(env.DatabaseUrl)
+	if err != nil {
+		panic(err)
+	}
+
+	...
+
+	app := fiber.New(fiber.Config{
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
+		Views:       engine,
+	})
+
+
+	userRepo := user.NewUserRepository(db)
+
+	feed.NewFeedHandler(app.Group("/api/rss"), feed.NewFeedRepository(db), userRepo)
+	api.NewYoutubeHandler(app.Group("/api/youtube"))
+    ...
+}
+```
+
+## Let's break down the first method
+
+The folder structure is as follows:
 
 ```bash
 .
@@ -458,7 +490,39 @@ func (repo *feedRepository) GetFeedById(id string, userID uuid.UUID) (Feed, erro
 }
 ```
 
-The breakdown the second way to create API endpoints:
+Then to register the endpoints add this to the `main.go` file:
+
+```go
+userRepo := user.NewUserRepository(db)
+
+feed.NewFeedHandler(app.Group("/api/rss"), feed.NewFeedRepository(db), userRepo)
+```
+
+And here's the user repository interface and user data model for your reference:
+
+```go
+type User struct {
+	ID         uuid.UUID  `gorm:"primary_key;type:uuid;default:uuid_generate_v4()"`
+	Name       string     `gorm:"size:255"`
+	Username   *string    `gorm:"size:255;unique"`
+	Email      string     `gorm:"size:255;unique"`
+	FirebaseID string     `gorm:"size:255;unique"`
+	CreatedAt  *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
+	UpdatedAt  *time.Time `gorm:"default:CURRENT_TIMESTAMP"`
+	DeletedAt  *time.Time
+}
+
+type UserRepository interface {
+	FindByID(id uuid.UUID) (*User, error)
+	FindByFirebaseID(firebaseID string) (*User, error)
+	Create(user *User) (*User, error)
+	Update(user *User) (*User, error)
+	UpdateUsername(user *User, username string) (*User, error)
+	Delete(id uuid.UUID) error
+}
+```
+
+## The breakdown the second way to create API endpoints:
 
 Sometime you don't need to create API to doesn't need to query the database. For example, you can create a file in the `api` folder and add the api resource name for example `api/youtube.go`.
 
@@ -553,3 +617,10 @@ func (h *youtubeHandler) getVideoInfo(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(video)
 }
 ```
+
+Then to register the endpoints add this to the `main.go` file:
+
+```go
+api.NewYoutubeHandler(app.Group("/api/youtube"))
+```
+
