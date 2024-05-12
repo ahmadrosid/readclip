@@ -23,17 +23,18 @@ reset_messages()
 
 args = sys.argv[1:]
 if len(args) > 0:
-    prompt_file_path = args[0]
-    output = ask(read_file_to_string(prompt_file_path)) 
-    write_file("example_output_prompt.md", output.strip())
-    print("Output written to example_output_prompt.md")
+    # prompt_file_path = args[0]
+    # output = ask(read_file_to_string(prompt_file_path)) 
+    # write_file("example_output_prompt.md", output.strip())
+    # print("Output written to example_output_prompt.md")
 
     text = read_file_to_string("example_output_prompt.md")
     code_snippets = parse_go_code_snippets(text)
     for snippet in code_snippets:
-        print(f"File path: {snippet['file_path']}")
+        print(f"Create file: {snippet['file_path']}") 
+        write_file("../" +snippet['file_path'], snippet['code'])
         # print(snippet['code'])
-        print()
+
 elif len(sys.argv) == 0:
     try:
         while True:
