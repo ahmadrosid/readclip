@@ -49,7 +49,7 @@ func main() {
 }
 ```
 
-## Let's break down the first method
+## 1. Let's break down the first method
 
 The folder structure is as follows:
 
@@ -522,7 +522,7 @@ type UserRepository interface {
 }
 ```
 
-## The breakdown the second way to create API endpoints:
+## 2. The breakdown the second way to create API endpoints:
 
 Sometime you don't need to create API to doesn't need to query the database. For example, you can create a file in the `api` folder and add the api resource name for example `api/youtube.go`.
 
