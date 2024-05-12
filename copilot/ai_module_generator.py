@@ -1,6 +1,9 @@
 from utils import read_file_to_string
 from llm import ask_groq, ask_together
 from prompt_toolkit import prompt as get_input
+from dotenv import load_dotenv
+
+load_dotenv()
 
 messages = []
 
