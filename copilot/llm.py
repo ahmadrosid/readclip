@@ -25,8 +25,6 @@ def ask_together(messages):
     response = together_client.chat.completions.create(
         messages=messages,
         # model="meta-llama/Llama-3-8b-chat-hf",
-        # model="codellama/CodeLlama-13b-Instruct-hf",
-        # model="codellama/CodeLlama-7b-Instruct-hf",
         model="mistralai/Mixtral-8x22B-Instruct-v0.1",
         stream=True,
     )
