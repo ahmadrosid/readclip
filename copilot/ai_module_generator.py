@@ -27,7 +27,6 @@ if len(args) > 0:
     # output = ask(read_file_to_string(prompt_file_path)) 
     # write_file("example_output_prompt.md", output.strip())
     # print("Output written to example_output_prompt.md")
-
     text = read_file_to_string("example_output_prompt.md")
     code_snippets = parse_go_code_snippets(text)
     for snippet in code_snippets:
@@ -35,7 +34,7 @@ if len(args) > 0:
         write_file("../" +snippet['file_path'], snippet['code'])
         # print(snippet['code'])
 
-elif len(sys.argv) == 0:
+elif len(args) == 0:
     try:
         while True:
             user_input = get_input("Ask ai: ")

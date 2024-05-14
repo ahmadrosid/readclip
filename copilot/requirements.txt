@@ -4,3 +4,4 @@ openai
 anthropic
 prompt_toolkit
 python-dotenv
+pathlib

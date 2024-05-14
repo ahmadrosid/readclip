@@ -1,5 +1,7 @@
 This is how module works in the Readclip codebase.
 
+Readclip is created with Golang version `1.16`.
+
 ## What is a module?
 
 A module is a self-contained piece of code that performs a specific task. It can be a function, a class, or a module. Modules are used to organize and reuse code, making it easier to manage and maintain large projects.
@@ -427,7 +429,7 @@ require (
 
 We also have some util package you can use.
 
-This util package is used to convert markdown to html.
+This util package is used to convert html to markdown. 
 
 ```go
 package util
@@ -435,6 +437,12 @@ package util
 import (
 	md "github.com/JohannesKaufmann/html-to-markdown"
 	"github.com/JohannesKaufmann/html-to-markdown/plugin"
+
+	"unsafe"
+
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 )
 
 func ConvertHtmlToMarkdown(html string) (string, error) {
@@ -445,6 +453,22 @@ func ConvertHtmlToMarkdown(html string) (string, error) {
 		return "", err
 	}
 	return markdown, nil
+}
+
+func unsafeByteToString(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
+}
+
+func MarkdownToHTML(mdText string) string {
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	p := parser.NewWithExtensions(extensions)
+	doc := p.Parse([]byte(mdText))
+
+	htmlFlags := html.CommonFlags | html.HrefTargetBlank
+	opts := html.RendererOptions{Flags: htmlFlags}
+	renderer := html.NewRenderer(opts)
+
+	return unsafeByteToString(markdown.Render(doc, renderer))
 }
 ```
 
@@ -457,6 +481,18 @@ import (
     ...
 )
 
+// Convert html to markdown
 markdown, err := util.ConvertHtmlToMarkdown(renderHtml)
+
+// Convert markdown to html
+html := util.MarkdownToHTML(markdown)
 ```
 
+Also if you are working with file you should not use `ioutil` package, instead use `os` package.
+
+```
+ioutil.ReadFile is deprecated: As of Go 1.16, this function simply calls [os.ReadFile].deprecateddefault
+ioutil.ReadAll is deprecated: As of Go 1.16, this function simply calls [io.ReadAll].deprecateddefault
+
+ioutil.ReadDir is deprecated: As of Go 1.16, [os.ReadDir] is a more efficient and correct choice: it returns a list of [fs.DirEntry] instead of [fs.FileInfo], and it returns partial results in the case of an error midway through reading a directory.deprecateddefault
+```

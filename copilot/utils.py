@@ -1,5 +1,5 @@
 import re
-import os
+from pathlib import Path
 
 def create_file_if_not_exists(file_path):
     """
@@ -12,24 +12,13 @@ def create_file_if_not_exists(file_path):
     Returns:
         bool: True if the file was created, False if the file already existed.
     """
-    directory = os.path.dirname(file_path)
-    print(f"directory: {directory}")
-    # if not os.path.exists(directory):
-    #     try:
-    #         os.makedirs(directory)
-    #     except OSError as e:
-    #         print(f"Error creating directory: {e}")
-    #         return False
-
-    if not os.path.exists(file_path):
-        try:
-            with open(file_path, 'w') as file:
-                file.write('')  # Write an empty string to create the file
-            return True
-        except IOError as e:
-            print(f"Error creating file: {e}")
-            return False
-    else:
+    path = Path(file_path)
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.touch(exist_ok=True)
+        return True
+    except Exception as e:
+        print(f"Error creating file or directory: {e}")
         return False
 
 def read_file_to_string(file_path):
