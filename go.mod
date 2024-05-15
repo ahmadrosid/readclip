@@ -81,6 +81,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
+	github.com/sashabaranov/go-openai v1.24.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/tetratelabs/wazero v1.2.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect

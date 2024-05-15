@@ -52,6 +52,13 @@ export const tools = [
     description: "Convert HTML to markdown.",
     link: "/tools/html-to-markdown" as const,
   },
+  {
+    slug: "blog-title-generator",
+    title: "Blog Title Generator",
+    description:
+      "Generate high-quality blog titles for your content.",
+    link: "/tools/blog-title-generator" as const,
+  }
 ];
 
 export default function Tools() {
@@ -128,6 +135,16 @@ export default function Tools() {
               <CardTitle>Html to markdown</CardTitle>
               <CardDescription>
                 Convert HTML to markdown.
+              </CardDescription>
+            </CardHeader>
+          </Link>
+        </Card>
+        <Card>
+          <Link to="/tools/blog-title-generator">
+            <CardHeader>
+              <CardTitle>Blog Title Generator</CardTitle>
+              <CardDescription>
+                Generate high-quality blog titles for your content.
               </CardDescription>
             </CardHeader>
           </Link>

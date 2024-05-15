@@ -1,4 +1,4 @@
 __pycache__
 .env
-example_output_*
-prompt_create_module_*
+example*
+prompt*

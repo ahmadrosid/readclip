@@ -1,6 +1,9 @@
+import sys
+from utils import parse_go_code_snippets
+from utils import write_file
 from utils import read_file_to_string
-from llm import ask_groq, ask_together
-from prompt_toolkit import prompt as get_input
+from llm import ask_together
+from prompt_toolkit.shortcuts import confirm
 
 messages = []
 
@@ -16,7 +19,20 @@ def ask(question):
 
 reset_messages()
 
-ask(question="create api to store notes, the notes will be belong for some url.")
+args = sys.argv[1:]
+if len(args) > 0:
+    prompt_file_path = args[0]
+    output = ask(read_file_to_string(prompt_file_path)) 
+    code_snippets = parse_go_code_snippets(output.strip())
+    for snippet in code_snippets:
+        print(f"Create file: {snippet['file_path']}")
+        answer = confirm(f"Do you want to create file {snippet['file_path']}?")
+        if answer:
+            print(f"Create file: {snippet['file_path']}")
+        # write_file("../" +snippet['file_path'], snippet['code'])
+
+
+# ask(question="create api to store notes, the notes will be belong for some url.")
 
 # try:
 #     while True:

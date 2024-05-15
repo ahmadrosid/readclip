@@ -210,6 +210,7 @@ func main() {
 			"GET::/explore-rss",
 			"GET::/api/rss/github/languages",
 			"POST::/api/convert/html",
+			"POST::/api/proxy/*",
 		},
 		ErrorHandler: firebase.ErrorHandler,
 	}))
@@ -226,6 +227,7 @@ func main() {
 	api.NewYoutubeHandler(app.Group("/api/youtube"))
 	api.NewRedditHandler(app.Group("/api/reddit"))
 	api.NewConvertHtmlHandler(app.Group("/api/convert"))
+	api.NewOpenAIHandler(app.Group("/api/proxy"))
 
 	app.Listen(":" + env.Port)
 }
