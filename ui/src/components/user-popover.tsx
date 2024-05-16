@@ -3,9 +3,11 @@ import { ModeToggle } from './mode-toggle'
 import { useCallback } from "react";
 import { auth } from "@/lib/firebase";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '@/hooks/useAuth';
 
 export function UserPopover() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleLogout = useCallback(async () => {
     await auth.signOut();
@@ -19,9 +21,9 @@ export function UserPopover() {
         <PopoverTrigger asChild>
             <div className="p-2 rounded-md flex gap-2 items-center cursor-pointer">
                 <img
-                  src="https://pbs.twimg.com/profile_images/1590244369919258625/ICtjIhUJ_x96.jpg"
+                  src={user?.photoURL || "/img/avatar.png"}
                   className="w-7 h-7 rounded-full"
-                  alt="User Avatar"
+                  alt={user?.displayName || ""}
                 />
                 <div className='hidden sm:block'>Ahmad Rosid</div>
             </div>
