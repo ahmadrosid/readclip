@@ -57,5 +57,5 @@ func IsTweeterUrl(str string) bool {
 	if err != nil {
 		panic(err)
 	}
-	return hostname == "twitter.com" || hostname == "www.twitter.com" || strings.Contains(hostname, "x.com")
+	return hostname == "twitter.com" || hostname == "www.twitter.com" || hostname == "x.com"
 }

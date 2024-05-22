@@ -71,7 +71,8 @@ func GetTwitterIDsFromURL(twitterURL string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if u.Host != "twitter.com" {
+
+	if u.Host != "twitter.com" && u.Host != "x.com" {
 		return "", errors.New("invalid Twitter URL")
 	}
 
@@ -89,7 +90,8 @@ func GetTwitterIDsFromURL(twitterURL string) (string, error) {
 }
 
 func GetTwitterSttusInfo(tweetUrl string) (*TwitterStatusResponse, error) {
-	// curl 'https://vividshare.io/api/tweet?id=1780554566121263576'
+	// curl 'https://vividshare.io/api/tweet?id=1765889695983026286'
+	// https://x.com/danjharrin/status/1765889695983026286
 	tweetId, err := GetTwitterIDsFromURL(tweetUrl)
 	if err != nil {
 		return nil, err
@@ -111,12 +113,11 @@ func GetTwitterSttusInfo(tweetUrl string) (*TwitterStatusResponse, error) {
 }
 
 func sliceStringTitle(s string) string {
-	lines := strings.Split(s, "\n")
-	if len(lines) == 1 || len(lines[0]) > 60 {
-		return lines[0][:60]
+	s = strings.TrimSuffix(s, "\n")
+	if len(s) > 60 {
+		return s[:60]
 	}
-
-	return lines[0]
+	return s
 }
 
 func MapTwitterStatusToClip(tweetUrl string, status *TwitterStatusResponse) *util.ContentData {
