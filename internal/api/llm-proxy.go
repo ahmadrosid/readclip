@@ -78,6 +78,7 @@ func (h *openaiHandler) createCompletion(c *fiber.Ctx) error {
 				w.Flush()
 				break
 			}
+
 			fmt.Fprintf(w, "data: %s\n\n", content)
 			err = w.Flush()
 			if err != nil {
