@@ -47,9 +47,16 @@ func IsRedditUrl(str string) bool {
 func IsMediumUrl(str string) bool {
 	hostname, err := GetHostname(str)
 	if err != nil {
-		panic(err)
+		return false
 	}
-	return hostname == "medium.com" || hostname == "www.medium.com" || strings.Contains(hostname, "medium.com")
+
+	validHosts := map[string]bool{
+		"medium.com":     true,
+		"www.medium.com": true,
+		"andrewzuo.com":  true,
+	}
+
+	return validHosts[hostname] || strings.HasSuffix(hostname, ".medium.com")
 }
 
 func IsTweeterUrl(str string) bool {

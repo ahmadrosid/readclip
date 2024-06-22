@@ -11,7 +11,7 @@ build-ui:
 	(set -e; cd ui && npm install --legacy-peer-deps && npm run build)
 
 dev:
-	@source .env && npx concurrently "cd ui && npm run dev" "go run main.go"
+	@source .env && bun --filter "ui" --filter "go run main.go"
 
 start:
 	docker compose up -d
