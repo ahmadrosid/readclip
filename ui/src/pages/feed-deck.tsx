@@ -101,7 +101,7 @@ export default function FeedDeckPage() {
           className={cn(
             "min-w-[28rem] snap-center",
             savedDecksComponents.length === 0 &&
-              "w-screen grid place-content-center h-[80vh]"
+              "w-full grid place-content-center h-[80vh]"
           )}
         >
           <div className="text-center">
@@ -169,11 +169,11 @@ export default function FeedDeckPage() {
                       label="RSS Feed"
                       onValueUpdate={setSelectedFeedItem}
                     />
-                    <FeedItem
+                    {/* <FeedItem
                       type="indiehacker"
                       label="Indiehacker"
                       onValueUpdate={setSelectedFeedItem}
-                    />
+                    /> */}
                     <FeedItem
                       type="reddit"
                       label="Sub Reddit"
