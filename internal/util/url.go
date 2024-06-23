@@ -51,9 +51,10 @@ func IsMediumUrl(str string) bool {
 	}
 
 	validHosts := map[string]bool{
-		"medium.com":     true,
-		"www.medium.com": true,
-		"andrewzuo.com":  true,
+		"medium.com":               true,
+		"www.medium.com":           true,
+		"andrewzuo.com":            true,
+		"levelup.gitconnected.com": true,
 	}
 
 	return validHosts[hostname] || strings.HasSuffix(hostname, ".medium.com")
