@@ -63,6 +63,7 @@ func IsMediumUrl(str string) bool {
 		"uxplanet.org":             true,
 		"betterprogramming.pub":    true,
 		"blog.prototypr.io":        true,
+		"writingcooperative.com":   true,
 	}
 
 	return validHosts[hostname] || strings.HasSuffix(hostname, ".medium.com")
