@@ -1,9 +1,9 @@
 import { BaseDeck } from "@/components/feed";
-import ReactHtmlParser from "react-html-parser";
+import { convertHtmlToReact } from "@hedgedoc/html-to-react";
 
 export default function HtmlTransformer(html: string, type: BaseDeck["type"]) {
-  return ReactHtmlParser(html, {
-    transform(node) {
+  return convertHtmlToReact(html, {
+    transform(node: any) {
       if (node.type === "tag" && node.name === "a") {
         if (node.attribs) {
           node.attribs.target = "_blank";
