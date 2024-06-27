@@ -153,6 +153,7 @@ func main() {
 
 	app.Get("/tools/business-analysis", func(c *fiber.Ctx) error {
 		fs := http.FS(index)
+
 		oldURL := "https://readclip.ahmadrosid.com/img/readclip.png"
 		newURL := "https://res.cloudinary.com/dr15yjl8w/image/upload/v1697992261/pika-1697992229212-1x_s8krxd.png"
 
