@@ -25,7 +25,7 @@ export function UserPopover() {
                   className="w-7 h-7 rounded-full"
                   alt={user?.displayName || ""}
                 />
-                <div className='hidden sm:block'>Ahmad Rosid</div>
+                <div className='hidden sm:block'>{user?.displayName || ""}</div>
             </div>
         </PopoverTrigger>
         <PopoverContent sideOffset={5} align='start' className='w-[200px] dark:bg-gray-800'>
