@@ -57,11 +57,12 @@ ssh root@api.ahmadrosid.com "rm /etc/nginx/sites-available/readclip.site.conf"
 Backup db:
 
 ```bash
-pg_dump -U alahmadrosid -d neondb -h ep-nameless-shape-59949167.ap-southeast-1.aws.neon.tech -p 5432 > readclip.sql
+pg_dump -d "host=ep-$HOST user=$USER dbname=$DATABASE_NAME password=$PASSWORD sslmode=require" -f ./neondb_backup.sql
 ```
 
 Restore db:
 
 ```bash
 pg_restore -h ep-ancient-mode-a1fbkbqv.ap-southeast-1.aws.neon.tech -p 5432 -U alahmadrosid -d neondb readclip.sql
+/opt/homebrew/opt/postgresql@16/bin/psql -U ahmadrosid -d readclip_backup -f neondb_backup.sql
 ```
