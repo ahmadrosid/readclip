@@ -25,6 +25,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html/v2"
 	_ "github.com/lib/pq"
@@ -55,10 +56,12 @@ func main() {
 		Views:       engine,
 	})
 
-	// app.Use(logger.New())
-	// app.Use("/api", logger.New(logger.Config{
-	// 	Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
-	// }))
+	if env.DebugMode {
+		app.Use(logger.New())
+		app.Use("/api", logger.New(logger.Config{
+			Format: "[${time}] ${status} - ${latency} ${method} ${path} - ${body}\n",
+		}))
+	}
 
 	app.Get("/page", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{

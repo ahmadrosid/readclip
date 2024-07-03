@@ -12,6 +12,7 @@ type Config struct {
 	GoogleCredentials string `env:"GOOGLE_APPLICATION_CREDENTIALS" envDefault:""`
 	DatabaseUrl       string `env:"DATABASE_URL" envDefault:""`
 	Uptash            Uptash `envPrefix:"UPSTASH_"`
+	DebugMode         bool   `env:"DEBUG_MODE" envDefault:"false"`
 }
 
 type Uptash struct {
