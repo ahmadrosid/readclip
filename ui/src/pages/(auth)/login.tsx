@@ -86,7 +86,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl">Sign in to ReadClipx</CardTitle>
+            <CardTitle className="text-2xl">Sign in to ReadClip</CardTitle>
             <CardDescription>
               Start your reading journey by logging in to your account.
             </CardDescription>
