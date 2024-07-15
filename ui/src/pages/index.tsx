@@ -19,7 +19,7 @@ export function DialogDemo({ className }: { className?: string }) {
       <DialogTrigger
         className={cn("px-6 flex items-center underline", className)}
       >
-        See Demo <ArrowRight className="w-4 h-4 ml-3" />
+        See Demo
       </DialogTrigger>
       <DialogContent className="max-w-lg sm:max-w-3xl">
         <DialogHeader>
@@ -74,11 +74,11 @@ export default function Home() {
                 buttonVariants({
                   size: "lg",
                   className:
-                    "items-center justify-between h-10  dark:text-gray-100 text-white dark:bg-gray-700 dark:hover:bg-gray-800",
+                    "items-center justify-between h-10 px-5 dark:text-gray-100 text-white dark:bg-gray-700 dark:hover:bg-gray-800",
                 })
               )}
             >
-              Getting started
+              Getting started  <ArrowRight className="w-4 h-4 ml-3" />
             </Link>
             <DialogDemo />
           </div>
@@ -254,7 +254,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

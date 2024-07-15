@@ -47,7 +47,7 @@ export function SummaryButton({
             )}
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="bg-gray-800">
+        <TooltipContent className="bg-gray-800 dark:text-white">
           <p>Generate summary</p>
         </TooltipContent>
       </Tooltip>
