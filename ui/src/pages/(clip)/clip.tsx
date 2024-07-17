@@ -32,6 +32,7 @@ import { DialogDemo } from "..";
 import { Link } from "@/router";
 import { SummaryCard } from "@/components/summary-card";
 import { SummaryButton } from "@/components/summary-button";
+import CreateNewClip from "@/components/create-new-clip";
 
 function LoadingSkeleton() {
   return (
@@ -141,6 +142,10 @@ export default function Home() {
   }, [data, deleteMutation, user]);
 
   const handleAddTag = useCallback(() => setOpenAddTag(true), []);
+  const setResult = (result: string) => {
+    setInputUrl(result)
+    mutate(result);
+  };
 
   useEffect(() => {
     if (urlParam !== null && !isLoading && !data && !deleteMutation.isLoading) {
@@ -176,14 +181,15 @@ export default function Home() {
                 className="bg-white h-12 dark:bg-gray-700"
               />
             </div>
-            <div className="py-2">
-              <Button className="h-12 dark:bg-gray-700 text-white">
+            <div className="py-2 space-x-2">
+              <Button className="h-12 dark:bg-gray-700 dark:hover:bg-gray-800 text-white">
                 {isLoading ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
                 ) : (
                   <Send className="w-4 h-4" />
                 )}
               </Button>
+              <CreateNewClip setResult={setResult} />
             </div>
           </form>
         </div>

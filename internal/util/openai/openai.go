@@ -59,7 +59,7 @@ func SummarizeContent(content string) (string, error) {
 	trimmedContent := TrimText(content, 2500)
 
 	request := OpenaiRequest{
-		Model: "gpt-3.5-turbo-16k",
+		Model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
 		Messages: []Message{
 			{
 				Role:    "system",
@@ -78,7 +78,8 @@ func SummarizeContent(content string) (string, error) {
 	}
 
 	// url := "https://api.openai.com/v1/chat/completions"
-	url := "http://143.198.16.88:3040/v1/chat/completions"
+	// url := "http://143.198.16.88:3040/v1/chat/completions"
+	url := "https://api.together.xyz/v1/chat/completions"
 	Authorization := env.GetEnv("OPENAI_API_KEY")
 	response, err := fetch.Post(url, request, Authorization)
 	if err != nil {
