@@ -1,5 +1,5 @@
 <script>
-  // import ModeToggle from "./mode-toggle.svelte";
+  import ModeToggle from "./ui/ModeToggle.svelte";
 </script>
 
 <footer class="py-0 border-t bg-white dark:bg-transparent">
@@ -39,7 +39,7 @@
       >
         Contact
       </a>
-      <!-- <ModeToggle /> -->
+      <ModeToggle />
     </div>
   </div>
 </footer>

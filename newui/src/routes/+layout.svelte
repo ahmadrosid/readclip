@@ -4,6 +4,8 @@
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
   import MainNavigation from "@/components/MainNavigation.svelte";
   import Footer from "@/components/Footer.svelte";
+  import { ModeWatcher } from "mode-watcher";
+
   const queryClient = new QueryClient();
 </script>
 
@@ -11,6 +13,7 @@
   <MainNavigation />
   <slot></slot>
   <Footer />
+  <ModeWatcher />
 </QueryClientProvider>
 
 <Toaster />

@@ -6,7 +6,9 @@
 </script>
 
 <svelte:head>
-  <title>Readclip - Read, Save and Enjoy</title>
+  <title>
+	ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy.
+  </title>
 </svelte:head>
 
 <div>
@@ -86,7 +88,7 @@
   </div>
 
   <div class="bg-gray-100 dark:bg-gray-900">
-    <div class="max-w-4xl mx-auto space-y-4 py-12 mb-8 px-4">
+    <div class="max-w-4xl mx-auto space-y-4 py-12 px-4">
       <h2
         class="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white"
       >

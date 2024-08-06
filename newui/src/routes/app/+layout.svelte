@@ -14,12 +14,12 @@
   } from "lucide-svelte";
 
   const navItems = [
-    { to: "/clip", icon: Home, label: "Home" },
-    { to: "/clips", icon: Bookmark, label: "Bookmarks" },
-    { to: "/collections", icon: Rows, label: "Collections" },
-    { to: "/feed-deck", icon: Rss, label: "Feeds" },
+    { to: "/app", icon: Home, label: "Home" },
+    { to: "/app/saved", icon: Bookmark, label: "Bookmarks" },
+    { to: "/app/collections", icon: Rows, label: "Collections" },
+    { to: "/app/feed-deck", icon: Rss, label: "Feeds" },
     { to: "/tools", icon: Wrench, label: "Tools" },
-    { to: "/setting", icon: Cog, label: "Settings" },
+    { to: "/app/setting", icon: Cog, label: "Settings" },
   ];
 </script>
 

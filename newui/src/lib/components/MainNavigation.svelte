@@ -2,7 +2,6 @@
   import { Button } from "@/components/ui/button";
   import { BookMarked } from "lucide-svelte";
   import { onMount } from "svelte";
-  import { toast } from "svelte-sonner";
 
   let hasToken = false;
 
@@ -33,19 +32,19 @@
           </span>
         </a>
 
-        <a href="/clip">
+        <a href="/app">
           <Button class="dark:text-gray-300 text-gray-800 px-2" variant="link">
             Home
           </Button>
         </a>
 
-        <a href="/clips">
+        <a href="/app/saved">
           <Button class="dark:text-gray-300 text-gray-800 px-2" variant="link">
             Clips
           </Button>
         </a>
 
-        <a href="/feed-deck">
+        <a href="/app/feed-deck">
           <Button class="dark:text-gray-300 text-gray-800 px-2" variant="link">
             Feeds
           </Button>
