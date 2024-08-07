@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Title from "@/components/ui/Title.svelte";
+  import { Title } from "@/components/ui/title";
   import * as Card from "$lib/components/ui/card";
 
   export let tools = [

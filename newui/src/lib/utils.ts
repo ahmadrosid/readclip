@@ -60,3 +60,16 @@ export const flyAndScale = (
 		easing: cubicOut
 	};
 };
+
+export function downloadText(title: string, data: string) {
+	const blob = new Blob([data], {
+	  type: "text/markdown",
+	});
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = title;
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+}

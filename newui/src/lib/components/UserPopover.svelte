@@ -11,10 +11,9 @@
     let user: User | null = null;
 
     onMount(() => {
-        // Initialize user data here
-        // This is a placeholder for the useAuth hook functionality
+        // only for testing
         user = {
-            photoURL: '/avatar.svg',
+            photoURL: '/img/avatar.png',
             displayName: ''
         };
     });
@@ -37,14 +36,16 @@
                     class="w-7 h-7 rounded-full"
                     alt={user?.displayName || ""}
                 />
-                <div class='hidden sm:block'>{user?.displayName || ""}</div>
+                <div class='hidden sm:block text-sm'>{user?.displayName || ""}</div>
             </div>
         </PopoverTrigger>
         <PopoverContent sideOffset={5} align='start' class='w-[200px] dark:bg-gray-800'>
             <ul class='text-gray-600 dark:text-gray-400 text-sm space-y-2'>
                 <li class="cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-gray-300">Settings</li>
                 <li class="cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-gray-300">Appearance</li>
-                <li class="cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-gray-300" on:click={handleLogout}>Logout</li>
+                <li class="cursor-pointer hover:underline hover:text-gray-800 dark:hover:text-gray-300">
+                    <button on:click={handleLogout}>Logout</button>
+                </li>
             </ul>
         </PopoverContent>
     </Popover>

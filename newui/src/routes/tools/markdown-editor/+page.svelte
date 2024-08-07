@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Title from "@/components/ui/Title.svelte";
+  import { Title } from "@/components/ui/title";
   import { Separator } from "@/components/ui/separator";
   import { Markdown } from "@/components/markdown";
   import { twMerge } from "tailwind-merge";
