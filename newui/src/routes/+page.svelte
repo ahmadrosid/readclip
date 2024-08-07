@@ -3,6 +3,8 @@
   import { Badge } from "@/components/ui/badge";
   import { Card, CardContent, CardTitle } from "@/components/ui/card";
   import DialogDemo from "@/components/DialogDemo.svelte";
+  import MainNavigation from "@/components/MainNavigation.svelte";
+  import Footer from "@/components/Footer.svelte";
 </script>
 
 <svelte:head>
@@ -12,6 +14,7 @@
 </svelte:head>
 
 <div>
+  <MainNavigation />
   <div class="py-0 sm:py-16 relative">
     <div
       class="absolute inset-0 -z-10 h-full w-full bg-gray-50 dark:bg-gray-900 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:16px_16px]"
@@ -218,4 +221,5 @@
       </div>
     </div>
   </div>
+  <Footer />
 </div>

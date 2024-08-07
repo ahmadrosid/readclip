@@ -1,17 +1,12 @@
 <script>
-  import { Toaster } from "svelte-sonner";
-  import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
-  const queryClient = new QueryClient();
-
-  import {
-    BookMarked,
-    Home,
-    Bookmark,
-    Rows,
-    Rss,
-    Wrench,
-    Cog,
-  } from "lucide-svelte";
+  import BookMarked from "lucide-svelte/icons/book-marked";
+  import Home from "lucide-svelte/icons/house";
+  import Bookmark from "lucide-svelte/icons/bookmark";
+  import Rows from "lucide-svelte/icons/rows-2";
+  import Rss from "lucide-svelte/icons/rss";
+  import Wrench from "lucide-svelte/icons/wrench";
+  import Cog from "lucide-svelte/icons/cog";
+  import UserPopover from "@/components/UserPopover.svelte";
 
   const navItems = [
     { to: "/app", icon: Home, label: "Home" },
@@ -52,19 +47,15 @@
       </ul>
     </div>
 
-    <!-- UserPopover component would go here -->
+    <UserPopover />
   </div>
   <div class="py-2 pr-2 flex-1">
     <div
       class="rounded-md bg-white/75 dark:bg-gray-800/35 w-full h-full border dark:border-gray-700/50 overflow-auto"
     >
-      <QueryClientProvider client={queryClient}>
-        <div class="p-6">
-          <slot></slot>
-        </div>
-      </QueryClientProvider>
-
-      <Toaster />
+      <div class="p-6">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </div>
