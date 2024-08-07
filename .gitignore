@@ -5,3 +5,4 @@ cli/scraper/html/
 readclip.sql
 .idea/
 backupdb.sh
+repopack-output.txt
