@@ -9,7 +9,7 @@
 
 <svelte:head>
   <title>
-	ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy.
+	  ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy.
   </title>
 </svelte:head>
 

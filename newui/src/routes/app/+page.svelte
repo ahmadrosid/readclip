@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { toast } from "svelte-sonner";
   import { createQuery } from "@tanstack/svelte-query";
 
   const query = createQuery({

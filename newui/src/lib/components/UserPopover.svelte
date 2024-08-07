@@ -14,8 +14,8 @@
         // Initialize user data here
         // This is a placeholder for the useAuth hook functionality
         user = {
-            photoURL: '/img/avatar.png',
-            displayName: 'User Name'
+            photoURL: '/avatar.svg',
+            displayName: ''
         };
     });
 

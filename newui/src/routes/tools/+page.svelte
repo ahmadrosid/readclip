@@ -8,7 +8,7 @@
       title: "Youtube Transcript",
       description:
         "Get the transcript of any Youtube video.",
-      link: `/tools/youtube-transcript`,
+      link: "/tools/youtube-transcript",
     },
     {
       slug: "reddit-reader",
@@ -58,7 +58,7 @@
 
 <div class="px-4 bg-gray-900 sm:px-8 mx-auto min-h-[80vh]">
   <div class="pt-6 pb-4">
-    <Title className="pb-4">Free tools from Readclip</Title>
+    <Title class="pb-4">Free tools from Readclip</Title>
     <p class="text-lg text-gray-600 dark:text-gray-300">
       ReadClip offers free tools to help streamline your daily tasks, without
       ads or distractions.

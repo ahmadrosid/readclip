@@ -76,3 +76,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.prose pre {
+  overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: transparent;
+}

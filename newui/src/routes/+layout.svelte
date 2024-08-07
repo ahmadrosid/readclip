@@ -7,6 +7,12 @@
   const queryClient = new QueryClient();
 </script>
 
+<svelte:head>
+  <title>
+	  ReadClip - Your Personal Knowledge Library: Save, Organize, and Enjoy.
+  </title>
+</svelte:head>
+
 <QueryClientProvider client={queryClient}>
   <slot></slot>
 </QueryClientProvider>
