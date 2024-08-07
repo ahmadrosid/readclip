@@ -50,7 +50,7 @@
   }
 </script>
 
-<div class="p-4 md:p-8 min-h-[80vh]">
+<div class="min-h-[80vh]">
   <h1 class="text-3xl font-bold mb-6">Collections</h1>
 
   <div class="mb-8">
