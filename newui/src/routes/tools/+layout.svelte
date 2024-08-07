@@ -4,7 +4,7 @@
 </script>
 
 <MainNavigation />
-<div class="dark:bg-gray-900">
+<div class="bg-gray-50 dark:bg-gray-900">
   <div class="w-full max-w-[90vw] mx-auto">
     <slot />
   </div>

@@ -2,6 +2,7 @@
   import { Button } from "@/components/ui/button";
   import { BookMarked } from "lucide-svelte";
   import { onMount } from "svelte";
+  import ModeToggle from "./ui/ModeToggle.svelte";
 
   let hasToken = false;
 
@@ -110,6 +111,7 @@
 
     <div class="px-0 sm:pr-2 sm:pl-4 block md:hidden">
       <!-- ModeToggle component would go here -->
+       <ModeToggle />
     </div>
   </div>
 </header>
