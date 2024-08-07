@@ -56,7 +56,7 @@
   ];
 </script>
 
-<div class="px-4 bg-gray-900 sm:px-8 mx-auto min-h-[80vh]">
+<div class="px-4 dark:bg-gray-900 sm:px-8 mx-auto min-h-[80vh]">
   <div class="pt-6 pb-4">
     <Title class="pb-4">Free tools from Readclip</Title>
     <p class="text-lg text-gray-600 dark:text-gray-300">
@@ -66,7 +66,7 @@
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
     {#each tools as tool}
-      <Card.Root class="rounded-lg bg-gray-700/40 border border-gray-600/25">
+      <Card.Root class="rounded-lg dark:bg-gray-700/40 border border-gray-300/75 dark:border-gray-600/25">
         <a href={tool.link}>
           <Card.Header>
             <Card.Title>{tool.title}</Card.Title>

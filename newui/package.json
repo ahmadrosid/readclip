@@ -32,6 +32,7 @@
     "highlight.js": "^11.10.0",
     "lucide-svelte": "^0.424.0",
     "mode-watcher": "^0.4.1",
+    "reading-time-estimator": "^1.11.0",
     "rehype-highlight": "^7.0.0",
     "svelte-exmarkdown": "^3.0.5",
     "svelte-sonner": "^0.3.27",
