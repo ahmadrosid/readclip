@@ -3,6 +3,9 @@
   import { BookMarked } from "lucide-svelte";
   import { onMount } from "svelte";
   import ModeToggle from "./ui/ModeToggle.svelte";
+  import { toast } from "svelte-sonner";
+  import { getAuth } from "firebase/auth";
+  import app from "$lib/firebase";
 
   let hasToken = false;
 
@@ -11,12 +14,16 @@
   });
 
   async function handleLogout() {
-    // Implement your logout logic here
-    // For example:
-    // await auth.signOut();
-    window.localStorage.removeItem("token");
-    hasToken = false;
-    //   navigate("/login");
+    try {
+      const auth = getAuth(app);
+      await auth.signOut();
+      window.location.href = "/login";
+    } catch {
+      toast.error("Failed to log out");
+    } finally {
+      window.localStorage.removeItem("token");
+      hasToken = false;
+    }
   }
 </script>
 
@@ -74,25 +81,15 @@
       class="hidden md:flex flex-1 items-center justify-between space-x-2 md:justify-end"
     >
       <nav class="flex items-center">
-        <div class="flex-shrink-0 hover:underline cursor-pointer text-sm">
-          <a
-            href={`javascript:window.location='https://readclip.site/clip?url='+encodeURIComponent(document.location)`}
-          >
-            Add to Readclip
-          </a>
-        </div>
         {#if hasToken}
           <div class="flex gap-4 items-center">
             <div class="flex-shrink-0 hover:underline cursor-pointer text-sm">
               <a
-                href="javascript:window.location='${import.meta.env
-                  .VITE_APP_URL}/clip?url='+encodeURIComponent(document.location)"
+                href={`javascript:window.location='https://readclip.site/clip?url='+encodeURIComponent(document.location)`}
               >
                 Add to Readclip
               </a>
             </div>
-
-            <!-- ModeToggle component would go here -->
 
             <Button variant="outline" on:click={handleLogout}>Logout</Button>
           </div>
