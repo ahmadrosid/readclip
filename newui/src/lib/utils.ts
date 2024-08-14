@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { cubicOut } from "svelte/easing";
 import type { TransitionConfig } from "svelte/transition";
+import { formatDistance } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -73,3 +74,9 @@ export function downloadText(title: string, data: string) {
 	a.click();
 	document.body.removeChild(a);
 }
+
+export const formatDate = (date: string, currentDate: string) => {
+	return formatDistance(new Date(date), new Date(currentDate), {
+	  addSuffix: false,
+	}).replace("about ", "");
+};
