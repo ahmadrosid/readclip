@@ -169,11 +169,11 @@ export default function FeedDeckPage() {
                       label="RSS Feed"
                       onValueUpdate={setSelectedFeedItem}
                     />
-                    {/* <FeedItem
+                    <FeedItem
                       type="indiehacker"
                       label="Indiehacker"
                       onValueUpdate={setSelectedFeedItem}
-                    /> */}
+                    />
                     <FeedItem
                       type="reddit"
                       label="Sub Reddit"
