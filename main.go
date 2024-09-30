@@ -76,10 +76,6 @@ func main() {
 		return ctx.Next()
 	})
 
-	serveUI := func(ctx *fiber.Ctx) error {
-		return filesystem.SendFile(ctx, http.FS(index), "index.html")
-	}
-
 	uiPaths := []string{
 		"/clip",
 		"/register",
@@ -96,7 +92,9 @@ func main() {
 	}
 
 	for _, path := range uiPaths {
-		app.Get(path, serveUI)
+		app.Get(path, func(ctx *fiber.Ctx) error {
+			return filesystem.SendFile(ctx, http.FS(index), "index.html")
+		})
 	}
 
 	app.Use("/", filesystem.New(filesystem.Config{
