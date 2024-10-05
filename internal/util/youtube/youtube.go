@@ -1,13 +1,58 @@
 package youtube
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/ahmadrosid/readclip/internal/util"
+	"github.com/ahmadrosid/readclip/internal/util/fetch"
 	"github.com/kkdai/youtube/v2"
 )
+
+type VideoInfo struct {
+	PublishedAt time.Time `json:"publishedAt"`
+	ChannelID   string    `json:"channelId"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Thumbnails  struct {
+		Default struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"default"`
+		Medium struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"medium"`
+		High struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"high"`
+		Standard struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"standard"`
+		Maxres struct {
+			URL    string `json:"url"`
+			Width  int    `json:"width"`
+			Height int    `json:"height"`
+		} `json:"maxres"`
+	} `json:"thumbnails"`
+	ChannelTitle         string `json:"channelTitle"`
+	CategoryID           string `json:"categoryId"`
+	LiveBroadcastContent string `json:"liveBroadcastContent"`
+	Localized            struct {
+		Title       string `json:"title"`
+		Description string `json:"description"`
+	} `json:"localized"`
+	DefaultAudioLanguage string `json:"defaultAudioLanguage"`
+}
 
 // Typical YouTube URL formats:
 // https://www.youtube.com/watch?v=VIDEO_ID
@@ -80,35 +125,33 @@ func GetVideoInfo(videoUrl string) (*youtube.Video, error) {
 }
 
 func GrabYoutubeVideoInfo(videoUrl string) (*util.ContentData, error) {
-	video, err := GetVideoInfo(videoUrl)
+	// video, err := GetVideoInfo(videoUrl)
+	url := "https://api.ahmadrosid.com/youtube/video?videoUrl=" + videoUrl
+	jsonStr, err := fetch.Fetch(url)
 	if err != nil {
 		return nil, err
 	}
 
-	imgUrl := ""
-	for _, thumbnail := range video.Thumbnails {
-		imgUrl = thumbnail.URL
-		break
+	var video VideoInfo
+	err = json.Unmarshal([]byte(jsonStr), &video)
+	if err != nil {
+		return nil, err
 	}
 
-	Content := ""
-	ContentLines := strings.Split(video.Description, "\n")
-	for i := 0; i < len(ContentLines); i++ {
-		Content = Content + "\n" + ContentLines[i] + "\n"
-	}
+	imgUrl := video.Thumbnails.Default.URL
 
 	return &util.ContentData{
 		Url:     videoUrl,
 		Title:   video.Title,
-		Content: Content,
+		Content: video.Description,
 		Metadata: &util.Metadata{
 			Title:       video.Title,
-			Author:      video.Author,
+			Author:      "",
 			Description: video.Description[0:100] + "...",
 			Hostname:    "youtube.com",
 			Image:       imgUrl,
 			Sitename:    "YouTube",
-			Date:        video.PublishDate,
+			Date:        video.PublishedAt,
 			PageType:    "video",
 		},
 	}, nil
