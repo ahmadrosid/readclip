@@ -4,7 +4,7 @@ chrome.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
 
 document.getElementById("getContentBtn").addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  console.log(tab)
+  document.getElementById("getContentBtn").innerText = " 🚧 Getting content...";
 
   chrome.scripting.executeScript(
     {
@@ -62,7 +62,11 @@ document.getElementById("getContentBtn").addEventListener("click", async () => {
           html_text: results[0].result,
         }),
       }).then(res => res.json());
-      console.log(result);
+      navigator.clipboard.writeText(result.data.content);
+      document.getElementById("getContentBtn").innerText = "Copied to clipboard! 🎉";
+      setTimeout(() => {
+        document.getElementById("getContentBtn").innerText = "Get Content";
+      }, 4000);
     }
   );
 });
