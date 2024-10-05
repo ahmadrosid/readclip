@@ -52,8 +52,17 @@ document.getElementById("getContentBtn").addEventListener("click", async () => {
         return tempElement.outerHTML;
       },
     },
-    (results) => {
-      console.log(results[0].result);
+    async (results) => {
+      const result = await fetch("https://readclip.site/api/convert/html", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          html_text: results[0].result,
+        }),
+      }).then(res => res.json());
+      console.log(result);
     }
   );
 });
