@@ -9,6 +9,7 @@
             height: 300px;
         }
         .button {
+            margin-top: 12px;
             display: inline-block;
             padding: 10px 20px;
             background-color: #4CAF50; /* Green */
@@ -25,14 +26,24 @@
         .button:hover {
             background-color: #3e8e41;
         }
+        .block {
+            display: block;
+        }
+        .w-full {
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
-    <button id="getContentBtn" type="button"
-        class="button">
+    <button id="getContentBtn" type="button" class="button block w-full">
         Get Content
     </button>
+
+    <a href="https://claude.ai/new" target="_blank" class="button block">
+        Go to Claude.ai
+    </a>
+
     <script src="popup.js"></script>
 </body>
 
