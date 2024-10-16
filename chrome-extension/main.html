@@ -5,26 +5,35 @@
     <title>Readclip Popup</title>
     <style>
         body {
-            width: 350px;
-            height: 300px;
+            width: 300px;
+            height: 135px;
         }
+
         .button {
-            margin-top: 12px;
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4CAF50; /* Green */
-            color: white;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
             text-align: center;
             text-decoration: none;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 0 #45a049;
         }
 
         .button:hover {
-            background-color: #3e8e41;
+            background-color: #45a049;
+            box-shadow: 0 3px 0 #3d8b40;
+            transform: translateY(2px);
+        }
+
+        .button:active {
+            background-color: #3d8b40;
+            box-shadow: 0 1px 0 #2d6930;
+            transform: translateY(4px);
         }
         .block {
             display: block;
@@ -32,18 +41,29 @@
         .w-full {
             width: 100%;
         }
+        .grid {
+            display: grid;
+            gap: 8px;
+        }
     </style>
 </head>
 
-<body>
-    <button id="getContentBtn" type="button" class="button block w-full">
+<body class="grid">
+    <button id="getContentBtn" type="button" class="button w-full">
         Get Content
     </button>
 
-    <a href="https://claude.ai/new" target="_blank" class="button block">
-        Go to Claude.ai
+    <a href="https://claude.ai/new" target="_blank">
+        <button type="button" class="button w-full">
+            Go to Claude.ai
+        </button>
     </a>
 
+    <a href="https://chatgpt.com" target="_blank">
+        <button type="button" class="button w-full">
+            Go to ChatGPT
+        </button>
+    </a>
     <script src="popup.js"></script>
 </body>
 
