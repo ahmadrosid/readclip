@@ -133,14 +133,8 @@ export function FeedItem({
           <label>
             <p className="pb-2 inline-flex">
               <span className="flex-1 text-sm pb-2 text-gray-600 dark:text-gray-500">
-                {"Rss feed url or "}
+                {"Rss feed url"}
               </span>
-              <a
-                href="/explore-rss"
-                className="text-sm px-1 text-gray-600 underline dark:text-gray-500"
-              >
-                explore rss
-              </a>
             </p>
             <Input
               name="input_url_rss"

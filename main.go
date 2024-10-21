@@ -87,7 +87,6 @@ func main() {
 		"/tools/word-counter",
 		"/tools/reading-time",
 		"/tools/markdown-editor",
-		"/explore-rss",
 		"/collections",
 	}
 
@@ -210,7 +209,6 @@ func main() {
 			"GET::/assets/*",
 			"GET::/health-check",
 			"GET::/tools/business-analysis",
-			"GET::/explore-rss",
 			"GET::/api/rss/github/languages",
 			"POST::/api/convert/html",
 			"POST::/api/proxy/*",
