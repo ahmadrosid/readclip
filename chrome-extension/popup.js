@@ -34,7 +34,7 @@ document.getElementById("getContentBtn").addEventListener("click", async () => {
           response.info.title
         }\n\n${response.content
           .map((item) => item.text)
-          .join("\n")}` + "\n\nGive me outline of this youtube video transcript."
+          .join("\n")}`
       );
     document.getElementById("getContentBtn").innerText = "Copied to clipboard!";
     setTimeout(() => {
@@ -102,7 +102,7 @@ document.getElementById("getContentBtn").addEventListener("click", async () => {
             html_text: results[0].result,
           }),
         }).then(res => res.json());
-        navigator.clipboard.writeText(result.data.content + "\n\nGive me outline of this article.");
+        navigator.clipboard.writeText(result.data.content);
         document.getElementById("getContentBtn").innerText = "Copied to clipboard!";
         setTimeout(() => {
           document.getElementById("getContentBtn").innerText = "Get Content";
