@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -18,7 +17,7 @@ import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
+import { Search as SearchIcon, Loader2 as LoaderIcon } from "lucide-react";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
@@ -133,7 +132,11 @@ export default function ArticlePage() {
               }
             }}
           >
-            <Search className="size-4" />
+            {searchMutation.isLoading ? (
+              <LoaderIcon className="size-4 animate-spin" />
+            ) : (
+              <SearchIcon className="size-4" />
+            )}
           </Button>
           <FilterTag
             data={Array.from(hosts.values())}
@@ -154,19 +157,24 @@ export default function ArticlePage() {
             onValueChange={handleSearch}
           />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Search Results">
-              {searchResults.map((clip) => (
-                <CommandItem
-                  onSelect={() => {
-                    window.location.href = `/clip?url=${clip.Url}`;
-                  }}
-                  key={clip.Id}
-                >
-                  {clip.Title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            {searchMutation.isLoading ? (
+              <div className="flex items-center justify-center py-6">
+                <LoaderIcon className="size-6 animate-spin" />
+              </div>
+            ) : (
+              <CommandGroup heading="Search Results">
+                {searchResults.map((clip) => (
+                  <CommandItem
+                    onSelect={() => {
+                      window.location.href = `/clip?url=${clip.Url}`;
+                    }}
+                    key={clip.Id}
+                  >
+                    {clip.Title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
           </CommandList>
         </CommandDialog>
       </div>
