@@ -29,7 +29,7 @@ export function NewLayout({ children }: { children: React.ReactNode }) {
               <Link to="/clips">
                 <div className="hover:bg-white dark:hover:bg-gray-800 p-2 rounded-sm cursor-pointer flex gap-2 items-center">
                   <Bookmark className="text-gray-500 w-5 h-5" />
-                  <span className="hidden sm:block">Bookmarks</span>
+                  <span className="hidden sm:block">Clips</span>
                 </div>
               </Link>
             </li>
