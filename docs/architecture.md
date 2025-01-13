@@ -17,19 +17,19 @@ ReadClip is built with a modern stack:
 ```
 ReadClip/
 ├── internal/               # Backend Go code
-│   ├── clip/              # Clip-related functionality
-│   │   ├── domain.go      # Type definitions
-│   │   ├── handler.go     # HTTP handlers
-│   │   └── repository.go  # Database operations
-│   └── user/              # User-related functionality
-├── ui/                    # Frontend React code
+│   ├── clip/               # Clip-related functionality
+│   │   ├── domain.go       # Type definitions
+│   │   ├── handler.go      # HTTP handlers
+│   │   └── repository.go   # Database operations
+│   └── user/               # User-related functionality
+├── ui/                     # Frontend React code
 │   ├── src/
-│   │   ├── lib/          # Shared utilities
-│   │   │   ├── api/      # API functions
-│   │   │   └── utils/    # Helper functions
-│   │   ├── components/   # Reusable UI components
-│   │   └── pages/        # Page components
-└── docs/                 # Documentation
+│   │   ├── lib/            # Shared utilities
+│   │   │   ├── api/        # API functions
+│   │   │   └── utils/      # Helper functions
+│   │   ├── components/     # Reusable UI components
+│   │   └── pages/          # Page components
+└── docs/                   # Documentation
 ```
 
 ## Backend Architecture
