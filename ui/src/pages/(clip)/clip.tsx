@@ -78,10 +78,6 @@ export default function Home() {
     mutationFn: fetchMarkdown,
     mutationKey: ["clip", inputUrl],
     retry: 2,
-    onSuccess: (response) => {
-      if (response.data) {
-      }
-    },
     onError: (err: Error) => {
       if (err.message === "Unauthorized") {
         toast.error("Unauthorized! Please login to continue");
