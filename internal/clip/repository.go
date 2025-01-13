@@ -181,7 +181,7 @@ func (repo *clipRepository) SearchClips(query string, userID uuid.UUID) ([]Clip,
 	searchQuery := "%" + query + "%"
 	err := repo.db.
 		Where("user_id = ?", userID).
-		Where("(title ILIKE ? OR content ILIKE ? OR description ILIKE ?)", searchQuery, searchQuery, searchQuery).
+		Where("(title ILIKE ? OR description ILIKE ?)", searchQuery, searchQuery, searchQuery).
 		Order("created_at DESC").
 		Limit(20).
 		Find(&clips).Error
