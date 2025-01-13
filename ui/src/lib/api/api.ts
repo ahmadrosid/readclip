@@ -72,6 +72,18 @@ export type AddArticleTagRequest = {
   tag_id: string;
 };
 
+export type UpdateClipRequest = {
+  id: string;
+  title: string;
+  content: string;
+  token: string;
+};
+
+export type UpdateClipResponse = BaseResponse & {
+  status: string;
+  data: Article;
+};
+
 export const fetchAllArticles = async ({
   pageParam = 1,
   tagId = "",
@@ -349,3 +361,20 @@ export const fetchDownloadClip = async (clipId: string) => {
     });
   });
 };
+
+export async function fetchUpdateClip({
+  id,
+  title,
+  content,
+  token,
+}: UpdateClipRequest): Promise<UpdateClipResponse> {
+  const response = await fetch(`/api/clips/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify({ title, content }),
+  });
+  return handleReturnFetch(response);
+}

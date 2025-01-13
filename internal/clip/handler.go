@@ -33,6 +33,11 @@ type RequestConvertHtmlToMarkdown struct {
 	Html string
 }
 
+type UpdateClipRequest struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
 type ClipHandler struct {
 	repo     ClipRepository
 	userRepo user.UserRepository
@@ -47,6 +52,7 @@ func NewClipHandler(route fiber.Router, repo ClipRepository, userRepo user.UserR
 	route.Get("/", handler.getAllClips)
 	route.Get("/summarize/:id", handler.summarizeByID)
 	route.Delete("/:id", handler.deleteClipByID)
+	route.Put("/:id", handler.updateClipByID)
 	route.Get("/:id/download", handler.downloadClipByID)
 	route.Post("/export", handler.exportClips)
 	route.Post("/scrape", handler.publicScrape)
@@ -519,5 +525,60 @@ func (h *ClipHandler) convertHtmlToMarkdown(c *fiber.Ctx) error {
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"status": "success",
+	})
+}
+
+func (h *ClipHandler) updateClipByID(c *fiber.Ctx) error {
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	clipID := c.Params("id")
+	if clipID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "clip id is required",
+		})
+	}
+
+	var req UpdateClipRequest
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	if req.Title == "" || req.Content == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "title and content are required",
+		})
+	}
+
+	err = h.repo.UpdateClipByID(clipID, *userID, req.Title, req.Content)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	// Get updated clip to return in response
+	clip, err := h.repo.GetClipById(clipID, *userID)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"status": "success",
+		"data":   clip,
 	})
 }

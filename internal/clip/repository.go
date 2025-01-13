@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/ahmadrosid/readclip/internal/tag"
 	"github.com/gofiber/fiber/v2"
@@ -71,6 +72,14 @@ func (repo *clipRepository) DeleteClipByID(id string, userID uuid.UUID) error {
 func (repo *clipRepository) UpdateSummaryByID(id string, userID uuid.UUID, summary string) error {
 	err := repo.db.Unscoped().Model(&Clip{}).Where("id = ?", id).Where("user_id = ?", userID).Update("summary", summary).Error
 	return err
+}
+
+func (repo *clipRepository) UpdateClipByID(id string, userID uuid.UUID, title string, content string) error {
+	return repo.db.Model(&Clip{}).Where("id = ?", id).Where("user_id = ?", userID).Updates(map[string]interface{}{
+		"title":      title,
+		"content":    content,
+		"updated_at": time.Now(),
+	}).Error
 }
 
 func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string, error) {

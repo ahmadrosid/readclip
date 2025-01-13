@@ -29,5 +29,6 @@ type ClipRepository interface {
 	CreateClip(clip Clip) (Clip, error)
 	DeleteClipByID(id string, userID uuid.UUID) error
 	UpdateSummaryByID(id string, userID uuid.UUID, summary string) error
+	UpdateClipByID(id string, userID uuid.UUID, title string, content string) error
 	ExportClips(format string, userID uuid.UUID) (string, error)
 }
