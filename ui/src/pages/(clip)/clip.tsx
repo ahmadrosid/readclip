@@ -9,6 +9,7 @@ import {
   ExternalLink,
   ExternalLinkIcon,
   Loader2,
+  PencilIcon,
   RefreshCw,
   Send,
   TagIcon,
@@ -33,6 +34,7 @@ import { Link } from "@/router";
 import { SummaryCard } from "@/components/summary-card";
 import { SummaryButton } from "@/components/summary-button";
 import CreateNewClip from "@/components/create-new-clip";
+import { DialogEditClip } from "@/components/dialog-edit-clip";
 
 function LoadingSkeleton() {
   return (
@@ -52,6 +54,7 @@ export default function Home() {
   const urlParam = params.get("url");
   const [inputUrl, setInputUrl] = useState(urlParam ?? "");
   const [openAddTag, setOpenAddTag] = useState(false);
+  const [openEditClip, setOpenEditClip] = useState(false);
   const [failedErrorMessage, setFailedError] = useState<string>("Failed to fetch article. Please check your url.");
 
   const fetchHistoryQuery = useQuery({
@@ -73,7 +76,7 @@ export default function Home() {
 
   const { data, mutate, isLoading, error } = useMutation({
     mutationFn: fetchMarkdown,
-    mutationKey: "fetchMarkdown",
+    mutationKey: ["clip", inputUrl],
     retry: 2,
     onError: (err: Error) => {
       if (err.message === "Unauthorized") {
@@ -325,6 +328,14 @@ export default function Home() {
                         )}
                       </Button>
                       <Separator orientation="vertical" className="h-[20px]" />
+                      <Button
+                        variant="secondary"
+                        onClick={() => setOpenEditClip(true)}
+                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                      >
+                        <PencilIcon className="h-3 w-3" />
+                      </Button>
+                      <Separator orientation="vertical" className="h-[20px]" />
                       <SummaryButton
                         clipId={data.data.Id}
                         onSummarize={() => mutate(inputUrl)}
@@ -353,6 +364,15 @@ export default function Home() {
               <Markdown>{`# ${data.data.Title}\n\n${data.data.Content}`}</Markdown>
             </div>
           </div>
+          {data.data && (
+            <DialogEditClip
+              open={openEditClip}
+              onOpenChange={setOpenEditClip}
+              title={data.data.Title}
+              content={data.data.Content}
+              clipId={data.data.Id}
+            />
+          )}
         </>
       )}
     </div>
