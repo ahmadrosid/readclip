@@ -37,7 +37,7 @@ export default function ArticlePage() {
   const [openCommandDialog, setOpenCommandDialog] = useState(false);
   const [openAddTag, setOpenAddTag] = useState(false);
   const [tagArticle, setTagArticle] = useState<Article>();
-  const [visibleTagIds, setVisibleTagIds] = useState<string[]>([]);
+  const [visibleTagId, setVisibleTagId] = useState("");
 
   const searchMutation = useMutation({
     mutationFn: async (query: string) => {
@@ -126,6 +126,8 @@ export default function ArticlePage() {
       .flat()
   );
 
+  const maxBadgeTags = 7;
+
   return (
     <div className="p-4 md:p-8 min-h-[80vh]">
       <div className="px-1 flex flex-col sm:flex-row gap-4 justify-between items-center">
@@ -196,7 +198,7 @@ export default function ArticlePage() {
       </div>
       <div className="flex flex-wrap justify-center gap-2 pt-4 sm:pb-2 overflow-x-auto scrollbar-thin">
         {tagsQuery.data?.data
-          .filter((tag) => visibleTagIds.includes(tag.Id) || tagsQuery.data.data.indexOf(tag) < 7)
+          .filter((tag) => tagsQuery.data.data.indexOf(tag) < maxBadgeTags)
           .map((item) => (
             <Badge
               className={cn(
@@ -216,7 +218,26 @@ export default function ArticlePage() {
               {item.Name}
             </Badge>
           ))}
-        {tagsQuery.data?.data && tagsQuery.data.data.length > 7 && (
+        {visibleTagId && tagsQuery.data?.data.find(tag => tag.Id === visibleTagId && tagsQuery.data.data.indexOf(tag) >= 7) && (
+          <Badge
+            className={cn(
+              "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
+              tagId === visibleTagId &&
+                "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
+            )}
+            onClick={() => {
+              if (tagId === visibleTagId) {
+                setTagId("");
+                setVisibleTagId("");
+              } else {
+                setTagId(visibleTagId);
+              }
+            }}
+          >
+            {tagsQuery.data.data.find(tag => tag.Id === visibleTagId)?.Name}
+          </Badge>
+        )}
+        {tagsQuery.data?.data && tagsQuery.data.data.length > maxBadgeTags && (
           <Popover open={openTagPopover} onOpenChange={setOpenTagPopover}>
             <PopoverTrigger asChild>
               <Button
@@ -224,7 +245,7 @@ export default function ArticlePage() {
                 size="sm"
                 className="text-sm font-normal"
               >
-                +{tagsQuery.data.data.length - visibleTagIds.length - 7} more
+                +{tagsQuery.data.data.length - 7} more
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0" align="end">
@@ -238,7 +259,6 @@ export default function ArticlePage() {
                 <CommandGroup className="max-h-[400px] overflow-y-auto scrollbar-thin">
                   {tagsQuery.data.data
                     .filter((tag) => 
-                      !visibleTagIds.includes(tag.Id) && 
                       tagsQuery.data.data.indexOf(tag) >= 7 &&
                       tag.Name.toLowerCase().includes(tagSearchQuery.toLowerCase())
                     )
@@ -248,9 +268,10 @@ export default function ArticlePage() {
                         onSelect={() => {
                           if (tagId === item.Id) {
                             setTagId("");
+                            setVisibleTagId("");
                           } else {
                             setTagId(item.Id);
-                            setVisibleTagIds((prev) => [...prev, item.Id]);
+                            setVisibleTagId(item.Id);
                           }
                           setOpenTagPopover(false);
                         }}
