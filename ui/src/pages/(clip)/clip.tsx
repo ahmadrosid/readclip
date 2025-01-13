@@ -78,6 +78,10 @@ export default function Home() {
     mutationFn: fetchMarkdown,
     mutationKey: ["clip", inputUrl],
     retry: 2,
+    onSuccess: (response) => {
+      if (response.data) {
+      }
+    },
     onError: (err: Error) => {
       if (err.message === "Unauthorized") {
         toast.error("Unauthorized! Please login to continue");
@@ -115,6 +119,9 @@ export default function Home() {
         return;
       }
       if (inputUrl !== "") {
+        const url = new URL(window.location.href);
+        url.searchParams.set("url", inputUrl);
+        window.history.replaceState({}, "", url);
         mutate(inputUrl);
       }
     },
@@ -248,6 +255,9 @@ export default function Home() {
                           className="h-9 cursor-pointer underline sm:no-underline hover:underline font-medium tracking-tight"
                           onClick={() => {
                             setInputUrl(item.Url);
+                            const url = new URL(window.location.href);
+                            url.searchParams.set("url", item.Url);
+                            window.history.replaceState({}, "", url);
                             mutate(item.Url);
                           }}
                         >
