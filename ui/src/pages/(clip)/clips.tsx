@@ -3,10 +3,12 @@ import { ArticleCard } from "@/components/article-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  CommandDialog,
+  Command,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandDialog,
   CommandList,
 } from "@/components/ui/command";
 import { useInfiniteQuery, useQuery, useMutation } from "react-query";
@@ -18,6 +20,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Search as SearchIcon, Loader2 as LoaderIcon } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
@@ -25,6 +32,12 @@ export default function ArticlePage() {
   const [selectedHost, setSelectedHost] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Article[]>([]);
+  const [openTagPopover, setOpenTagPopover] = useState(false);
+  const [tagSearchQuery, setTagSearchQuery] = useState("");
+  const [openCommandDialog, setOpenCommandDialog] = useState(false);
+  const [openAddTag, setOpenAddTag] = useState(false);
+  const [tagArticle, setTagArticle] = useState<Article>();
+  const [visibleTagIds, setVisibleTagIds] = useState<string[]>([]);
 
   const searchMutation = useMutation({
     mutationFn: async (query: string) => {
@@ -83,10 +96,6 @@ export default function ArticlePage() {
     refetchOnReconnect: false,
     retry: 2,
   });
-
-  const [openCommandDialog, setOpenCommandDialog] = useState(false);
-  const [openAddTag, setOpenAddTag] = useState(false);
-  const [tagArticle, setTagArticle] = useState<Article>();
 
   const handleOndeleteCallback = useCallback(() => {
     refetch();
@@ -186,25 +195,82 @@ export default function ArticlePage() {
         />
       </div>
       <div className="flex flex-wrap justify-center gap-2 pt-4 sm:pb-2 overflow-x-auto scrollbar-thin">
-        {tagsQuery.data?.data.map((item) => (
-          <Badge
-            className={cn(
-              "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
-              tagId === item.Id &&
-                "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
-            )}
-            key={item.Id}
-            onClick={() => {
-              if (tagId === item.Id) {
-                setTagId("");
-              } else {
-                setTagId(item.Id);
-              }
-            }}
-          >
-            {item.Name}
-          </Badge>
-        ))}
+        {tagsQuery.data?.data
+          .filter((tag) => visibleTagIds.includes(tag.Id) || tagsQuery.data.data.indexOf(tag) < 7)
+          .map((item) => (
+            <Badge
+              className={cn(
+                "text-gray-600 hover:bg-gray-200 cursor-pointer bg-white dark:bg-gray-800 hover:text-gray-600 dark:text-gray-300",
+                tagId === item.Id &&
+                  "bg-primary text-white hover:text-gray-600 dark:bg-gray-700"
+              )}
+              key={item.Id}
+              onClick={() => {
+                if (tagId === item.Id) {
+                  setTagId("");
+                } else {
+                  setTagId(item.Id);
+                }
+              }}
+            >
+              {item.Name}
+            </Badge>
+          ))}
+        {tagsQuery.data?.data && tagsQuery.data.data.length > 7 && (
+          <Popover open={openTagPopover} onOpenChange={setOpenTagPopover}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sm font-normal"
+              >
+                +{tagsQuery.data.data.length - visibleTagIds.length - 7} more
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0" align="end">
+              <Command>
+                <CommandInput 
+                  placeholder="Search tags..." 
+                  value={tagSearchQuery}
+                  onValueChange={setTagSearchQuery}
+                />
+                <CommandEmpty>No tags found.</CommandEmpty>
+                <CommandGroup className="max-h-[400px] overflow-y-auto scrollbar-thin">
+                  {tagsQuery.data.data
+                    .filter((tag) => 
+                      !visibleTagIds.includes(tag.Id) && 
+                      tagsQuery.data.data.indexOf(tag) >= 7 &&
+                      tag.Name.toLowerCase().includes(tagSearchQuery.toLowerCase())
+                    )
+                    .map((item) => (
+                      <CommandItem
+                        key={item.Id}
+                        onSelect={() => {
+                          if (tagId === item.Id) {
+                            setTagId("");
+                          } else {
+                            setTagId(item.Id);
+                            setVisibleTagIds((prev) => [...prev, item.Id]);
+                          }
+                          setOpenTagPopover(false);
+                        }}
+                      >
+                        <Badge
+                          className={cn(
+                            "text-gray-600 bg-white dark:bg-gray-800 dark:text-gray-300",
+                            tagId === item.Id &&
+                              "bg-primary text-white dark:bg-gray-700"
+                          )}
+                        >
+                          {item.Name}
+                        </Badge>
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
       {isFetching && !isFetchingNextPage && <LoadingSkeleton />}
       {isError && (

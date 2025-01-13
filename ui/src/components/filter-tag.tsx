@@ -76,7 +76,7 @@ export function FilterTag({ data, onSelect }: Props) {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="end">
         <Command>
-          <CommandInput placeholder="Search tag..." />
+          <CommandInput placeholder="Search host..." />
           <CommandEmpty>No tag found.</CommandEmpty>
           <CommandGroup className="max-h-[400px] overflow-y-auto scrollbar-thin">
             {data.map((tag, idx) => (
