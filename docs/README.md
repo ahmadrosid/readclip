@@ -24,14 +24,14 @@ Before adding new features, make sure you understand the project structure:
 ```
 ReadClip/
 ├── internal/           # Backend Go code
-│   ├── clip/          # Clip-related functionality
-│   └── user/          # User-related functionality
-├── ui/                # Frontend React code
+│   ├── clip/           # Clip-related functionality
+│   └── user/           # User-related functionality
+├── ui/                 # Frontend React code
 │   ├── src/
-│   │   ├── lib/      # Shared utilities and API functions
-│   │   ├── components/# Reusable UI components
-│   │   └── pages/    # Page components
-└── docs/             # Documentation
+│   │   ├── lib/        # Shared utilities and API functions
+│   │   ├── components/ # Reusable UI components
+│   │   └── pages/      # Page components
+└── docs/               # Documentation
 ```
 
 ## Development Workflow
