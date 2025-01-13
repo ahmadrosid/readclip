@@ -264,14 +264,15 @@ export const fetchDeleteClipTag = async ({
 };
 
 export const fetchSummarizeClip = async (
-  clipId: string
+  clipId: string,
+  token: string
 ): Promise<{ status: string }> => {
   return handleReturnFetch(
     await fetch(`/api/clips/summarize/${clipId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getToken(),
+        Authorization: token,
       },
     })
   );

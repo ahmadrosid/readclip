@@ -9,6 +9,7 @@ import {
   ExternalLink,
   ExternalLinkIcon,
   Loader2,
+  MoreHorizontal,
   PencilIcon,
   RefreshCw,
   Send,
@@ -35,6 +36,11 @@ import { SummaryCard } from "@/components/summary-card";
 import { SummaryButton } from "@/components/summary-button";
 import CreateNewClip from "@/components/create-new-clip";
 import { DialogEditClip } from "@/components/dialog-edit-clip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function LoadingSkeleton() {
   return (
@@ -336,32 +342,46 @@ export default function Home() {
                       <Separator orientation="vertical" className="h-[20px]" />
                       <Button
                         variant="secondary"
-                        onClick={() => setOpenEditClip(true)}
-                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
-                      >
-                        <PencilIcon className="h-3 w-3" />
-                      </Button>
-                      <Separator orientation="vertical" className="h-[20px]" />
-                      <SummaryButton
-                        clipId={data.data.Id}
-                        onSummarize={() => mutate(inputUrl)}
-                      />
-                      <Separator orientation="vertical" className="h-[20px]" />
-                      <Button
-                        variant="secondary"
                         onClick={handleCopyClip}
                         className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
                       >
                         <CopyIcon className="h-3 w-3" />
                       </Button>
                       <Separator orientation="vertical" className="h-[20px]" />
-                      <Button
-                        variant="secondary"
-                        onClick={handleDownloadClip}
-                        className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
-                      >
-                        <DownloadIcon className="h-3 w-3" />
-                      </Button>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="secondary"
+                            className="px-3 shadow-none hover:bg-gray-300/50 hover:text-gray-600 h-8"
+                          >
+                            <MoreHorizontal className="h-3 w-3" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-48 p-2">
+                          <div className="flex flex-col gap-1">
+                            <Button
+                              variant="ghost"
+                              onClick={() => setOpenEditClip(true)}
+                              className="w-full justify-start gap-2 px-2 h-8"
+                            >
+                              <PencilIcon className="h-3 w-3" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              onClick={handleDownloadClip}
+                              className="w-full justify-start gap-2 px-2 h-8"
+                            >
+                              <DownloadIcon className="h-3 w-3" />
+                              Download
+                            </Button>
+                            <SummaryButton
+                              clipId={data.data.Id}
+                              onSummarize={() => mutate(inputUrl)}
+                            />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
                 </div>
