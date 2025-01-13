@@ -10,21 +10,45 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { CommandSeparator } from "cmdk";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery, useQuery, useMutation } from "react-query";
 import { DialogTag } from "@/components/dialog-tag";
 import { Button } from "@/components/ui/button";
-import { fetchAllArticles, Article, fetchAllTags } from "@/lib/api/api";
+import { fetchAllArticles, fetchSearchClips, Article, fetchAllTags } from "@/lib/api/api";
 import { FilterTag } from "@/components/filter-tag";
 import { useAuth } from "@/hooks/useAuth";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
 
 export default function ArticlePage() {
   const { user, navigate } = useAuth();
   const [tagId, setTagId] = useState("");
   const [selectedHost, setSelectedHost] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<Article[]>([]);
+
+  const searchMutation = useMutation({
+    mutationFn: async (query: string) => {
+      if (!user) throw new Error("Unauthorized");
+      const token = await user.getIdToken();
+      return fetchSearchClips({
+        query,
+        token,
+      });
+    },
+    onSuccess: (response) => {
+      setSearchResults(response.data);
+    },
+  });
+
+  const handleSearch = useCallback((value: string) => {
+    setSearchQuery(value);
+    if (value.trim()) {
+      searchMutation.mutate(value);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchMutation]);
 
   const {
     data: clips,
@@ -99,16 +123,18 @@ export default function ArticlePage() {
       <div className="px-1 flex flex-col sm:flex-row gap-4 justify-between items-center">
         <h2 className="text-2xl font-bold tracking-tight flex-1">Saved Clips</h2>
         <div className="flex gap-2 py-2 sm:py-0">
-          <Input
-            className="bg-white dark:bg-gray-800 flex-1 sm:w-64"
-            placeholder="Search clips..."
+          <Button
+            variant="outline"
+            className="bg-white dark:bg-gray-800"
             onClick={(e) => {
               e.preventDefault();
               if (!openCommandDialog) {
                 setOpenCommandDialog(true);
               }
             }}
-          />
+          >
+            <Search className="size-4" />
+          </Button>
           <FilterTag
             data={Array.from(hosts.values())}
             onSelect={(host) => {
@@ -118,35 +144,28 @@ export default function ArticlePage() {
         </div>
       </div>
       <div>
-        <CommandDialog
-          open={openCommandDialog}
+        <CommandDialog 
+          open={openCommandDialog} 
           onOpenChange={setOpenCommandDialog}
         >
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput 
+            placeholder="Type to search..." 
+            value={searchQuery}
+            onValueChange={handleSearch}
+          />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              {clips?.pages.map((group, i) => (
-                <Fragment key={i}>
-                  {group.data.map((clip) => (
-                    <CommandItem
-                      onSelect={() => {
-                        window.location.href = `/clip?url=${clip.Url}`;
-                      }}
-                      key={clip.Id}
-                    >
-                      {clip.Title}
-                    </CommandItem>
-                  ))}
-                </Fragment>
+            <CommandGroup heading="Search Results">
+              {searchResults.map((clip) => (
+                <CommandItem
+                  onSelect={() => {
+                    window.location.href = `/clip?url=${clip.Url}`;
+                  }}
+                  key={clip.Id}
+                >
+                  {clip.Title}
+                </CommandItem>
               ))}
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="Menu">
-              <CommandItem onSelect={() => navigate("/")}>Home</CommandItem>
-              <CommandItem onSelect={() => navigate("/clips")}>
-                Saved
-              </CommandItem>
             </CommandGroup>
           </CommandList>
         </CommandDialog>

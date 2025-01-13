@@ -175,3 +175,15 @@ func (repo *clipRepository) ExportClips(format string, userID uuid.UUID) (string
 	jsonString, err := json.Marshal(data)
 	return string(jsonString), err
 }
+
+func (repo *clipRepository) SearchClips(query string, userID uuid.UUID) ([]Clip, error) {
+	var clips []Clip
+	searchQuery := "%" + query + "%"
+	err := repo.db.
+		Where("user_id = ?", userID).
+		Where("(title ILIKE ? OR content ILIKE ? OR description ILIKE ?)", searchQuery, searchQuery, searchQuery).
+		Order("created_at DESC").
+		Limit(20).
+		Find(&clips).Error
+	return clips, err
+}

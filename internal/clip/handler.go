@@ -48,15 +48,16 @@ func NewClipHandler(route fiber.Router, repo ClipRepository, userRepo user.UserR
 	handler := &ClipHandler{
 		repo, userRepo, tagRepo,
 	}
+	route.Get("/search", handler.searchClips)
+	route.Post("/export", handler.exportClips)
+	route.Post("/scrape", handler.publicScrape)
+	route.Post("/convert/html", handler.convertHtmlToMarkdown)
 	route.Post("/", handler.grabClip)
 	route.Get("/", handler.getAllClips)
 	route.Get("/summarize/:id", handler.summarizeByID)
 	route.Delete("/:id", handler.deleteClipByID)
 	route.Put("/:id", handler.updateClipByID)
 	route.Get("/:id/download", handler.downloadClipByID)
-	route.Post("/export", handler.exportClips)
-	route.Post("/scrape", handler.publicScrape)
-	route.Post("/convert/html", handler.convertHtmlToMarkdown)
 }
 
 func (h *ClipHandler) getUserID(c *fiber.Ctx) (*uuid.UUID, error) {
@@ -580,5 +581,38 @@ func (h *ClipHandler) updateClipByID(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"status": "success",
 		"data":   clip,
+	})
+}
+
+func (h *ClipHandler) searchClips(c *fiber.Ctx) error {
+	userID, err := h.getUserID(c)
+	if err != nil {
+		return c.Status(http.StatusUnauthorized).JSON(fiber.Map{
+			"status": "error",
+			"error":  "Unauthorized",
+		})
+	}
+
+	query := c.Query("q")
+	if query == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"status": "error",
+			"error":  "Search query is required",
+		})
+	}
+
+	clips, err := h.repo.SearchClips(query, *userID)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"status": "error",
+			"error":  err.Error(),
+		})
+	}
+
+	now := time.Now().UTC()
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"status":           "success",
+		"data":             clips,
+		"current_datetime": now.Format(time.RFC3339),
 	})
 }

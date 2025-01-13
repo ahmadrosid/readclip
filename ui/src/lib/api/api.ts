@@ -84,6 +84,11 @@ export type UpdateClipResponse = BaseResponse & {
   data: Article;
 };
 
+export type SearchClipsResponse = BaseResponse & {
+  status: string;
+  data: Article[];
+};
+
 export const fetchAllArticles = async ({
   pageParam = 1,
   tagId = "",
@@ -378,3 +383,19 @@ export async function fetchUpdateClip({
   });
   return handleReturnFetch(response);
 }
+
+export const fetchSearchClips = async ({
+  query,
+  token,
+}: {
+  query: string;
+  token: string;
+}): Promise<SearchClipsResponse> => {
+  return handleReturnFetch(
+    await fetch(`/api/clips/search?q=${encodeURIComponent(query)}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+  );
+};

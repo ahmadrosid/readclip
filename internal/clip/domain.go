@@ -31,4 +31,5 @@ type ClipRepository interface {
 	UpdateSummaryByID(id string, userID uuid.UUID, summary string) error
 	UpdateClipByID(id string, userID uuid.UUID, title string, content string) error
 	ExportClips(format string, userID uuid.UUID) (string, error)
+	SearchClips(query string, userID uuid.UUID) ([]Clip, error)
 }

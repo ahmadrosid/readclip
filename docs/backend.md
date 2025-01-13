@@ -2,7 +2,111 @@
 
 This guide explains how to add new features to the ReadClip backend.
 
-## Adding New Endpoints
+## API Endpoints
+
+All API endpoints require authentication using a JWT token in the Authorization header.
+
+### Authentication Header
+```bash
+Authorization: YOUR_FIREBASE_JWT_TOKEN
+```
+
+### Available Endpoints
+
+#### 1. Search Clips
+```
+GET /api/clips/search?q={query}
+
+# Example
+curl -X GET 'http://localhost:8000/api/clips/search' \
+  --url-query 'q=test' \
+  --header 'Authorization: YOUR_JWT_TOKEN'
+
+# Response
+{
+  "status": "success",
+  "data": [
+    {
+      "Id": "uuid",
+      "Url": "string",
+      "Title": "string",
+      "Description": "string",
+      "Content": "string",
+      "CreatedAt": "string",
+      "Hostname": "string",
+      "Summary": "string"
+    }
+  ],
+  "current_datetime": "2025-01-13T15:56:35+07:00"
+}
+```
+
+#### 2. Get All Clips
+```
+GET /api/clips?page={page}&tag_id={tag_id}
+
+# Example
+curl -X GET 'http://localhost:8000/api/clips' \
+  --url-query 'page=1' \
+  --url-query 'tag_id=optional_tag_id' \
+  --header 'Authorization: YOUR_JWT_TOKEN'
+```
+
+#### 3. Create Clip
+```
+POST /api/clips
+
+# Example
+curl -X POST 'http://localhost:8000/api/clips' \
+  --header 'Authorization: YOUR_JWT_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "url": "https://example.com",
+    "title": "Example Title",
+    "content": "Article content"
+  }'
+```
+
+#### 4. Delete Clip
+```
+DELETE /api/clips/{id}
+
+# Example
+curl -X DELETE 'http://localhost:8000/api/clips/clip_id' \
+  --header 'Authorization: YOUR_JWT_TOKEN'
+```
+
+#### 5. Update Clip
+```
+PUT /api/clips/{id}
+
+# Example
+curl -X PUT 'http://localhost:8000/api/clips/clip_id' \
+  --header 'Authorization: YOUR_JWT_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "title": "Updated Title",
+    "content": "Updated content"
+  }'
+```
+
+#### 6. New Feature
+```
+POST /api/new-feature
+
+# Example
+curl -X POST 'http://localhost:8000/api/new-feature' \
+  --header 'Authorization: YOUR_JWT_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "user_id": "user_id",
+    "data": "data"
+  }'
+```
+
+## Development Guide
+
+### Adding New Endpoints
 
 ### 1. Define the Domain Types
 
@@ -155,4 +259,3 @@ func TestNewFeatureHandler(t *testing.T) {
         })
     }
 }
-```
