@@ -13,5 +13,20 @@
         "48": "icons/icon48.png",
         "128": "icons/icon128.png"
     },
-    "permissions": ["activeTab", "scripting"]
+    "permissions": [
+        "activeTab", 
+        "scripting",
+        "identity",
+        "storage"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://securetoken.googleapis.com; object-src 'self'"
+    },
+    "oauth2": {
+        "client_id": "936969372823-1ij5pqvv4gg5g8ov8p4lqt7jfv8bqvqf.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile"
+        ]
+    }
 }
