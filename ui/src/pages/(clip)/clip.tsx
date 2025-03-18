@@ -393,7 +393,10 @@ export default function Home() {
           {data.data && (
             <DialogEditClip
               open={openEditClip}
-              onOpenChange={setOpenEditClip}
+              onClose={() => {
+                setOpenEditClip(false);
+                mutate(inputUrl);
+              }}
               title={data.data.Title}
               content={data.data.Content}
               clipId={data.data.Id}

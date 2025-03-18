@@ -17,7 +17,7 @@ import { Loader2 } from "lucide-react";
 
 interface DialogEditClipProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: (open: boolean) => void;
   title: string;
   content: string;
   clipId: string;
@@ -25,7 +25,7 @@ interface DialogEditClipProps {
 
 export function DialogEditClip({
   open,
-  onOpenChange,
+  onClose,
   title: initialTitle,
   content: initialContent,
   clipId,
@@ -51,7 +51,7 @@ export function DialogEditClip({
       // Update both the clip data and the markdown data
       queryClient.setQueryData(["clip", clipId], response);
       queryClient.setQueryData(["fetchMarkdown", clipId], response);
-      onOpenChange(false);
+      onClose(false);
     },
     onError: (error: Error) => {
       toast.error(`Failed to update clip: ${error.message}`);
@@ -67,7 +67,7 @@ export function DialogEditClip({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[725px]">
         <DialogHeader>
           <DialogTitle>Edit Clip</DialogTitle>
@@ -97,7 +97,7 @@ export function DialogEditClip({
         <DialogFooter>
           <Button 
             variant="outline" 
-            onClick={() => onOpenChange(false)}
+            onClick={() => onClose(false)}
             disabled={updateMutation.isLoading}
           >
             Cancel
