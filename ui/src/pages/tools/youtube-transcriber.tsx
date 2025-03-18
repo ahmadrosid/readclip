@@ -157,7 +157,7 @@ export default function YoutubeTranscriber() {
                   <Markdown className="p-0 max-w-5xl">
                     {transcribeMutation.data.content
                       .map((item) => item.text)
-                      .join("\n")}
+                      .join("\n\n")}
                   </Markdown>
                 ) : (
                   ""
