@@ -199,14 +199,6 @@ func (h *ClipHandler) grabClip(c *fiber.Ctx) error {
 				"error":  err.Error(),
 			})
 		}
-	} else if util.IsMediumUrl(input.Url) {
-		res, err = util.Scrape("https://freedium.cfd/"+input.Url, "markdown")
-		if err != nil {
-			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-				"status": "error",
-				"error":  err.Error(),
-			})
-		}
 	} else if util.IsTweeterUrl(input.Url) {
 		status, err := twitter.GetTwitterSttusInfo(input.Url)
 		if err != nil {
