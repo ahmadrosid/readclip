@@ -40,7 +40,7 @@ export function SummaryButton({
       ) : (
         <RefreshCw className="h-3 w-3" />
       )}
-      Summary
+      Generate Summary
     </Button>
   );
 }
