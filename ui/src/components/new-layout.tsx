@@ -15,7 +15,7 @@ export function NewLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="h-screen bg-gray-100 flex dark:bg-gray-900/75 dark:border-gray-800">
-      <div className={`h-full w-full ${showSidebar ? "w-[260px]" : "w-[55px]"} flex-col hidden sm:flex transition-width duration-300`}>
+      <div className={`h-full w-full ${showSidebar ? "w-[260px] max-w-[260px]" : "w-[55px]"} flex-col hidden sm:flex transition-width duration-300`}>
         <div className="flex justify-between p-3">
           {showSidebar && (
             <Link to="/" className="text-lg flex items-center gap-2">
