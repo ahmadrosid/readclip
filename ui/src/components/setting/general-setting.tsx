@@ -44,7 +44,7 @@ export default function GeneralSetting() {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-700 dark:border shadow rounded-lg p-6 space-y-6">
+    <div className="bg-white dark:bg-gray-800/75 dark:border shadow rounded-lg p-6 space-y-6">
       <div className="space-y-2">
         <h3 className="text-lg font-bold tracking-tight">General</h3>
         <p className="text-muted-foreground">

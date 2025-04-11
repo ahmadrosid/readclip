@@ -65,13 +65,13 @@ export default function Tools() {
   return (
     <div className="container px-4 sm:px-8 mx-auto min-h-[80vh]">
       <div className="pt-6 pb-4">
-        <Title className="pb-4">Free tools from Readclip</Title>
+        <Title className="pb-4">Free tools</Title>
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          ReadClip offers free tools to help streamline your daily tasks, without ads or distractions.
+          Get more done with ReadClip - free tools, zero distractions.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/markdown-editor">
             <CardHeader>
               <CardTitle>Markdown Editor</CardTitle>
@@ -81,7 +81,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/word-counter">
             <CardHeader>
               <CardTitle>Word counter</CardTitle>
@@ -89,7 +89,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/reading-time">
             <CardHeader>
               <CardTitle>Reading time estimator</CardTitle>
@@ -99,7 +99,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/business-analysis">
             <CardHeader>
               <CardTitle>Business Value Proposition Analysis</CardTitle>
@@ -109,7 +109,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/reddit-reader">
             <CardHeader>
               <CardTitle>Reddit reader</CardTitle>
@@ -119,7 +119,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/youtube-transcriber">
             <CardHeader>
               <CardTitle>Youtube Transcriber</CardTitle>
@@ -129,7 +129,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/html-to-markdown">
             <CardHeader>
               <CardTitle>Html to markdown</CardTitle>
@@ -139,7 +139,7 @@ export default function Tools() {
             </CardHeader>
           </Link>
         </Card>
-        <Card>
+        <Card className="shadow-none">
           <Link to="/tools/blog-title-generator">
             <CardHeader>
               <CardTitle>Blog Title Generator</CardTitle>

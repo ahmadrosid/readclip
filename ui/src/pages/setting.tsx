@@ -25,10 +25,9 @@ function NavItem({
       className={cn(
         buttonVariants({ variant: "ghost" }),
         pathname === activePath
-          ? "bg-white hover:border-muted-foreground"
+          ? "bg-white hover:border-muted-foreground dark:bg-gray-800/70 dark:border-gray-600/70 px-3"
           : "hover:bg-muted hover:border-muted-foreground border-transparent",
         "justify-start cursor-pointer border",
-        "dark:bg-transparent"
       )}
     >
       {children}

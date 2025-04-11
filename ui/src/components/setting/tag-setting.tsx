@@ -40,7 +40,7 @@ function TagItem({ tag, className, refetch }: TagProps) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-sm text-red-500"
+        className="text-sm text-red-500 tracking-tight dark:hover:bg-gray-600/70"
         onClick={() => deleteTagMutation.mutate(tag.Id)}
       >
         {deleteTagMutation.isLoading ? "Deleting..." : "Delete"}
@@ -56,7 +56,7 @@ export default function TagSetting() {
   });
 
   return (
-    <div className="bg-white dark:bg-gray-700 dark:border shadow rounded-lg p-6 space-y-6">
+    <div className="bg-white dark:bg-gray-800/75 dark:border shadow rounded-lg p-6 space-y-6">
       <div className="flex justify-between align-top">
         <div className="space-y-2">
           <h3 className="text-lg font-bold tracking-tight">Tags</h3>
@@ -78,7 +78,7 @@ export default function TagSetting() {
             tag={tag}
             refetch={refetch}
             className={cn(
-              idx % 2 === 0 && "bg-gray-100/70 dark:bg-gray-800/70"
+              idx % 2 === 0 && "bg-gray-100/70 dark:bg-gray-700/30"
             )}
           />
         ))}

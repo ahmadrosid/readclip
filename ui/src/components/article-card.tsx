@@ -27,6 +27,7 @@ import {
   PlusIcon,
   TrashIcon,
   XIcon,
+  Bookmark,
 } from "lucide-react";
 import {
   type Article,
@@ -37,6 +38,7 @@ import { toast } from "sonner";
 import { useMutation } from "react-query";
 import { formatDate } from "@/lib/utils";
 import { getToken } from "@/lib/api";
+import { DialogCollectionSelect } from "@/components/dialog-collection-select";
 
 type Props = {
   article: Article;
@@ -145,6 +147,7 @@ export function ArticleCard({
   onAddTagCallback,
 }: Props) {
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [showCollectionDialog, setShowCollectionDialog] = useState(false);
 
   return (
     <Card className="grid shadow-none dark:border-gray-700/50">
@@ -192,6 +195,10 @@ export function ArticleCard({
                 clipId={article.Id}
                 setOpenDropdown={setOpenDropdown}
               />
+              <DropdownMenuItem onClick={() => setShowCollectionDialog(true)}>
+                <Bookmark className="mr-2 h-4 w-4" />
+                Add to Collection
+              </DropdownMenuItem>
               <DeleteMenuItem
                 clipId={article.Id}
                 setOpenDropdown={(state) => {
@@ -227,6 +234,13 @@ export function ArticleCard({
           </a>
         </div>
       </CardContent>
+      <DialogCollectionSelect
+        open={showCollectionDialog}
+        onOpenChange={setShowCollectionDialog}
+        collections={[]} // TODO: Fetch collections
+        clipId={article.Id}
+        currentCollectionIds={[]} // TODO: Get current collections
+      />
     </Card>
   );
 }
