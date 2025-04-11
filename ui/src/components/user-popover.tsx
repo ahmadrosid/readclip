@@ -5,7 +5,7 @@ import { auth } from "@/lib/firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '@/hooks/useAuth';
 
-export function UserPopover() {
+export function UserPopover({ showSidebar }: { showSidebar: boolean }) {
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -19,13 +19,13 @@ export function UserPopover() {
     <div className="px-2 pb-3 relative flex justify-between items-center">
       <Popover>
         <PopoverTrigger asChild>
-            <div className="p-2 rounded-md flex gap-2 items-center cursor-pointer">
+            <div className="px-1 rounded-md flex gap-2 items-center cursor-pointer">
                 <img
                   src={user?.photoURL || "/img/avatar.png"}
                   className="w-7 h-7 rounded-full"
                   alt={user?.displayName || ""}
                 />
-                <div className='hidden sm:block'>{user?.displayName || ""}</div>
+                {showSidebar && <div className='hidden sm:block'>{user?.displayName || ""}</div>}
             </div>
         </PopoverTrigger>
         <PopoverContent sideOffset={5} align='start' className='w-[200px] dark:bg-gray-800'>
@@ -37,7 +37,7 @@ export function UserPopover() {
         </PopoverContent>
       </Popover>
       <div className='hidden sm:block'>
-        <ModeToggle />
+        {showSidebar && <ModeToggle />}
       </div>
     </div>
   )
