@@ -13,9 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
-import { useCallback, useState } from "react";
-import type { UserCredential } from "firebase/auth";
-import { DialogCreateAccount } from "@/components/dialog-create-account";
+import { useCallback } from "react";
 import { useMutation } from "react-query";
 import { fetchLogin } from "@/lib/api/api";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,11 +21,6 @@ import { useAuth } from "@/hooks/useAuth";
 export default function LoginPage() {
   const { user: loggedUser } = useAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-  });
-  const [open, setOpen] = useState(false);
 
   const loginMutation = useMutation("login", fetchLogin, {
     onSuccess: () => {
@@ -40,20 +33,12 @@ export default function LoginPage() {
       navigate("/clip");
     },
     onError: (err: Error) => {
-      if (err.message === "user not found") {
-        setOpen(true);
-        return;
-      }
       toast.error(err.message);
     },
   });
 
   const handleOnAthenticated = useCallback(
-    (credential: UserCredential) => {
-      setUser({
-        name: credential.user.displayName ?? "",
-        email: credential.user.email ?? "",
-      });
+    () => {
       loginMutation.mutate();
     },
     [loginMutation]
@@ -61,12 +46,6 @@ export default function LoginPage() {
 
   return (
     <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
-      <DialogCreateAccount
-        email={user.email}
-        name={user.name}
-        open={open}
-        onOpenChange={setOpen}
-      />
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
