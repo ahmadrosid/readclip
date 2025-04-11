@@ -12,7 +12,7 @@ export function useAuth(withRedirect: boolean = true) {
       if (!user) {
         if (withRedirect) {
           window.localStorage.removeItem("token");
-          navigate("/login");
+          // navigate("/login");
         }
       } else {
         const token = await user.getIdToken();

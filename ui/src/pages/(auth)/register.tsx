@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { BookMarkedIcon } from "lucide-react";
 import { GoogleSignIn } from "@/components/google-login";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -12,13 +14,14 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useAuthState } from "react-firebase-hooks/auth";
 import app from "@/lib/firebase";
-import { getAuth } from "firebase/auth";
+import { getAuth, User } from "firebase/auth";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
 import { useMutation } from "react-query";
 import { fetchCreateUser } from "@/lib/api/api";
 
 export default function LoginPage() {
+  const [loggedUser, setLoggedUser] = useState<User | undefined>();
   const navigate = useNavigate();
   const registerMutation = useMutation("register", fetchCreateUser, {
     onSuccess: (data) => {
@@ -41,9 +44,8 @@ export default function LoginPage() {
 
   useAuthState(getAuth(app), {
     onUserChanged: async (user) => {
-      const hasToken = window.localStorage.getItem("token");
-      if (user && hasToken && !registerMutation.isLoading) {
-        navigate("/");
+      if (user) {
+        setLoggedUser(user);
       }
     },
   });
@@ -53,13 +55,17 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <Card className="overflow-hidden">
           <CardHeader className="space-y-1 text-center">
+            <div className="flex items-center justify-center mb-4">
+              <div className="bg-gray-200 dark:bg-gray-100/15 p-2 rounded-xl">
+                <BookMarkedIcon className="w-6 h-6" />
+              </div>
+            </div>
             <CardTitle className="text-2xl">Register to ReadClip</CardTitle>
             <CardDescription>
-              Start your reading journey by create new account.
+              <span className="tracking-tight px-4 pt-2">Ready to explore? Create your account for free.</span>
             </CardDescription>
           </CardHeader>
-          <Separator />
-          <CardContent className="grid gap-4 pt-4 pb-2 bg-gray-100/75 dark:bg-gray-200">
+          <CardContent className="grid gap-4 pt-4 pb-2">
             <GoogleSignIn
               label="Register with Google"
               setError={(error) => {
@@ -73,21 +79,27 @@ export default function LoginPage() {
               }}
             />
           </CardContent>
-          <CardFooter className="bg-gray-100/75 dark:bg-gray-200">
-            <div className="flex justify-center text-sm w-full">
-              <span className="px-2 text-muted-foreground">
-                <a
-                  className={cn(
-                    buttonVariants({
-                      variant: "link",
-                      className: "text-muted-foreground dark:text-gray-600",
-                    })
-                  )}
-                  href="/login"
-                >
-                  Already have account? Login here!
-                </a>
-              </span>
+          <CardFooter>
+            <div className="w-full space-y-6 mt-6">
+              <Separator className="w-full" />
+              <div className="flex justify-center text-sm w-full">
+                <p className={`px-2 text-muted-foreground  ${loggedUser ? "opacity-30" : ""}`}>
+                  Already have account?
+                  <a
+                    className={cn(
+                      buttonVariants({
+                        variant: "link",
+                        className: "text-foreground dark:text-gray-300 px-1",
+                      })
+                    )}
+                    href="/login"
+                    onClick={(e) => loggedUser && e.preventDefault()}
+                    style={{ pointerEvents: loggedUser ? "none" : "auto", opacity: loggedUser ? 0.5 : 1 }}
+                  >
+                    Login
+                  </a>
+                </p>
+              </div>
             </div>
           </CardFooter>
         </Card>

@@ -51,7 +51,7 @@ export function GoogleSignIn({
     <div className="gap-2 flex justify-between flex-wrap">
       {currentUser ? (
         <Button
-          className="w-full bg-white h-10 dark:text-gray-900 dark:hover:text-white"
+          className="w-full bg-white h-10 dark:bg-gray-600/50 dark:text-gray-300 dark:hover:text-white"
           variant="outline"
           onClick={handleLogout}
         >
@@ -61,7 +61,7 @@ export function GoogleSignIn({
         <Button
           onClick={handleGoogleLogin}
           variant="outline"
-          className="h-10 w-full dark:text-gray-900 dark:hover:text-white"
+          className="h-10 w-full bg-white dark:bg-gray-600/50 dark:text-gray-300 dark:hover:text-white"
         >
           <Google className="mr-2 h-4 w-4" />
           {label}
