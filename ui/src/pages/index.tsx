@@ -53,18 +53,18 @@ export default function Home() {
       <div className="py-0 sm:py-16 relative">
         <div className="absolute inset-0 -z-10 h-full w-full bg-gray-50 dark:bg-gray-900 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="max-w-4xl py-0 sm:py-16 mx-auto text-left sm:text-center px-4 sm:px-0">
-          <div className="py-6 max-w-4xl">
-            <Badge
+          <div className="py-0 max-w-4xl">
+            {/* <Badge
               variant={"secondary"}
               className="py-2 px-4 rounded-full border border-gray-200 dark:border-gray-500"
             >
               Read, Save, Organize and Enjoy
-            </Badge>
-            <h1 className="py-4 sm:py-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
-              Curate Your Own Clutter-Free Content Library
+            </Badge> */}
+            <h1 className="py-4 sm:pb-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
+              Save Programming Resources That Never Vanish
             </h1>
-            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">
-              Your one-stop solution for bookmarking, tagging, and enjoying online content.
+            <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto text-balance">
+              Join thousands of junior developers who've saved their most valuable learning resources in a searchable, permanent library.
             </p>
           </div>
           <div className="flex justify-start sm:justify-center gap-2 items-center py-6">
@@ -78,9 +78,9 @@ export default function Home() {
                 })
               )}
             >
-              Getting started  <ArrowRight className="w-4 h-4 ml-3" />
+              Try it now <ArrowRight className="w-4 h-4 ml-3" />
             </Link>
-            <DialogDemo />
+            {/* <DialogDemo /> */}
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function Home() {
       </div>
 
       <div className="bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto space-y-4 py-12 mb-8 px-4">
+        <div className="max-w-5xl mx-auto space-y-4 py-12 mb-8 px-4 sm:px-0">
           <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-gray-800 sm:text-5xl sm:leading-[3.5rem] dark:text-white">
             Features
           </h2>
@@ -237,7 +237,7 @@ export default function Home() {
           </h2>
         </div>
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="flex justify-start sm:justify-center gap-2 items-center py-2">
+          <div className="flex justify-center sm:justify-center gap-2 items-center py-2">
             <Link
               to="/clip"
               className={cn(
@@ -248,9 +248,9 @@ export default function Home() {
                 })
               )}
             >
-              Getting started
+              Try it now
             </Link>
-            <DialogDemo />
+            {/* <DialogDemo /> */}
           </div>
         </div>
       </div>
