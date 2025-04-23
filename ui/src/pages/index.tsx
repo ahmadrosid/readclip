@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 export function DialogDemo({ className }: { className?: string }) {
@@ -60,11 +60,11 @@ export default function Home() {
             >
               Read, Save, Organize and Enjoy
             </Badge> */}
-            <h1 className="py-4 sm:pb-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200">
-              Save Programming Resources That Never Vanish
+            <h1 className="py-4 sm:pb-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200 text-balance">
+              Browser Tab Chaos Into Your Personal Programming Knowledge Base
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto text-balance">
-              Join thousands of junior developers who've saved their most valuable learning resources in a searchable, permanent library.
+              Because great developers shouldn't waste time searching for solutions they've already found. One save, instant access, always there.
             </p>
           </div>
           <div className="flex justify-start sm:justify-center gap-2 items-center py-6">
@@ -78,7 +78,7 @@ export default function Home() {
                 })
               )}
             >
-              Try it now <ArrowRight className="w-4 h-4 ml-3" />
+              Try Readclip Free <ArrowRight className="w-4 h-4 ml-3" />
             </Link>
             {/* <DialogDemo /> */}
           </div>
@@ -248,7 +248,7 @@ export default function Home() {
                 })
               )}
             >
-              Try it now
+              Try Readclip Free <ArrowRight className="w-4 h-4 ml-3" />
             </Link>
             {/* <DialogDemo /> */}
           </div>
