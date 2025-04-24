@@ -61,7 +61,7 @@ export default function Home() {
               Read, Save, Organize and Enjoy
             </Badge> */}
             <h1 className="py-4 sm:pb-8 text-3xl font-extrabold tracking-[-0.04em] text-black sm:text-7xl sm:leading-[4.5rem] dark:text-gray-200 text-balance">
-              Save Programming Resources in One Place - Never Lose That Tutorial
+              Never lose another programming tutorial – even if the original link dies
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 max-w-3xl mx-auto text-balance">
               Because great developers shouldn't waste time searching for solutions they've already found. One save, instant access, always there.
