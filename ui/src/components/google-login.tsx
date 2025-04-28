@@ -9,10 +9,12 @@ export function GoogleSignIn({
   label,
   setError,
   onAuthenticated,
+  disabled = false,
 }: {
   label: string;
   setError: (error: string) => void;
   onAuthenticated?: (credential: UserCredential) => void;
+  disabled?: boolean;
 }) {
   const [currentUser] = useAuthState(getAuth(app), {
     onUserChanged: async (user) => {
@@ -54,11 +56,13 @@ export function GoogleSignIn({
           className="w-full bg-white h-10 dark:bg-gray-600/50 dark:text-gray-300 dark:hover:text-white"
           variant="outline"
           onClick={handleLogout}
+          disabled={disabled}
         >
           Logout
         </Button>
       ) : (
         <Button
+          disabled={disabled}
           onClick={handleGoogleLogin}
           variant="outline"
           className="h-10 w-full bg-white dark:bg-gray-600/50 dark:text-gray-300 dark:hover:text-white"

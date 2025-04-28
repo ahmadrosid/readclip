@@ -22,6 +22,12 @@ export default function LoginPage() {
   const { user: loggedUser } = useAuth();
   const navigate = useNavigate();
 
+  // Redirect if already authenticated
+  if (loggedUser) {
+    navigate("/clip");
+    return null;
+  }
+
   const loginMutation = useMutation("login", fetchLogin, {
     onSuccess: () => {
       const redirectUrl = window.localStorage.getItem("redirect-auth");
@@ -37,8 +43,9 @@ export default function LoginPage() {
     },
   });
 
+  // Accept credential for future extensibility
   const handleOnAthenticated = useCallback(
-    () => {
+    (credential?: any) => {
       loginMutation.mutate();
     },
     [loginMutation]
@@ -61,12 +68,13 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent className="grid gap-4 pt-4 pb-2">
             <GoogleSignIn
-              label="Continue with Google"
+              label={loginMutation.isLoading ? "Signing in..." : "Continue with Google"}
               setError={(error) => {
                 if (error == "") return;
                 toast.error(error);
               }}
               onAuthenticated={handleOnAthenticated}
+              disabled={loginMutation.isLoading || !!loggedUser}
             />
           </CardContent>
           <CardFooter>
