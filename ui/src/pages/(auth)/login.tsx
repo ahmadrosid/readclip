@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useNavigate } from "@/router";
 import { cn } from "@/lib/utils";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useMutation } from "react-query";
 import { fetchLogin } from "@/lib/api/api";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,11 +22,11 @@ export default function LoginPage() {
   const { user: loggedUser } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect if already authenticated
-  if (loggedUser) {
-    navigate("/clip");
-    return null;
-  }
+  useEffect(() => {
+    if (loggedUser) {
+      navigate("/clip");
+    }
+  }, [loggedUser, navigate]);
 
   const loginMutation = useMutation("login", fetchLogin, {
     onSuccess: () => {
@@ -43,13 +43,7 @@ export default function LoginPage() {
     },
   });
 
-  // Accept credential for future extensibility
-  const handleOnAthenticated = useCallback(
-    (credential?: any) => {
-      loginMutation.mutate();
-    },
-    [loginMutation]
-  );
+  const handleOnAthenticated = useCallback(() => loginMutation.mutate(), [loginMutation]);
 
   return (
     <div className="grid p-8 py-16 place-content-center min-h-[80vh]">
