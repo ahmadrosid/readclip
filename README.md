@@ -127,9 +127,7 @@ Some feature will be added soon.
 - [x] FREE TOOLS: Business Value Proposition Analysis
 - [x] Daily Reading Digest (explore menu just like instagram etc)
 - [x] Improve parsing code
-- [ ] FullText search (Opensearch)
 - [ ] Chrome Extensions?
-- [ ] Email news letter subscriptions. [https://github.com/foxcpp/maddy](https://github.com/foxcpp/maddy)
 - [ ] Blogs
 
 ## Marketing Materials
